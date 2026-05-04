@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(update-config)",
+      "PowerShell(npx shadcn@latest mcp init --client claude 2>&1)",
+      "PowerShell(npx shadcn@latest mcp --help 2>&1)",
+      "Read(//mnt/c/Users/guiro/**)",
+      "Read(//mnt/c/**)",
+      "PowerShell(claude-code *)",
+      "PowerShell(claude plugin *)"
+    ]
+  }
+}
