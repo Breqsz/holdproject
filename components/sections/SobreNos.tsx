@@ -2,8 +2,9 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { Target, Eye, Star } from 'lucide-react'
 import { useLocale } from '@/lib/i18n'
+
+const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number]
 
 /* ─── Count-up hook ─────────────────────────────────────────────────────── */
 
@@ -12,7 +13,6 @@ function useCountUp(target: number, duration: number, triggered: boolean) {
 
   useEffect(() => {
     if (!triggered) return
-
     let startTime: number | null = null
     let raf: number
 
@@ -20,12 +20,9 @@ function useCountUp(target: number, duration: number, triggered: boolean) {
       if (!startTime) startTime = timestamp
       const elapsed = timestamp - startTime
       const progress = Math.min(elapsed / duration, 1)
-      // ease-out quad
       const eased = 1 - (1 - progress) * (1 - progress)
       setCount(Math.round(eased * target))
-      if (progress < 1) {
-        raf = requestAnimationFrame(step)
-      }
+      if (progress < 1) raf = requestAnimationFrame(step)
     }
 
     raf = requestAnimationFrame(step)
@@ -38,48 +35,25 @@ function useCountUp(target: number, duration: number, triggered: boolean) {
 /* ─── Variants ──────────────────────────────────────────────────────────── */
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 32 },
+  hidden: { opacity: 0, y: 28 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.7, ease: [0.32, 0.72, 0, 1] as [number, number, number, number] },
+    transition: { duration: 0.85, ease: EASE_OUT_EXPO },
   },
 }
 
 const stagger = {
   hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.12 },
-  },
+  visible: { opacity: 1, transition: { staggerChildren: 0.12 } },
 }
 
-const springHover = {
-  y: -4,
-  transition: { type: 'spring' as const, stiffness: 100, damping: 20 },
-}
+/* ─── Manifesto blocks (no cards, no icons) ─────────────────────────────── */
 
-/* ─── Card data ─────────────────────────────────────────────────────────── */
-
-const cards = [
-  {
-    titleKey: 'about.mission.title',
-    bodyKey: 'about.mission.body',
-    icon: Target,
-    color: '#ae251c',
-  },
-  {
-    titleKey: 'about.vision.title',
-    bodyKey: 'about.vision.body',
-    icon: Eye,
-    color: '#5b8fc9',
-  },
-  {
-    titleKey: 'about.values.title',
-    bodyKey: 'about.values.body',
-    icon: Star,
-    color: '#7a9ab8',
-  },
+const principles = [
+  { titleKey: 'about.mission.title', bodyKey: 'about.mission.body' },
+  { titleKey: 'about.vision.title',  bodyKey: 'about.vision.body'  },
+  { titleKey: 'about.values.title',  bodyKey: 'about.values.body'  },
 ]
 
 /* ─── Component ─────────────────────────────────────────────────────────── */
@@ -87,22 +61,21 @@ const cards = [
 export default function SobreNos() {
   const { t } = useLocale()
 
-  // Single ref/inView for the whole section to trigger count-up
   const statsRef = useRef<HTMLDivElement>(null)
   const statsInView = useInView(statsRef, { once: true, margin: '-80px' })
-
   const yearsCount = useCountUp(19, 1400, statsInView)
   const partnersCount = useCountUp(60, 1600, statsInView)
+  const frentesCount = useCountUp(4, 1200, statsInView)
 
   return (
     <section
       id="sobre-nos"
-      className="py-24 md:py-32 bg-[#0b1f3a]"
+      className="section-pad bg-[#0b1f3a]"
       style={{ fontFamily: 'var(--font-outfit)' }}
     >
       <div className="max-w-6xl mx-auto px-6 lg:px-8">
 
-        {/* Header block */}
+        {/* Header — left-aligned editorial */}
         <motion.div
           variants={stagger}
           initial="hidden"
@@ -110,100 +83,80 @@ export default function SobreNos() {
           viewport={{ once: true, margin: '-80px' }}
           className="max-w-3xl"
         >
-          {/* Eyebrow */}
           <motion.div variants={fadeUp}>
             <span className="inline-flex items-center rounded-full bg-[#ae251c]/20 text-[#ae251c] px-3 py-1 text-[10px] uppercase tracking-[0.2em] font-semibold">
               {t('about.eyebrow')}
             </span>
           </motion.div>
 
-          {/* Title */}
           <motion.h2
             variants={fadeUp}
-            className="mt-6 text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.15] tracking-tight text-white"
+            className="mt-6 text-display text-white"
+            style={{ fontSize: 'clamp(2rem, 4.4vw, 3.25rem)' }}
           >
             {t('about.title')}
           </motion.h2>
 
-          {/* Subtitle */}
           <motion.p
             variants={fadeUp}
-            className="mt-5 text-[#7a9ab8] text-lg leading-relaxed"
+            className="mt-6 max-w-[60ch] text-pretty text-lg leading-relaxed text-[#7a9ab8]"
           >
             {t('about.subtitle')}
           </motion.p>
 
-          {/* Body */}
           <motion.p
             variants={fadeUp}
-            className="mt-4 text-[#7a9ab8] text-base leading-relaxed"
+            className="mt-4 max-w-[60ch] text-base leading-relaxed text-[#7a9ab8]"
           >
             {t('about.body')}
           </motion.p>
         </motion.div>
 
-        {/* Stat counters */}
-        <div ref={statsRef} className="mt-12 flex flex-wrap gap-12">
-          {/* +19 Years */}
-          <div className="flex flex-col gap-1">
-            <span className="text-6xl font-bold text-white leading-none">
-              +{yearsCount}
-            </span>
-            <span className="text-[#7a9ab8] text-sm mt-2">
-              {t('about.stat.years')}
-            </span>
-          </div>
-
-          {/* +60 Partners */}
-          <div className="flex flex-col gap-1">
-            <span className="text-6xl font-bold text-white leading-none">
-              +{partnersCount}
-            </span>
-            <span className="text-[#7a9ab8] text-sm mt-2">
-              {t('about.stat.partners')}
-            </span>
-          </div>
+        {/* Stats — fluid display scale, gold rule underline */}
+        <div ref={statsRef} className="mt-16 grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-12 max-w-4xl">
+          {[
+            { count: yearsCount, key: 'about.stat.years' },
+            { count: partnersCount, key: 'about.stat.partners' },
+            { count: frentesCount, key: 'about.stat.frentes' },
+          ].map(({ count, key }) => (
+            <div key={key} className="flex flex-col">
+              <span
+                className="tabular text-display leading-none text-white"
+                style={{ fontSize: 'clamp(3rem, 7vw, 5rem)' }}
+              >
+                +{count}
+              </span>
+              <div className="rule-gold mt-4 h-px w-12" />
+              <span className="mt-3 text-sm text-[#7a9ab8]">
+                {t(key)}
+              </span>
+            </div>
+          ))}
         </div>
 
-        {/* Cards row */}
+        {/* Manifesto — three blocks, no cards, hairline-divided columns */}
         <motion.div
           variants={stagger}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-60px' }}
-          className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6"
+          className="mt-24 grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-0 md:divide-x md:divide-[#142f54]"
         >
-          {cards.map(({ titleKey, bodyKey, icon: Icon, color }) => (
+          {principles.map(({ titleKey, bodyKey }, i) => (
             <motion.div
               key={titleKey}
               variants={fadeUp}
-              whileHover={springHover}
-              /* Double-Bezel outer wrapper */
-              className="rounded-2xl bg-white/5 ring-1 ring-white/10 p-1.5 cursor-default"
+              className={[
+                'flex flex-col gap-4',
+                i === 0 ? 'md:pr-10' : i === principles.length - 1 ? 'md:pl-10' : 'md:px-10',
+              ].join(' ')}
             >
-              {/* Double-Bezel inner */}
-              <div className="rounded-[calc(1rem-0.375rem)] bg-[#142f54] shadow-[inset_0_1px_1px_rgba(255,255,255,0.08)] p-6 h-full flex flex-col gap-4">
-                {/* Icon */}
-                <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
-                  style={{ backgroundColor: `${color}20` }}
-                >
-                  <Icon size={20} style={{ color }} />
-                </div>
-
-                {/* Title */}
-                <p
-                  className="text-xs font-semibold uppercase tracking-wider"
-                  style={{ color: '#ae251c' }}
-                >
-                  {t(titleKey)}
-                </p>
-
-                {/* Body */}
-                <p className="text-[#7a9ab8] text-sm leading-relaxed">
-                  {t(bodyKey)}
-                </p>
-              </div>
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#ae251c]">
+                {t(titleKey)}
+              </p>
+              <p className="text-base leading-relaxed text-[#e0e8f0]">
+                {t(bodyKey)}
+              </p>
             </motion.div>
           ))}
         </motion.div>
