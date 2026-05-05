@@ -27,7 +27,7 @@ export default function Depoimentos() {
   return (
     <section
       id="depoimentos"
-      className="section-pad bg-[#0b1f3a]"
+      className="section-pad bg-[#F5F5F5]"
       style={{ fontFamily: 'var(--font-outfit)' }}
     >
       <div className="max-w-6xl mx-auto px-6 lg:px-8">
@@ -43,7 +43,7 @@ export default function Depoimentos() {
           <div className="max-w-2xl">
             <motion.h2
               variants={fadeUp}
-              className="mt-5 text-display text-white"
+              className="mt-5 text-display text-[#07162a]"
               style={{ fontSize: 'clamp(2rem, 4.4vw, 3.25rem)' }}
             >
               {t('testimonials.title')}
@@ -55,7 +55,7 @@ export default function Depoimentos() {
               href={googleSummary.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-5 inline-flex items-center gap-3 rounded-full bg-white/[0.04] ring-1 ring-white/10 px-4 py-2 hover:ring-white/30 transition-colors"
+              className="mt-5 inline-flex items-center gap-3 rounded-full bg-[#07162a]/[0.04] ring-1 ring-[#07162a]/10 px-4 py-2 hover:ring-[#07162a]/25 transition-colors"
               aria-label={t('testimonials.googleBadge')}
             >
               <GoogleGIcon size={18} />
@@ -63,7 +63,7 @@ export default function Depoimentos() {
                 {googleSummary.rating.toString().replace('.', ',')}
                 <Star size={14} fill="#c9a84c" color="#c9a84c" />
               </span>
-              <span className="text-[#7a9ab8] text-xs">
+              <span className="text-[#07162a]/55 text-xs">
                 · {googleSummary.count} avaliações no Google
               </span>
             </motion.a>
@@ -73,14 +73,14 @@ export default function Depoimentos() {
             <button
               onClick={scrollPrev}
               aria-label="Depoimento anterior"
-              className="w-11 h-11 rounded-full bg-[#142f54] hover:bg-[#1e4a7a] transition-colors flex items-center justify-center text-[#e0e8f0]"
+              className="w-11 h-11 rounded-full bg-[#07162a]/[0.08] hover:bg-[#07162a]/[0.14] transition-colors flex items-center justify-center text-[#07162a]"
             >
               <ArrowLeft size={18} strokeWidth={1.7} />
             </button>
             <button
               onClick={scrollNext}
               aria-label="Próximo depoimento"
-              className="w-11 h-11 rounded-full bg-[#142f54] hover:bg-[#1e4a7a] transition-colors flex items-center justify-center text-[#e0e8f0]"
+              className="w-11 h-11 rounded-full bg-[#07162a]/[0.08] hover:bg-[#07162a]/[0.14] transition-colors flex items-center justify-center text-[#07162a]"
             >
               <ArrowRight size={18} strokeWidth={1.7} />
             </button>
@@ -101,7 +101,7 @@ export default function Depoimentos() {
                   key={item.name}
                   className="flex-[0_0_100%] sm:flex-[0_0_calc(50%-10px)] lg:flex-[0_0_calc(50%-10px)] min-w-0"
                 >
-                  <div className="rounded-2xl bg-[#142f54] ring-1 ring-white/10 p-7 md:p-9 h-full flex flex-col gap-5">
+                  <div className="rounded-2xl bg-white ring-1 ring-[#07162a]/[0.08] p-7 md:p-9 h-full flex flex-col gap-5">
 
                     <div className="flex items-center gap-1">
                       {Array.from({ length: item.rating }).map((_, si) => (
@@ -110,7 +110,7 @@ export default function Depoimentos() {
                     </div>
 
                     <p
-                      className="text-pretty text-[#e0e8f0] leading-snug flex-1"
+                      className="text-pretty text-[#07162a] leading-snug flex-1"
                       style={{
                         fontSize: 'clamp(1rem, 1.4vw, 1.15rem)',
                         letterSpacing: '-0.005em',
@@ -121,8 +121,8 @@ export default function Depoimentos() {
 
                     <div>
                       <div className="rule-gold h-px w-10 mb-4 opacity-60" />
-                      <p className="text-white font-semibold text-sm">{item.name}</p>
-                      <p className="text-[#7a9ab8] text-xs mt-0.5 inline-flex items-center gap-1.5">
+                      <p className="text-[#07162a] font-semibold text-sm">{item.name}</p>
+                      <p className="text-[#07162a]/50 text-xs mt-0.5 inline-flex items-center gap-1.5">
                         <GoogleGIcon size={12} />
                         {t('testimonials.role')}
                       </p>
