@@ -62,4 +62,14 @@ describe('AudienceToggle', () => {
     renderToggle()
     expect(screen.getByRole('group', { name: 'Selecionar audiência' })).toBeInTheDocument()
   })
+
+  it('applies backdrop-blur wrapper when variant="hero"', () => {
+    render(
+      <AudienceProvider>
+        <AudienceToggle variant="hero" />
+      </AudienceProvider>
+    )
+    const group = screen.getByRole('group', { name: 'Selecionar audiência' })
+    expect(group.className).toMatch(/backdrop-blur/)
+  })
 })

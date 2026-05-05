@@ -6,7 +6,7 @@ import { useAudience } from '@/lib/audience'
 const SPRING = { type: 'spring' as const, stiffness: 110, damping: 22 }
 
 interface AudienceToggleProps {
-  variant?: 'dark' | 'light'
+  variant?: 'dark' | 'light' | 'hero'
   className?: string
 }
 
@@ -16,11 +16,15 @@ export function AudienceToggle({ variant = 'dark', className = '' }: AudienceTog
   const wrapper =
     variant === 'dark'
       ? 'bg-[#142f54] ring-1 ring-white/10'
+      : variant === 'hero'
+      ? 'bg-[rgba(255,255,255,0.07)] ring-1 ring-white/10 backdrop-blur-sm'
       : 'bg-white/10 ring-1 ring-white/15 backdrop-blur-sm'
 
   const inactive =
     variant === 'dark'
       ? 'text-[#7a9ab8] hover:text-white'
+      : variant === 'hero'
+      ? 'text-white/40 hover:text-white/70'
       : 'text-white/70 hover:text-white'
 
   const labels: { id: 'pf' | 'pj'; label: string }[] = [
