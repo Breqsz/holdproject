@@ -53,7 +53,7 @@ export default function FAQ() {
   return (
     <section
       id="faq"
-      className="section-pad bg-[#07162a]"
+      className="section-pad bg-[#F5F5F5]"
       style={{ fontFamily: 'var(--font-outfit)' }}
     >
       <div className="max-w-3xl mx-auto px-6 lg:px-8">
@@ -68,7 +68,7 @@ export default function FAQ() {
         >
           <motion.h2
             variants={fadeUp}
-            className="mt-5 text-display text-white"
+            className="mt-5 text-display text-[#07162a]"
             style={{ fontSize: 'clamp(1.75rem, 3.6vw, 2.75rem)' }}
           >
             {t('faq.title')}
@@ -96,7 +96,7 @@ export default function FAQ() {
                   aria-expanded={isOpen ? 'true' : 'false'}
                   className="w-full flex items-center justify-between gap-4 py-5 text-left group"
                 >
-                  <span className="text-[#e0e8f0] font-medium text-sm md:text-base leading-snug group-hover:text-white transition-colors">
+                  <span className="text-[#07162a] font-medium text-sm md:text-base leading-snug group-hover:text-[#ae251c] transition-colors">
                     {item.q}
                   </span>
                   <motion.span
@@ -118,7 +118,7 @@ export default function FAQ() {
                       transition={{ duration: 0.32, ease: EASE_OUT_EXPO }}
                       className="overflow-hidden"
                     >
-                      <p className="pb-5 pr-8 text-[#7a9ab8] text-sm leading-relaxed">
+                      <p className="pb-5 pr-8 text-[#07162a]/55 text-sm leading-relaxed">
                         {item.a}
                       </p>
                     </motion.div>
