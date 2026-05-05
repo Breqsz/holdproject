@@ -111,7 +111,7 @@ export default function InvestimentosClient() {
           <Reveal delay={0.2} className="hidden lg:block">
             <div className="relative aspect-[4/5] rounded-2xl overflow-hidden ring-1 ring-[#c9a84c]/15">
               <Image
-                src="/images/hero/investimentos.jpg"
+                src="/images/hero/investimentos.webp"
                 alt="Análise patrimonial em ambiente executivo com gráficos e indicadores"
                 fill
                 priority

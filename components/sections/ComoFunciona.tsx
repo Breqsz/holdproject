@@ -96,7 +96,7 @@ export default function ComoFunciona() {
             className="pointer-events-none select-none flex justify-center lg:justify-end lg:shrink-0"
           >
             <Image
-              src="/personagem/jacimar-avatar-question.png"
+              src="/personagem/jacimar-avatar-question.webp"
               alt=""
               width={260}
               height={400}

@@ -110,7 +110,7 @@ export default function SegurosClient() {
           <Reveal delay={0.2} className="hidden lg:block">
             <div className="relative aspect-[4/5] rounded-2xl overflow-hidden ring-1 ring-white/10">
               <Image
-                src="/images/hero/seguros.jpg"
+                src="/images/hero/seguros.webp"
                 alt="Família protegida por seguro patrimonial residencial"
                 fill
                 priority

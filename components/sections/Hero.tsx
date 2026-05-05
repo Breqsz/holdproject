@@ -196,7 +196,7 @@ export default function Hero() {
               }}
             >
               <img
-                src="/personagem/jacimar-avatar-3d.png"
+                src="/personagem/jacimar-avatar-3d.webp"
                 alt={t('hero.character.alt')}
                 className="h-full w-full object-contain"
                 style={{ mixBlendMode: 'multiply' }}

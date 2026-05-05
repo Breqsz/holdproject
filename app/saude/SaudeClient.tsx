@@ -108,7 +108,7 @@ export default function SaudeClient() {
           <Reveal delay={0.2} className="hidden lg:block">
             <div className="relative aspect-[4/5] rounded-2xl overflow-hidden ring-1 ring-[#142f54]/10 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.18)]">
               <Image
-                src="/images/hero/saude.jpg"
+                src="/images/hero/saude.webp"
                 alt="Família planejando bem-estar e saúde em ambiente doméstico"
                 fill
                 priority

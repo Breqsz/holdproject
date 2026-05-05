@@ -23,7 +23,7 @@ const team: TeamMember[] = [
     role: 'Diretoria executiva',
     initials: 'JM',
     bio: 'Frente comercial e estratégica. +19 anos conduzindo as decisões patrimoniais de famílias e empresas em Uberlândia.',
-    photo: '/personagem/jacimar-avatar-3d.png',
+    photo: '/personagem/jacimar-avatar-3d.webp',
   },
   {
     name: 'Time de Saúde',
@@ -37,14 +37,14 @@ const team: TeamMember[] = [
     role: 'Consultores em proteção patrimonial',
     initials: 'CS',
     bio: 'Vida, auto, residencial, empresarial e patrimonial — com suporte humano em sinistros e renovações.',
-    photo: '/images/hero/seguros.jpg',
+    photo: '/images/hero/seguros.webp',
   },
   {
     name: 'Time de Consórcios',
     role: 'Estruturação de consórcios',
     initials: 'TC',
     bio: 'Atendimento consultivo a clientes finais, empresas, agronegócio e escritórios de investimento parceiros.',
-    photo: '/images/hero/consorcios.jpg',
+    photo: '/images/hero/consorcios.webp',
   },
   {
     name: 'Time Patrimonial',

@@ -138,11 +138,7 @@ export default function SobreNos() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.85, ease: EASE_OUT_EXPO, delay: 0.1 }}
               >
-                <motion.div
-                  animate={{ y: [0, -10, 0] }}
-                  transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut' }}
-                  className="relative"
-                >
+                <div className="float-up relative">
                   <div className="absolute inset-0 rounded-[14px] pointer-events-none" style={{ background: 'rgba(11,31,58,0.45)', border: '1px solid rgba(201,168,76,0.1)', transform: 'translate(9px,9px)' }} />
                   <div className="absolute inset-0 rounded-[14px] pointer-events-none" style={{ background: 'rgba(11,31,58,0.68)', border: '1px solid rgba(201,168,76,0.18)', transform: 'translate(4.5px,4.5px)' }} />
                   <div className="relative rounded-[14px] px-7 py-6 text-center" style={{ background: 'rgba(11,31,58,0.97)', border: '1px solid rgba(201,168,76,0.32)', boxShadow: '0 1px 0 rgba(255,255,255,0.1) inset,0 20px 40px rgba(0,0,0,0.6),0 6px 12px rgba(0,0,0,0.4)' }}>
@@ -151,7 +147,7 @@ export default function SobreNos() {
                     </span>
                     <p className="mt-2 text-sm text-[#7a9ab8] leading-snug">{t('about.stat.years')}</p>
                   </div>
-                </motion.div>
+                </div>
               </motion.div>
 
               {/* Row — parceiros + frentes (small, bottom) */}
@@ -164,11 +160,7 @@ export default function SobreNos() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.85, ease: EASE_OUT_EXPO, delay: 0.22 }}
                 >
-                  <motion.div
-                    animate={{ y: [0, 8, 0] }}
-                    transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-                    className="relative"
-                  >
+                  <div className="float-down relative">
                     <div className="absolute inset-0 rounded-[13px] pointer-events-none" style={{ background: 'rgba(11,31,58,0.45)', border: '1px solid rgba(201,168,76,0.1)', transform: 'translate(9px,9px)' }} />
                     <div className="absolute inset-0 rounded-[13px] pointer-events-none" style={{ background: 'rgba(11,31,58,0.68)', border: '1px solid rgba(201,168,76,0.18)', transform: 'translate(4.5px,4.5px)' }} />
                     <div className="relative rounded-[13px] px-5 py-4 text-center" style={{ background: 'rgba(11,31,58,0.97)', border: '1px solid rgba(201,168,76,0.32)', boxShadow: '0 1px 0 rgba(255,255,255,0.1) inset,0 16px 32px rgba(0,0,0,0.55),0 4px 8px rgba(0,0,0,0.35)' }}>
@@ -177,7 +169,7 @@ export default function SobreNos() {
                       </span>
                       <p className="mt-1.5 text-xs text-[#7a9ab8] leading-snug">{t('about.stat.partners')}</p>
                     </div>
-                  </motion.div>
+                  </div>
                 </motion.div>
 
                 {/* Pill 3 — frentes */}
@@ -187,11 +179,7 @@ export default function SobreNos() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.85, ease: EASE_OUT_EXPO, delay: 0.34 }}
                 >
-                  <motion.div
-                    animate={{ y: [0, -7, 0] }}
-                    transition={{ duration: 4.7, repeat: Infinity, ease: 'easeInOut' }}
-                    className="relative"
-                  >
+                  <div className="float-alt relative">
                     <div className="absolute inset-0 rounded-[13px] pointer-events-none" style={{ background: 'rgba(11,31,58,0.45)', border: '1px solid rgba(201,168,76,0.1)', transform: 'translate(9px,9px)' }} />
                     <div className="absolute inset-0 rounded-[13px] pointer-events-none" style={{ background: 'rgba(11,31,58,0.68)', border: '1px solid rgba(201,168,76,0.18)', transform: 'translate(4.5px,4.5px)' }} />
                     <div className="relative rounded-[13px] px-5 py-4 text-center" style={{ background: 'rgba(11,31,58,0.97)', border: '1px solid rgba(201,168,76,0.32)', boxShadow: '0 1px 0 rgba(255,255,255,0.1) inset,0 16px 32px rgba(0,0,0,0.55),0 4px 8px rgba(0,0,0,0.35)' }}>
@@ -200,7 +188,7 @@ export default function SobreNos() {
                       </span>
                       <p className="mt-1.5 text-xs text-[#7a9ab8] leading-snug">{t('about.stat.frentes')}</p>
                     </div>
-                  </motion.div>
+                  </div>
                 </motion.div>
 
               </div>

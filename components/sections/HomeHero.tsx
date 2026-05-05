@@ -71,10 +71,10 @@ export default function HomeHero() {
 
   return (
     <section id="home" className="relative bg-[#07162a] overflow-hidden">
-      {/* Atmosphere orbs */}
-      <div aria-hidden className="pointer-events-none absolute -right-20 -top-20 h-[480px] w-[480px] rounded-full bg-[#1a4b8a] opacity-[.18] blur-[110px]" />
-      <div aria-hidden className="pointer-events-none absolute bottom-0 left-12 h-[280px] w-[280px] rounded-full bg-[#ae251c] opacity-[.10] blur-[90px]" />
-      <div aria-hidden className="pointer-events-none absolute -left-8 top-32 h-[220px] w-[220px] rounded-full bg-[#3b6cb5] opacity-[.16] blur-[80px]" />
+      {/* Atmosphere orbs — hidden on mobile (GPU-intensive blur) */}
+      <div aria-hidden className="hidden md:block pointer-events-none absolute -right-20 -top-20 h-[480px] w-[480px] rounded-full bg-[#1a4b8a] opacity-[.18] blur-[110px]" />
+      <div aria-hidden className="hidden md:block pointer-events-none absolute bottom-0 left-12 h-[280px] w-[280px] rounded-full bg-[#ae251c] opacity-[.10] blur-[90px]" />
+      <div aria-hidden className="hidden md:block pointer-events-none absolute -left-8 top-32 h-[220px] w-[220px] rounded-full bg-[#3b6cb5] opacity-[.16] blur-[80px]" />
 
       {/* Hero card — full-width, height reserves space for floating CardNav */}
       <div
@@ -127,9 +127,10 @@ export default function HomeHero() {
                 <RotatingText
                   texts={frentes}
                   rotationInterval={ROTATION_INTERVAL_MS}
+                  splitBy="words"
                   mainClassName="text-white justify-center"
                   staggerFrom="last"
-                  staggerDuration={0.04}
+                  staggerDuration={0.06}
                   initial={{ y: '100%' }}
                   animate={{ y: 0 }}
                   exit={{ y: '-120%' }}
@@ -142,9 +143,10 @@ export default function HomeHero() {
                 <RotatingText
                   texts={valores}
                   rotationInterval={ROTATION_INTERVAL_MS}
+                  splitBy="words"
                   mainClassName="text-white justify-center"
                   staggerFrom="last"
-                  staggerDuration={0.04}
+                  staggerDuration={0.06}
                   initial={{ y: '100%' }}
                   animate={{ y: 0 }}
                   exit={{ y: '-120%' }}

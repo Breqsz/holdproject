@@ -58,8 +58,10 @@ export default function Footer() {
             <span className="text-[#1e4a7a] font-light select-none" style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}>×</span>
 
             <img
-              src="/images/LojaCorr.svg"
+              src="/images/LojaCorr.webp"
               alt="Lojacorr"
+              loading="lazy"
+              decoding="async"
               className="brightness-200 contrast-125 w-auto"
               style={{ height: 'clamp(2.4rem, 4.8vw, 4.2rem)' }}
             />

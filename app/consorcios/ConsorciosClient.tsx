@@ -116,7 +116,7 @@ function HeroSection() {
         <Reveal delay={0.2} className="hidden lg:block">
           <div className="relative aspect-[4/5] rounded-2xl overflow-hidden ring-1 ring-white/10">
             <Image
-              src="/images/hero/consorcios.jpg"
+              src="/images/hero/consorcios.webp"
               alt="Consultor da Hold conduzindo planejamento patrimonial"
               fill
               priority
