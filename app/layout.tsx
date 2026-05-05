@@ -49,14 +49,6 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR" className={`${outfit.variable} ${gellix.variable}`}>
-      <head>
-        <link
-          rel="preload"
-          as="image"
-          href="/images/hero/family-hero.webp"
-          fetchPriority="high"
-        />
-      </head>
       <body>
         <LocaleProvider>
           <AudienceProvider>

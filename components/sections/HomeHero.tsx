@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { motion, useMotionValue, useSpring } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
@@ -80,20 +81,21 @@ export default function HomeHero() {
         className="relative overflow-hidden"
         style={{ height: 'calc(100dvh - 90px)' }}
       >
-        <img
+        <Image
           src="/images/hero/family-hero.webp"
           alt={isPF ? 'Pessoa atendida pela Hold Corretora' : ''}
-          fetchPriority="high"
-          decoding="async"
-          className="absolute inset-0 w-full h-full object-cover object-top"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-top"
           style={{ opacity: isPF ? 1 : 0, transition: 'opacity 650ms ease' }}
         />
-        <img
+        <Image
           src="/images/hero/office-hero.webp"
           alt={isPF ? '' : 'Escritório corporativo atendido pela Hold Corretora'}
-          loading="lazy"
-          decoding="async"
-          className="absolute inset-0 w-full h-full object-cover object-center"
+          fill
+          sizes="100vw"
+          className="object-cover object-center"
           style={{ opacity: isPF ? 0 : 1, transition: 'opacity 650ms ease' }}
         />
 
