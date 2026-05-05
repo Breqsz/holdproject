@@ -66,12 +66,6 @@ export default function FAQ() {
           viewport={{ once: true }}
           className="mb-12"
         >
-          <motion.div variants={fadeUp}>
-            <span className="inline-flex items-center rounded-full bg-[#ae251c]/20 text-[#ae251c] px-3 py-1 text-[10px] uppercase tracking-[0.2em] font-semibold">
-              {t('faq.eyebrow')}
-            </span>
-          </motion.div>
-
           <motion.h2
             variants={fadeUp}
             className="mt-5 text-display text-white"

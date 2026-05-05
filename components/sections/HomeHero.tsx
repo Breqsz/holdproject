@@ -13,7 +13,7 @@ import RotatingText from '@/components/motion/RotatingText'
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number]
 const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? ''
-const ROTATION_INTERVAL_MS = 2400
+const ROTATION_INTERVAL_MS = 3800
 
 const FRENTES = ['Consórcio', 'Seguros', 'Saúde', 'Investimentos']
 const VALORES = ['inteligência', 'confiança', 'estratégia', 'clareza', 'método', 'visão', 'propósito']
@@ -100,16 +100,9 @@ export default function HomeHero() {
             initial="hidden"
             animate="visible"
           >
-            <motion.div variants={itemVariants} className="flex items-center gap-3">
-              <span className="inline-flex items-center rounded-full border border-[#ae251c]/30 bg-[#ae251c]/15 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#ae251c]">
-                {t('hero.eyebrow')}
-              </span>
-              <div className="rule-gold h-px max-w-[140px] flex-1" />
-            </motion.div>
-
             <motion.h1
               variants={itemVariants}
-              className="mt-8 text-display text-pretty leading-[1.05]"
+              className="mt-8 text-display text-pretty leading-[1.05] font-gellix"
               style={{ fontSize: 'clamp(2.5rem, 6.4vw, 4.75rem)' }}
             >
               <span className="block text-[#ae251c]">
@@ -117,11 +110,11 @@ export default function HomeHero() {
                   texts={FRENTES}
                   controlledIndex={rotationIndex % FRENTES.length}
                   staggerFrom="last"
-                  staggerDuration={0.025}
+                  staggerDuration={0.04}
                   initial={{ y: '100%' }}
                   animate={{ y: 0 }}
                   exit={{ y: '-120%' }}
-                  transition={{ type: 'spring', damping: 30, stiffness: 400 }}
+                  transition={{ type: 'spring', damping: 45, stiffness: 150 }}
                   splitLevelClassName="overflow-hidden pb-0.5"
                 />
               </span>
@@ -131,11 +124,11 @@ export default function HomeHero() {
                   texts={VALORES}
                   controlledIndex={rotationIndex % VALORES.length}
                   staggerFrom="last"
-                  staggerDuration={0.025}
+                  staggerDuration={0.04}
                   initial={{ y: '100%' }}
                   animate={{ y: 0 }}
                   exit={{ y: '-120%' }}
-                  transition={{ type: 'spring', damping: 30, stiffness: 400 }}
+                  transition={{ type: 'spring', damping: 45, stiffness: 150 }}
                   splitLevelClassName="overflow-hidden pb-0.5"
                 />
                 <span className="text-white">.</span>

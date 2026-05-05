@@ -35,9 +35,8 @@ describe('SolucoesGrid', () => {
 
   it('renders the section heading', () => {
     render(<SolucoesGrid />)
-    expect(screen.getByText('Nossas soluções')).toBeInTheDocument()
     expect(
-      screen.getByRole('heading', { level: 2, name: /Quatro frentes, uma visão integrada/i })
+      screen.getByRole('heading', { level: 2, name: /Um ecossistema/i })
     ).toBeInTheDocument()
   })
 
@@ -48,7 +47,7 @@ describe('SolucoesGrid', () => {
 
   it('renders 4 service cards linking to dedicated routes', () => {
     render(<SolucoesGrid />)
-    expect(screen.getByRole('link', { name: /Consórcios/ })).toHaveAttribute('href', '/consorcios/')
+    expect(screen.getByRole('link', { name: /Consórcio/ })).toHaveAttribute('href', '/consorcios/')
     expect(screen.getByRole('link', { name: /Seguros/ })).toHaveAttribute('href', '/seguros/')
     expect(screen.getByRole('link', { name: /Saúde/ })).toHaveAttribute('href', '/saude/')
     expect(screen.getByRole('link', { name: /Investimentos/ })).toHaveAttribute('href', '/investimentos/')

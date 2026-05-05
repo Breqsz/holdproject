@@ -62,10 +62,6 @@ describe('Depoimentos (real Google reviews)', () => {
     expect(document.querySelector('#depoimentos')).not.toBeNull()
   })
 
-  it('renders the new eyebrow "Pessoas que confiaram em nós"', () => {
-    expect(screen.getByText('Pessoas que confiaram em nós')).toBeInTheDocument()
-  })
-
   it('renders the H2 title', () => {
     expect(screen.getByRole('heading', { level: 2, name: 'O que nossos clientes dizem' })).toBeInTheDocument()
   })

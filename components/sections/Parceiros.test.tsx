@@ -40,9 +40,8 @@ describe('Parceiros', () => {
     expect(document.querySelector('#parceiros')).not.toBeNull()
   })
 
-  it('renders the eyebrow and title', () => {
+  it('renders the title', () => {
     render(<Parceiros />)
-    expect(screen.getByText('Parceiros')).toBeInTheDocument()
     expect(screen.getByRole('heading', { level: 2, name: /Operamos com administradoras/i })).toBeInTheDocument()
   })
 

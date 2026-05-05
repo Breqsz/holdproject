@@ -76,10 +76,6 @@ describe('FAQ', () => {
     expect(document.querySelector('#faq')).not.toBeNull()
   })
 
-  it('renders the eyebrow pill', () => {
-    expect(screen.getByText('Perguntas Frequentes')).toBeInTheDocument()
-  })
-
   it('renders the H2 title', () => {
     expect(
       screen.getByRole('heading', {

@@ -104,10 +104,9 @@ describe('Contato section', () => {
     vi.restoreAllMocks()
   })
 
-  // ── 1. Renders eyebrow + title ──────────────────────────────────────────
-  it('renders eyebrow and title from i18n', () => {
+  // ── 1. Renders title ──────────────────────────────────────────────────────
+  it('renders title from i18n', () => {
     renderContato()
-    expect(screen.getByText('contact.eyebrow')).toBeInTheDocument()
     expect(screen.getByText('contact.title')).toBeInTheDocument()
   })
 

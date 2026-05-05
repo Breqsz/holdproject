@@ -242,9 +242,6 @@ export default function Contato() {
 
         {/* Header — left-aligned editorial */}
         <div className="max-w-2xl mb-12">
-          <span className="inline-flex items-center rounded-full bg-[#ae251c]/20 text-[#ae251c] px-3 py-1 text-[10px] uppercase tracking-[0.2em] font-semibold">
-            {t('contact.eyebrow')}
-          </span>
           <h2
             className="mt-5 text-display text-white"
             style={{ fontSize: 'clamp(2rem, 4.4vw, 3.25rem)' }}

@@ -83,12 +83,6 @@ export default function SobreNos() {
           viewport={{ once: true, margin: '-80px' }}
           className="max-w-3xl"
         >
-          <motion.div variants={fadeUp}>
-            <span className="inline-flex items-center rounded-full bg-[#ae251c]/20 text-[#ae251c] px-3 py-1 text-[10px] uppercase tracking-[0.2em] font-semibold">
-              {t('about.eyebrow')}
-            </span>
-          </motion.div>
-
           <motion.h2
             variants={fadeUp}
             className="mt-6 text-display text-white"

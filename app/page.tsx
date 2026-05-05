@@ -25,10 +25,11 @@ export default function Home() {
         <CurvedLoop
           marqueeText="SEGURANÇA ✦ PLANEJAMENTO ✦ ACOMPANHAMENTO ✦ RESULTADOS ✦ "
           curveAmount={300}
-          speed={1.2}
+          speed={0.55}
           direction="left"
           interactive={false}
           className="fill-white/15"
+          fontSize="text-[2.2rem] md:text-[3rem]"
         />
       </div>
 

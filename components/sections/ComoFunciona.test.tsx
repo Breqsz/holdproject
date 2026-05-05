@@ -59,9 +59,8 @@ describe('ComoFunciona (PF mirror of ParaEscritorios)', () => {
     expect(document.querySelector('#como-funciona')).not.toBeNull()
   })
 
-  it('renders eyebrow, title and subtitle', () => {
+  it('renders title and subtitle', () => {
     render(<ComoFunciona />)
-    expect(screen.getByText('Para você')).toBeInTheDocument()
     expect(screen.getByRole('heading', { level: 2, name: /Como funciona seu plano com a Hold/i })).toBeInTheDocument()
     expect(screen.getByText(/Planejamento estruturado/)).toBeInTheDocument()
   })

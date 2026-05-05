@@ -72,11 +72,6 @@ describe('SobreNos', () => {
     expect(document.querySelector('#sobre-nos')).not.toBeNull()
   })
 
-  it('renders the eyebrow', () => {
-    render(<SobreNos />)
-    expect(screen.getByText('Quem somos')).toBeInTheDocument()
-  })
-
   it('renders the H2 title and body copy', () => {
     render(<SobreNos />)
     expect(screen.getByText('Mais do que viabilizar crédito.')).toBeInTheDocument()

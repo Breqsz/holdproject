@@ -68,11 +68,6 @@ describe('HomeHero', () => {
     expect(document.querySelector('#home')).not.toBeNull()
   })
 
-  it('renders the eyebrow', () => {
-    renderHero()
-    expect(screen.getByText('Consultoria Estratégica em Patrimônio')).toBeInTheDocument()
-  })
-
   it('renders the static "com" middle line', () => {
     renderHero()
     expect(screen.getAllByText('com').length).toBeGreaterThan(0)

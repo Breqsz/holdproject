@@ -28,9 +28,6 @@ export default function Parceiros() {
           transition={{ duration: 0.85, ease: EASE_OUT_EXPO }}
           className="max-w-3xl mb-12"
         >
-          <span className="inline-flex items-center rounded-full bg-[#ae251c]/20 text-[#ae251c] px-3 py-1 text-[10px] uppercase tracking-[0.2em] font-semibold">
-            {t('partnersLogos.eyebrow')}
-          </span>
           <h2
             className="mt-5 text-display text-white"
             style={{ fontSize: 'clamp(1.5rem, 3vw, 2.25rem)' }}

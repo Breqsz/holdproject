@@ -22,7 +22,7 @@ const ITEMS: CardNavItem[] = [
   {
     label: 'Soluções',
     bgColor: '#142f54',
-    textColor: '#e0e8f0',
+    textColor: '#ffffff',
     links: [
       { label: 'Consórcios',    href: '/consorcios/',    ariaLabel: 'Ver soluções de consórcio' },
       { label: 'Seguros',       href: '/seguros/',       ariaLabel: 'Ver soluções de seguros' },
@@ -33,7 +33,7 @@ const ITEMS: CardNavItem[] = [
   {
     label: 'A Hold',
     bgColor: '#0b1f3a',
-    textColor: '#7a9ab8',
+    textColor: '#ffffff',
     links: [
       { label: 'Sobre Nós',        href: '/#sobre-nos',         ariaLabel: 'Conheça a Hold Corretora' },
       { label: 'Equipe',           href: '/equipe/',            ariaLabel: 'Conheça a equipe Hold Corretora' },

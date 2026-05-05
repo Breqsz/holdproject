@@ -41,12 +41,6 @@ export default function Depoimentos() {
           className="flex items-end justify-between gap-6 mb-12 flex-wrap"
         >
           <div className="max-w-2xl">
-            <motion.div variants={fadeUp}>
-              <span className="inline-flex items-center rounded-full bg-[#ae251c]/20 text-[#ae251c] px-3 py-1 text-[10px] uppercase tracking-[0.2em] font-semibold">
-                {t('testimonials.eyebrow')}
-              </span>
-            </motion.div>
-
             <motion.h2
               variants={fadeUp}
               className="mt-5 text-display text-white"

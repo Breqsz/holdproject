@@ -84,10 +84,6 @@ describe('ParaEscritorios', () => {
     expect(document.querySelector('#para-escritorios')).not.toBeNull()
   })
 
-  it('renders the eyebrow pill', () => {
-    expect(screen.getByText('Para Escritórios')).toBeInTheDocument()
-  })
-
   it('renders the H2 title', () => {
     expect(
       screen.getByRole('heading', { level: 2, name: 'Mesa de Consórcios para Parceiros' })
