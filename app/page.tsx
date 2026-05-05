@@ -1,15 +1,17 @@
 'use client'
 
+import dynamic from 'next/dynamic'
 import HomeHero from '@/components/sections/HomeHero'
-import SolucoesGrid from '@/components/sections/SolucoesGrid'
-import Parceiros from '@/components/sections/Parceiros'
-import SobreNos from '@/components/sections/SobreNos'
-import ParaEscritorios from '@/components/sections/ParaEscritorios'
-import ComoFunciona from '@/components/sections/ComoFunciona'
-import Depoimentos from '@/components/sections/Depoimentos'
-import FAQ from '@/components/sections/FAQ'
-import Contato from '@/components/sections/Contato'
 import { useAudience } from '@/lib/audience'
+
+const SolucoesGrid    = dynamic(() => import('@/components/sections/SolucoesGrid'))
+const Parceiros       = dynamic(() => import('@/components/sections/Parceiros'))
+const SobreNos        = dynamic(() => import('@/components/sections/SobreNos'))
+const ParaEscritorios = dynamic(() => import('@/components/sections/ParaEscritorios'))
+const ComoFunciona    = dynamic(() => import('@/components/sections/ComoFunciona'))
+const Depoimentos     = dynamic(() => import('@/components/sections/Depoimentos'))
+const FAQ             = dynamic(() => import('@/components/sections/FAQ'))
+const Contato         = dynamic(() => import('@/components/sections/Contato'))
 
 export default function Home() {
   const { audience, hydrated } = useAudience()

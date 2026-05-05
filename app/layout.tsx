@@ -19,11 +19,7 @@ const outfit = Outfit({
 const gellix = localFont({
   src: [
     { path: '../public/fonts/Gellix-TRIAL-Regular.otf', weight: '400', style: 'normal' },
-    { path: '../public/fonts/Gellix-TRIAL-RegularItalic.otf', weight: '400', style: 'italic' },
-    { path: '../public/fonts/Gellix-TRIAL-Medium.otf', weight: '500', style: 'normal' },
-    { path: '../public/fonts/Gellix-TRIAL-SemiBold.otf', weight: '600', style: 'normal' },
     { path: '../public/fonts/Gellix-TRIAL-Bold.otf', weight: '700', style: 'normal' },
-    { path: '../public/fonts/Gellix-TRIAL-ExtraBold.otf', weight: '800', style: 'normal' },
     { path: '../public/fonts/Gellix-TRIAL-Black.otf', weight: '900', style: 'normal' },
   ],
   variable: '--font-gellix',
@@ -53,6 +49,14 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR" className={`${outfit.variable} ${gellix.variable}`}>
+      <head>
+        <link
+          rel="preload"
+          as="image"
+          href="/images/hero/family-hero.webp"
+          fetchPriority="high"
+        />
+      </head>
       <body>
         <LocaleProvider>
           <AudienceProvider>
