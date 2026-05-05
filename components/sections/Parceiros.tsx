@@ -7,13 +7,13 @@ import LogoLoop, { type LogoItem } from '@/components/motion/LogoLoop'
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number]
 
 const partnerLogos: LogoItem[] = [
-  { src: '/images/logosEmpresasParceiras/HDIseguros.png', alt: 'HDI Seguros' },
-  { src: '/images/logosEmpresasParceiras/MAGSeguros.png', alt: 'MAG Seguros' },
-  { src: '/images/logosEmpresasParceiras/MAPFRE.png', alt: 'MAPFRE' },
-  { src: '/images/logosEmpresasParceiras/SulAmerica.png', alt: 'SulAmérica' },
-  { src: '/images/logosEmpresasParceiras/TokioSeguadora.png', alt: 'Tokio Marine' },
-  { src: '/images/logosEmpresasParceiras/Unimed.png', alt: 'Unimed' },
-  { src: '/images/logosEmpresasParceiras/bradesco.png', alt: 'Bradesco Seguros' },
+  { src: '/images/logosEmpresasParceiras/HDIseguros.webp', alt: 'HDI Seguros' },
+  { src: '/images/logosEmpresasParceiras/MAGSeguros.webp', alt: 'MAG Seguros' },
+  { src: '/images/logosEmpresasParceiras/MAPFRE.webp', alt: 'MAPFRE' },
+  { src: '/images/logosEmpresasParceiras/SulAmerica.webp', alt: 'SulAmérica' },
+  { src: '/images/logosEmpresasParceiras/TokioSeguadora.webp', alt: 'Tokio Marine' },
+  { src: '/images/logosEmpresasParceiras/Unimed.webp', alt: 'Unimed' },
+  { src: '/images/logosEmpresasParceiras/bradesco.webp', alt: 'Bradesco Seguros' },
 ]
 
 export default function Parceiros() {
