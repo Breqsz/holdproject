@@ -134,7 +134,7 @@ function SectorCard({ service }: { service: Service }) {
 
 export default function SolucoesGrid() {
   return (
-    <section id="solucoes" className="section-pad bg-[#07162a]" style={{ fontFamily: 'var(--font-outfit)' }}>
+    <section id="solucoes" className="section-pad bg-[#F5F5F5]" style={{ fontFamily: 'var(--font-outfit)' }}>
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
 
         <motion.div
@@ -145,12 +145,12 @@ export default function SolucoesGrid() {
           className="max-w-3xl mb-12 lg:mb-16 text-center mx-auto"
         >
           <h2
-            className="text-display text-white"
+            className="text-display text-[#07162a]"
             style={{ fontSize: 'clamp(1.75rem, 3.8vw, 2.75rem)' }}
           >
             Um ecossistema. <span style={{ color: '#ae251c' }}>Quatro frentes.</span>
           </h2>
-          <p className="mt-5 max-w-[56ch] text-pretty text-[#7a9ab8] leading-relaxed mx-auto">
+          <p className="mt-5 max-w-[56ch] text-pretty text-[#07162a]/60 leading-relaxed mx-auto">
             Ficamos entre você e cada solução — consórcio, seguro, saúde ou investimento. Intermediação estratégica, sem conflito de interesse.
           </p>
         </motion.div>
