@@ -19,7 +19,7 @@ const partnerLogos: LogoItem[] = [
 export default function Parceiros() {
   const { t } = useLocale()
   return (
-    <section id="parceiros" className="section-pad bg-[#0b1f3a]" style={{ fontFamily: 'var(--font-outfit)' }}>
+    <section id="parceiros" className="section-pad bg-[#F5F5F5]" style={{ fontFamily: 'var(--font-outfit)' }}>
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -29,12 +29,12 @@ export default function Parceiros() {
           className="max-w-3xl mb-12"
         >
           <h2
-            className="mt-5 text-display text-white"
+            className="mt-5 text-display text-[#07162a]"
             style={{ fontSize: 'clamp(1.5rem, 3vw, 2.25rem)' }}
           >
             {t('partnersLogos.title')}
           </h2>
-          <p className="mt-4 max-w-[60ch] text-[#7a9ab8] leading-relaxed text-sm">
+          <p className="mt-4 max-w-[60ch] text-[#07162a]/60 leading-relaxed text-sm">
             {t('partnersLogos.subtitle')}
           </p>
         </motion.div>
@@ -48,7 +48,7 @@ export default function Parceiros() {
             gap={56}
             scaleOnHover
             fadeOut
-            fadeOutColor="#0b1f3a"
+            fadeOutColor="#F5F5F5"
             ariaLabel="Parceiros administradoras e seguradoras"
           />
         </div>
