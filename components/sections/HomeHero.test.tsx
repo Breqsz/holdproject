@@ -102,10 +102,22 @@ describe('HomeHero', () => {
     expect(pjImg!.style.opacity).toBe('1')
   })
 
-  it('renders the audience toggle inside the card', () => {
+  it('renders audience toggle buttons', () => {
     renderHero()
     expect(screen.getByRole('button', { name: 'Para você' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Para sua empresa' })).toBeInTheDocument()
+  })
+
+  it('shows PF subtitle by default', () => {
+    renderHero()
+    expect(screen.getByText(/Proteção inteligente para o que mais importa/i)).toBeInTheDocument()
+  })
+
+  it('shows PJ subtitle when switched to empresa', async () => {
+    const user = userEvent.setup()
+    renderHero()
+    await user.click(screen.getByRole('button', { name: 'Para sua empresa' }))
+    expect(screen.getByText(/Soluções corporativas de proteção/i)).toBeInTheDocument()
   })
 
   it('renders WhatsApp CTA and "Conhecer soluções" for PF', () => {

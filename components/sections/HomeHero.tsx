@@ -94,14 +94,14 @@ export default function HomeHero() {
       <div aria-hidden className="pointer-events-none absolute bottom-0 left-12 h-[280px] w-[280px] rounded-full bg-[#ae251c] opacity-[.10] blur-[90px]" />
       <div aria-hidden className="pointer-events-none absolute -left-8 top-32 h-[220px] w-[220px] rounded-full bg-[#3b6cb5] opacity-[.16] blur-[80px]" />
 
-      {/* Hero card */}
+      {/* Hero card — 90px accounts for CardNav height (≈56px) + outer section top padding */}
       <div
         className="relative mx-[10px] rounded-2xl overflow-hidden"
         style={{ height: 'calc(100dvh - 90px)' }}
       >
         <Image
           src="/images/hero/persona_hero.jpg"
-          alt=""
+          alt={isPF ? 'Pessoa atendida pela Hold Corretora' : ''}
           fill
           priority
           sizes="100vw"
@@ -110,7 +110,7 @@ export default function HomeHero() {
         />
         <Image
           src="/images/hero/office_hero.avif"
-          alt=""
+          alt={isPF ? '' : 'Escritório corporativo atendido pela Hold Corretora'}
           fill
           sizes="100vw"
           className="object-cover object-top"
