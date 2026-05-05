@@ -3,6 +3,29 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    /* Motion tokens — natural deceleration curves */
+    --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+    --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);
+
+    /* Section rhythm — fluid for breath */
+    --section-tight: clamp(4rem, 8vw, 6rem);
+    --section-pad:   clamp(6rem, 10vw, 9rem);
+    --section-wide:  clamp(8rem, 12vw, 12rem);
+
+    /* Surfaces — opaque, never glass-by-default */
+    --surface-deep: #07162a;
+    --surface-base: #0b1f3a;
+    --surface-mid:  #142f54;
+    --surface-rise: #1e3a64;
+
+    /* Hairline */
+    --hairline:        rgba(255, 255, 255, 0.08);
+    --hairline-strong: rgba(255, 255, 255, 0.14);
+    --hairline-gold:   rgba(201, 168, 76, 0.32);
+  }
+
   * {
     box-sizing: border-box;
   }
@@ -10,15 +33,92 @@
     scroll-behavior: smooth;
   }
   body {
-    background: #07162a;
+    background: var(--surface-deep);
     color: #e0e8f0;
     font-family: var(--font-outfit), system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
+    /* Looser leading for light-on-dark per brand register */
+    line-height: 1.55;
+  }
+  ::selection {
+    background: rgba(174, 37, 28, 0.4);
+    color: #fff;
   }
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .text-balance { text-wrap: balance; }
+  .text-pretty  { text-wrap: pretty; }
+
+  /* Solid surfaces — use these by default, NOT glass-card */
+  .panel-deep { background: var(--surface-deep); border: 1px solid var(--hairline); }
+  .panel-base { background: var(--surface-base); border: 1px solid var(--hairline); }
+  .panel-mid  { background: var(--surface-mid);  border: 1px solid var(--hairline); }
+
+  /* Glass — rare and purposeful only (e.g. Hero floating stats over photographic content) */
+  .glass-card {
+    background: rgba(11, 31, 58, 0.92);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+
+  /* Subtle dot-grid pattern */
+  .dot-grid {
+    background-image: radial-gradient(circle, rgba(122, 154, 184, 0.22) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+
+  /* Tabular numbers */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+  }
+
+  /* Gold hairline rule — for editorial moments */
+  .rule-gold {
+    background: linear-gradient(90deg, transparent, var(--hairline-gold) 30%, var(--hairline-gold) 70%, transparent);
+  }
+
+  /* Ground separator — softer than border-b */
+  .ground-divide {
+    border-bottom: 1px solid rgba(122, 154, 184, 0.12);
+  }
+
+  /* Display weight + tracking — display variant of Outfit */
+  .text-display {
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+  }
+
+  /* Will-change hint for magnetic / parallax targets */
+  .magnetic { will-change: transform; }
+
+  /* grid-template-rows accordion technique */
+  .row-collapsing {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 360ms var(--ease-out-quart);
+  }
+  .row-collapsing > * { overflow: hidden; }
+  .row-collapsing[data-open="true"] { grid-template-rows: 1fr; }
+}
+
+@layer components {
+  /* Section padding tokens */
+  .section-pad   { padding-top: var(--section-pad);   padding-bottom: var(--section-pad);   }
+  .section-tight { padding-top: var(--section-tight); padding-bottom: var(--section-tight); }
+  .section-wide  { padding-top: var(--section-wide);  padding-bottom: var(--section-wide);  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

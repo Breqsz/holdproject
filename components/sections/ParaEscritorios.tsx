@@ -1,8 +1,11 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { useRef } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { Check, ShieldCheck, ArrowRight } from 'lucide-react'
 import { useLocale } from '@/lib/i18n'
+
+const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number]
 
 const diferenciais = [
   'Estrutura especializada sem necessidade de equipe interna',
@@ -25,11 +28,12 @@ const stepKeys = [
 ] as const
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 32 },
+  hidden: { opacity: 0, y: 28, filter: 'blur(6px)' },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { type: 'spring' as const, stiffness: 100, damping: 20 },
+    filter: 'blur(0px)',
+    transition: { duration: 0.85, ease: EASE_OUT_EXPO },
   },
 }
 
@@ -40,14 +44,18 @@ const stagger = {
 
 export default function ParaEscritorios() {
   const { t } = useLocale()
+  const stepsRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({ target: stepsRef, offset: ['start 0.85', 'end 0.4'] })
+  const lineScaleX = useTransform(scrollYProgress, [0, 1], [0, 1])
 
   return (
     <section
       id="para-escritorios"
-      className="py-24 md:py-32 bg-[#07162a]"
+      className="section-pad bg-[#07162a]"
       style={{ fontFamily: 'var(--font-outfit)' }}
     >
       <div className="max-w-6xl mx-auto px-6 lg:px-8">
+
         {/* Eyebrow + heading */}
         <motion.div
           variants={stagger}
@@ -64,42 +72,46 @@ export default function ParaEscritorios() {
 
           <motion.h2
             variants={fadeUp}
-            className="mt-4 text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight text-white"
+            className="mt-5 text-display text-white"
+            style={{ fontSize: 'clamp(2rem, 4.4vw, 3.25rem)' }}
           >
             {t('partners.title')}
           </motion.h2>
 
           <motion.p
             variants={fadeUp}
-            className="mt-4 text-[#7a9ab8] text-lg leading-relaxed"
+            className="mt-6 max-w-[60ch] text-pretty text-lg leading-relaxed text-[#7a9ab8]"
           >
             {t('partners.subtitle')}
           </motion.p>
 
           <motion.p
             variants={fadeUp}
-            className="mt-4 text-[#e0e8f0]/80 leading-relaxed"
+            className="mt-4 max-w-[60ch] leading-relaxed text-[#e0e8f0]/80"
           >
             {t('partners.body')}
           </motion.p>
         </motion.div>
 
-        {/* Diferenciais */}
+        {/* Diferenciais — two-column list, no card */}
         <motion.div
           variants={stagger}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="mt-12"
+          className="mt-16"
         >
-          <motion.h3
-            variants={fadeUp}
-            className="text-sm font-semibold uppercase tracking-[0.15em] text-[#7a9ab8] mb-6"
-          >
-            {t('partners.diff.title')}
-          </motion.h3>
+          <div className="flex items-center gap-4 mb-8">
+            <motion.h3
+              variants={fadeUp}
+              className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#ae251c]"
+            >
+              {t('partners.diff.title')}
+            </motion.h3>
+            <motion.div variants={fadeUp} className="rule-gold h-px flex-1 max-w-[160px]" />
+          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-3">
             {diferenciais.map((item, i) => (
               <motion.div
                 key={i}
@@ -109,68 +121,68 @@ export default function ParaEscritorios() {
                 <span className="mt-0.5 shrink-0">
                   <Check size={16} color="#ae251c" />
                 </span>
-                <span className="text-[#e0e8f0]/90 text-sm leading-relaxed">
-                  {item}
-                </span>
+                <span className="text-[#e0e8f0]/90 text-sm leading-relaxed">{item}</span>
               </motion.div>
             ))}
           </div>
         </motion.div>
 
-        {/* 5 Steps */}
+        {/* 5 steps timeline — premium motion */}
         <motion.div
+          ref={stepsRef}
           variants={stagger}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="mt-16 grid grid-cols-1 md:grid-cols-5 gap-6"
+          className="mt-20 relative"
         >
-          {stepKeys.map((key, i) => (
-            <motion.div
-              key={key}
-              variants={fadeUp}
-              className="flex flex-col"
-            >
-              {/* Outer bezel */}
-              <div className="rounded-2xl bg-white/5 ring-1 ring-white/10 p-1.5 h-full">
-                {/* Inner bezel */}
-                <div className="rounded-[calc(1rem-0.375rem)] bg-[#0b1f3a] shadow-[inset_0_1px_1px_rgba(255,255,255,0.08)] p-5 h-full flex flex-col">
-                  {/* Numbered circle */}
-                  <div className="w-9 h-9 rounded-full bg-[#ae251c]/15 ring-1 ring-[#ae251c]/40 flex items-center justify-center mb-4 shrink-0">
-                    <span className="text-[#ae251c] text-sm font-bold">
-                      {i + 1}
-                    </span>
-                  </div>
+          {/* Static rail */}
+          <div aria-hidden className="hidden md:block absolute left-0 right-0 top-[18px] h-px bg-[#142f54]/40" />
+          {/* Scroll-linked progress line */}
+          <motion.div
+            aria-hidden
+            style={{ scaleX: lineScaleX, transformOrigin: 'left' }}
+            className="hidden md:block absolute left-0 right-0 top-[18px] h-px bg-gradient-to-r from-[#c9a84c] via-[#ae251c] to-[#c9a84c]"
+          />
 
-                  <p className="text-white font-semibold text-sm leading-snug mb-2">
-                    {t(`${key}.title`)}
-                  </p>
-                  <p className="text-[#7a9ab8] text-xs leading-relaxed">
-                    {t(`${key}.desc`)}
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          ))}
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-10 md:gap-6 relative">
+            {stepKeys.map((key, i) => (
+              <motion.div key={key} variants={fadeUp} className="flex flex-col gap-3">
+                <motion.div
+                  className="flex items-center gap-3 md:block"
+                  whileInView={{ scale: [0.6, 1.06, 1] }}
+                  transition={{ duration: 0.7, ease: EASE_OUT_EXPO, delay: i * 0.08 }}
+                  viewport={{ once: true }}
+                >
+                  <span className="relative inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#07162a] ring-1 ring-[#c9a84c]/40 text-[#c9a84c] text-sm font-bold tabular shadow-[0_0_22px_rgba(201,168,76,0.0)] hover:shadow-[0_0_22px_rgba(201,168,76,0.45)] transition-shadow">
+                    {i + 1}
+                  </span>
+                </motion.div>
+
+                <p className="text-white font-semibold text-sm leading-snug">
+                  {t(`${key}.title`)}
+                </p>
+                <p className="text-[#7a9ab8] text-xs leading-relaxed">
+                  {t(`${key}.desc`)}
+                </p>
+              </motion.div>
+            ))}
+          </div>
         </motion.div>
 
-        {/* Badge */}
+        {/* Badge — single panel, no double bezel */}
         <motion.div
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="mt-12 flex justify-center"
+          className="mt-16 flex justify-center"
         >
-          {/* Outer bezel */}
-          <div className="rounded-2xl bg-white/5 ring-1 ring-white/10 p-1.5">
-            {/* Inner bezel */}
-            <div className="rounded-[calc(1rem-0.375rem)] bg-[#0b1f3a] shadow-[inset_0_1px_1px_rgba(255,255,255,0.08)] px-6 py-3 flex items-center gap-3">
-              <ShieldCheck size={18} className="text-[#ae251c] shrink-0" />
-              <span className="text-[#e0e8f0] text-sm font-medium">
-                {t('partners.badge')}
-              </span>
-            </div>
+          <div className="rounded-full bg-[#0b1f3a] ring-1 ring-[#c9a84c]/25 px-6 py-3 flex items-center gap-3">
+            <ShieldCheck size={18} className="text-[#c9a84c] shrink-0" strokeWidth={1.7} />
+            <span className="text-[#e0e8f0] text-sm font-medium">
+              {t('partners.badge')}
+            </span>
           </div>
         </motion.div>
 
@@ -184,10 +196,10 @@ export default function ParaEscritorios() {
         >
           <a
             href="#contato"
-            className="inline-flex items-center gap-3 bg-[#ae251c] hover:bg-[#c42d23] text-white px-8 py-3.5 rounded-full font-semibold transition-colors duration-200"
+            className="group inline-flex items-center gap-3 bg-[#ae251c] hover:bg-[#c42d23] text-white px-8 py-3.5 rounded-full font-semibold transition-colors duration-200"
           >
             {t('partners.cta')}
-            <span className="w-8 h-8 rounded-full bg-black/20 flex items-center justify-center shrink-0">
+            <span className="w-8 h-8 rounded-full bg-black/20 flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:translate-x-0.5">
               <ArrowRight size={16} />
             </span>
           </a>

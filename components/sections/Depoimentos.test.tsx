@@ -2,10 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Depoimentos from './Depoimentos'
-
-// ---------------------------------------------------------------------------
-// Mocks
-// ---------------------------------------------------------------------------
+import { googleReviews, googleSummary } from '@/lib/reviews-google'
 
 vi.mock('framer-motion', () => {
   const React = require('react')
@@ -15,21 +12,16 @@ vi.mock('framer-motion', () => {
       get: (_target, tag: string) =>
         React.forwardRef(
           (
-            {
-              children,
-              initial: _i,
-              animate: _a,
-              whileInView: _wiv,
-              variants: _v,
-              viewport: _vp,
-              transition: _t,
-              ...rest
-            }: Record<string, unknown>,
-            ref: unknown
-          ) =>
-            React.createElement(tag, { ...rest, ref }, children)
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            { children, initial, animate, whileInView, variants, viewport, transition, exit, whileHover, whileTap, ...rest }: any,
+            ref: unknown,
+          ) => {
+            void initial; void animate; void whileInView; void variants; void viewport
+            void transition; void exit; void whileHover; void whileTap
+            return React.createElement(tag, { ...rest, ref }, children)
+          },
         ),
-    }
+    },
   )
   return { motion, AnimatePresence: ({ children }: { children: unknown }) => children }
 })
@@ -40,34 +32,27 @@ vi.mock('@/lib/i18n', () => ({
     setLocale: vi.fn(),
     t: (key: string) => {
       const map: Record<string, string> = {
-        'testimonials.eyebrow': 'Depoimentos',
-        'testimonials.title': 'O que nossos clientes dizem',
+        'testimonials.eyebrow':     'Pessoas que confiaram em nós',
+        'testimonials.title':       'O que nossos clientes dizem',
+        'testimonials.googleBadge': '4,9 ★ · 39 avaliações no Google',
+        'testimonials.role':        'Google review',
       }
       return map[key] ?? key
     },
   }),
 }))
 
-// Embla: expose a minimal stub that still renders children and provides
-// scrollPrev/scrollNext so prev/next buttons can be exercised.
 const mockScrollPrev = vi.fn()
 const mockScrollNext = vi.fn()
-
 vi.mock('embla-carousel-react', () => ({
   default: () => {
-    const React = require('react')
-    // Return [ref callback, api stub]
     const ref = (node: HTMLElement | null) => void node
     const api = { scrollPrev: mockScrollPrev, scrollNext: mockScrollNext }
     return [ref, api]
   },
 }))
 
-// ---------------------------------------------------------------------------
-// Tests
-// ---------------------------------------------------------------------------
-
-describe('Depoimentos', () => {
+describe('Depoimentos (real Google reviews)', () => {
   beforeEach(() => {
     vi.clearAllMocks()
     render(<Depoimentos />)
@@ -77,72 +62,34 @@ describe('Depoimentos', () => {
     expect(document.querySelector('#depoimentos')).not.toBeNull()
   })
 
-  it('renders the eyebrow pill', () => {
-    expect(screen.getByText('Depoimentos')).toBeInTheDocument()
+  it('renders the new eyebrow "Pessoas que confiaram em nós"', () => {
+    expect(screen.getByText('Pessoas que confiaram em nós')).toBeInTheDocument()
   })
 
   it('renders the H2 title', () => {
-    expect(
-      screen.getByRole('heading', { level: 2, name: 'O que nossos clientes dizem' })
-    ).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 2, name: 'O que nossos clientes dizem' })).toBeInTheDocument()
   })
 
-  it('renders all 6 testimonial author names', () => {
-    const names = [
-      'Rafael Mendonça',
-      'Camila Borges',
-      'Gustavo Almeida',
-      'Priscila Cavalcanti',
-      'Thiago Rezende',
-      'Fernanda Lopes',
-    ]
-    names.forEach((name) => {
-      expect(screen.getByText(name)).toBeInTheDocument()
-    })
+  it('renders the Google badge linking to the Google profile', () => {
+    const link = screen.getByRole('link', { name: /4,9 ★ · 39 avaliações no Google/i })
+    expect(link).toHaveAttribute('href', googleSummary.href)
+    expect(link).toHaveAttribute('target', '_blank')
   })
 
-  it('renders all 6 testimonial roles', () => {
-    const roles = [
-      'Empresário',
-      'Médica',
-      'Assessor de Investimentos',
-      'Empresária',
-      'Arquiteto',
-      'Contadora',
-    ]
-    roles.forEach((role) => {
-      expect(screen.getByText(role)).toBeInTheDocument()
-    })
+  it('renders all curated review author names', () => {
+    for (const r of googleReviews) {
+      expect(screen.getByText(r.name)).toBeInTheDocument()
+    }
   })
 
-  it('renders quote text for each testimonial', () => {
-    expect(
-      screen.getByText(/Suporte excepcional do início ao fim/)
-    ).toBeInTheDocument()
-    expect(
-      screen.getByText(/contemplação em 8 meses/)
-    ).toBeInTheDocument()
-    expect(
-      screen.getByText(/complementa perfeitamente nosso portfólio/)
-    ).toBeInTheDocument()
-    expect(
-      screen.getByText(/sem comprometer o caixa/)
-    ).toBeInTheDocument()
-    expect(
-      screen.getByText(/carta de crédito contemplada/)
-    ).toBeInTheDocument()
-    expect(
-      screen.getByText(/referência em consórcio estratégico/)
-    ).toBeInTheDocument()
+  it('renders the "Google review" role label per card (one per review)', () => {
+    const labels = screen.getAllByText('Google review')
+    expect(labels.length).toBe(googleReviews.length)
   })
 
   it('renders prev and next navigation buttons', () => {
-    expect(
-      screen.getByRole('button', { name: /depoimento anterior/i })
-    ).toBeInTheDocument()
-    expect(
-      screen.getByRole('button', { name: /próximo depoimento/i })
-    ).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /depoimento anterior/i })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /próximo depoimento/i })).toBeInTheDocument()
   })
 
   it('calls scrollPrev when prev button is clicked', async () => {
@@ -155,13 +102,5 @@ describe('Depoimentos', () => {
     const user = userEvent.setup()
     await user.click(screen.getByRole('button', { name: /próximo depoimento/i }))
     expect(mockScrollNext).toHaveBeenCalledOnce()
-  })
-
-  it('renders 30 gold star icons (6 testimonials × 5 stars)', () => {
-    // Each Star has aria-hidden by lucide-react; query by the SVG role or count
-    // lucide renders <svg> elements — we count them inside star containers
-    const stars = document.querySelectorAll('svg')
-    // 30 stars + 2 chevrons (prev/next) = 32 total SVGs
-    expect(stars.length).toBeGreaterThanOrEqual(30)
   })
 })

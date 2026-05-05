@@ -32,7 +32,13 @@ vi.mock('framer-motion', () => {
         ),
     }
   )
-  return { motion, AnimatePresence: ({ children }: { children: unknown }) => children }
+  const make = () => ({ get: () => 0, set: () => {}, onChange: () => () => {} })
+  return {
+    motion,
+    AnimatePresence: ({ children }: { children: unknown }) => children,
+    useScroll: () => ({ scrollYProgress: make() }),
+    useTransform: () => make(),
+  }
 })
 
 // i18n: return the key's suffix as a readable label

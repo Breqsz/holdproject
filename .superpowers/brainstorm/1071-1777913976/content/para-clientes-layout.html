@@ -1,0 +1,145 @@
+<h2>Como navegar as 8 categorias de consórcio?</h2>
+<p class="subtitle">Seção "Para Clientes" — toggle "Para Você / Para sua Empresa" fica no topo desta seção</p>
+
+<div class="cards">
+
+  <!-- OPÇÃO A: Tabs horizontais -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0b1f3a; padding:20px; font-family:Inter,sans-serif;">
+      <!-- Toggle -->
+      <div style="display:flex; justify-content:center; margin-bottom:16px;">
+        <div style="background:#142f54; border-radius:30px; padding:4px; display:inline-flex; gap:4px;">
+          <span style="background:#ae251c; color:white; font-size:10px; padding:5px 14px; border-radius:22px; font-weight:600;">Para Você</span>
+          <span style="color:#8899aa; font-size:10px; padding:5px 14px; font-weight:600;">Para sua Empresa</span>
+        </div>
+      </div>
+      <!-- Tabs -->
+      <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:14px;">
+        <span style="background:#ae251c; color:white; font-size:9px; padding:5px 10px; border-radius:4px; font-weight:600;">Imóveis</span>
+        <span style="background:#142f54; color:#8899aa; font-size:9px; padding:5px 10px; border-radius:4px;">Veículos</span>
+        <span style="background:#142f54; color:#8899aa; font-size:9px; padding:5px 10px; border-radius:4px;">Pesados</span>
+        <span style="background:#142f54; color:#8899aa; font-size:9px; padding:5px 10px; border-radius:4px;">Serviços</span>
+        <span style="background:#142f54; color:#8899aa; font-size:9px; padding:5px 10px; border-radius:4px;">Condomínios</span>
+        <span style="background:#142f54; color:#8899aa; font-size:9px; padding:5px 10px; border-radius:4px;">Igrejas</span>
+        <span style="background:#142f54; color:#8899aa; font-size:9px; padding:5px 10px; border-radius:4px;">Alavancagem</span>
+        <span style="background:#142f54; color:#8899aa; font-size:9px; padding:5px 10px; border-radius:4px;">Cotas</span>
+      </div>
+      <!-- Content area -->
+      <div style="background:#142f54; border-radius:8px; padding:14px;">
+        <div style="font-size:12px; font-weight:700; color:white; margin-bottom:4px;">Imóveis</div>
+        <div style="font-size:10px; color:#a0c4ff; margin-bottom:8px;">Planejamento inteligente para adquirir, ampliar ou rentabilizar patrimônio.</div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px;">
+          <span style="background:#0b1f3a; color:#8899aa; font-size:9px; padding:3px 7px; border-radius:3px;">Residencial</span>
+          <span style="background:#0b1f3a; color:#8899aa; font-size:9px; padding:3px 7px; border-radius:3px;">Comercial</span>
+          <span style="background:#0b1f3a; color:#8899aa; font-size:9px; padding:3px 7px; border-radius:3px;">Construção</span>
+        </div>
+        <div style="background:#ae251c; color:white; font-size:9px; padding:5px 12px; border-radius:4px; display:inline-block;">Falar com especialista →</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Tabs horizontais (pill style)</h3>
+      <p>8 tabs em linha, a ativa fica em vermelho. Em mobile ficam scrolláveis. Conteúdo da categoria aparece abaixo. Simples e direto.</p>
+    </div>
+  </div>
+
+  <!-- OPÇÃO B: Cards grid clicáveis -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0b1f3a; padding:20px; font-family:Inter,sans-serif;">
+      <!-- Toggle -->
+      <div style="display:flex; justify-content:center; margin-bottom:14px;">
+        <div style="background:#142f54; border-radius:30px; padding:4px; display:inline-flex; gap:4px;">
+          <span style="background:#ae251c; color:white; font-size:10px; padding:5px 14px; border-radius:22px; font-weight:600;">Para Você</span>
+          <span style="color:#8899aa; font-size:10px; padding:5px 14px; font-weight:600;">Para sua Empresa</span>
+        </div>
+      </div>
+      <!-- Grid de cards -->
+      <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-bottom:10px;">
+        <div style="background:#ae251c; border-radius:7px; padding:10px; text-align:center; border:2px solid #ae251c;">
+          <div style="font-size:16px; margin-bottom:4px;">🏠</div>
+          <div style="font-size:9px; font-weight:700; color:white;">Imóveis</div>
+        </div>
+        <div style="background:#142f54; border-radius:7px; padding:10px; text-align:center;">
+          <div style="font-size:16px; margin-bottom:4px;">🚗</div>
+          <div style="font-size:9px; font-weight:600; color:#8899aa;">Veículos</div>
+        </div>
+        <div style="background:#142f54; border-radius:7px; padding:10px; text-align:center;">
+          <div style="font-size:16px; margin-bottom:4px;">🚛</div>
+          <div style="font-size:9px; font-weight:600; color:#8899aa;">Pesados</div>
+        </div>
+        <div style="background:#142f54; border-radius:7px; padding:10px; text-align:center;">
+          <div style="font-size:16px; margin-bottom:4px;">✨</div>
+          <div style="font-size:9px; font-weight:600; color:#8899aa;">Serviços</div>
+        </div>
+        <div style="background:#142f54; border-radius:7px; padding:10px; text-align:center;">
+          <div style="font-size:16px; margin-bottom:4px;">🏢</div>
+          <div style="font-size:9px; font-weight:600; color:#8899aa;">Condomínios</div>
+        </div>
+        <div style="background:#142f54; border-radius:7px; padding:10px; text-align:center;">
+          <div style="font-size:16px; margin-bottom:4px;">⛪</div>
+          <div style="font-size:9px; font-weight:600; color:#8899aa;">Igrejas</div>
+        </div>
+        <div style="background:#142f54; border-radius:7px; padding:10px; text-align:center;">
+          <div style="font-size:16px; margin-bottom:4px;">📈</div>
+          <div style="font-size:9px; font-weight:600; color:#8899aa;">Alavancagem</div>
+        </div>
+        <div style="background:#142f54; border-radius:7px; padding:10px; text-align:center;">
+          <div style="font-size:16px; margin-bottom:4px;">⚡</div>
+          <div style="font-size:9px; font-weight:600; color:#8899aa;">Cotas</div>
+        </div>
+      </div>
+      <!-- Detail panel -->
+      <div style="background:#142f54; border-radius:8px; padding:12px; border-left:3px solid #ae251c;">
+        <div style="font-size:11px; font-weight:700; color:white; margin-bottom:3px;">Imóveis ↗</div>
+        <div style="font-size:9px; color:#8899aa;">Clique em qualquer categoria para ver detalhes aqui</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Grid de ícone-cards + painel</h3>
+      <p>8 cards em grid 4×2, cada um com ícone e label. Clicar em um abre o conteúdo num painel abaixo/ao lado. Visual mais rico, sem scroll de tabs.</p>
+    </div>
+  </div>
+
+  <!-- OPÇÃO C: Accordion lateral -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0b1f3a; padding:20px; font-family:Inter,sans-serif;">
+      <!-- Toggle -->
+      <div style="display:flex; justify-content:center; margin-bottom:14px;">
+        <div style="background:#142f54; border-radius:30px; padding:4px; display:inline-flex; gap:4px;">
+          <span style="background:#ae251c; color:white; font-size:10px; padding:5px 14px; border-radius:22px; font-weight:600;">Para Você</span>
+          <span style="color:#8899aa; font-size:10px; padding:5px 14px; font-weight:600;">Para sua Empresa</span>
+        </div>
+      </div>
+      <!-- Sidebar + Content -->
+      <div style="display:flex; gap:10px;">
+        <!-- Sidebar nav -->
+        <div style="width:90px; flex-shrink:0; display:flex; flex-direction:column; gap:3px;">
+          <div style="background:#ae251c; border-radius:5px; padding:8px; font-size:9px; font-weight:700; color:white;">🏠 Imóveis</div>
+          <div style="background:#142f54; border-radius:5px; padding:8px; font-size:9px; color:#8899aa;">🚗 Veículos</div>
+          <div style="background:#142f54; border-radius:5px; padding:8px; font-size:9px; color:#8899aa;">🚛 Pesados</div>
+          <div style="background:#142f54; border-radius:5px; padding:8px; font-size:9px; color:#8899aa;">✨ Serviços</div>
+          <div style="background:#142f54; border-radius:5px; padding:8px; font-size:9px; color:#667788; font-style:italic;">+4 mais...</div>
+        </div>
+        <!-- Content -->
+        <div style="flex:1; background:#142f54; border-radius:8px; padding:14px;">
+          <div style="font-size:12px; font-weight:700; color:white; margin-bottom:6px;">Imóveis</div>
+          <div style="font-size:9px; color:#a0c4ff; line-height:1.5; margin-bottom:8px;">Planejamento inteligente para adquirir, ampliar ou rentabilizar patrimônio imobiliário.</div>
+          <div style="font-size:9px; color:#8899aa; margin-bottom:6px;">Aplicações:</div>
+          <div style="display:flex; flex-wrap:wrap; gap:4px; margin-bottom:10px;">
+            <span style="background:#0b1f3a; color:#8899aa; font-size:8px; padding:3px 6px; border-radius:3px;">Residencial</span>
+            <span style="background:#0b1f3a; color:#8899aa; font-size:8px; padding:3px 6px; border-radius:3px;">Comercial</span>
+            <span style="background:#0b1f3a; color:#8899aa; font-size:8px; padding:3px 6px; border-radius:3px;">Construção</span>
+            <span style="background:#0b1f3a; color:#8899aa; font-size:8px; padding:3px 6px; border-radius:3px;">Reforma</span>
+          </div>
+          <div style="background:#ae251c; color:white; font-size:9px; padding:6px 12px; border-radius:4px; display:inline-block;">Falar com especialista →</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Sidebar vertical + conteúdo à direita</h3>
+      <p>Menu lateral com as 8 categorias. Selecionar uma troca o conteúdo à direita. Parecido com um menu de produto — bom para quando há muito texto por categoria.</p>
+    </div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:16px;">Clique para selecionar. Esta seção é a mais complexa do site — vale alinhar bem.</p>

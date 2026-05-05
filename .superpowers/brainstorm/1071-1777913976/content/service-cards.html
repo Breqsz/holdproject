@@ -1,0 +1,115 @@
+<h2>Como apresentar os 4 pilares de serviço?</h2>
+<p class="subtitle">Consórcio · Seguros · Saúde · Investimentos — cada card tem cor temática e linka para a seção correspondente</p>
+
+<div class="cards">
+
+  <!-- OPÇÃO A -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0b1f3a; padding: 20px; font-family: Inter, sans-serif;">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+        <div style="background:#020c30; border-radius:10px; padding:16px; color:white;">
+          <div style="font-size:22px; margin-bottom:6px;">🔵</div>
+          <div style="font-size:13px; font-weight:700; color:#a0c4ff;">CONSÓRCIO</div>
+          <div style="font-size:11px; color:#8899aa; margin-top:4px;">Planejamento patrimonial</div>
+          <div style="margin-top:12px; font-size:10px; color:#aabbcc; border-top:1px solid #1e3a5a; padding-top:8px;">→ Ver soluções</div>
+        </div>
+        <div style="background:#6b0f0a; border-radius:10px; padding:16px; color:white;">
+          <div style="font-size:22px; margin-bottom:6px;">🔴</div>
+          <div style="font-size:13px; font-weight:700; color:#ffaaaa;">SEGUROS</div>
+          <div style="font-size:11px; color:#cc8888; margin-top:4px;">Proteção e segurança</div>
+          <div style="margin-top:12px; font-size:10px; color:#cc9999; border-top:1px solid #8b1a1a; padding-top:8px;">→ Ver soluções</div>
+        </div>
+        <div style="background:#f0f4ff; border-radius:10px; padding:16px; color:#0b1f3a;">
+          <div style="font-size:22px; margin-bottom:6px;">⚪</div>
+          <div style="font-size:13px; font-weight:700; color:#020c30;">SAÚDE</div>
+          <div style="font-size:11px; color:#445566; margin-top:4px;">Planos e bem-estar</div>
+          <div style="margin-top:12px; font-size:10px; color:#334455; border-top:1px solid #ccd8ee; padding-top:8px;">→ Ver soluções</div>
+        </div>
+        <div style="background:#1a1a2e; border-radius:10px; padding:16px; color:white; border:1px solid #c9a84c44;">
+          <div style="font-size:22px; margin-bottom:6px;">⚫</div>
+          <div style="font-size:13px; font-weight:700; color:#c9a84c;">INVESTIMENTOS</div>
+          <div style="font-size:11px; color:#998855; margin-top:4px;">Crescimento e patrimônio</div>
+          <div style="margin-top:12px; font-size:10px; color:#c9a84c; border-top:1px solid #c9a84c44; padding-top:8px;">→ Ver soluções</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Grid 2×2 com cor sólida</h3>
+      <p>4 cards iguals em grid. Cada um com sua cor dominante, ícone e CTA "ver soluções". Visual equilibrado, mobile-friendly.</p>
+    </div>
+  </div>
+
+  <!-- OPÇÃO B -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#07162a; padding: 20px; font-family: Inter, sans-serif;">
+      <div style="display:flex; gap:8px;">
+        <div style="flex:1.4; background:linear-gradient(135deg,#020c30,#142f54); border-radius:10px; padding:18px; color:white; position:relative; overflow:hidden;">
+          <div style="position:absolute; top:-10px; right:-10px; width:60px; height:60px; background:#1e3a6a; border-radius:50%; opacity:.4;"></div>
+          <div style="font-size:10px; font-weight:700; letter-spacing:2px; color:#a0c4ff;">CONSÓRCIO</div>
+          <div style="font-size:13px; color:#cdd8e8; margin-top:6px; line-height:1.4;">Planejamento patrimonial estratégico</div>
+          <div style="margin-top:14px; display:inline-block; background:#ae251c; color:white; font-size:10px; padding:5px 10px; border-radius:4px;">Ver soluções →</div>
+        </div>
+        <div style="flex:1; display:flex; flex-direction:column; gap:8px;">
+          <div style="background:linear-gradient(135deg,#4a0808,#7a1010); border-radius:8px; padding:12px; color:white; flex:1;">
+            <div style="font-size:9px; font-weight:700; letter-spacing:2px; color:#ffaaaa;">SEGUROS</div>
+            <div style="font-size:10px; color:#cc9999; margin-top:3px;">Proteção</div>
+          </div>
+          <div style="background:linear-gradient(135deg,#e8f0ff,#f5f8ff); border-radius:8px; padding:12px; color:#0b1f3a; flex:1;">
+            <div style="font-size:9px; font-weight:700; letter-spacing:2px; color:#020c30;">SAÚDE</div>
+            <div style="font-size:10px; color:#334455; margin-top:3px;">Bem-estar</div>
+          </div>
+          <div style="background:linear-gradient(135deg,#111122,#1a1a2e); border-radius:8px; padding:12px; color:white; flex:1; border:1px solid #c9a84c33;">
+            <div style="font-size:9px; font-weight:700; letter-spacing:2px; color:#c9a84c;">INVESTIMENTOS</div>
+            <div style="font-size:10px; color:#998855; margin-top:3px;">Crescimento</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Consórcio em destaque + 3 secundários</h3>
+      <p>Consórcio é o produto principal da Hold — aparece maior, com CTA visível. Os outros 3 ficam menores ao lado. Hierarquia clara do negócio.</p>
+    </div>
+  </div>
+
+  <!-- OPÇÃO C -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#07162a; padding: 20px; font-family: Inter, sans-serif;">
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:8px;">
+          <div style="background:#020c30; border-radius:8px; padding:14px; color:white; text-align:center;">
+            <div style="width:36px; height:36px; background:#0d2a6e; border-radius:8px; margin:0 auto 8px; display:flex; align-items:center; justify-content:center; font-size:16px;">🔷</div>
+            <div style="font-size:10px; font-weight:700; color:#a0c4ff; letter-spacing:1px;">CONSÓRCIO</div>
+            <div style="width:30px; height:2px; background:#ae251c; margin:6px auto;"></div>
+            <div style="font-size:9px; color:#8899bb;">Planejamento patrimonial</div>
+          </div>
+          <div style="background:#5a0a0a; border-radius:8px; padding:14px; color:white; text-align:center;">
+            <div style="width:36px; height:36px; background:#8b1010; border-radius:8px; margin:0 auto 8px; display:flex; align-items:center; justify-content:center; font-size:16px;">🛡️</div>
+            <div style="font-size:10px; font-weight:700; color:#ffbbbb; letter-spacing:1px;">SEGUROS</div>
+            <div style="width:30px; height:2px; background:#ae251c; margin:6px auto;"></div>
+            <div style="font-size:9px; color:#cc9999;">Proteção e segurança</div>
+          </div>
+          <div style="background:#e8f2ff; border-radius:8px; padding:14px; color:#0b1f3a; text-align:center;">
+            <div style="width:36px; height:36px; background:#c8dcff; border-radius:8px; margin:0 auto 8px; display:flex; align-items:center; justify-content:center; font-size:16px;">💚</div>
+            <div style="font-size:10px; font-weight:700; color:#020c30; letter-spacing:1px;">SAÚDE</div>
+            <div style="width:30px; height:2px; background:#0b1f3a; margin:6px auto;"></div>
+            <div style="font-size:9px; color:#445566;">Planos personalizados</div>
+          </div>
+          <div style="background:#111120; border-radius:8px; padding:14px; color:white; text-align:center; border:1px solid #c9a84c44;">
+            <div style="width:36px; height:36px; background:#2a2a10; border-radius:8px; margin:0 auto 8px; display:flex; align-items:center; justify-content:center; font-size:16px;">📈</div>
+            <div style="font-size:10px; font-weight:700; color:#c9a84c; letter-spacing:1px;">INVEST.</div>
+            <div style="width:30px; height:2px; background:#c9a84c; margin:6px auto;"></div>
+            <div style="font-size:9px; color:#887744;">Crescimento</div>
+          </div>
+        </div>
+        <div style="font-size:9px; color:#445566; text-align:center; font-style:italic;">hover → card expande com descrição e CTA</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Row de 4 com ícone + hover expand</h3>
+      <p>Fileira horizontal com 4 cards iguais. No hover/tap, o card expande mostrando descrição e botão. Mais limpo na seção, mais interativo.</p>
+    </div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:16px;">Clique para selecionar e me diga o que acha no terminal.</p>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hold Corretora — Design Overview</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Inter, system-ui, sans-serif; background: #07162a; color: #e0e8f0; font-size: 14px; line-height: 1.6; }
+
+  .page { max-width: 960px; margin: 0 auto; padding: 32px 24px; }
+
+  h1 { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+  .tagline { color: #7a9ab8; font-size: 13px; margin-bottom: 32px; }
+
+  /* Section */
+  .section { margin-bottom: 28px; }
+  .section-title { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: #ae251c; text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .section-title::after { content: ''; flex: 1; height: 1px; background: #142f54; }
+
+  /* Grid */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+
+  /* Card */
+  .card { background: #142f54; border-radius: 10px; padding: 16px; }
+  .card h3 { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+  .card p { font-size: 12px; color: #7a9ab8; line-height: 1.5; }
+  .card .badge { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 10px; background: #ae251c22; color: #ae251c; margin-bottom: 8px; }
+  .card .badge.green { background: #0d4a2a; color: #4ade80; }
+  .card .badge.blue { background: #0a2a4a; color: #60a5fa; }
+
+  /* Stack */
+  .stack-row { display: flex; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid #0b1f3a; }
+  .stack-row:last-child { border-bottom: none; }
+  .stack-label { font-size: 11px; font-weight: 600; color: #7a9ab8; width: 110px; flex-shrink: 0; }
+  .stack-value { font-size: 12px; color: #c8d8e8; }
+  .stack-tag { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 8px; }
+  .tag-changed { background: #3a1a0a; color: #f97316; }
+  .tag-same { background: #0d2a0d; color: #4ade80; }
+
+  /* Sections list */
+  .section-item { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid #0b1f3a; align-items: flex-start; }
+  .section-item:last-child { border-bottom: none; }
+  .section-num { width: 24px; height: 24px; border-radius: 50%; background: #ae251c; color: white; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+  .section-info h4 { font-size: 13px; font-weight: 600; color: #fff; margin-bottom: 2px; }
+  .section-info p { font-size: 11px; color: #6a8aaa; }
+  .anchor { font-size: 10px; color: #ae251c; font-family: monospace; }
+
+  /* Flow */
+  .flow { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .flow-box { background: #0b1f3a; border: 1px solid #142f54; border-radius: 6px; padding: 6px 10px; font-size: 11px; color: #a0c4dd; font-family: monospace; }
+  .flow-arrow { color: #ae251c; font-size: 16px; }
+
+  /* Decision highlight */
+  .decision { background: #0f2a42; border-left: 3px solid #ae251c; border-radius: 0 8px 8px 0; padding: 10px 14px; margin-top: 10px; }
+  .decision .label { font-size: 10px; font-weight: 700; color: #ae251c; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+  .decision p { font-size: 12px; color: #a0c4dd; }
+
+  /* Color swatches */
+  .swatches { display: flex; gap: 8px; flex-wrap: wrap; }
+  .swatch { display: flex; align-items: center; gap: 6px; }
+  .swatch-dot { width: 20px; height: 20px; border-radius: 4px; flex-shrink: 0; }
+  .swatch-label { font-size: 11px; color: #7a9ab8; }
+
+  /* Missing items */
+  .missing { background: #2a1a0a; border: 1px solid #7c3a10; border-radius: 8px; padding: 12px 14px; }
+  .missing h4 { font-size: 12px; font-weight: 700; color: #fb923c; margin-bottom: 6px; }
+  .missing li { font-size: 11px; color: #cc8855; margin-left: 14px; margin-bottom: 3px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <h1>Hold Corretora — Design Final</h1>
+  <p class="tagline">Site institucional SPA · Next.js 14 · Static Export · Hostgator</p>
+
+  <!-- STACK -->
+  <div class="section">
+    <div class="section-title">Stack Técnica</div>
+    <div class="card">
+      <div class="stack-row"><span class="stack-label">Framework</span><span class="stack-value">Next.js 14 App Router</span><span class="stack-tag tag-same">confirmado</span></div>
+      <div class="stack-row"><span class="stack-label">Styling</span><span class="stack-value">Tailwind CSS v3 + shadcn/ui</span><span class="stack-tag tag-same">confirmado</span></div>
+      <div class="stack-row"><span class="stack-label">Animações</span><span class="stack-value">Framer Motion + React Bits</span><span class="stack-tag tag-same">confirmado</span></div>
+      <div class="stack-row"><span class="stack-label">i18n</span><span class="stack-value">Context customizado (pt.json / en.json)</span><span class="stack-tag tag-same">confirmado</span></div>
+      <div class="stack-row"><span class="stack-label">Formulário</span><span class="stack-value">EmailJS (client-side) · sem API route</span><span class="stack-tag tag-changed">mudou → EmailJS</span></div>
+      <div class="stack-row"><span class="stack-label">Deploy</span><span class="stack-value">output: 'export' → pasta out/ no Hostgator</span><span class="stack-tag tag-changed">mudou → static</span></div>
+      <div class="stack-row"><span class="stack-label">Font</span><span class="stack-value">Inter via next/font/google</span><span class="stack-tag tag-same">confirmado</span></div>
+    </div>
+  </div>
+
+  <!-- PALETA -->
+  <div class="section">
+    <div class="section-title">Paleta de Cores</div>
+    <div class="card">
+      <div class="swatches">
+        <div class="swatch"><div class="swatch-dot" style="background:#07162a; border:1px solid #142f54"></div><span class="swatch-label">#07162a — Navy Dark (bg)</span></div>
+        <div class="swatch"><div class="swatch-dot" style="background:#0b1f3a; border:1px solid #142f54"></div><span class="swatch-label">#0b1f3a — Navy Base</span></div>
+        <div class="swatch"><div class="swatch-dot" style="background:#142f54"></div><span class="swatch-label">#142f54 — Navy Mid (cards)</span></div>
+        <div class="swatch"><div class="swatch-dot" style="background:#020c30"></div><span class="swatch-label">#020c30 — Azul Marca</span></div>
+        <div class="swatch"><div class="swatch-dot" style="background:#ae251c"></div><span class="swatch-label">#ae251c — Vermelho Marca</span></div>
+        <div class="swatch"><div class="swatch-dot" style="background:#1a1a2e; border:1px solid #c9a84c44"></div><span class="swatch-label">#1a1a2e — Grafite Invest.</span></div>
+        <div class="swatch"><div class="swatch-dot" style="background:#c9a84c"></div><span class="swatch-label">#c9a84c — Dourado Invest.</span></div>
+        <div class="swatch"><div class="swatch-dot" style="background:#ffffff"></div><span class="swatch-label">#ffffff — Branco (Saúde)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEÇÕES -->
+  <div class="section">
+    <div class="section-title">Seções da Página (ordem de scroll)</div>
+    <div class="card">
+      <div class="section-item">
+        <div class="section-num">1</div>
+        <div class="section-info">
+          <h4>Hero <span class="anchor">#home</span></h4>
+          <p>Gradiente navy + foto home.jpg · H1 "ecossistema estratégico" · 2 CTAs (vermelho + outline) · 4 badges: Segurança / Planejamento / Acompanhamento / Resultados · Framer Motion stagger</p>
+        </div>
+      </div>
+      <div class="section-item">
+        <div class="section-num">2</div>
+        <div class="section-info">
+          <h4>Sobre Nós <span class="anchor">#sobre-nos</span></h4>
+          <p>Stat counters animados (+19 Anos / +60 Parceiros) · Cards Missão / Visão / Valores</p>
+        </div>
+      </div>
+      <div class="section-item">
+        <div class="section-num">3</div>
+        <div class="section-info">
+          <h4>4 Pilares <span class="anchor">#servicos</span></h4>
+          <p><strong style="color:#ae251c">Layout B aprovado:</strong> Consórcio em destaque (maior, CTA visível) + Seguros / Saúde / Investimentos menores ao lado com cor temática</p>
+        </div>
+      </div>
+      <div class="section-item">
+        <div class="section-num">4</div>
+        <div class="section-info">
+          <h4>Para Clientes — Consórcio <span class="anchor">#para-clientes</span></h4>
+          <p>Toggle "Para Você / Para sua Empresa" · <strong style="color:#ae251c">Layout B aprovado:</strong> Grid 4×2 icon-cards + painel de detalhe · 8 categorias com aplicações e CTA WhatsApp · Seção "Como Funciona" (4 steps)</p>
+        </div>
+      </div>
+      <div class="section-item">
+        <div class="section-num">5</div>
+        <div class="section-info">
+          <h4>Para Escritórios <span class="anchor">#para-escritorios</span></h4>
+          <p>Ativado pelo toggle "Para sua Empresa" na seção 4 · Diferenciais + 5 steps · Badge "Banco Central"</p>
+        </div>
+      </div>
+      <div class="section-item">
+        <div class="section-num">6</div>
+        <div class="section-info">
+          <h4>Depoimentos <span class="anchor">#depoimentos</span></h4>
+          <p>Carousel (Embla/shadcn) · Cards com estrelas + nome + texto · Mock data inicial</p>
+        </div>
+      </div>
+      <div class="section-item">
+        <div class="section-num">7</div>
+        <div class="section-info">
+          <h4>FAQ <span class="anchor">#faq</span></h4>
+          <p>18 perguntas · shadcn Accordion · Framer Motion AnimatePresence no conteúdo</p>
+        </div>
+      </div>
+      <div class="section-item">
+        <div class="section-num">8</div>
+        <div class="section-info">
+          <h4>Contato <span class="anchor">#contato</span></h4>
+          <p>Formulário dual (cliente / parceiro) · Submit → EmailJS envia email + window.open WhatsApp · react-hook-form + zod · shadcn Sonner toast</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLUXO CONTATO -->
+  <div class="section">
+    <div class="section-title">Fluxo do Formulário de Contato</div>
+    <div class="card">
+      <div class="flow">
+        <div class="flow-box">Usuário preenche form</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">zod valida</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">emailjs.send()</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">Email chega p/ Jacimar</div>
+      </div>
+      <div class="flow" style="margin-top:8px;">
+        <div class="flow-box">Paralelo</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">window.open(wa.me/...)</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">WhatsApp c/ msg formatada</div>
+      </div>
+      <div class="flow" style="margin-top:8px;">
+        <div class="flow-box">Resultado</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">Toast sucesso/erro (Sonner)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPONENTES LAYOUT -->
+  <div class="section">
+    <div class="section-title">Componentes Persistentes</div>
+    <div class="grid-3">
+      <div class="card">
+        <h3>Navbar</h3>
+        <p>Fixed · bg transparente → navy/95 + blur ao scroll · Links âncora · Toggle PT|EN · Mobile: Sheet hamburger</p>
+      </div>
+      <div class="card">
+        <h3>Footer</h3>
+        <p>Logo + tagline · Links nav · Instagram / LinkedIn / WhatsApp · CRECI/SUSEP + "Fiscalizado Banco Central"</p>
+      </div>
+      <div class="card">
+        <h3>WhatsApp Floating</h3>
+        <p>Fixed bottom-right · CSS animate-ping no ring · Link wa.me com número do Jacimar</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PENDÊNCIAS DO CLIENTE -->
+  <div class="section">
+    <div class="section-title">Pendências do Cliente (placeholder até chegar)</div>
+    <div class="missing">
+      <h4>⚠️ Itens a confirmar com Jacimar</h4>
+      <ul>
+        <li>Número de WhatsApp atualizado</li>
+        <li>Email institucional (para EmailJS)</li>
+        <li>Logo SVG final (puzzle 4 peças) — placeholder: texto estilizado "HOLD"</li>
+        <li>URL do Instagram da empresa</li>
+        <li>Conteúdo de Saúde, Seguros e Investimentos — placeholder por enquanto</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

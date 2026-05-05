@@ -2,69 +2,20 @@
 
 import { useCallback } from 'react'
 import { motion } from 'framer-motion'
-import { Star, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Star, ArrowLeft, ArrowRight } from 'lucide-react'
 import useEmblaCarousel from 'embla-carousel-react'
 import { useLocale } from '@/lib/i18n'
+import { googleReviews, googleSummary } from '@/lib/reviews-google'
+import GoogleGIcon from '@/components/icons/GoogleGIcon'
 
-interface Testimonial {
-  name: string
-  role: string
-  rating: number
-  text: string
-}
-
-const testimonials: Testimonial[] = [
-  {
-    name: 'Rafael Mendonça',
-    role: 'Empresário',
-    rating: 5,
-    text: 'A Hold estruturou todo o processo de aquisição do nosso novo galpão via consórcio. Suporte excepcional do início ao fim.',
-  },
-  {
-    name: 'Camila Borges',
-    role: 'Médica',
-    rating: 5,
-    text: 'Consegui contemplação em 8 meses com a estratégia deles. Planejamento financeiro acima do esperado.',
-  },
-  {
-    name: 'Gustavo Almeida',
-    role: 'Assessor de Investimentos',
-    rating: 5,
-    text: 'Parceria estratégica para meu escritório. A mesa de consórcios deles complementa perfeitamente nosso portfólio.',
-  },
-  {
-    name: 'Priscila Cavalcanti',
-    role: 'Empresária',
-    rating: 5,
-    text: 'Renovei toda a frota da empresa sem comprometer o caixa. Processo transparente e muito bem conduzido.',
-  },
-  {
-    name: 'Thiago Rezende',
-    role: 'Arquiteto',
-    rating: 5,
-    text: 'Adquiri meu imóvel comercial com carta de crédito contemplada. Economizei muito em relação ao financiamento.',
-  },
-  {
-    name: 'Fernanda Lopes',
-    role: 'Contadora',
-    rating: 5,
-    text: 'Excelente acompanhamento pós-venda. São referência em consórcio estratégico em Uberlândia.',
-  },
-]
+const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number]
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 32 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { type: 'spring' as const, stiffness: 100, damping: 20 },
-  },
+  hidden: { opacity: 0, y: 28 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.85, ease: EASE_OUT_EXPO } },
 }
 
-const stagger = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.1 } },
-}
+const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }
 
 export default function Depoimentos() {
   const { t } = useLocale()
@@ -76,30 +27,70 @@ export default function Depoimentos() {
   return (
     <section
       id="depoimentos"
-      className="py-24 md:py-32 bg-[#0b1f3a]"
+      className="section-pad bg-[#0b1f3a]"
       style={{ fontFamily: 'var(--font-outfit)' }}
     >
       <div className="max-w-6xl mx-auto px-6 lg:px-8">
-        {/* Eyebrow + heading */}
+
+        {/* Header */}
         <motion.div
           variants={stagger}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="text-center mb-14"
+          className="flex items-end justify-between gap-6 mb-12 flex-wrap"
         >
-          <motion.div variants={fadeUp}>
-            <span className="inline-flex items-center rounded-full bg-[#ae251c]/20 text-[#ae251c] px-3 py-1 text-[10px] uppercase tracking-[0.2em] font-semibold">
-              {t('testimonials.eyebrow')}
-            </span>
-          </motion.div>
+          <div className="max-w-2xl">
+            <motion.div variants={fadeUp}>
+              <span className="inline-flex items-center rounded-full bg-[#ae251c]/20 text-[#ae251c] px-3 py-1 text-[10px] uppercase tracking-[0.2em] font-semibold">
+                {t('testimonials.eyebrow')}
+              </span>
+            </motion.div>
 
-          <motion.h2
-            variants={fadeUp}
-            className="mt-4 text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight text-white"
-          >
-            {t('testimonials.title')}
-          </motion.h2>
+            <motion.h2
+              variants={fadeUp}
+              className="mt-5 text-display text-white"
+              style={{ fontSize: 'clamp(2rem, 4.4vw, 3.25rem)' }}
+            >
+              {t('testimonials.title')}
+            </motion.h2>
+
+            {/* Google badge */}
+            <motion.a
+              variants={fadeUp}
+              href={googleSummary.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-5 inline-flex items-center gap-3 rounded-full bg-white/[0.04] ring-1 ring-white/10 px-4 py-2 hover:ring-white/30 transition-colors"
+              aria-label={t('testimonials.googleBadge')}
+            >
+              <GoogleGIcon size={18} />
+              <span className="flex items-center gap-1.5 text-[#c9a84c] tabular text-sm font-bold">
+                {googleSummary.rating.toString().replace('.', ',')}
+                <Star size={14} fill="#c9a84c" color="#c9a84c" />
+              </span>
+              <span className="text-[#7a9ab8] text-xs">
+                · {googleSummary.count} avaliações no Google
+              </span>
+            </motion.a>
+          </div>
+
+          <motion.div variants={fadeUp} className="flex items-center gap-2">
+            <button
+              onClick={scrollPrev}
+              aria-label="Depoimento anterior"
+              className="w-11 h-11 rounded-full bg-[#142f54] hover:bg-[#1e4a7a] transition-colors flex items-center justify-center text-[#e0e8f0]"
+            >
+              <ArrowLeft size={18} strokeWidth={1.7} />
+            </button>
+            <button
+              onClick={scrollNext}
+              aria-label="Próximo depoimento"
+              className="w-11 h-11 rounded-full bg-[#142f54] hover:bg-[#1e4a7a] transition-colors flex items-center justify-center text-[#e0e8f0]"
+            >
+              <ArrowRight size={18} strokeWidth={1.7} />
+            </button>
+          </motion.div>
         </motion.div>
 
         {/* Carousel */}
@@ -107,71 +98,45 @@ export default function Depoimentos() {
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ type: 'spring', stiffness: 100, damping: 20, delay: 0.15 }}
+          transition={{ duration: 0.85, ease: EASE_OUT_EXPO, delay: 0.15 }}
         >
-          {/* Embla viewport — overflow hidden */}
           <div className="overflow-hidden" ref={emblaRef}>
             <div className="flex gap-5">
-              {testimonials.map((item) => (
+              {googleReviews.map((item) => (
                 <div
                   key={item.name}
-                  /* flex-[0_0_...] pins card width inside embla */
-                  className="flex-[0_0_100%] sm:flex-[0_0_calc(50%-10px)] lg:flex-[0_0_calc(33.333%-14px)] min-w-0"
+                  className="flex-[0_0_100%] sm:flex-[0_0_calc(50%-10px)] lg:flex-[0_0_calc(50%-10px)] min-w-0"
                 >
-                  {/* Outer bezel */}
-                  <div className="rounded-2xl bg-white/5 ring-1 ring-white/10 p-1.5 h-full">
-                    {/* Inner bezel */}
-                    <div className="rounded-[calc(1rem-0.375rem)] bg-[#142f54] shadow-[inset_0_1px_1px_rgba(255,255,255,0.08)] p-6 h-full flex flex-col gap-4">
-                      {/* Stars */}
-                      <div className="flex items-center gap-1">
-                        {Array.from({ length: item.rating }).map((_, si) => (
-                          <Star
-                            key={si}
-                            size={14}
-                            fill="#c9a84c"
-                            color="#c9a84c"
-                          />
-                        ))}
-                      </div>
+                  <div className="rounded-2xl bg-[#142f54] ring-1 ring-white/10 p-7 md:p-9 h-full flex flex-col gap-5">
 
-                      {/* Quote */}
-                      <p className="text-[#7a9ab8] text-sm leading-relaxed flex-1">
-                        &ldquo;{item.text}&rdquo;
+                    <div className="flex items-center gap-1">
+                      {Array.from({ length: item.rating }).map((_, si) => (
+                        <Star key={si} size={14} fill="#c9a84c" color="#c9a84c" />
+                      ))}
+                    </div>
+
+                    <p
+                      className="text-pretty text-[#e0e8f0] leading-snug flex-1"
+                      style={{
+                        fontSize: 'clamp(1rem, 1.4vw, 1.15rem)',
+                        letterSpacing: '-0.005em',
+                      }}
+                    >
+                      &ldquo;{item.text}&rdquo;
+                    </p>
+
+                    <div>
+                      <div className="rule-gold h-px w-10 mb-4 opacity-60" />
+                      <p className="text-white font-semibold text-sm">{item.name}</p>
+                      <p className="text-[#7a9ab8] text-xs mt-0.5 inline-flex items-center gap-1.5">
+                        <GoogleGIcon size={12} />
+                        {t('testimonials.role')}
                       </p>
-
-                      {/* Author */}
-                      <div>
-                        <p className="text-white font-semibold text-sm">
-                          {item.name}
-                        </p>
-                        <p className="text-[#7a9ab8] text-xs mt-0.5">
-                          {item.role}
-                        </p>
-                      </div>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
-          </div>
-
-          {/* Prev / Next controls */}
-          <div className="flex items-center justify-center gap-3 mt-10">
-            <button
-              onClick={scrollPrev}
-              aria-label="Depoimento anterior"
-              className="w-10 h-10 rounded-full bg-white/5 ring-1 ring-white/10 hover:bg-white/10 transition-colors flex items-center justify-center text-[#e0e8f0]"
-            >
-              <ChevronLeft size={18} />
-            </button>
-
-            <button
-              onClick={scrollNext}
-              aria-label="Próximo depoimento"
-              className="w-10 h-10 rounded-full bg-white/5 ring-1 ring-white/10 hover:bg-white/10 transition-colors flex items-center justify-center text-[#e0e8f0]"
-            >
-              <ChevronRight size={18} />
-            </button>
           </div>
         </motion.div>
       </div>

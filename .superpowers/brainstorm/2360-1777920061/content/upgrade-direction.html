@@ -1,0 +1,157 @@
+<style>
+.preview {
+  height: 200px; overflow: hidden; border-radius: 10px 10px 0 0;
+  position: relative; margin-bottom: 0;
+}
+.preview-a { background: linear-gradient(135deg, #07162a 0%, #0b1f3a 60%, #142f54 100%); }
+.preview-b { background: #07162a; }
+.preview-c { background: #020a1a; }
+
+/* shared nav strip */
+.mnav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 14px;
+  font-size: 10px; color: #7a9ab8;
+  background: rgba(7,22,42,0.85); backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.mlogo { font-weight: 800; font-size: 13px; color: #fff; letter-spacing: 1px; }
+.mlogo em { color: #ae251c; font-style: normal; font-weight: 500; font-size: 11px; }
+
+/* Option A — rectangle hero image */
+.hero-a { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 12px 14px; height: calc(100% - 34px); }
+.htxt { display: flex; flex-direction: column; justify-content: center; gap: 6px; }
+.hbadge { display: inline-block; background: rgba(174,37,28,.15); border: 1px solid rgba(174,37,28,.25); color: #ae251c; font-size: 7px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; width: fit-content; }
+.hh1 { font-size: 15px; font-weight: 800; color: #fff; line-height: 1.2; }
+.hh1 s { color: #ae251c; text-decoration: none; }
+.hsub { font-size: 8px; color: #7a9ab8; line-height: 1.5; }
+.hbtns { display: flex; gap: 6px; }
+.bred { background: #ae251c; color: #fff; font-size: 8px; font-weight: 700; padding: 5px 10px; border-radius: 999px; }
+.bout { border: 1px solid rgba(255,255,255,.3); color: #fff; font-size: 8px; padding: 5px 10px; border-radius: 999px; }
+.himg-a { position: relative; }
+.imgbox { width: 100%; height: 100%; background: linear-gradient(135deg,#142f54,#0b1f3a); border-radius: 8px; overflow: hidden; border: 1px solid rgba(255,255,255,.07); }
+.imgbox img { width: 100%; height: 100%; object-fit: cover; opacity: .85; }
+.statfloat { position: absolute; bottom: 8px; left: 8px; background: rgba(11,31,58,.85); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,.1); border-radius: 8px; padding: 5px 9px; }
+.snum { font-size: 16px; font-weight: 800; color: #fff; }
+.slbl { font-size: 6px; color: #7a9ab8; }
+
+/* Option B — blobs + circle */
+.blob { position: absolute; border-radius: 50%; filter: blur(50px); pointer-events: none; }
+.b1 { width: 180px; height: 180px; background: #1a4b8a; opacity: .35; top: -30px; right: -20px; }
+.b2 { width: 120px; height: 120px; background: #ae251c; opacity: .18; bottom: -20px; left: 20px; }
+.dots { position: absolute; inset: 0; opacity: .07; background-image: radial-gradient(circle,#7a9ab8 1px,transparent 1px); background-size: 18px 18px; pointer-events: none; }
+.hero-b { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 10px 14px; height: calc(100% - 60px); position: relative; z-index: 2; }
+.nav-pill { display: flex; align-items: center; gap: 12px; background: rgba(20,47,84,.6); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,.1); border-radius: 999px; padding: 7px 14px; margin: 8px auto 0; width: fit-content; position: relative; z-index: 2; }
+.circle-wrap { display: flex; align-items: center; justify-content: flex-end; position: relative; }
+.cframe { width: 130px; height: 130px; border-radius: 50%; border: 2px solid rgba(255,255,255,.15); overflow: hidden; box-shadow: 0 0 0 7px rgba(20,47,84,.4); }
+.cframe img { width: 100%; height: 100%; object-fit: cover; }
+.dring { position: absolute; width: 165px; height: 165px; border-radius: 50%; border: 1px solid rgba(174,37,28,.3); top: 50%; right: -5px; transform: translateY(-50%); }
+.ddot { position: absolute; width: 7px; height: 7px; background: #ae251c; border-radius: 50%; top: 8px; right: 60px; }
+.gtext { background: linear-gradient(135deg,#fff 0%,#a0c4ff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+/* Option C — aurora full-width */
+.aurora { position: absolute; inset: 0; opacity: .7; background: radial-gradient(ellipse at 70% 20%,rgba(20,60,120,.9) 0%,transparent 50%), radial-gradient(ellipse at 10% 90%,rgba(174,37,28,.3) 0%,transparent 50%); pointer-events: none; }
+.hero-c { padding: 14px 16px; height: calc(100% - 36px); position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: center; gap: 8px; }
+.bigtxt { font-size: 22px; font-weight: 900; line-height: 1.1; color: #fff; }
+.bigtxt .red { background: linear-gradient(90deg,#ae251c,#e05049); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: block; }
+.tagsrow { display: flex; gap: 4px; flex-wrap: wrap; }
+.ttag { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); color: #a0b8d0; font-size: 7px; padding: 3px 8px; border-radius: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; }
+.shimmer { background: linear-gradient(135deg,#ae251c,#c42d23); color: #fff; font-size: 8px; font-weight: 700; padding: 6px 13px; border-radius: 7px; display: inline-block; }
+
+/* Card label area */
+.cinfo { background: #111827; padding: 14px 16px; border-radius: 0 0 10px 10px; }
+.clabel { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; }
+.cletter { width: 24px; height: 24px; background: rgba(174,37,28,.15); border: 1px solid rgba(174,37,28,.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; color: #ae251c; flex-shrink: 0; }
+.ctitle { font-size: 12px; font-weight: 700; color: #fff; }
+.csub { font-size: 9px; color: #7a9ab8; font-style: italic; }
+.cdesc { font-size: 10px; color: #9ab0c8; line-height: 1.6; margin-bottom: 8px; }
+.ptags { display: flex; gap: 5px; flex-wrap: wrap; }
+.pt { font-size: 8px; font-weight: 600; padding: 2px 7px; border-radius: 999px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); color: #7a9ab8; }
+.pt.r { background: rgba(174,37,28,.12); border-color: rgba(174,37,28,.25); color: #e05049; }
+.pt.b { background: rgba(90,150,220,.1); border-color: rgba(90,150,220,.2); color: #7ab2e8; }
+
+/* Grid layout for 3 options */
+.opts3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; max-width: 980px; margin: 0 auto; }
+.ocard { border-radius: 10px; overflow: hidden; cursor: pointer; border: 2px solid transparent; transition: all .2s; }
+.ocard:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(0,0,0,.5); }
+.ocard.selected { border-color: #ae251c; box-shadow: 0 0 0 3px rgba(174,37,28,.2); }
+</style>
+
+<h2>Qual direção para o upgrade?</h2>
+<p class="subtitle">Analisei código, referências (consorce.com, hold.jpeg, formulário) e detalhes.txt. Clique para selecionar.</p>
+
+<div class="opts3">
+
+  <!-- A: Polimento -->
+  <div class="ocard" data-choice="a" onclick="toggleSelect(this)">
+    <div class="preview preview-a">
+      <div class="mnav"><div class="mlogo">HOLD <em>Corretora</em></div><span>Home · Sobre · Clientes · FAQ</span></div>
+      <div class="hero-a">
+        <div class="htxt">
+          <div class="hbadge">Consórcio Estratégico</div>
+          <div class="hh1">Consórcio com <s>inteligência</s><br>e estratégia.</div>
+          <div class="hsub">Da escolha à contemplação, a Hold cuida de tudo.</div>
+          <div class="hbtns"><div class="bred">Para Clientes →</div><div class="bout">Escritórios</div></div>
+        </div>
+        <div class="himg-a">
+          <div class="imgbox"><img src="/images/hero/home.jpg" alt=""></div>
+          <div class="statfloat"><div class="snum">+19</div><div class="slbl">Anos de Experiência</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="cinfo">
+      <div class="clabel"><div class="cletter">A</div><div><div class="ctitle">Polimento Cirúrgico</div><div class="csub">Evolução do design atual</div></div></div>
+      <div class="cdesc">Mantém estrutura. Adiciona glassmorphism, stat-card flutuante, border-beam, animações mais ricas. Baixo risco.</div>
+      <div class="ptags"><span class="pt">Baixo risco</span><span class="pt b">Glass morphism</span><span class="pt b">Border beam</span></div>
+    </div>
+  </div>
+
+  <!-- B: Premium (recomendado) -->
+  <div class="ocard" data-choice="b" onclick="toggleSelect(this)">
+    <div class="preview preview-b">
+      <div class="blob b1"></div><div class="blob b2"></div><div class="dots"></div>
+      <div class="nav-pill"><div class="mlogo">HOLD <em>Corretora</em></div><span style="font-size:9px;color:#7a9ab8;">Home · Sobre · Clientes · FAQ</span></div>
+      <div class="hero-b">
+        <div class="htxt">
+          <div class="hbadge">Consultoria Especializada</div>
+          <div class="hh1"><span class="gtext">Consórcio com</span><br><s style="color:#ae251c;text-decoration:none;">inteligência,</s><br>confiança e estratégia.</div>
+          <div class="hsub">Da escolha à contemplação, a Hold cuida de tudo com você.</div>
+          <div class="hbtns"><div class="bred">Para Clientes →</div><div class="bout">Escritórios de Investimentos</div></div>
+        </div>
+        <div class="circle-wrap">
+          <div class="dring"></div><div class="ddot"></div>
+          <div class="cframe"><img src="/images/hero/home.jpg" alt=""></div>
+        </div>
+      </div>
+    </div>
+    <div class="cinfo">
+      <div class="clabel"><div class="cletter">B</div><div><div class="ctitle">Transformação Premium ⭐</div><div class="csub">Fiel às referências — consorce.com + hold.jpeg</div></div></div>
+      <div class="cdesc">Frame circular na foto + mesh gradient blobs + dot grid + formulário 2 colunas lado a lado + ReactBits elements.</div>
+      <div class="ptags"><span class="pt r">Recomendado</span><span class="pt b">Frame circular</span><span class="pt b">Mesh gradient</span><span class="pt r">Form 2 cols</span></div>
+    </div>
+  </div>
+
+  <!-- C: Agency Elite -->
+  <div class="ocard" data-choice="c" onclick="toggleSelect(this)">
+    <div class="preview preview-c">
+      <div class="aurora"></div>
+      <div class="mnav"><div class="mlogo" style="letter-spacing:3px;">HOLD</div><span style="font-size:7px;letter-spacing:2px;text-transform:uppercase;">CORRETORA</span><span>Home · Sobre · Contato</span></div>
+      <div class="hero-c">
+        <div class="bigtxt">Consórcio com<span class="red">estratégia</span>e propósito.</div>
+        <div class="hsub" style="max-width:220px;">Transformamos objetivos em conquistas com decisões bem estruturadas.</div>
+        <div class="tagsrow"><span class="ttag">Imóveis</span><span class="ttag">Veículos</span><span class="ttag">Pesados</span><span class="ttag">Alavancagem</span></div>
+        <div class="shimmer">Fale com um especialista →</div>
+      </div>
+    </div>
+    <div class="cinfo">
+      <div class="clabel"><div class="cletter">C</div><div><div class="ctitle">Agency Elite</div><div class="csub">Editorial · Aurora · Tipografia maximalista</div></div></div>
+      <div class="cdesc">Hero full-width sem split, tipografia enorme com gradiente, aurora animado, noise grain. Visual de agência de luxo.</div>
+      <div class="ptags"><span class="pt">Alto risco</span><span class="pt b">Aurora BG</span><span class="pt b">Tipo bold</span></div>
+    </div>
+  </div>
+
+</div>
+
+<p style="text-align:center;margin-top:20px;font-size:12px;color:#4a6a8a;">
+  Recomendo a <strong style="color:#7a9ab8;">Opção B</strong> — replica a pegada exata das suas referências. Clique e confirme no terminal.
+</p>

@@ -11,6 +11,8 @@ import { toast } from 'sonner'
 import { useLocale } from '@/lib/i18n'
 import { formatWhatsAppLink } from '@/lib/utils'
 
+const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number]
+
 // ─── Schemas ────────────────────────────────────────────────────────────────
 
 const clientSchema = z.object({
@@ -36,7 +38,7 @@ type PartnerFormData = z.infer<typeof partnerSchema>
 
 function FieldLabel({ children }: { children: React.ReactNode }) {
   return (
-    <label className="text-[#7a9ab8] text-sm font-medium mb-1 block">
+    <label className="text-[#7a9ab8] text-xs font-medium mb-1.5 block uppercase tracking-wider">
       {children}
     </label>
   )
@@ -44,11 +46,11 @@ function FieldLabel({ children }: { children: React.ReactNode }) {
 
 function FieldError({ message }: { message?: string }) {
   if (!message) return null
-  return <p className="text-[#ae251c] text-xs mt-1">{message}</p>
+  return <p className="text-[#ae251c] text-xs mt-1.5">{message}</p>
 }
 
 const inputClass =
-  'w-full bg-[#0b1f3a] border border-[#142f54] focus:border-[#ae251c] text-white placeholder-[#4a6a8a] rounded-lg px-4 py-3 outline-none transition-colors'
+  'w-full bg-[#07162a] border border-[#142f54] focus:border-[#c9a84c] focus:ring-1 focus:ring-[#c9a84c]/30 text-white placeholder-[#4a6a8a] rounded-lg px-4 py-3 outline-none transition-all duration-200'
 
 // ─── Client Form ─────────────────────────────────────────────────────────────
 
@@ -67,36 +69,21 @@ function ClientForm({ onSubmit, loading, t }: ClientFormProps) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
-      {/* Segment */}
       <div>
         <FieldLabel>{t('contact.segment.label')}</FieldLabel>
         <select {...register('segment')} className={inputClass}>
-          <option value="" className="bg-[#0b1f3a]">
-            Selecione...
-          </option>
-          {[
-            'Imóvel',
-            'Veículo',
-            'Pesados & Agro',
-            'Serviços',
-            'Condomínio',
-            'Outros',
-          ].map((opt) => (
-            <option key={opt} value={opt} className="bg-[#0b1f3a]">
-              {opt}
-            </option>
+          <option value="" className="bg-[#0b1f3a]">Selecione...</option>
+          {['Imóvel', 'Veículo', 'Pesados & Agro', 'Serviços', 'Condomínio', 'Outros'].map((opt) => (
+            <option key={opt} value={opt} className="bg-[#0b1f3a]">{opt}</option>
           ))}
         </select>
         <FieldError message={errors.segment?.message} />
       </div>
 
-      {/* Credit */}
       <div>
         <FieldLabel>{t('contact.credit.label')}</FieldLabel>
         <div className="relative">
-          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#7a9ab8] text-sm select-none pointer-events-none">
-            R$
-          </span>
+          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#7a9ab8] text-sm select-none pointer-events-none">R$</span>
           <input
             {...register('credit')}
             type="text"
@@ -107,43 +94,24 @@ function ClientForm({ onSubmit, loading, t }: ClientFormProps) {
         <FieldError message={errors.credit?.message} />
       </div>
 
-      {/* Term */}
       <div>
         <FieldLabel>{t('contact.term.label')}</FieldLabel>
-        <input
-          {...register('term')}
-          type="text"
-          placeholder="ex: 60 meses"
-          className={inputClass}
-        />
+        <input {...register('term')} type="text" placeholder="ex: 60 meses" className={inputClass} />
         <FieldError message={errors.term?.message} />
       </div>
 
-      {/* Name */}
       <div>
         <FieldLabel>{t('contact.name.label')}</FieldLabel>
-        <input
-          {...register('name')}
-          type="text"
-          placeholder="Seu nome completo"
-          className={inputClass}
-        />
+        <input {...register('name')} type="text" placeholder="Seu nome completo" className={inputClass} />
         <FieldError message={errors.name?.message} />
       </div>
 
-      {/* WhatsApp */}
       <div>
         <FieldLabel>{t('contact.whatsapp.label')}</FieldLabel>
-        <input
-          {...register('whatsapp')}
-          type="tel"
-          placeholder="(11) 99999-9999"
-          className={inputClass}
-        />
+        <input {...register('whatsapp')} type="tel" placeholder="(11) 99999-9999" className={inputClass} />
         <FieldError message={errors.whatsapp?.message} />
       </div>
 
-      {/* Submit */}
       <button
         type="submit"
         disabled={loading}
@@ -173,68 +141,36 @@ function PartnerForm({ onSubmit, loading, t }: PartnerFormProps) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
-      {/* Company */}
       <div>
         <FieldLabel>{t('contact.company.label')}</FieldLabel>
-        <input
-          {...register('company')}
-          type="text"
-          placeholder="Razão social da empresa"
-          className={inputClass}
-        />
+        <input {...register('company')} type="text" placeholder="Razão social da empresa" className={inputClass} />
         <FieldError message={errors.company?.message} />
       </div>
 
-      {/* Broker */}
       <div>
         <FieldLabel>{t('contact.broker.label')}</FieldLabel>
-        <input
-          {...register('broker')}
-          type="text"
-          placeholder="Nome do escritório / correspondente"
-          className={inputClass}
-        />
+        <input {...register('broker')} type="text" placeholder="Nome do escritório / correspondente" className={inputClass} />
         <FieldError message={errors.broker?.message} />
       </div>
 
-      {/* Advisors */}
       <div>
         <FieldLabel>{t('contact.advisors.label')}</FieldLabel>
-        <input
-          {...register('advisors')}
-          type="number"
-          min={1}
-          placeholder="Ex: 5"
-          className={inputClass}
-        />
+        <input {...register('advisors')} type="number" min={1} placeholder="Ex: 5" className={inputClass} />
         <FieldError message={errors.advisors?.message} />
       </div>
 
-      {/* Phone */}
       <div>
         <FieldLabel>{t('contact.phone.label')}</FieldLabel>
-        <input
-          {...register('phone')}
-          type="tel"
-          placeholder="(11) 99999-9999"
-          className={inputClass}
-        />
+        <input {...register('phone')} type="tel" placeholder="(11) 99999-9999" className={inputClass} />
         <FieldError message={errors.phone?.message} />
       </div>
 
-      {/* Email */}
       <div>
         <FieldLabel>{t('contact.email.label')}</FieldLabel>
-        <input
-          {...register('email')}
-          type="email"
-          placeholder="contato@empresa.com.br"
-          className={inputClass}
-        />
+        <input {...register('email')} type="email" placeholder="contato@empresa.com.br" className={inputClass} />
         <FieldError message={errors.email?.message} />
       </div>
 
-      {/* Submit */}
       <button
         type="submit"
         disabled={loading}
@@ -266,8 +202,7 @@ export default function Contato() {
         process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!,
       )
       toast.success(t('contact.success'))
-      const waNumber =
-        process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '55XXXXXXXXXXX'
+      const waNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '55XXXXXXXXXXX'
       const msg = `Olá! Sou ${data.name}, tenho interesse em consórcio de ${data.segment} com crédito de ${data.credit}.`
       window.open(formatWhatsAppLink(waNumber, msg), '_blank')
     } catch {
@@ -287,8 +222,7 @@ export default function Contato() {
         process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!,
       )
       toast.success(t('contact.success'))
-      const waNumber =
-        process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '55XXXXXXXXXXX'
+      const waNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '55XXXXXXXXXXX'
       const msg = `Olá! Sou ${data.broker}, tenho interesse em parceria com a Hold Corretora.`
       window.open(formatWhatsAppLink(waNumber, msg), '_blank')
     } catch {
@@ -301,85 +235,80 @@ export default function Contato() {
   return (
     <section
       id="contato"
-      className="py-24 md:py-32 bg-[#0b1f3a]"
+      className="section-pad bg-[#0b1f3a]"
       style={{ fontFamily: 'var(--font-outfit)' }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-16">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        {/* Header — left-aligned editorial */}
+        <div className="max-w-2xl mb-12">
           <span className="inline-flex items-center rounded-full bg-[#ae251c]/20 text-[#ae251c] px-3 py-1 text-[10px] uppercase tracking-[0.2em] font-semibold">
             {t('contact.eyebrow')}
           </span>
-          <h2 className="mt-4 text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white">
+          <h2
+            className="mt-5 text-display text-white"
+            style={{ fontSize: 'clamp(2rem, 4.4vw, 3.25rem)' }}
+          >
             {t('contact.title')}
           </h2>
         </div>
 
-        {/* Card — Double-Bezel */}
-        <div className="max-w-lg mx-auto rounded-2xl bg-white/5 ring-1 ring-white/10 p-1.5">
-          <div className="rounded-[calc(1rem-0.375rem)] bg-[#0b1f3a] shadow-[inset_0_1px_1px_rgba(255,255,255,0.08)] px-6 py-8 sm:px-8">
+        {/* Form panel — single solid surface, no double bezel */}
+        <div className="max-w-lg mx-auto rounded-2xl bg-[#0b1f3a] ring-1 ring-white/10 px-6 py-8 sm:px-10 sm:py-10">
 
-            {/* Tab toggle */}
-            <div className="flex justify-center mb-8">
-              <div className="bg-[#142f54] rounded-full p-1 inline-flex">
-                <button
-                  type="button"
-                  onClick={() => setTab('client')}
-                  className={`rounded-full px-6 py-2 text-sm font-semibold transition-colors duration-200 ${
-                    isClient
-                      ? 'bg-[#ae251c] text-white'
-                      : 'text-[#7a9ab8] hover:text-white'
-                  }`}
-                >
-                  {t('contact.client.title')}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setTab('partner')}
-                  className={`rounded-full px-6 py-2 text-sm font-semibold transition-colors duration-200 ${
-                    !isClient
-                      ? 'bg-[#ae251c] text-white'
-                      : 'text-[#7a9ab8] hover:text-white'
-                  }`}
-                >
-                  {t('contact.partner.title')}
-                </button>
-              </div>
+          {/* Tab toggle */}
+          <div className="flex justify-center mb-8">
+            <div className="bg-[#142f54] rounded-full p-1 inline-flex relative">
+              {(['client', 'partner'] as const).map((id) => {
+                const label = id === 'client' ? t('contact.client.title') : t('contact.partner.title')
+                const isActive = tab === id
+                return (
+                  <button
+                    key={id}
+                    type="button"
+                    onClick={() => setTab(id)}
+                    className="relative z-10 rounded-full px-6 py-2 text-sm font-semibold transition-colors duration-200"
+                    style={{ color: isActive ? '#ffffff' : '#7a9ab8' }}
+                  >
+                    {isActive && (
+                      <motion.span
+                        layoutId="contact-tab-pill"
+                        className="absolute inset-0 rounded-full bg-[#ae251c] -z-10"
+                        transition={{ type: 'spring', stiffness: 110, damping: 22 }}
+                      />
+                    )}
+                    {label}
+                  </button>
+                )
+              })}
             </div>
-
-            {/* Animated form swap */}
-            <AnimatePresence mode="wait">
-              {isClient ? (
-                <motion.div
-                  key="client"
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -12 }}
-                  transition={{ duration: 0.22, ease: 'easeInOut' }}
-                >
-                  <ClientForm
-                    onSubmit={handleClientSubmit}
-                    loading={loading}
-                    t={t}
-                  />
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="partner"
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -12 }}
-                  transition={{ duration: 0.22, ease: 'easeInOut' }}
-                >
-                  <PartnerForm
-                    onSubmit={handlePartnerSubmit}
-                    loading={loading}
-                    t={t}
-                  />
-                </motion.div>
-              )}
-            </AnimatePresence>
           </div>
+
+          {/* Animated form swap */}
+          <AnimatePresence mode="wait">
+            {isClient ? (
+              <motion.div
+                key="client"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.32, ease: EASE_OUT_EXPO }}
+              >
+                <ClientForm onSubmit={handleClientSubmit} loading={loading} t={t} />
+              </motion.div>
+            ) : (
+              <motion.div
+                key="partner"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.32, ease: EASE_OUT_EXPO }}
+              >
+                <PartnerForm onSubmit={handlePartnerSubmit} loading={loading} t={t} />
+              </motion.div>
+            )}
+          </AnimatePresence>
+
         </div>
       </div>
     </section>
