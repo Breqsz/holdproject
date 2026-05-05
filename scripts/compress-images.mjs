@@ -11,25 +11,25 @@ const TARGETS = [
     src: join(ROOT, 'public/images/hero/family-hero.jpeg'),
     out: join(ROOT, 'public/images/hero/family-hero.webp'),
     width: 1280,
-    quality: 78,
+    quality: 85,
   },
   {
     src: join(ROOT, 'public/images/hero/office-hero.jpg'),
     out: join(ROOT, 'public/images/hero/office-hero.webp'),
     width: 1280,
-    quality: 78,
+    quality: 85,
   },
   {
     src: join(ROOT, 'public/images/hero/family-hero2.jpeg'),
     out: join(ROOT, 'public/images/hero/family-hero2.webp'),
     width: 1280,
-    quality: 75,
+    quality: 82,
   },
   {
     src: join(ROOT, 'public/images/hero/family-hero3.jpeg'),
     out: join(ROOT, 'public/images/hero/family-hero3.webp'),
     width: 1280,
-    quality: 75,
+    quality: 82,
   },
 ]
 
