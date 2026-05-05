@@ -92,9 +92,9 @@ export default function HomeHero() {
       <div aria-hidden className="dot-grid pointer-events-none absolute inset-0 opacity-[0.06]" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 pt-32 pb-16 md:pt-40 md:pb-20 min-h-[100dvh] flex flex-col justify-center">
-        <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-10 lg:gap-12 items-center">
+        <div className="max-w-3xl">
 
-          {/* Left — text block */}
+          {/* Text block */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
@@ -158,31 +158,6 @@ export default function HomeHero() {
             </motion.div>
           </motion.div>
 
-          {/* Right — Jacimar 3D avatar */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1.1, ease: EASE_OUT_EXPO, delay: 0.3 }}
-            className="relative flex items-center justify-center lg:justify-end"
-          >
-            {/* glow ring behind avatar */}
-            <div
-              aria-hidden
-              className="pointer-events-none absolute inset-0 -z-10 m-auto h-[380px] w-[380px] rounded-full"
-              style={{ background: 'radial-gradient(circle, rgba(174,37,28,0.18) 0%, transparent 60%)', filter: 'blur(40px)' }}
-            />
-            <img
-              src="/personagem/jacimar-avatar-3d.png"
-              alt={t('hero.character.alt')}
-              className="h-[320px] md:h-[420px] lg:h-[520px] w-auto object-contain pointer-events-none select-none"
-              draggable={false}
-            />
-            {/* shadow under */}
-            <div
-              aria-hidden
-              className="absolute -bottom-2 left-1/2 -translate-x-1/2 h-4 w-2/3 rounded-full bg-black/40 blur-xl"
-            />
-          </motion.div>
         </div>
       </div>
     </section>

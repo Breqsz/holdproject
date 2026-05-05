@@ -100,11 +100,8 @@ describe('HomeHero', () => {
     expect(screen.getByRole('link', { name: /Conhecer soluções/i })).toHaveAttribute('href', '#solucoes')
   })
 
-  it('renders the Jacimar 3D avatar on the right', () => {
+  it('does not render the Jacimar 3D avatar', () => {
     renderHero()
-    expect(screen.getByRole('img', { name: 'Especialista Hold Corretora' })).toHaveAttribute(
-      'src',
-      '/personagem/jacimar-avatar-3d.png',
-    )
+    expect(screen.queryByRole('img', { name: 'Especialista Hold Corretora' })).toBeNull()
   })
 })
