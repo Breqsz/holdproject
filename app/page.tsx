@@ -9,7 +9,6 @@ import ComoFunciona from '@/components/sections/ComoFunciona'
 import Depoimentos from '@/components/sections/Depoimentos'
 import FAQ from '@/components/sections/FAQ'
 import Contato from '@/components/sections/Contato'
-import CurvedLoop from '@/components/motion/CurvedLoop'
 import { useAudience } from '@/lib/audience'
 
 export default function Home() {
@@ -19,19 +18,6 @@ export default function Home() {
   return (
     <>
       <HomeHero />
-
-      {/* Curved values divider — between Hero and Solutions */}
-      <div aria-hidden className="bg-[#07162a] py-8 md:py-10">
-        <CurvedLoop
-          marqueeText="SEGURANÇA ✦ PLANEJAMENTO ✦ ACOMPANHAMENTO ✦ RESULTADOS ✦ "
-          curveAmount={300}
-          speed={0.55}
-          direction="left"
-          interactive={false}
-          className="fill-white/15"
-          fontSize="text-[2.2rem] md:text-[3rem]"
-        />
-      </div>
 
       <SolucoesGrid />
       <Parceiros />

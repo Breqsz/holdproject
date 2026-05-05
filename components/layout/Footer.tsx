@@ -1,6 +1,6 @@
 'use client'
 
-import { MessageCircle } from 'lucide-react'
+import { MessageCircle, MapPin, Phone } from 'lucide-react'
 import { useLocale } from '@/lib/i18n'
 
 function IconInstagram({ size = 16 }: { size?: number }) {
@@ -38,29 +38,45 @@ export default function Footer() {
       {/* Top hairline — gold tint */}
       <div className="rule-gold h-px max-w-7xl mx-auto" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
 
-          {/* Brand block — wider */}
-          <div className="md:col-span-5">
-            <div className="flex items-baseline gap-2 mb-5">
+        {/* Main footer hero — HOLD CORRETORA × LOJACORR — centered */}
+        <div className="mb-14 flex flex-col items-center text-center gap-4">
+          <div className="flex items-end gap-4 sm:gap-6 flex-wrap justify-center">
+            <div className="flex items-baseline gap-2.5">
               <span
-                className="text-display text-white tracking-tight"
-                style={{ fontSize: 'clamp(2rem, 3vw, 2.5rem)' }}
+                className="text-display text-white tracking-tight leading-none"
+                style={{ fontSize: 'clamp(2.8rem, 6vw, 5rem)' }}
               >
                 HOLD
               </span>
-              <span className="text-[#c9a84c] font-medium text-sm tracking-wider">Corretora</span>
+              <span className="text-[#c9a84c] font-semibold tracking-wider" style={{ fontSize: 'clamp(0.85rem, 1.4vw, 1.1rem)' }}>
+                Corretora
+              </span>
             </div>
-            <p className="text-[#7a9ab8] text-sm leading-relaxed max-w-sm">
-              {t('footer.tagline')}
-            </p>
+
+            <span className="text-[#1e4a7a] font-light select-none" style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}>×</span>
+
+            <img
+              src="/images/LojaCorr.svg"
+              alt="Lojacorr"
+              className="brightness-200 contrast-125 w-auto"
+              style={{ height: 'clamp(2.4rem, 4.8vw, 4.2rem)' }}
+            />
           </div>
 
-          {/* Nav */}
-          <div className="md:col-span-3">
+          <p className="text-[#7a9ab8] text-sm leading-relaxed max-w-sm">
+            {t('footer.tagline')}
+          </p>
+        </div>
+
+        {/* 3-column grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 sm:gap-6">
+
+          {/* Navegação */}
+          <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
             <h4 className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#ae251c] mb-5">
-              Navegação
+              {t('footer.nav.title')}
             </h4>
             <ul className="space-y-2.5">
               {navLinks.map((link) => (
@@ -76,10 +92,10 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Social + legal */}
-          <div className="md:col-span-4">
+          {/* Redes Sociais */}
+          <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
             <h4 className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#ae251c] mb-5">
-              Redes Sociais
+              {t('footer.social.title')}
             </h4>
             <div className="flex gap-2.5 mb-7">
               <a
@@ -106,28 +122,41 @@ export default function Footer() {
                 <MessageCircle size={16} strokeWidth={1.7} />
               </a>
             </div>
-            <p className="text-[#4a6a8a] text-xs leading-relaxed max-w-xs">
+            <p className="text-[#4a6a8a] text-xs leading-relaxed max-w-[18ch]">
               {t('footer.legal')}
             </p>
           </div>
-        </div>
 
-        {/* Lojacorr membership block */}
-        <div className="mt-16 pt-8 border-t border-[#142f54]/40">
-          <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8">
-            <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#c9a84c]">
-              Filiada
-            </span>
-            <div className="flex items-center gap-4">
-              <img
-                src="/images/LojaCorr.svg"
-                alt="Lojacorr"
-                className="h-8 w-auto opacity-90"
-              />
-              <span className="text-[#7a9ab8] text-xs leading-relaxed max-w-sm">
-                {t('footer.lojacorr')}
-              </span>
-            </div>
+          {/* Contato */}
+          <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
+            <h4 className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#ae251c] mb-5">
+              {t('nav.contact')}
+            </h4>
+            <ul className="space-y-3">
+              <li className="flex items-start gap-2.5">
+                <MapPin size={14} className="text-[#c9a84c] shrink-0 mt-0.5" strokeWidth={1.7} />
+                <span className="text-[#7a9ab8] text-sm leading-relaxed">
+                  Uberlândia, MG
+                </span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <MessageCircle size={14} className="text-[#c9a84c] shrink-0 mt-0.5" strokeWidth={1.7} />
+                <a
+                  href={waHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#7a9ab8] hover:text-white text-sm transition-colors duration-200"
+                >
+                  WhatsApp
+                </a>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <Phone size={14} className="text-[#c9a84c] shrink-0 mt-0.5" strokeWidth={1.7} />
+                <span className="text-[#7a9ab8] text-sm">
+                  holdcorretora.com
+                </span>
+              </li>
+            </ul>
           </div>
         </div>
 

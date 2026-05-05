@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Direção de Design — Hold</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #111; color: #eee; padding: 32px 24px; }
+  h1 { font-size: 18px; font-weight: 600; letter-spacing: -0.02em; color: #fff; margin-bottom: 6px; }
+  .q { font-size: 13px; color: #888; margin-bottom: 32px; }
+
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 900px) { .cards { grid-template-columns: 1fr; } }
+
+  .card {
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.2s, transform 0.2s;
+    background: #1a1a1a;
+  }
+  .card:hover { transform: translateY(-2px); }
+  .card.selected { border-color: #4f8ef7; }
+
+  .preview {
+    height: 340px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  /* Option A — Full Light (Halo) */
+  .preview-a {
+    background: #F5F5F5;
+    padding: 0;
+  }
+  .preview-a .nav-bar {
+    position: absolute; top: 0; left: 0; right: 0;
+    padding: 14px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: transparent;
+  }
+  .preview-a .logo { font-size: 13px; font-weight: 700; color: #000; letter-spacing: -0.03em; }
+  .preview-a .nav-links { display: flex; gap: 12px; }
+  .preview-a .nav-link { font-size: 10px; color: #555; }
+  .preview-a .nav-btn { font-size: 10px; background: #000; color: #fff; padding: 5px 12px; border-radius: 100px; }
+
+  .preview-a .hero-card {
+    margin: 10px;
+    border-radius: 14px;
+    overflow: hidden;
+    height: 280px;
+    position: relative;
+    background: linear-gradient(135deg, #c8d5e8 0%, #dde8f5 50%, #e8eef5 100%);
+  }
+  .preview-a .hero-card .office-img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.6;
+  }
+  .preview-a .hero-content {
+    position: absolute; bottom: 16px; left: 16px;
+    z-index: 2;
+  }
+  .preview-a .hero-h1 { font-size: 18px; font-weight: 600; color: #000; letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 6px; }
+  .preview-a .hero-p { font-size: 9px; color: rgba(0,0,0,0.6); max-width: 160px; line-height: 1.4; margin-bottom: 10px; }
+  .preview-a .toggle { display: inline-flex; background: rgba(0,0,0,0.08); border-radius: 100px; padding: 2px; gap: 1px; }
+  .preview-a .toggle-btn { font-size: 8px; padding: 3px 8px; border-radius: 100px; color: #000; }
+  .preview-a .toggle-btn.active { background: #000; color: #fff; }
+
+  /* Option B — Dark core, light trim */
+  .preview-b {
+    background: #07162a;
+    padding: 0;
+  }
+  .preview-b .nav-bar {
+    position: absolute; top: 0; left: 0; right: 0;
+    padding: 14px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .preview-b .logo { font-size: 13px; font-weight: 700; color: #fff; letter-spacing: -0.03em; }
+  .preview-b .nav-btn { font-size: 10px; background: #ae251c; color: #fff; padding: 5px 12px; border-radius: 100px; }
+
+  .preview-b .hero-content {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 16px 20px;
+    background: #F5F5F5;
+    border-radius: 20px 20px 0 0;
+  }
+  .preview-b .label { font-size: 8px; color: #888; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.08em; }
+  .preview-b .hero-h1 { font-size: 16px; font-weight: 700; color: #000; letter-spacing: -0.04em; line-height: 1.15; margin-bottom: 6px; }
+  .preview-b .hero-p { font-size: 9px; color: rgba(0,0,0,0.55); line-height: 1.45; margin-bottom: 10px; }
+  .preview-b .btns { display: flex; gap: 6px; }
+  .preview-b .btn-red { font-size: 8px; background: #ae251c; color: #fff; padding: 4px 10px; border-radius: 100px; }
+  .preview-b .btn-out { font-size: 8px; border: 1px solid #ddd; color: #333; padding: 4px 10px; border-radius: 100px; }
+  .preview-b .toggle { display: inline-flex; background: #eee; border-radius: 100px; padding: 2px; gap: 1px; margin-bottom: 8px; }
+  .preview-b .toggle-btn { font-size: 8px; padding: 3px 8px; border-radius: 100px; color: #555; }
+  .preview-b .toggle-btn.active { background: #000; color: #fff; }
+
+  /* Dark illustration area */
+  .preview-b .dark-area {
+    position: absolute; top: 55px; left: 0; right: 0; height: 180px;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .preview-b .orb { width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #1e3a64, #07162a); border: 1px solid rgba(255,255,255,0.08); }
+  .preview-b .rotating-label { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); font-size: 18px; font-weight: 700; color: #ae251c; letter-spacing: -0.03em; white-space: nowrap; }
+  .preview-b .sub-label { font-size: 11px; color: rgba(255,255,255,0.4); }
+
+  /* Option C — Hybrid Dark hero, light sections */
+  .preview-c {
+    background: #07162a;
+    padding: 0;
+  }
+  .preview-c .nav-bar {
+    position: absolute; top: 0; left: 0; right: 0;
+    padding: 14px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .preview-c .logo { font-size: 13px; font-weight: 700; color: #fff; letter-spacing: -0.03em; }
+  .preview-c .nav-btn { font-size: 10px; background: #fff; color: #000; padding: 5px 12px; border-radius: 100px; }
+
+  .preview-c .hero-card {
+    position: absolute; top: 48px; left: 10px; right: 10px; bottom: 0;
+    border-radius: 14px 14px 0 0;
+    overflow: hidden;
+    background: linear-gradient(160deg, #0b1f3a 0%, #07162a 100%);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .preview-c .orb1 { position: absolute; width: 200px; height: 200px; border-radius: 50%; background: #1a4b8a; opacity: 0.18; filter: blur(50px); top: -60px; right: -60px; }
+  .preview-c .orb2 { position: absolute; width: 120px; height: 120px; border-radius: 50%; background: #ae251c; opacity: 0.12; filter: blur(40px); bottom: 10px; left: -30px; }
+
+  .preview-c .hero-content { position: absolute; bottom: 20px; left: 18px; z-index: 2; }
+  .preview-c .hero-h1 { font-size: 19px; font-weight: 700; color: #fff; letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 4px; }
+  .preview-c .red-word { color: #ae251c; }
+  .preview-c .hero-p { font-size: 9px; color: rgba(255,255,255,0.5); margin-bottom: 10px; line-height: 1.45; max-width: 180px; }
+  .preview-c .toggle { display: inline-flex; background: rgba(255,255,255,0.07); border-radius: 100px; padding: 2px; gap: 1px; margin-bottom: 8px; }
+  .preview-c .toggle-btn { font-size: 8px; padding: 3px 8px; border-radius: 100px; color: rgba(255,255,255,0.5); }
+  .preview-c .toggle-btn.active { background: #fff; color: #000; }
+  .preview-c .btns { display: flex; gap: 6px; }
+  .preview-c .btn-red { font-size: 8px; background: #ae251c; color: #fff; padding: 4px 10px; border-radius: 100px; }
+  .preview-c .btn-out { font-size: 8px; border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.7); padding: 4px 10px; border-radius: 100px; }
+
+  .card-body { padding: 16px 18px; }
+  .option-tag { font-size: 11px; font-weight: 700; color: #4f8ef7; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+  .card-title { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 4px; letter-spacing: -0.01em; }
+  .card-desc { font-size: 12px; color: #666; line-height: 1.45; }
+  .rec { display: inline-block; margin-top: 6px; font-size: 10px; color: #f4b942; font-weight: 600; }
+
+  .hint { text-align: center; margin-top: 24px; font-size: 12px; color: #444; }
+</style>
+</head>
+<body>
+
+<h1>Qual direção de design para a Hold?</h1>
+<p class="q">Cada opção mantém o toggle Empresa/Cliente e adapta o estilo geral da homepage. Clique para escolher.</p>
+
+<div class="cards">
+
+  <!-- Option A -->
+  <div class="card" data-choice="a" onclick="this.classList.toggle('selected')">
+    <div class="preview preview-a">
+      <div class="nav-bar">
+        <span class="logo">HOLD</span>
+        <div class="nav-links">
+          <span class="nav-link">Soluções</span>
+          <span class="nav-link">Sobre</span>
+          <span class="nav-link">Parceiros</span>
+        </div>
+        <span class="nav-btn">Falar no WhatsApp</span>
+      </div>
+      <div class="hero-card">
+        <img class="office-img" src="/images/hero/office_hero.avif" alt="" onerror="this.style.display='none'" />
+        <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(200,213,232,0.7) 0%,rgba(232,238,245,0.5) 100%)"></div>
+        <div class="hero-content">
+          <div class="hero-h1">Seguros com<br/>estratégia.</div>
+          <div class="hero-p">Proteção inteligente para o que mais importa na sua vida e empresa.</div>
+          <div class="toggle">
+            <span class="toggle-btn active">Pessoa Física</span>
+            <span class="toggle-btn">Empresa</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="option-tag">A</div>
+      <div class="card-title">Full Light — Halo</div>
+      <div class="card-desc">Fundo #F5F5F5, hero com imagem/vídeo em card rounded, nav transparente sobre hero. Estética Halo/fintech limpa. Gellix continua como fonte. CTAs em preto.</div>
+    </div>
+  </div>
+
+  <!-- Option B -->
+  <div class="card" data-choice="b" onclick="this.classList.toggle('selected')">
+    <div class="preview preview-b">
+      <div class="nav-bar">
+        <span class="logo">HOLD</span>
+        <span class="nav-btn">WhatsApp</span>
+      </div>
+      <div class="dark-area">
+        <div class="orb"></div>
+        <div style="position:absolute;display:flex;flex-direction:column;align-items:center">
+          <div class="rotating-label">Consórcio</div>
+          <div class="sub-label">→ inteligência</div>
+        </div>
+      </div>
+      <div class="hero-content">
+        <div class="toggle">
+          <span class="toggle-btn active">Pessoa Física</span>
+          <span class="toggle-btn">Empresa</span>
+        </div>
+        <div class="hero-h1">Proteção &amp;<br/>Crescimento.</div>
+        <div class="hero-p">Soluções de seguros, consórcios e saúde adaptadas ao seu perfil.</div>
+        <div class="btns">
+          <span class="btn-red">Falar no WhatsApp</span>
+          <span class="btn-out">Conhecer soluções</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="option-tag">B</div>
+      <div class="card-title">Dark hero + Light bottom</div>
+      <div class="card-desc">Mantém o dark navy no topo, mas conteúdo do hero emerge de um painel branco embaixo. Seções abaixo ficam em #F5F5F5. Transição dramática. Red CTAs preservados.</div>
+    </div>
+  </div>
+
+  <!-- Option C -->
+  <div class="card" data-choice="c" onclick="this.classList.toggle('selected')">
+    <div class="preview preview-c">
+      <div class="nav-bar">
+        <span class="logo">HOLD</span>
+        <span class="nav-btn">WhatsApp</span>
+      </div>
+      <div class="hero-card">
+        <div class="orb1"></div>
+        <div class="orb2"></div>
+        <div class="hero-content">
+          <div class="toggle">
+            <span class="toggle-btn active">Pessoa Física</span>
+            <span class="toggle-btn">Empresa</span>
+          </div>
+          <div class="hero-h1"><span class="red-word">Consórcio</span><br/>com <span class="red-word">inteligência</span>.</div>
+          <div class="hero-p">Proteção e crescimento patrimonial com acompanhamento especializado.</div>
+          <div class="btns">
+            <span class="btn-red">WhatsApp</span>
+            <span class="btn-out">Ver soluções →</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="option-tag">C</div>
+      <div class="card-title">Dark Refinado (atual evoluído)</div>
+      <div class="card-desc">Mantém o dark atual mas aplica estrutura Halo: hero com card rounded, tipografia mais compacta (-0.04em), seções inferiores em #F5F5F5. Identidade dark preservada, layout modernizado.</div>
+      <span class="rec">★ Nossa recomendação</span>
+    </div>
+  </div>
+
+</div>
+
+<p class="hint">Clique em uma opção para selecionar · responda no terminal depois</p>
+
+<script>
+document.querySelectorAll('.card').forEach(card => {
+  card.addEventListener('click', () => {
+    document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    const choice = card.dataset.choice;
+    const title = card.querySelector('.card-title').textContent;
+    if (window.parent !== window) {
+      window.parent.postMessage({type:'choice',choice,text:title}, '*');
+    }
+    // try to record via fetch if companion server is present
+    fetch('/select', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({choice, text: title})}).catch(()=>{});
+  });
+});
+</script>
+</body>
+</html>

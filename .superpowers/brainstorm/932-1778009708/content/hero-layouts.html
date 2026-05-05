@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hero Layout — 3 Propostas</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0a0f1a;
+    color: #e0e8f0;
+    font-family: system-ui, -apple-system, sans-serif;
+    padding: 32px 24px 48px;
+    min-height: 100vh;
+  }
+
+  .page-title {
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: #c9a84c;
+    margin-bottom: 8px;
+  }
+  .page-sub {
+    text-align: center;
+    color: #7a9ab8;
+    font-size: 14px;
+    margin-bottom: 40px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* ── Card wrapper ── */
+  .card {
+    border-radius: 16px;
+    overflow: hidden;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: border-color .25s, transform .2s, box-shadow .25s;
+    background: #07162a;
+    position: relative;
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 20px 48px rgba(0,0,0,.5); }
+  .card.selected { border-color: #c9a84c; box-shadow: 0 0 0 3px rgba(201,168,76,.2), 0 20px 48px rgba(0,0,0,.5); }
+  .card .check {
+    position: absolute; top: 12px; right: 12px; z-index: 10;
+    width: 28px; height: 28px; border-radius: 50%;
+    background: #c9a84c; display: none;
+    align-items: center; justify-content: center;
+    font-size: 14px; color: #07162a; font-weight: 700;
+  }
+  .card.selected .check { display: flex; }
+
+  .card-label {
+    padding: 16px 20px 12px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .tag {
+    font-size: 10px; font-weight: 700; letter-spacing: .15em;
+    text-transform: uppercase; padding: 4px 10px;
+    border-radius: 999px;
+    background: rgba(201,168,76,.12); color: #c9a84c;
+    border: 1px solid rgba(201,168,76,.25);
+  }
+  .card-name { font-size: 14px; font-weight: 600; color: #fff; }
+
+  /* ── Hero mockup ── */
+  .hero {
+    position: relative;
+    height: 360px;
+    overflow: hidden;
+    margin: 0 16px 16px;
+    border-radius: 10px;
+  }
+
+  /* Photo placeholder */
+  .photo {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, #1a3a6a 0%, #0d2040 60%, #07162a 100%);
+  }
+  /* Fake "person" silhouette for PF feel */
+  .photo::after {
+    content: '';
+    position: absolute; bottom: 0; right: 12%;
+    width: 55%; height: 90%;
+    background: linear-gradient(to top, rgba(20,47,84,.9) 0%, rgba(30,60,100,.3) 60%, transparent 100%);
+    border-radius: 60% 60% 0 0 / 20% 20% 0 0;
+  }
+
+  /* Gradient overlay */
+  .overlay {
+    position: absolute; inset: 0;
+    pointer-events: none;
+  }
+
+  /* Brand atmosphere orbs */
+  .orb1 {
+    position: absolute; top: -40px; right: -40px;
+    width: 200px; height: 200px; border-radius: 50%;
+    background: #1a4b8a; opacity: .22; filter: blur(60px);
+    pointer-events: none;
+  }
+  .orb2 {
+    position: absolute; bottom: 0; left: 10%;
+    width: 120px; height: 120px; border-radius: 50%;
+    background: #ae251c; opacity: .12; filter: blur(50px);
+    pointer-events: none;
+  }
+
+  /* ── Content blocks ── */
+  .content { position: absolute; z-index: 2; }
+
+  /* Shared UI atoms */
+  .toggle-pill {
+    display: inline-flex; align-items: center; gap: 0;
+    background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12);
+    border-radius: 999px; padding: 3px;
+    font-size: 9px; font-weight: 600; letter-spacing: .06em;
+  }
+  .toggle-pill span {
+    padding: 4px 10px; border-radius: 999px; color: rgba(255,255,255,.45);
+    transition: all .2s;
+  }
+  .toggle-pill span.active {
+    background: #ae251c; color: #fff;
+    box-shadow: 0 2px 10px rgba(174,37,28,.4);
+  }
+
+  .h1-mock {
+    font-weight: 800; letter-spacing: -.025em; line-height: 1.05;
+    color: #fff;
+  }
+  .h1-red { color: #ae251c; display: block; font-style: italic; }
+
+  .subtitle-mock {
+    color: rgba(255,255,255,.42);
+    font-size: 10px; line-height: 1.55;
+    max-width: 200px;
+  }
+
+  .btn-red {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: #ae251c; color: #fff; border: none;
+    border-radius: 999px; padding: 7px 16px;
+    font-size: 9px; font-weight: 700;
+    box-shadow: 0 4px 14px rgba(174,37,28,.4);
+    letter-spacing: .02em;
+  }
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: rgba(255,255,255,.06); color: #fff;
+    border: 1px solid rgba(255,255,255,.14);
+    border-radius: 999px; padding: 7px 16px;
+    font-size: 9px; font-weight: 600;
+    letter-spacing: .02em;
+  }
+  .btns { display: flex; gap: 7px; flex-wrap: wrap; }
+
+  /* ── LAYOUT A — Centralizado ── */
+  .layout-a .overlay {
+    background: linear-gradient(to top, rgba(7,22,42,.85) 0%, rgba(7,22,42,.55) 50%, rgba(7,22,42,.25) 100%);
+  }
+  .layout-a .content {
+    inset: 0; display: flex;
+    flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 24px;
+  }
+  .layout-a .toggle-pill { margin-bottom: 14px; }
+  .layout-a .h1-mock { font-size: 26px; margin-bottom: 10px; }
+  .layout-a .subtitle-mock { max-width: 220px; font-size: 9.5px; margin-bottom: 14px; text-align: center; }
+  .layout-a .btns { justify-content: center; }
+
+  /* ── LAYOUT B — Lateral esquerdo ── */
+  .layout-b .overlay {
+    background: linear-gradient(105deg, rgba(7,22,42,.96) 0%, rgba(7,22,42,.75) 45%, rgba(7,22,42,.15) 100%);
+  }
+  .layout-b .content {
+    left: 0; top: 0; bottom: 0;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 24px 20px 24px 24px;
+    width: 68%;
+  }
+  .layout-b .toggle-pill { margin-bottom: 12px; }
+  .layout-b .h1-mock { font-size: 24px; margin-bottom: 8px; }
+  .layout-b .subtitle-mock { margin-bottom: 14px; }
+
+  /* ── LAYOUT C — Outra proposta: Bottom band ── */
+  .layout-c .overlay {
+    background: linear-gradient(to top,
+      rgba(7,22,42,1) 0%,
+      rgba(7,22,42,.9) 30%,
+      rgba(7,22,42,.4) 58%,
+      rgba(7,22,42,.1) 100%
+    );
+  }
+  .layout-c .content {
+    left: 0; right: 0; bottom: 0;
+    padding: 20px 24px 20px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    align-items: end;
+    gap: 0 16px;
+  }
+  .layout-c .left-col { grid-column: 1; grid-row: 1 / 3; }
+  .layout-c .toggle-pill { margin-bottom: 10px; }
+  .layout-c .h1-mock { font-size: 22px; margin-bottom: 6px; }
+  .layout-c .subtitle-mock { max-width: 180px; font-size: 9px; margin-bottom: 12px; }
+  .layout-c .right-col {
+    grid-column: 2; grid-row: 1 / 3;
+    display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-end; gap: 6px;
+  }
+  .layout-c .btn-red, .layout-c .btn-ghost {
+    white-space: nowrap;
+  }
+
+  /* ── Descriptions ── */
+  .desc {
+    padding: 0 20px 20px;
+    color: #7a9ab8; font-size: 12px; line-height: 1.55;
+  }
+  .desc strong { color: #e0e8f0; display: block; margin-bottom: 4px; font-size: 13px; }
+
+  .pros-cons {
+    padding: 0 20px 20px;
+    display: flex; gap: 12px;
+  }
+  .pro, .con {
+    flex: 1; border-radius: 8px; padding: 8px 10px;
+    font-size: 10.5px; line-height: 1.5;
+  }
+  .pro { background: rgba(201,168,76,.07); border: 1px solid rgba(201,168,76,.18); color: #c9a84c; }
+  .con { background: rgba(122,154,184,.06); border: 1px solid rgba(122,154,184,.15); color: #7a9ab8; }
+  .pro::before { content: '✓ '; }
+  .con::before { content: '± '; }
+
+  /* footer instruction */
+  .footer-note {
+    text-align: center; color: #4a6a8a; font-size: 12px; margin-top: 36px;
+  }
+</style>
+</head>
+<body>
+
+<p class="page-title">Hero — 3 Propostas de Layout</p>
+<p class="page-sub">Clique na proposta que mais agrada para selecioná-la</p>
+
+<div class="grid">
+
+  <!-- ── A: Centralizado ── -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="check">✓</div>
+    <div class="card-label">
+      <span class="tag">A</span>
+      <span class="card-name">Centralizado</span>
+    </div>
+
+    <div class="hero layout-a">
+      <div class="photo"></div>
+      <div class="orb1"></div>
+      <div class="orb2"></div>
+      <div class="overlay"></div>
+      <div class="content">
+        <div class="toggle-pill">
+          <span class="active">Para você</span>
+          <span>Para empresa</span>
+        </div>
+        <div class="h1-mock">
+          <span class="h1-red">Consórcio</span>
+          com
+          <span class="h1-red">inteligência.</span>
+        </div>
+        <p class="subtitle-mock">Proteção inteligente para o que mais importa na sua vida e família.</p>
+        <div class="btns">
+          <button class="btn-red">💬 WhatsApp</button>
+          <button class="btn-ghost">Conhecer soluções →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="desc">
+      <strong>Texto e botões no centro da imagem</strong>
+      Toda a atenção vai direto ao conteúdo. Impacto imediato, leitura fácil. Funciona muito bem em desktop e mobile — o texto fica "flutuando" sobre a foto.
+    </div>
+    <div class="pros-cons">
+      <div class="pro">Impacto visual forte<br>Legível em todos os tamanhos</div>
+      <div class="con">Pode competir com rostos na foto<br>Menos editorial</div>
+    </div>
+  </div>
+
+  <!-- ── B: Lateral esquerdo ── -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="check">✓</div>
+    <div class="card-label">
+      <span class="tag">B</span>
+      <span class="card-name">Lateral esquerdo</span>
+    </div>
+
+    <div class="hero layout-b">
+      <div class="photo"></div>
+      <div class="orb1"></div>
+      <div class="orb2"></div>
+      <div class="overlay"></div>
+      <div class="content">
+        <div class="toggle-pill">
+          <span class="active">Para você</span>
+          <span>Para empresa</span>
+        </div>
+        <div class="h1-mock">
+          <span class="h1-red">Consórcio</span>
+          com
+          <span class="h1-red">inteligência.</span>
+        </div>
+        <p class="subtitle-mock">Proteção inteligente para o que mais importa na sua vida e família.</p>
+        <div class="btns">
+          <button class="btn-red">💬 WhatsApp</button>
+          <button class="btn-ghost">Soluções →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="desc">
+      <strong>Texto centralizado verticalmente, coluna esquerda</strong>
+      O conteúdo fica no meio da altura da tela, ancorado à esquerda. A foto aparece inteiramente à direita — layout mais editorial e sofisticado.
+    </div>
+    <div class="pros-cons">
+      <div class="pro">Visual mais sofisticado<br>Foto respira à direita</div>
+      <div class="con">Menos dramático em mobile<br>Gradiente pesado</div>
+    </div>
+  </div>
+
+  <!-- ── C: Outra proposta ── -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="check">✓</div>
+    <div class="card-label">
+      <span class="tag">C</span>
+      <span class="card-name">Banda inferior + CTAs à direita</span>
+    </div>
+
+    <div class="hero layout-c">
+      <div class="photo"></div>
+      <div class="orb1"></div>
+      <div class="orb2"></div>
+      <div class="overlay"></div>
+      <div class="content">
+        <div class="left-col">
+          <div class="toggle-pill">
+            <span class="active">Para você</span>
+            <span>Para empresa</span>
+          </div>
+          <div class="h1-mock">
+            <span class="h1-red">Consórcio</span>
+            com
+            <span class="h1-red">inteligência.</span>
+          </div>
+          <p class="subtitle-mock">Proteção inteligente para o que mais importa na sua vida.</p>
+          <div class="btns">
+            <button class="btn-red">💬 WhatsApp</button>
+          </div>
+        </div>
+        <div class="right-col">
+          <button class="btn-ghost">Soluções →</button>
+          <button class="btn-ghost">Escritórios →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="desc">
+      <strong>Título à esquerda · CTAs empilhados à direita</strong>
+      Layout assimétrico: headline domina à esquerda, botões de ação ficam empilhados verticalmente no canto direito. Sensação mais "dashboard" e moderna.
+    </div>
+    <div class="pros-cons">
+      <div class="pro">Layout original e diferente<br>CTAs sempre visíveis</div>
+      <div class="con">Mais complexo em mobile<br>Menos convencional</div>
+    </div>
+  </div>
+
+</div>
+
+<p class="footer-note">Abra <strong>http://localhost:49237</strong> no navegador · Clique para selecionar · Responda no terminal</p>
+
+<script>
+function toggleSelect(el) {
+  const cards = document.querySelectorAll('.card');
+  cards.forEach(c => c !== el && c.classList.remove('selected'));
+  el.classList.toggle('selected');
+  if (typeof window.__superpowers_select === 'function') {
+    window.__superpowers_select(el.dataset.choice, el.querySelector('.card-name').textContent);
+  }
+}
+</script>
+</body>
+</html>

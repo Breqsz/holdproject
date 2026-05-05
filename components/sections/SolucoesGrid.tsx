@@ -7,6 +7,7 @@ import ConsorcioIcon from '@/components/icons/sectors/ConsorcioIcon'
 import SegurosIcon from '@/components/icons/sectors/SegurosIcon'
 import SaudeIcon from '@/components/icons/sectors/SaudeIcon'
 import InvestimentosIcon from '@/components/icons/sectors/InvestimentosIcon'
+import { useLocale } from '@/lib/i18n'
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number]
 
@@ -21,46 +22,6 @@ type Service = {
   text?: string
 }
 
-const SERVICES: Service[] = [
-  {
-    href: '/consorcios/',
-    Icon: ConsorcioIcon,
-    label: 'Consórcio',
-    title: 'Patrimônio sem juros',
-    desc: 'Imóveis, veículos, agro, serviços e alavancagem. Estratégia patrimonial com acompanhamento da escolha à contemplação.',
-    accent: '#3b6cb5',
-    bg: 'linear-gradient(135deg, #020c30 0%, #0b2d6e 100%)',
-  },
-  {
-    href: '/seguros/',
-    Icon: SegurosIcon,
-    label: 'Seguros',
-    title: 'Proteção sob medida',
-    desc: 'Auto, vida, residencial e empresarial. Comparativo de seguradoras, cobertura otimizada e franquia personalizada.',
-    accent: '#ae251c',
-    bg: 'linear-gradient(135deg, #6e1a14 0%, #ae251c 100%)',
-  },
-  {
-    href: '/saude/',
-    Icon: SaudeIcon,
-    label: 'Saúde & Vida',
-    title: 'Cobertura completa',
-    desc: 'Planos individuais, familiares e empresariais. Acesso às melhores operadoras com consultoria na escolha certa.',
-    accent: '#142f54',
-    bg: 'linear-gradient(135deg, #f0f6ff 0%, #d4e3f5 100%)',
-    text: '#07162a',
-  },
-  {
-    href: '/investimentos/',
-    Icon: InvestimentosIcon,
-    label: 'Investimentos',
-    title: 'Soluções financeiras',
-    desc: 'Renda fixa, variável e previdência. Parceria com instituições financeiras para diversificação e crescimento patrimonial.',
-    accent: '#c9a84c',
-    bg: 'linear-gradient(135deg, #0a0a0a 0%, #181818 100%)',
-  },
-]
-
 const containerVariants = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.08 } },
@@ -72,6 +33,7 @@ const cardVariants = {
 }
 
 function SectorCard({ service }: { service: Service }) {
+  const { t } = useLocale()
   const { href, Icon, label, title, desc, accent, bg, text } = service
   const isLight = !!text
 
@@ -123,7 +85,7 @@ function SectorCard({ service }: { service: Service }) {
             className="flex items-center gap-2 text-xs font-semibold tracking-wide uppercase"
             style={{ color: isLight ? accent : 'rgba(255,255,255,0.65)' }}
           >
-            Conhecer
+            {t('solucoes.explore')}
             <ArrowUpRight size={13} className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </div>
         </div>
@@ -133,6 +95,48 @@ function SectorCard({ service }: { service: Service }) {
 }
 
 export default function SolucoesGrid() {
+  const { t } = useLocale()
+
+  const SERVICES: Service[] = [
+    {
+      href: '/consorcios/',
+      Icon: ConsorcioIcon,
+      label: t('solucoes.consorcio.label'),
+      title: t('solucoes.consorcio.title'),
+      desc: t('solucoes.consorcio.desc'),
+      accent: '#3b6cb5',
+      bg: 'linear-gradient(135deg, #020c30 0%, #0b2d6e 100%)',
+    },
+    {
+      href: '/seguros/',
+      Icon: SegurosIcon,
+      label: t('solucoes.seguros.label'),
+      title: t('solucoes.seguros.title'),
+      desc: t('solucoes.seguros.desc'),
+      accent: '#ae251c',
+      bg: 'linear-gradient(135deg, #6e1a14 0%, #ae251c 100%)',
+    },
+    {
+      href: '/saude/',
+      Icon: SaudeIcon,
+      label: t('solucoes.saude.label'),
+      title: t('solucoes.saude.title'),
+      desc: t('solucoes.saude.desc'),
+      accent: '#142f54',
+      bg: 'linear-gradient(135deg, #f0f6ff 0%, #d4e3f5 100%)',
+      text: '#07162a',
+    },
+    {
+      href: '/investimentos/',
+      Icon: InvestimentosIcon,
+      label: t('solucoes.invest.label'),
+      title: t('solucoes.invest.title'),
+      desc: t('solucoes.invest.desc'),
+      accent: '#c9a84c',
+      bg: 'linear-gradient(135deg, #0a0a0a 0%, #181818 100%)',
+    },
+  ]
+
   return (
     <section id="solucoes" className="section-pad bg-[#F5F5F5]" style={{ fontFamily: 'var(--font-outfit)' }}>
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -148,10 +152,10 @@ export default function SolucoesGrid() {
             className="text-display text-[#07162a]"
             style={{ fontSize: 'clamp(1.75rem, 3.8vw, 2.75rem)' }}
           >
-            Um ecossistema. <span style={{ color: '#ae251c' }}>Quatro frentes.</span>
+            {t('solucoes.heading.main')} <span style={{ color: '#ae251c' }}>{t('solucoes.heading.accent')}</span>
           </h2>
           <p className="mt-5 max-w-[56ch] text-pretty text-[#07162a]/60 leading-relaxed mx-auto">
-            Ficamos entre você e cada solução — consórcio, seguro, saúde ou investimento. Intermediação estratégica, sem conflito de interesse.
+            {t('solucoes.subtitle')}
           </p>
         </motion.div>
 

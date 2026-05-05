@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cards SobreNos — 4 Propostas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;300;400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #040d1c;
+  color: #e0e8f0;
+  font-family: 'Outfit', system-ui, sans-serif;
+  padding: 40px 24px 80px;
+  min-height: 100vh;
+}
+
+.page-title {
+  text-align: center;
+  font-size: 10px; font-weight: 700; letter-spacing: .22em;
+  text-transform: uppercase; color: #c9a84c; margin-bottom: 6px;
+}
+.page-sub {
+  text-align: center; color: #4a6a8a; font-size: 13px; margin-bottom: 48px;
+}
+
+/* ── Proposal grid ── */
+.proposals {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* ── Proposal shell ── */
+.prop {
+  border-radius: 16px;
+  border: 2px solid rgba(255,255,255,.05);
+  background: #07162a;
+  cursor: pointer;
+  transition: border-color .25s, box-shadow .25s, transform .2s;
+  overflow: hidden;
+  position: relative;
+}
+.prop:hover { transform: translateY(-3px); }
+.prop.selected {
+  border-color: #c9a84c;
+  box-shadow: 0 0 0 3px rgba(201,168,76,.15), 0 20px 60px rgba(0,0,0,.5);
+}
+.check {
+  position: absolute; top: 12px; right: 12px; z-index: 20;
+  width: 26px; height: 26px; border-radius: 50%;
+  background: #c9a84c; display: none;
+  align-items: center; justify-content: center;
+  font-size: 13px; color: #07162a; font-weight: 800;
+}
+.prop.selected .check { display: flex; }
+
+/* ── Card preview label ── */
+.prop-label {
+  padding: 14px 18px 10px;
+  display: flex; align-items: center; gap: 10px;
+  border-bottom: 1px solid rgba(255,255,255,.05);
+}
+.tag {
+  font-size: 9px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase;
+  padding: 3px 9px; border-radius: 999px;
+  background: rgba(201,168,76,.1); color: #c9a84c;
+  border: 1px solid rgba(201,168,76,.22);
+}
+.prop-name { font-size: 12px; font-weight: 600; color: #7a9ab8; }
+
+/* ── The card itself ── */
+.card-wrap { padding: 14px; }
+
+.card {
+  border-radius: 12px;
+  background: #071526;
+  border: 1px solid rgba(201,168,76,.18);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Shared stats footer */
+.stats {
+  padding: 14px 16px 16px;
+  border-top: 1px solid;
+  border-color: transparent;
+  background: transparent;
+}
+.stats-icon {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: rgba(174,37,28,.15);
+  border: 1px solid rgba(174,37,28,.3);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 10px;
+}
+.stats-icon svg { width: 12px; height: 12px; color: #ae251c; }
+.stats-num {
+  font-size: 32px; font-weight: 900; color: #fff;
+  letter-spacing: -.04em; line-height: 1;
+  font-family: 'Outfit', sans-serif;
+}
+.stats-rule {
+  width: 28px; height: 1.5px;
+  background: linear-gradient(to right, #ae251c, #c9a84c);
+  border-radius: 2px; margin: 8px 0;
+}
+.stats-label {
+  font-size: 11px; color: #7a9ab8;
+}
+
+/* ── Prop desc ── */
+.prop-desc {
+  padding: 0 18px 12px;
+  font-size: 11.5px; line-height: 1.6; color: #7a9ab8;
+}
+.prop-desc strong { display: block; color: #e0e8f0; font-size: 12.5px; margin-bottom: 3px; }
+
+.tradeoffs {
+  padding: 0 18px 18px;
+  display: flex; gap: 8px;
+}
+.tpro, .tcon {
+  flex: 1; border-radius: 7px; padding: 7px 9px;
+  font-size: 10px; line-height: 1.5;
+}
+.tpro { background: rgba(201,168,76,.07); border: 1px solid rgba(201,168,76,.18); color: #c9a84c; }
+.tcon { background: rgba(122,154,184,.05); border: 1px solid rgba(122,154,184,.12); color: #7a9ab8; }
+.tpro::before { content: '✓ '; }
+.tcon::before { content: '± '; }
+
+
+/* ════════════════════════════════════════════════════════════════
+   A — NÚMERO MONUMENTAL
+   O algarismo é a própria ilustração: watermark gigante + acento mínimo
+════════════════════════════════════════════════════════════════ */
+.vis-a {
+  height: 176px;
+  position: relative;
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.vis-a-watermark {
+  position: absolute;
+  font-size: 180px; font-weight: 900; line-height: 1;
+  letter-spacing: -.06em; color: rgba(201,168,76,.055);
+  user-select: none; pointer-events: none;
+  transform: translateY(8px);
+  font-family: 'Outfit', sans-serif;
+}
+.vis-a-accent {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; align-items: center; gap: 0;
+}
+.vis-a-line {
+  width: 1px; height: 56px;
+  background: linear-gradient(to bottom, transparent, rgba(201,168,76,.6));
+}
+.vis-a-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #c9a84c;
+  box-shadow: 0 0 14px rgba(201,168,76,.8), 0 0 28px rgba(201,168,76,.3);
+}
+.vis-a-stats {
+  border-top: 1px solid rgba(201,168,76,.1) !important;
+}
+
+
+/* ════════════════════════════════════════════════════════════════
+   B — LINHA DE CRESCIMENTO
+   SVG de tendência: curva bezier + área gradiente + milestone dots
+════════════════════════════════════════════════════════════════ */
+.vis-b {
+  height: 176px;
+  padding: 16px 16px 0;
+  overflow: hidden;
+}
+.vis-b svg { width: 100%; height: 100%; display: block; overflow: visible; }
+
+
+/* ════════════════════════════════════════════════════════════════
+   C — SISTEMA ORBITAL
+   Anéis concêntricos com pontos orbitando — ecossistema em movimento
+════════════════════════════════════════════════════════════════ */
+.vis-c {
+  height: 176px;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.vis-c-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 50%, rgba(201,168,76,.06) 0%, transparent 65%);
+  pointer-events: none;
+}
+.vis-c svg { width: 160px; height: 160px; position: relative; z-index: 1; }
+
+
+/* ════════════════════════════════════════════════════════════════
+   D — ROSA DE VENTOS (Compass Rose)
+   Padrão radial geométrico de linhas finas — precisão, longevidade
+════════════════════════════════════════════════════════════════ */
+.vis-d {
+  height: 176px;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.vis-d-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 50%, rgba(201,168,76,.05) 0%, transparent 60%);
+}
+.vis-d svg { width: 160px; height: 160px; position: relative; z-index: 1; }
+
+/* ── Footer ── */
+.footer { text-align: center; color: #1e3a5a; font-size: 12px; margin-top: 44px; }
+</style>
+</head>
+<body>
+
+<p class="page-title">SobreNos Cards — 4 Propostas · Redesign</p>
+<p class="page-sub">Clique para selecionar · Exemplo com card "+19 Anos de Experiência"</p>
+
+<div class="proposals">
+
+  <!-- ═══════════ A — NÚMERO MONUMENTAL ═══════════ -->
+  <div class="prop" data-choice="a" onclick="toggleSelect(this)">
+    <div class="check">✓</div>
+    <div class="prop-label">
+      <span class="tag">A</span>
+      <span class="prop-name">Número Monumental</span>
+    </div>
+
+    <div class="card-wrap">
+      <div class="card">
+        <div class="vis-a">
+          <div class="vis-a-watermark">19</div>
+          <div class="vis-a-accent">
+            <div class="vis-a-line"></div>
+            <div class="vis-a-dot"></div>
+          </div>
+        </div>
+        <div class="stats vis-a-stats">
+          <div class="stats-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/>
+            </svg>
+          </div>
+          <div class="stats-num">+19</div>
+          <div class="stats-rule"></div>
+          <div class="stats-label">Anos de Experiência</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="prop-desc">
+      <strong>O número como arquitetura</strong>
+      O algarismo preenche o card como uma marca d'água arquitetural — quase invisível mas onipresente. Um ponto dourado com glow flutua no centro. Máximo impacto com mínimo ruído visual.
+    </p>
+    <div class="tradeoffs">
+      <div class="tpro">Muito elegante · Foco total no número · Intemporal</div>
+      <div class="tcon">Pode parecer vazio para quem espera ilustração</div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════ B — LINHA DE CRESCIMENTO ═══════════ -->
+  <div class="prop" data-choice="b" onclick="toggleSelect(this)">
+    <div class="check">✓</div>
+    <div class="prop-label">
+      <span class="tag">B</span>
+      <span class="prop-name">Linha de Crescimento</span>
+    </div>
+
+    <div class="card-wrap">
+      <div class="card">
+        <div class="vis-b">
+          <svg viewBox="0 0 260 130" fill="none" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="areaFill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="rgba(201,168,76,.28)"/>
+                <stop offset="100%" stop-color="rgba(201,168,76,0)"/>
+              </linearGradient>
+              <linearGradient id="lineCol" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#ae251c"/>
+                <stop offset="100%" stop-color="#c9a84c"/>
+              </linearGradient>
+            </defs>
+            <!-- Subtle grid -->
+            <line x1="0" y1="43" x2="260" y2="43" stroke="rgba(201,168,76,.06)" stroke-width="1"/>
+            <line x1="0" y1="86" x2="260" y2="86" stroke="rgba(201,168,76,.06)" stroke-width="1"/>
+            <line x1="65" y1="0" x2="65" y2="130" stroke="rgba(201,168,76,.04)" stroke-width="1"/>
+            <line x1="130" y1="0" x2="130" y2="130" stroke="rgba(201,168,76,.04)" stroke-width="1"/>
+            <line x1="195" y1="0" x2="195" y2="130" stroke="rgba(201,168,76,.04)" stroke-width="1"/>
+            <!-- Area under curve -->
+            <path d="M 0,122 C 50,118 90,108 130,82 C 170,56 210,34 260,12 L 260,130 L 0,130 Z"
+              fill="url(#areaFill)"/>
+            <!-- The line -->
+            <path d="M 0,122 C 50,118 90,108 130,82 C 170,56 210,34 260,12"
+              stroke="url(#lineCol)" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+            <!-- Milestone dots -->
+            <circle cx="0"   cy="122" r="3"   fill="#ae251c" opacity=".6"/>
+            <circle cx="65"  cy="108" r="3.5" fill="#c9a84c" opacity=".75"/>
+            <circle cx="130" cy="82"  r="4"   fill="#c9a84c" opacity=".85"/>
+            <circle cx="195" cy="46"  r="4.5" fill="#c9a84c"/>
+            <circle cx="260" cy="12"  r="5.5" fill="#c9a84c" stroke="#071526" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="stats" style="border-top: 1px solid rgba(201,168,76,.12)">
+          <div class="stats-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+            </svg>
+          </div>
+          <div class="stats-num">+19</div>
+          <div class="stats-rule"></div>
+          <div class="stats-label">Anos de Experiência</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="prop-desc">
+      <strong>Trajetória como narrativa</strong>
+      Curva bezier ascendente com área gradiente abaixo — conta a história de 19 anos de crescimento sem uma palavra. Grade sutil ao fundo. Dots de marco em cada época.
+    </p>
+    <div class="tradeoffs">
+      <div class="tpro">Narrativa clara · Premium fintech · Versátil para 3 cards</div>
+      <div class="tcon">Mais comum no setor financeiro</div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════ C — SISTEMA ORBITAL ═══════════ -->
+  <div class="prop" data-choice="c" onclick="toggleSelect(this)">
+    <div class="check">✓</div>
+    <div class="prop-label">
+      <span class="tag">C</span>
+      <span class="prop-name">Sistema Orbital</span>
+    </div>
+
+    <div class="card-wrap">
+      <div class="card">
+        <div class="vis-c">
+          <div class="vis-c-bg"></div>
+          <svg viewBox="0 0 160 160" fill="none">
+            <!-- Outer ring -->
+            <circle cx="80" cy="80" r="68" stroke="rgba(201,168,76,.1)" stroke-width="1"/>
+            <!-- Middle ring -->
+            <circle cx="80" cy="80" r="48" stroke="rgba(201,168,76,.13)" stroke-width="1"/>
+            <!-- Inner ring -->
+            <circle cx="80" cy="80" r="28" stroke="rgba(201,168,76,.16)" stroke-width="1"/>
+
+            <!-- Connection spokes (subtle) -->
+            <line x1="80" y1="80" x2="80"   y2="12"  stroke="rgba(201,168,76,.08)" stroke-width="1"/>
+            <line x1="80" y1="80" x2="139"  y2="114" stroke="rgba(201,168,76,.08)" stroke-width="1"/>
+            <line x1="80" y1="80" x2="21"   y2="114" stroke="rgba(201,168,76,.08)" stroke-width="1"/>
+            <line x1="80" y1="80" x2="148"  y2="45"  stroke="rgba(201,168,76,.05)" stroke-width="1"/>
+            <line x1="80" y1="80" x2="12"   y2="45"  stroke="rgba(201,168,76,.05)" stroke-width="1"/>
+
+            <!-- Outer ring dots -->
+            <circle cx="80"  cy="12"  r="5"   fill="#c9a84c" opacity=".9"/>
+            <circle cx="139" cy="114" r="4"   fill="#c9a84c" opacity=".7"/>
+            <circle cx="21"  cy="114" r="3.5" fill="#ae251c" opacity=".8"/>
+            <circle cx="148" cy="45"  r="3"   fill="#c9a84c" opacity=".45"/>
+            <circle cx="12"  cy="45"  r="3"   fill="#c9a84c" opacity=".4"/>
+
+            <!-- Middle ring dots -->
+            <circle cx="80"  cy="32"  r="3.5" fill="#c9a84c" opacity=".6"/>
+            <circle cx="121" cy="104" r="3"   fill="#c9a84c" opacity=".5"/>
+            <circle cx="39"  cy="104" r="3"   fill="#ae251c" opacity=".6"/>
+
+            <!-- Inner ring dots -->
+            <circle cx="80"  cy="52"  r="2.5" fill="#c9a84c" opacity=".7"/>
+            <circle cx="104" cy="94"  r="2"   fill="#c9a84c" opacity=".55"/>
+            <circle cx="56"  cy="94"  r="2"   fill="#c9a84c" opacity=".55"/>
+
+            <!-- Center -->
+            <circle cx="80" cy="80" r="5" fill="#c9a84c" opacity=".95"/>
+            <circle cx="80" cy="80" r="9" fill="none" stroke="#c9a84c" stroke-width="1" opacity=".2"/>
+          </svg>
+        </div>
+        <div class="stats" style="border-top: 1px solid rgba(201,168,76,.12)">
+          <div class="stats-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <div class="stats-num">+19</div>
+          <div class="stats-rule"></div>
+          <div class="stats-label">Anos de Experiência</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="prop-desc">
+      <strong>Ecossistema em órbita</strong>
+      Três anéis concêntricos com pontos em diferentes órbitas — transmite rede, alcance e presença em múltiplas camadas. Diferenciador visual único no setor.
+    </p>
+    <div class="tradeoffs">
+      <div class="tpro">Único · Transmite rede e escala · Muito diferenciado</div>
+      <div class="tcon">Mais abstrato — exige que o usuário interprete</div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════ D — ROSA DE VENTOS ═══════════ -->
+  <div class="prop" data-choice="d" onclick="toggleSelect(this)">
+    <div class="check">✓</div>
+    <div class="prop-label">
+      <span class="tag">D</span>
+      <span class="prop-name">Rosa de Ventos</span>
+    </div>
+
+    <div class="card-wrap">
+      <div class="card">
+        <div class="vis-d">
+          <div class="vis-d-bg"></div>
+          <svg viewBox="0 0 160 160" fill="none">
+            <!-- 8 radial spokes -->
+            <g stroke="rgba(201,168,76,.18)" stroke-width="1">
+              <line x1="80" y1="80" x2="80"   y2="8"/>
+              <line x1="80" y1="80" x2="152"  y2="80"/>
+              <line x1="80" y1="80" x2="80"   y2="152"/>
+              <line x1="80" y1="80" x2="8"    y2="80"/>
+              <line x1="80" y1="80" x2="131"  y2="29"/>
+              <line x1="80" y1="80" x2="131"  y2="131"/>
+              <line x1="80" y1="80" x2="29"   y2="131"/>
+              <line x1="80" y1="80" x2="29"   y2="29"/>
+            </g>
+
+            <!-- 3 concentric rings -->
+            <circle cx="80" cy="80" r="66" stroke="rgba(201,168,76,.09)" stroke-width="1.5"/>
+            <circle cx="80" cy="80" r="46" stroke="rgba(201,168,76,.12)" stroke-width="1.5"/>
+            <circle cx="80" cy="80" r="26" stroke="rgba(201,168,76,.16)" stroke-width="1.5"/>
+
+            <!-- Cardinal dots (outer ring, r=66) -->
+            <circle cx="80"  cy="14"  r="3"   fill="#c9a84c" opacity=".7"/>
+            <circle cx="146" cy="80"  r="3"   fill="#c9a84c" opacity=".7"/>
+            <circle cx="80"  cy="146" r="3"   fill="#c9a84c" opacity=".7"/>
+            <circle cx="14"  cy="80"  r="3"   fill="#c9a84c" opacity=".7"/>
+            <!-- Diagonal dots (outer ring) — smaller -->
+            <circle cx="126.6" cy="33.4" r="2" fill="#c9a84c" opacity=".4"/>
+            <circle cx="126.6" cy="126.6" r="2" fill="#c9a84c" opacity=".4"/>
+            <circle cx="33.4"  cy="126.6" r="2" fill="#c9a84c" opacity=".4"/>
+            <circle cx="33.4"  cy="33.4"  r="2" fill="#c9a84c" opacity=".4"/>
+
+            <!-- Middle ring dots -->
+            <circle cx="80"  cy="34"  r="2.5" fill="#c9a84c" opacity=".55"/>
+            <circle cx="126" cy="80"  r="2.5" fill="#ae251c" opacity=".7"/>
+            <circle cx="80"  cy="126" r="2.5" fill="#c9a84c" opacity=".55"/>
+            <circle cx="34"  cy="80"  r="2.5" fill="#c9a84c" opacity=".55"/>
+
+            <!-- Inner ring dots -->
+            <circle cx="80" cy="54"  r="2" fill="#c9a84c" opacity=".65"/>
+            <circle cx="106" cy="80" r="2" fill="#c9a84c" opacity=".65"/>
+            <circle cx="80" cy="106" r="2" fill="#c9a84c" opacity=".65"/>
+            <circle cx="54" cy="80"  r="2" fill="#c9a84c" opacity=".65"/>
+
+            <!-- Center -->
+            <circle cx="80" cy="80" r="4.5" fill="#c9a84c"/>
+            <circle cx="80" cy="80" r="8"   fill="none" stroke="#c9a84c" stroke-width="1" opacity=".25"/>
+          </svg>
+        </div>
+        <div class="stats" style="border-top: 1px solid rgba(201,168,76,.12)">
+          <div class="stats-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+          </div>
+          <div class="stats-num">+19</div>
+          <div class="stats-rule"></div>
+          <div class="stats-label">Anos de Experiência</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="prop-desc">
+      <strong>Precisão intemporal</strong>
+      Padrão radial de 8 esporas + 3 anéis + pontos nas interseções — como uma rosa-dos-ventos ou relógio de precisão. Transmite orientação, experiência e longevidade. Atemporal.
+    </p>
+    <div class="tradeoffs">
+      <div class="tpro">Premium clássico · Atemporal · Muito coerente com longevidade</div>
+      <div class="tcon">O mesmo padrão nos 3 cards pode parecer repetitivo</div>
+    </div>
+  </div>
+
+</div>
+
+<p class="footer">Clique para selecionar — ou diga qual você prefere e o que ajustar</p>
+
+<script>
+function toggleSelect(el) {
+  document.querySelectorAll('.prop').forEach(p => p.classList.remove('selected'))
+  el.classList.add('selected')
+  if (window.__sp_select) window.__sp_select(el.dataset.choice, el.querySelector('.prop-name')?.textContent || '')
+}
+</script>
+</body>
+</html>

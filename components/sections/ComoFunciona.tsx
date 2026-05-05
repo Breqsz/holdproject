@@ -1,7 +1,8 @@
 'use client'
 
-import { useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { useEffect, useState } from 'react'
+import Image from 'next/image'
+import { motion } from 'framer-motion'
 import { Check, ShieldCheck, ArrowRight } from 'lucide-react'
 import { useLocale } from '@/lib/i18n'
 import { formatWhatsAppLink } from '@/lib/utils'
@@ -9,16 +10,7 @@ import { formatWhatsAppLink } from '@/lib/utils'
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number]
 const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? ''
 
-const ganhos = [
-  'Sem juros — só taxa de administração',
-  'Atendimento consultivo e personalizado',
-  'Estratégia de contemplação sob medida',
-  'Acompanhamento contínuo em todas as etapas',
-  'Transparência total no contrato e na operação',
-  'Parcerias com administradoras autorizadas pelo Banco Central',
-  'Adequação ao seu objetivo, momento e perfil',
-  'Suporte pós-venda contínuo',
-]
+const GANHO_COUNT = 8
 
 const stepKeys = [
   'comoFunciona.step1',
@@ -44,11 +36,15 @@ const stagger = {
 
 export default function ComoFunciona() {
   const { t } = useLocale()
-  const stepsRef = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({ target: stepsRef, offset: ['start 0.85', 'end 0.4'] })
-  const lineScaleX = useTransform(scrollYProgress, [0, 1], [0, 1])
+  const [activeStep, setActiveStep] = useState(0)
 
-  const wa = formatWhatsAppLink(WHATSAPP, 'Olá! Quero conversar com um especialista da Hold sobre meu plano.')
+  useEffect(() => {
+    const id = setInterval(() => setActiveStep((prev) => (prev + 1) % 4), 2500)
+    return () => clearInterval(id)
+  }, [])
+
+  const ganhos = Array.from({ length: GANHO_COUNT }, (_, i) => t(`comoFunciona.gain.${i + 1}`))
+  const wa = formatWhatsAppLink(WHATSAPP, t('comoFunciona.wa'))
 
   return (
     <section
@@ -58,36 +54,57 @@ export default function ComoFunciona() {
     >
       <div className="max-w-6xl mx-auto px-6 lg:px-8">
 
-        {/* Header */}
-        <motion.div
-          variants={stagger}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="max-w-3xl"
-        >
-          <motion.h2
-            variants={fadeUp}
-            className="mt-5 text-display text-[#07162a]"
-            style={{ fontSize: 'clamp(2rem, 4.4vw, 3.25rem)' }}
-          >
-            {t('comoFunciona.title')}
-          </motion.h2>
+        {/* Header — texto à esquerda, personagem preenche o espaço vazio à direita */}
+        <div className="flex flex-col lg:flex-row lg:items-end gap-6 lg:gap-4">
 
-          <motion.p
-            variants={fadeUp}
-            className="mt-6 max-w-[60ch] text-pretty text-lg leading-relaxed text-[#07162a]/60"
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="flex-1 max-w-3xl"
           >
-            {t('comoFunciona.subtitle')}
-          </motion.p>
+            <motion.h2
+              variants={fadeUp}
+              className="mt-5 text-display text-[#07162a]"
+              style={{ fontSize: 'clamp(2rem, 4.4vw, 3.25rem)' }}
+            >
+              {t('comoFunciona.title')}
+            </motion.h2>
 
-          <motion.p
-            variants={fadeUp}
-            className="mt-4 max-w-[60ch] leading-relaxed text-[#07162a]/70"
+            <motion.p
+              variants={fadeUp}
+              className="mt-6 max-w-[60ch] text-pretty text-lg leading-relaxed text-[#07162a]/60"
+            >
+              {t('comoFunciona.subtitle')}
+            </motion.p>
+
+            <motion.p
+              variants={fadeUp}
+              className="mt-4 max-w-[60ch] leading-relaxed text-[#07162a]/70"
+            >
+              {t('comoFunciona.body')}
+            </motion.p>
+          </motion.div>
+
+          {/* Personagem 3D */}
+          <motion.div
+            initial={{ opacity: 0, y: 32 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.9, ease: EASE_OUT_EXPO, delay: 0.25 }}
+            className="pointer-events-none select-none flex justify-center lg:justify-end lg:shrink-0"
           >
-            {t('comoFunciona.body')}
-          </motion.p>
-        </motion.div>
+            <Image
+              src="/personagem/jacimar-avatar-question.png"
+              alt=""
+              width={260}
+              height={400}
+              className="w-56 sm:w-72 lg:w-[22rem] xl:w-[26rem] h-auto drop-shadow-xl"
+            />
+          </motion.div>
+
+        </div>
 
         {/* Ganhos — two-column list */}
         <motion.div
@@ -119,49 +136,52 @@ export default function ComoFunciona() {
           </div>
         </motion.div>
 
-        {/* 4 steps timeline — premium motion */}
+        {/* 4 steps timeline */}
         <motion.div
-          ref={stepsRef}
           variants={stagger}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           className="mt-20 relative"
         >
-          {/* Scroll-linked connector (desktop) */}
+          {/* Rail */}
           <div aria-hidden className="hidden md:block absolute left-0 right-0 top-[18px] h-px bg-[#07162a]/10" />
+          {/* Active-step progress line */}
           <motion.div
             aria-hidden
-            style={{ scaleX: lineScaleX, transformOrigin: 'left' }}
+            animate={{ scaleX: (activeStep + 1) / 4 }}
+            transition={{ duration: 0.5, ease: EASE_OUT_EXPO }}
+            style={{ transformOrigin: 'left' }}
             className="hidden md:block absolute left-0 right-0 top-[18px] h-px bg-gradient-to-r from-[#c9a84c] via-[#ae251c] to-[#c9a84c]"
           />
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-6 relative">
-            {stepKeys.map((key, i) => (
-              <motion.div
-                key={key}
-                variants={fadeUp}
-                className="flex flex-col gap-3"
-              >
-                <motion.div
-                  className="flex items-center gap-3 md:block"
-                  whileInView={{ scale: [0.6, 1.06, 1] }}
-                  transition={{ duration: 0.7, ease: EASE_OUT_EXPO, delay: i * 0.08 }}
-                  viewport={{ once: true }}
-                >
-                  <span className="relative inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#07162a] ring-1 ring-[#c9a84c]/40 text-[#c9a84c] text-sm font-bold tabular shadow-[0_0_22px_rgba(201,168,76,0.0)] hover:shadow-[0_0_22px_rgba(201,168,76,0.45)] transition-shadow">
-                    {i + 1}
-                  </span>
-                </motion.div>
+            {stepKeys.map((key, i) => {
+              const isActive = activeStep === i
+              return (
+                <motion.div key={key} variants={fadeUp} className="flex flex-col gap-3">
+                  <div className="flex items-center gap-3 md:block">
+                    <span
+                      className={`relative inline-flex h-9 w-9 items-center justify-center rounded-full text-sm font-bold tabular transition-all duration-500 ${
+                        isActive
+                          ? 'bg-[#c9a84c] text-[#07162a]'
+                          : 'bg-[#07162a] ring-1 ring-[#c9a84c]/40 text-[#c9a84c]'
+                      }`}
+                      style={{ boxShadow: isActive ? '0 0 22px rgba(201,168,76,0.6)' : 'none' }}
+                    >
+                      {i + 1}
+                    </span>
+                  </div>
 
-                <p className="text-[#07162a] font-semibold text-sm leading-snug">
-                  {t(`${key}.title`)}
-                </p>
-                <p className="text-[#07162a]/55 text-xs leading-relaxed">
-                  {t(`${key}.desc`)}
-                </p>
-              </motion.div>
-            ))}
+                  <p className={`font-semibold text-sm leading-snug transition-colors duration-500 ${isActive ? 'text-[#07162a]' : 'text-[#07162a]/40'}`}>
+                    {t(`${key}.title`)}
+                  </p>
+                  <p className={`text-xs leading-relaxed transition-colors duration-500 ${isActive ? 'text-[#07162a]/65' : 'text-[#07162a]/30'}`}>
+                    {t(`${key}.desc`)}
+                  </p>
+                </motion.div>
+              )
+            })}
           </div>
         </motion.div>
 

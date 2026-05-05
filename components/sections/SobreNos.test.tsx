@@ -2,10 +2,6 @@ import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import SobreNos from './SobreNos'
 
-// ---------------------------------------------------------------------------
-// Mocks
-// ---------------------------------------------------------------------------
-
 vi.mock('framer-motion', () => {
   const React = require('react')
   const motion = new Proxy(
@@ -33,7 +29,6 @@ vi.mock('framer-motion', () => {
   return {
     motion,
     AnimatePresence: ({ children }: { children: unknown }) => children,
-    // useInView returns true so the count-up triggers immediately in the test
     useInView: () => true,
   }
 })
@@ -50,6 +45,7 @@ vi.mock('@/lib/i18n', () => ({
         'about.body':          'A Hold opera há quase duas décadas em Uberlândia.',
         'about.stat.years':    'Anos de Experiência',
         'about.stat.partners': 'Parceiros Comerciais',
+        'about.stat.frentes':  'Frentes integradas',
         'about.mission.title': 'Missão',
         'about.mission.body':  'Estruturar decisões patrimoniais.',
         'about.vision.title':  'Visão',
@@ -61,10 +57,6 @@ vi.mock('@/lib/i18n', () => ({
     },
   }),
 }))
-
-// ---------------------------------------------------------------------------
-// Tests
-// ---------------------------------------------------------------------------
 
 describe('SobreNos', () => {
   it('renders the section with id="sobre-nos"', () => {
@@ -79,12 +71,10 @@ describe('SobreNos', () => {
     expect(screen.getByText(/A Hold opera/)).toBeInTheDocument()
   })
 
-  it('renders both stat labels (count-up values are animated)', () => {
+  it('renders stat labels (count-up values are RAF-driven)', () => {
     render(<SobreNos />)
-    // The numeric values are RAF-driven count-ups and aren't deterministic
-    // in jsdom; assert the labels and the leading "+" prefix instead.
-    expect(screen.getByText('Anos de Experiência')).toBeInTheDocument()
-    expect(screen.getByText('Parceiros Comerciais')).toBeInTheDocument()
+    expect(screen.getAllByText('Anos de Experiência').length).toBeGreaterThanOrEqual(1)
+    expect(screen.getAllByText('Parceiros Comerciais').length).toBeGreaterThanOrEqual(1)
     expect(screen.getAllByText(/^\+\d+$/).length).toBeGreaterThanOrEqual(2)
   })
 

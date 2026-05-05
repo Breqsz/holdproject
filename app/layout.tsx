@@ -8,6 +8,7 @@ import { Toaster } from 'sonner'
 import CardNav from '@/components/layout/CardNav'
 import Footer from '@/components/layout/Footer'
 import WhatsAppButton from '@/components/layout/WhatsAppButton'
+import ScrollUI from '@/components/layout/ScrollUI'
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -58,6 +59,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <CardNav />
             <main>{children}</main>
             <Footer />
+            <ScrollUI />
             <WhatsAppButton />
             <Toaster
               position="bottom-center"

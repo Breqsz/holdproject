@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hero Card — Imagem</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #111; color: #eee; padding: 28px 20px; }
+  h1 { font-size: 17px; font-weight: 600; letter-spacing: -0.02em; color: #fff; margin-bottom: 5px; }
+  .q { font-size: 12px; color: #666; margin-bottom: 28px; }
+
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  @media (max-width: 860px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .grid { grid-template-columns: 1fr; } }
+
+  .card {
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.2s, transform 0.15s;
+    background: #1c1c1c;
+  }
+  .card:hover { transform: translateY(-2px); }
+  .card.selected { border-color: #4f8ef7; }
+
+  .preview {
+    height: 220px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .bg-img {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover;
+  }
+
+  .overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(7,22,42,0.85) 0%, rgba(7,22,42,0.3) 60%, transparent 100%);
+  }
+
+  /* Gradient-only option */
+  .gradient-only {
+    background: linear-gradient(135deg, #07162a 0%, #0b1f3a 40%, #142f54 100%);
+  }
+
+  .orb-a { position: absolute; width: 140px; height: 140px; border-radius: 50%; background: #1a4b8a; opacity: 0.2; filter: blur(50px); top: -30px; right: -30px; }
+  .orb-b { position: absolute; width: 80px; height: 80px; border-radius: 50%; background: #ae251c; opacity: 0.13; filter: blur(35px); bottom: 20px; left: 10px; }
+
+  .hero-ui {
+    position: relative; z-index: 2; padding: 12px 14px;
+  }
+  .toggle { display: inline-flex; background: rgba(255,255,255,0.1); border-radius: 100px; padding: 2px; gap: 1px; margin-bottom: 6px; }
+  .toggle-btn { font-size: 8px; padding: 2px 7px; border-radius: 100px; color: rgba(255,255,255,0.5); }
+  .toggle-btn.active { background: rgba(255,255,255,0.15); color: #fff; }
+  .h1 { font-size: 14px; font-weight: 700; color: #fff; letter-spacing: -0.04em; line-height: 1.15; margin-bottom: 3px; }
+  .red { color: #ae251c; }
+  .sub { font-size: 8px; color: rgba(255,255,255,0.45); line-height: 1.4; margin-bottom: 8px; max-width: 130px; }
+  .btn { display: inline-block; font-size: 8px; background: #ae251c; color: #fff; padding: 3px 9px; border-radius: 100px; }
+
+  .card-body { padding: 12px 14px; }
+  .tag { font-size: 10px; font-weight: 700; color: #4f8ef7; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 3px; }
+  .title { font-size: 13px; font-weight: 600; color: #fff; margin-bottom: 3px; }
+  .desc { font-size: 11px; color: #555; line-height: 1.4; }
+
+  /* Full section preview row */
+  .full-preview {
+    margin-top: 28px;
+    background: #07162a;
+    border-radius: 16px;
+    overflow: hidden;
+    padding: 0;
+  }
+  .fp-nav {
+    height: 56px;
+    display: flex; align-items: center; justify-content: center;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .fp-nav .pill { background: #fff; border-radius: 10px; padding: 0 20px; height: 38px; display: flex; align-items: center; justify-content: space-between; width: 280px; }
+  .fp-nav .pill .logo { font-size: 11px; font-weight: 700; color: #07162a; }
+  .fp-nav .pill .cta { font-size: 9px; background: #ae251c; color: #fff; padding: 3px 8px; border-radius: 6px; }
+
+  .fp-hero { padding: 10px; }
+  .fp-card {
+    border-radius: 12px;
+    overflow: hidden;
+    height: 200px;
+    position: relative;
+    background: linear-gradient(135deg, #0b1f3a 0%, #07162a 100%);
+  }
+  .fp-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .fp-card .dim { position: absolute; inset: 0; background: linear-gradient(to top, rgba(7,22,42,0.9) 0%, rgba(7,22,42,0.35) 50%, transparent 100%); }
+  .fp-card .content { position: absolute; bottom: 14px; left: 16px; right: 16px; z-index: 2; }
+  .fp-card .content .tgl { display: inline-flex; background: rgba(255,255,255,0.1); border-radius: 100px; padding: 2px; gap: 1px; margin-bottom: 6px; }
+  .fp-card .content .tgl span { font-size: 8px; padding: 2px 7px; border-radius: 100px; color: rgba(255,255,255,0.5); }
+  .fp-card .content .tgl span.on { background: rgba(255,255,255,0.15); color: #fff; }
+  .fp-card .content h2 { font-size: 20px; font-weight: 700; color: #fff; letter-spacing: -0.04em; line-height: 1.1; }
+  .fp-card .content h2 em { color: #ae251c; font-style: normal; }
+  .fp-card .content p { font-size: 9px; color: rgba(255,255,255,0.45); margin-top: 4px; margin-bottom: 8px; }
+  .fp-card .content .b { display: inline-block; font-size: 8px; background: #ae251c; color: #fff; padding: 3px 9px; border-radius: 100px; }
+
+  .hint { text-align: center; margin-top: 20px; font-size: 11px; color: #444; }
+</style>
+</head>
+<body>
+
+<h1>Qual imagem vai no card do hero?</h1>
+<p class="q">O card fica dentro do fundo dark, com overlay gradiente preservando a legibilidade do texto.</p>
+
+<div class="grid">
+
+  <!-- 1 office_hero.avif -->
+  <div class="card" data-choice="office" onclick="select(this)">
+    <div class="preview">
+      <img class="bg-img" src="/images/hero/office_hero.avif" alt="office hero" />
+      <div class="overlay"></div>
+      <div class="hero-ui">
+        <div class="toggle"><span class="toggle-btn active">Pessoa Física</span><span class="toggle-btn">Empresa</span></div>
+        <div class="h1"><em class="red">Seguros</em> com<br/>inteligência.</div>
+        <div class="sub">Proteção adaptada ao seu perfil.</div>
+        <span class="btn">WhatsApp →</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="tag">1</div>
+      <div class="title">Office Hero</div>
+      <div class="desc">office_hero.avif — ambiente corporativo moderno, tons neutros</div>
+    </div>
+  </div>
+
+  <!-- 2 home.jpg -->
+  <div class="card" data-choice="home" onclick="select(this)">
+    <div class="preview">
+      <img class="bg-img" src="/images/hero/home.jpg" alt="home" />
+      <div class="overlay"></div>
+      <div class="hero-ui">
+        <div class="toggle"><span class="toggle-btn active">Pessoa Física</span><span class="toggle-btn">Empresa</span></div>
+        <div class="h1"><em class="red">Consórcio</em> com<br/>estratégia.</div>
+        <div class="sub">Planejamento inteligente para conquistas reais.</div>
+        <span class="btn">WhatsApp →</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="tag">2</div>
+      <div class="title">Home</div>
+      <div class="desc">home.jpg — imagem principal da homepage</div>
+    </div>
+  </div>
+
+  <!-- 3 investimentos.jpg -->
+  <div class="card" data-choice="invest" onclick="select(this)">
+    <div class="preview">
+      <img class="bg-img" src="/images/hero/investimentos.jpg" alt="investimentos" />
+      <div class="overlay"></div>
+      <div class="hero-ui">
+        <div class="toggle"><span class="toggle-btn active">Pessoa Física</span><span class="toggle-btn">Empresa</span></div>
+        <div class="h1"><em class="red">Investimentos</em><br/>com visão.</div>
+        <div class="sub">Patrimônio crescendo com segurança.</div>
+        <span class="btn">WhatsApp →</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="tag">3</div>
+      <div class="title">Investimentos</div>
+      <div class="desc">investimentos.jpg — tom financeiro premium</div>
+    </div>
+  </div>
+
+  <!-- 4 sem imagem (gradient puro) -->
+  <div class="card" data-choice="gradient" onclick="select(this)">
+    <div class="preview gradient-only">
+      <div class="orb-a"></div>
+      <div class="orb-b"></div>
+      <div class="hero-ui">
+        <div class="toggle"><span class="toggle-btn active">Pessoa Física</span><span class="toggle-btn">Empresa</span></div>
+        <div class="h1"><em class="red">Seguros</em> com<br/>inteligência.</div>
+        <div class="sub">Proteção adaptada ao seu perfil.</div>
+        <span class="btn">WhatsApp →</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="tag">4</div>
+      <div class="title">Gradient Puro</div>
+      <div class="desc">Sem foto — mantém o estilo dark atual com atmosfera de orbs. Mais seguro para todas as seções.</div>
+    </div>
+  </div>
+
+</div>
+
+<p class="hint">Clique para selecionar · responda no terminal</p>
+
+<script>
+function select(el) {
+  document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  const choice = el.dataset.choice;
+  const title = el.querySelector('.title').textContent;
+  fetch('/select', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({choice, text: title})}).catch(()=>{});
+}
+</script>
+</body>
+</html>

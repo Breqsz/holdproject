@@ -51,7 +51,20 @@
       "Bash(git -C \"E:/Projetos/hold\" add docs/superpowers/specs/2026-05-04-hold-site-iteration-v2-design.md)",
       "Bash(git -C E:/Projetos/hold commit -m ' *)",
       "Bash(npm --prefix \"E:/Projetos/hold\" ls motion)",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "Bash(C:\\\\Users\\\\guiro\\\\.claude\\\\plugins\\\\cache\\\\claude-plugins-official\\\\superpowers\\\\5.0.7\\\\scripts\\\\start-server.sh *)",
+      "Bash(git push *)",
+      "Bash(Get-ChildItem -Path \"E:\\\\Projetos\\\\hold\" -Force)",
+      "Bash(Select-Object Name, Mode)",
+      "Bash(C:\\\\Users\\\\guiro\\\\.claude\\\\plugins\\\\cache\\\\claude-plugins-official\\\\superpowers\\\\5.0.7\\\\skills\\\\brainstorming\\\\scripts\\\\start-server.sh *)",
+      "Bash(git commit *)",
+      "Bash(dir E:\\\\Projetos\\\\hold\\\\public\\\\images\\\\hero\\\\ *)",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(d['version']\\)\")",
+      "Bash(start \"\" \"rotating-text-proposals.html\")",
+      "Bash(start *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:50172)",
+      "mcp__claude_ai_Vercel__deploy_to_vercel",
+      "Bash(vercel deploy *)"
     ]
   }
 }

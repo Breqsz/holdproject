@@ -7,17 +7,7 @@ import { useLocale } from '@/lib/i18n'
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number]
 
-const diferenciais = [
-  'Estrutura especializada sem necessidade de equipe interna',
-  'Time com experiência em consórcios e atendimento consultivo',
-  'Propostas personalizadas para seu escritório',
-  'Adequação à linguagem e ao perfil do seu público',
-  'Integração ao modelo comercial do escritório',
-  'Suporte contínuo ao assessor e ao cliente',
-  'Parcerias com administradoras autorizadas pelo Banco Central',
-  'Operação estruturada com transparência e acompanhamento',
-  'Preservação do relacionamento com sua base de clientes',
-]
+const DIFF_COUNT = 9
 
 const stepKeys = [
   'partners.step1',
@@ -44,6 +34,7 @@ const stagger = {
 
 export default function ParaEscritorios() {
   const { t } = useLocale()
+  const diferenciais = Array.from({ length: DIFF_COUNT }, (_, i) => t(`partners.diff.${i + 1}`))
   const stepsRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({ target: stepsRef, offset: ['start 0.85', 'end 0.4'] })
   const lineScaleX = useTransform(scrollYProgress, [0, 1], [0, 1])

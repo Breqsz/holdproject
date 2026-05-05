@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RotatingText — 3 Propostas</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #07162a;
+    color: #e0e8f0;
+    font-family: system-ui, -apple-system, sans-serif;
+    padding: 40px 24px 60px;
+    min-height: 100vh;
+  }
+
+  .page-title {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: #c9a84c;
+    margin-bottom: 6px;
+  }
+  .page-sub {
+    text-align: center;
+    color: #4a6a8a;
+    font-size: 13px;
+    margin-bottom: 48px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .card {
+    border-radius: 16px;
+    overflow: hidden;
+    border: 2px solid rgba(255,255,255,.06);
+    background: #050e1e;
+    cursor: pointer;
+    transition: border-color .25s, transform .2s;
+    position: relative;
+  }
+  .card:hover { transform: translateY(-3px); }
+  .card.selected { border-color: #c9a84c; box-shadow: 0 0 0 3px rgba(201,168,76,.15); }
+  .check {
+    position: absolute; top: 12px; right: 12px; z-index: 10;
+    width: 26px; height: 26px; border-radius: 50%;
+    background: #c9a84c; display: none;
+    align-items: center; justify-content: center;
+    font-size: 13px; color: #07162a; font-weight: 700;
+  }
+  .card.selected .check { display: flex; }
+
+  .card-label {
+    padding: 16px 20px 10px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .tag {
+    font-size: 10px; font-weight: 700; letter-spacing: .14em;
+    text-transform: uppercase; padding: 4px 10px;
+    border-radius: 999px;
+    background: rgba(201,168,76,.1); color: #c9a84c;
+    border: 1px solid rgba(201,168,76,.22);
+  }
+  .card-name { font-size: 13px; font-weight: 600; color: #e0e8f0; }
+
+  /* ── Preview box ── */
+  .preview {
+    margin: 0 16px 16px;
+    border-radius: 10px;
+    background: #07162a;
+    padding: 32px 20px;
+    min-height: 220px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .preview::before {
+    content: '';
+    position: absolute; top: -60px; right: -60px;
+    width: 200px; height: 200px; border-radius: 50%;
+    background: #1a4b8a; opacity: .18; filter: blur(60px);
+    pointer-events: none;
+  }
+
+  .headline {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -.025em;
+    line-height: 1.1;
+    color: #fff;
+    text-align: center;
+  }
+  .subtitle {
+    margin-top: 12px;
+    font-size: 11px;
+    color: rgba(255,255,255,.35);
+    text-align: center;
+    max-width: 200px;
+    line-height: 1.5;
+  }
+
+  /* ── A: Cor sólida ── */
+  .word-color {
+    color: #c9a84c;
+    font-style: italic;
+    animation: rotateWords 2.5s infinite;
+  }
+  @keyframes rotateWords {
+    0%,30%   { opacity: 1; transform: translateY(0); }
+    40%      { opacity: 0; transform: translateY(-12px); }
+    50%      { opacity: 0; transform: translateY(12px); }
+    60%,90%  { opacity: 1; transform: translateY(0); }
+  }
+  .word-color span { display: none; }
+  .word-color span.active { display: inline; }
+
+  /* ── B: Underline sweep ── */
+  .word-underline {
+    position: relative;
+    display: inline-block;
+    color: #fff;
+    font-style: italic;
+  }
+  .word-underline::after {
+    content: '';
+    position: absolute;
+    bottom: -3px; left: 0;
+    width: 100%; height: 3px;
+    background: linear-gradient(90deg, #ae251c, #c9a84c);
+    border-radius: 2px;
+    transform-origin: left;
+    animation: sweepLine 2.5s infinite;
+  }
+  @keyframes sweepLine {
+    0%     { transform: scaleX(0); opacity: 0; }
+    8%     { transform: scaleX(1); opacity: 1; }
+    75%    { transform: scaleX(1); opacity: 1; }
+    90%    { transform: scaleX(0); opacity: 0; transform-origin: right; }
+    100%   { transform: scaleX(0); opacity: 0; transform-origin: left; }
+  }
+  .word-b {
+    animation: fadeSlide 2.5s infinite;
+  }
+  @keyframes fadeSlide {
+    0%,5%  { opacity: 0; transform: translateY(10px); }
+    12%,78%{ opacity: 1; transform: translateY(0); }
+    88%,100%{ opacity: 0; transform: translateY(-10px); }
+  }
+
+  /* ── C: Gradiente no texto ── */
+  .word-gradient {
+    font-style: italic;
+    background: linear-gradient(135deg, #ffffff 0%, #c9a84c 50%, #ae251c 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 2.5s infinite;
+    background-size: 200% 100%;
+  }
+  @keyframes shimmer {
+    0%   { background-position: 100% 0; opacity: 0; transform: translateY(8px); }
+    10%  { opacity: 1; transform: translateY(0); }
+    70%  { opacity: 1; transform: translateY(0); background-position: 0% 0; }
+    85%  { opacity: 0; transform: translateY(-8px); }
+    100% { background-position: 100% 0; opacity: 0; transform: translateY(8px); }
+  }
+
+  /* ── Descriptions ── */
+  .desc {
+    padding: 0 20px 16px;
+    color: #7a9ab8; font-size: 12px; line-height: 1.6;
+  }
+  .desc strong { color: #e0e8f0; display: block; margin-bottom: 4px; font-size: 13px; }
+
+  .pros-cons {
+    padding: 0 20px 20px;
+    display: flex; gap: 10px;
+  }
+  .pro, .con {
+    flex: 1; border-radius: 8px; padding: 8px 10px;
+    font-size: 10.5px; line-height: 1.5;
+  }
+  .pro { background: rgba(201,168,76,.07); border: 1px solid rgba(201,168,76,.18); color: #c9a84c; }
+  .con { background: rgba(122,154,184,.05); border: 1px solid rgba(122,154,184,.12); color: #7a9ab8; }
+  .pro::before { content: '✓ '; }
+  .con::before { content: '± '; }
+
+  .footer-note {
+    text-align: center; color: #2a4a6a; font-size: 12px; margin-top: 40px;
+  }
+</style>
+</head>
+<body>
+
+<p class="page-title">RotatingText — 3 Propostas sem fundo</p>
+<p class="page-sub">Clique na proposta que mais agrada</p>
+
+<div class="grid">
+
+  <!-- A: Cor sólida -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="check">✓</div>
+    <div class="card-label">
+      <span class="tag">A</span>
+      <span class="card-name">Cor sólida + itálico</span>
+    </div>
+    <div class="preview">
+      <div class="headline">
+        <span class="word-color" id="wordA">Consórcio</span><br>
+        com<br>
+        <span class="word-color" id="wordA2">inteligência</span>.
+      </div>
+      <p class="subtitle">Sem fundo. A palavra destaca só pela cor dourada e o itálico.</p>
+    </div>
+    <div class="desc">
+      <strong>Destaque pela cor, sem caixa</strong>
+      A palavra que rotaciona aparece em dourado (#c9a84c) com itálico. Zero background, zero problema de tamanho. Limpo e elegante — o contraste cor+estilo já cria hierarquia visual.
+    </div>
+    <div class="pros-cons">
+      <div class="pro">Sem nenhum bug de largura<br>Visual sofisticado</div>
+      <div class="con">Menos "impactante" visualmente<br>Depende do contraste da foto</div>
+    </div>
+  </div>
+
+  <!-- B: Underline sweep -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="check">✓</div>
+    <div class="card-label">
+      <span class="tag">B</span>
+      <span class="card-name">Sublinhado animado</span>
+    </div>
+    <div class="preview">
+      <div class="headline">
+        <span class="word-underline"><span class="word-b">Consórcio</span></span><br>
+        com<br>
+        <span class="word-underline"><span class="word-b" style="animation-delay:.1s">inteligência</span></span>.
+      </div>
+      <p class="subtitle">Texto branco + linha vermelha/dourada que varre da esquerda à direita.</p>
+    </div>
+    <div class="desc">
+      <strong>Sweep no sublinhado, texto fica branco</strong>
+      A palavra rotaciona em branco e uma linha fina vermelho→dourado aparece varrendo embaixo dela. Sem caixa, sem problema de largura — só a linha se anima.
+    </div>
+    <div class="pros-cons">
+      <div class="pro">Efeito marcante e moderno<br>Sem bugs de largura</div>
+      <div class="con">Sublinhado pode sumir na foto<br>Mais sutil em tamanhos menores</div>
+    </div>
+  </div>
+
+  <!-- C: Gradiente shimmer -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="check">✓</div>
+    <div class="card-label">
+      <span class="tag">C</span>
+      <span class="card-name">Gradiente no texto</span>
+    </div>
+    <div class="preview">
+      <div class="headline">
+        <span class="word-gradient">Consórcio</span><br>
+        com<br>
+        <span class="word-gradient" style="animation-delay:.15s">inteligência</span>.
+      </div>
+      <p class="subtitle">Texto com gradiente branco → dourado → vermelho que passa ao entrar.</p>
+    </div>
+    <div class="desc">
+      <strong>Gradiente luminoso direto no texto</strong>
+      A palavra entra com um shimmer branco→dourado→vermelho que percorre as letras. Sem caixa, sem linha, sem fundo — o efeito fica todo dentro do próprio texto.
+    </div>
+    <div class="pros-cons">
+      <div class="pro">Muito elegante e único<br>Sem absolutamente nenhum box</div>
+      <div class="con">Gradiente pode variar entre browsers<br>Mais sutil em telas pequenas</div>
+    </div>
+  </div>
+
+</div>
+
+<p class="footer-note">Clique para selecionar · depois responda qual prefere</p>
+
+<script>
+  // Cycle words on A
+  const wordsA = ['Consórcio', 'Seguros', 'Saúde', 'Investimentos']
+  const wordsV = ['inteligência', 'confiança', 'estratégia', 'clareza']
+  let idx = 0
+  setInterval(() => {
+    idx = (idx + 1) % wordsA.length
+    document.getElementById('wordA').textContent = wordsA[idx]
+    document.getElementById('wordA2').textContent = wordsV[idx]
+  }, 2500)
+
+  function toggleSelect(el) {
+    document.querySelectorAll('.card').forEach(c => c !== el && c.classList.remove('selected'))
+    el.classList.toggle('selected')
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pills 3D — 5 Propostas</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #040d1c;
+  font-family: 'Outfit', system-ui, sans-serif;
+  color: #e0e8f0;
+  padding: 36px 20px 80px;
+}
+
+.page-title {
+  text-align: center; font-size: 10px; font-weight: 700;
+  letter-spacing: .22em; text-transform: uppercase; color: #c9a84c; margin-bottom: 5px;
+}
+.page-sub { text-align: center; color: #4a6a8a; font-size: 13px; margin-bottom: 44px; }
+
+/* ── Grid 3 + 2 ── */
+.proposals {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.row2 {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  max-width: 1100px;
+  margin: 18px auto 0;
+}
+.row2 .prop { width: calc(33.333% - 6px); max-width: 340px; }
+
+/* ── Proposal shell ── */
+.prop {
+  border-radius: 16px;
+  border: 2px solid rgba(255,255,255,.05);
+  background: #07162a;
+  cursor: pointer;
+  transition: border-color .25s, box-shadow .25s, transform .2s;
+  overflow: hidden;
+  position: relative;
+}
+.prop:hover { transform: translateY(-3px); }
+.prop.selected {
+  border-color: #c9a84c;
+  box-shadow: 0 0 0 3px rgba(201,168,76,.15), 0 24px 60px rgba(0,0,0,.5);
+}
+.check {
+  position: absolute; top: 12px; right: 12px; z-index: 30;
+  width: 26px; height: 26px; border-radius: 50%;
+  background: #c9a84c; display: none;
+  align-items: center; justify-content: center;
+  font-size: 13px; color: #07162a; font-weight: 800;
+}
+.prop.selected .check { display: flex; }
+
+.prop-label {
+  padding: 14px 18px 10px;
+  display: flex; align-items: center; gap: 10px;
+  border-bottom: 1px solid rgba(255,255,255,.05);
+}
+.tag {
+  font-size: 9px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase;
+  padding: 3px 9px; border-radius: 999px;
+  background: rgba(201,168,76,.1); color: #c9a84c;
+  border: 1px solid rgba(201,168,76,.22);
+}
+.prop-name { font-size: 12px; font-weight: 600; color: #7a9ab8; }
+
+/* ── Preview zone ── */
+.preview-zone {
+  margin: 18px;
+  border-radius: 10px;
+  background: #0b1f3a;
+  height: 200px;
+  position: relative;
+  overflow: visible;
+}
+
+/* ── Shared pill anatomy ── */
+.pill {
+  position: absolute;
+  padding: 14px 16px;
+  display: flex; flex-direction: column; gap: 0;
+  min-width: 110px;
+}
+.pill-rule {
+  width: 22px; height: 2px;
+  background: linear-gradient(90deg, #ae251c, #c9a84c);
+  border-radius: 2px; margin-bottom: 8px;
+}
+.pill-num {
+  font-size: 26px; font-weight: 900;
+  line-height: 1; letter-spacing: -.04em; color: #fff;
+  font-family: 'Outfit', sans-serif;
+}
+.pill-lbl {
+  font-size: 9px; color: #7a9ab8;
+  line-height: 1.4; margin-top: 4px;
+}
+.pill-gold { color: #c9a84c; }
+
+/* Floating keyframes */
+@keyframes fl-a { 0%,100%{transform:translateY(0)}  50%{transform:translateY(-9px)} }
+@keyframes fl-b { 0%,100%{transform:translateY(0)}  50%{transform:translateY(7px)}  }
+@keyframes fl-c { 0%,100%{transform:translateY(0)}  50%{transform:translateY(-7px)} }
+
+.pill-pos-1 { top: 10px;  left: 12px;  animation: fl-a 4.2s ease-in-out infinite; }
+.pill-pos-2 { top: 56px;  right: 12px; animation: fl-b 5.0s ease-in-out infinite; }
+.pill-pos-3 { bottom: 12px; left: 30px; animation: fl-c 4.7s ease-in-out infinite; }
+
+/* ── Description ── */
+.prop-desc { padding: 4px 18px 12px; font-size: 11.5px; line-height: 1.6; color: #7a9ab8; }
+.prop-desc strong { display: block; color: #e0e8f0; font-size: 12.5px; margin-bottom: 3px; }
+.tradeoffs { padding: 0 18px 18px; display: flex; gap: 8px; }
+.tpro,.tcon { flex:1; border-radius: 7px; padding: 7px 9px; font-size: 10px; line-height: 1.5; }
+.tpro { background: rgba(201,168,76,.07); border: 1px solid rgba(201,168,76,.18); color: #c9a84c; }
+.tcon { background: rgba(122,154,184,.05); border: 1px solid rgba(122,154,184,.12); color: #7a9ab8; }
+.tpro::before { content: '✓ '; }
+.tcon::before { content: '± '; }
+
+
+/* ══════════════════════════════════════════════════════════════
+   P1 — VIDRO INCLINADO
+   Perspectiva 3D real: rotateX + rotateY com luz simulada
+══════════════════════════════════════════════════════════════ */
+.pill-p1 {
+  border-radius: 14px;
+  background: rgba(10, 28, 54, 0.92);
+  /* Luz vem do canto superior-esquerdo */
+  border-top:  1px solid rgba(255,255,255,0.22);
+  border-left: 1px solid rgba(255,255,255,0.12);
+  border-right: 1px solid rgba(0,0,0,0.4);
+  border-bottom: 1px solid rgba(0,0,0,0.5);
+  box-shadow:
+    0 2px 0  rgba(255,255,255,0.07) inset,  /* brilho topo */
+    0 28px 56px rgba(0,0,0,.7),
+    0 8px  16px rgba(0,0,0,.5),
+    0 2px  4px  rgba(0,0,0,.9),
+    4px 6px 12px rgba(201,168,76,.06);
+}
+/* Inclinação aplicada via wrapper */
+.tilt-wrap-1 { transform: perspective(420px) rotateX(12deg) rotateY(-8deg); }
+
+@keyframes fl-tilt-a {
+  0%,100% { transform: perspective(420px) rotateX(12deg) rotateY(-8deg) translateY(0);   }
+  50%      { transform: perspective(420px) rotateX(12deg) rotateY(-8deg) translateY(-9px); }
+}
+@keyframes fl-tilt-b {
+  0%,100% { transform: perspective(420px) rotateX(12deg) rotateY(-8deg) translateY(0);  }
+  50%      { transform: perspective(420px) rotateX(12deg) rotateY(-8deg) translateY(7px); }
+}
+@keyframes fl-tilt-c {
+  0%,100% { transform: perspective(420px) rotateX(12deg) rotateY(-8deg) translateY(0);   }
+  50%      { transform: perspective(420px) rotateX(12deg) rotateY(-8deg) translateY(-7px); }
+}
+.pill-pos-1.tilt-wrap-1 { animation: fl-tilt-a 4.2s ease-in-out infinite; }
+.pill-pos-2.tilt-wrap-1 { animation: fl-tilt-b 5.0s ease-in-out infinite; }
+.pill-pos-3.tilt-wrap-1 { animation: fl-tilt-c 4.7s ease-in-out infinite; }
+
+
+/* ══════════════════════════════════════════════════════════════
+   P2 — RELEVO METÁLICO
+   Espessura física visível + múltiplos highlights de fonte de luz
+══════════════════════════════════════════════════════════════ */
+.pill-p2-wrap {
+  position: absolute;
+}
+.pill-p2-wrap .pill {
+  position: relative;
+  border-radius: 12px;
+  background: linear-gradient(155deg,
+    rgba(18, 48, 88, 0.98) 0%,
+    rgba(9, 25, 52, 0.98)  45%,
+    rgba(14, 38, 72, 0.98) 100%);
+  border: none;
+  box-shadow:
+    /* Highlights internos (simulam fonte de luz de cima) */
+    0  1px 0 rgba(255,255,255,0.18) inset,
+    0 -1px 0 rgba(0,0,0,0.55) inset,
+    1px  0 0 rgba(255,255,255,0.09) inset,
+   -1px  0 0 rgba(0,0,0,0.35) inset,
+    /* Ring ouro */
+    0 0 0 1px rgba(201,168,76,0.3),
+    /* Sombras de profundidade */
+    0 24px 48px rgba(0,0,0,0.7),
+    0  8px 16px rgba(0,0,0,0.45),
+    0  2px  4px rgba(0,0,0,0.9);
+  min-width: 115px;
+}
+/* Borda inferior visível — "espessura" do cartão */
+.pill-p2-wrap .pill::after {
+  content: '';
+  position: absolute;
+  bottom: -5px; left: 4px; right: 4px; height: 5px;
+  background: linear-gradient(to right,
+    rgba(4,12,28,0.95), rgba(8,22,48,0.9), rgba(4,12,28,0.95));
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+}
+.pill-p2-wrap.pill-pos-1 { animation: fl-a 4.2s ease-in-out infinite; }
+.pill-p2-wrap.pill-pos-2 { animation: fl-b 5.0s ease-in-out infinite; }
+.pill-p2-wrap.pill-pos-3 { animation: fl-c 4.7s ease-in-out infinite; }
+
+
+/* ══════════════════════════════════════════════════════════════
+   P3 — CRISTAL EMPILHADO
+   3 camadas visíveis com offset — profundidade real em Z
+══════════════════════════════════════════════════════════════ */
+.pill-p3-wrap {
+  position: absolute;
+}
+/* Camada traseira 2 */
+.pill-p3-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 13px;
+  background: rgba(11,31,58,0.45);
+  border: 1px solid rgba(201,168,76,0.1);
+  transform: translate(9px, 9px);
+  z-index: 0;
+}
+/* Camada traseira 1 */
+.pill-p3-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 13px;
+  background: rgba(11,31,58,0.68);
+  border: 1px solid rgba(201,168,76,0.18);
+  transform: translate(4.5px, 4.5px);
+  z-index: 1;
+}
+.pill-p3-wrap .pill {
+  position: relative;
+  z-index: 2;
+  border-radius: 13px;
+  background: rgba(11,31,58,0.97);
+  border: 1px solid rgba(201,168,76,0.32);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.1) inset,
+    0 16px 32px rgba(0,0,0,0.55),
+    0  4px  8px rgba(0,0,0,0.35);
+  min-width: 110px;
+}
+.pill-p3-wrap.pill-pos-1 { animation: fl-a 4.2s ease-in-out infinite; }
+.pill-p3-wrap.pill-pos-2 { animation: fl-b 5.0s ease-in-out infinite; }
+.pill-p3-wrap.pill-pos-3 { animation: fl-c 4.7s ease-in-out infinite; }
+
+
+/* ══════════════════════════════════════════════════════════════
+   P4 — NEON PROFUNDIDADE
+   Emissão de luz: glow multicamada + sombra colorida
+══════════════════════════════════════════════════════════════ */
+.pill-p4 {
+  border-radius: 14px;
+  background: rgba(5, 13, 28, 0.97);
+  border: 1px solid rgba(201,168,76,0.6);
+  box-shadow:
+    /* Glow interno (brilha por dentro) */
+    0 0 8px  rgba(201,168,76,0.15) inset,
+    /* Glow externo em camadas */
+    0 0 12px rgba(201,168,76,0.25),
+    0 0 28px rgba(201,168,76,0.14),
+    0 0 56px rgba(201,168,76,0.07),
+    /* Sombra colorida profunda */
+    0 16px 40px rgba(0,0,0,0.75),
+    0  4px 12px rgba(201,168,76,0.08);
+}
+.pill-p4 .pill-num { text-shadow: 0 0 16px rgba(201,168,76,0.5); }
+.pill-p4 .pill-lbl { color: rgba(201,168,76,0.65); }
+
+
+/* ══════════════════════════════════════════════════════════════
+   P5 — EXTRUDIDO ISOMÉTRICO
+   Sombra escalonada hard-edge — objeto físico saindo da tela
+══════════════════════════════════════════════════════════════ */
+.pill-p5 {
+  border-radius: 11px;
+  background: linear-gradient(148deg, #0f2845 0%, #07162a 100%);
+  border: 1px solid rgba(201,168,76,0.25);
+  box-shadow:
+    /* Escalonamento isométrico */
+    1px 1px 0 rgba(0,0,0,.92),
+    2px 2px 0 rgba(0,0,0,.88),
+    3px 3px 0 rgba(0,0,0,.84),
+    4px 4px 0 rgba(0,0,0,.80),
+    5px 5px 0 rgba(0,0,0,.75),
+    6px 6px 0 rgba(0,0,0,.70),
+    7px 7px 0 rgba(0,0,0,.65),
+    8px 8px 0 rgba(0,0,0,.55),
+    /* Sombra ambiente */
+    14px 20px 40px rgba(0,0,0,.55),
+    /* Highlight topo */
+    0 1px 0 rgba(255,255,255,0.12) inset;
+}
+</style>
+</head>
+<body>
+
+<p class="page-title">Pills Flutuantes — 5 Propostas 3D</p>
+<p class="page-sub">Clique para selecionar · Animações ao vivo em cada preview</p>
+
+
+<div class="proposals">
+
+  <!-- ═══════ P1 — VIDRO INCLINADO ═══════ -->
+  <div class="prop" data-choice="a" onclick="toggleSelect(this)">
+    <div class="check">✓</div>
+    <div class="prop-label"><span class="tag">A</span><span class="prop-name">Vidro Inclinado</span></div>
+    <div class="preview-zone">
+
+      <div class="pill-pos-1 tilt-wrap-1 pill pill-p1">
+        <div class="pill-rule"></div>
+        <span class="pill-num">+19<span class="pill-gold">a</span></span>
+        <span class="pill-lbl">Anos de Experiência</span>
+      </div>
+
+      <div class="pill-pos-2 tilt-wrap-1 pill pill-p1">
+        <div class="pill-rule"></div>
+        <span class="pill-num">+60</span>
+        <span class="pill-lbl">Parceiros Comerciais</span>
+      </div>
+
+      <div class="pill-pos-3 tilt-wrap-1 pill pill-p1">
+        <div class="pill-rule"></div>
+        <span class="pill-num">4</span>
+        <span class="pill-lbl">Frentes integradas</span>
+      </div>
+
+    </div>
+    <p class="prop-desc">
+      <strong>Perspectiva 3D real via CSS transform</strong>
+      Cada pill é inclinada com rotateX + rotateY, simulando uma tile física flutuando no espaço. Bordas assimétricas — topo/esquerda mais brilhantes (luz), baixo/direita mais escuras (sombra).
+    </p>
+    <div class="tradeoffs">
+      <div class="tpro">Efeito 3D mais literal · Profundidade imediata</div>
+      <div class="tcon">Leitura levemente dificultada pela inclinação</div>
+    </div>
+  </div>
+
+
+  <!-- ═══════ P2 — RELEVO METÁLICO ═══════ -->
+  <div class="prop" data-choice="b" onclick="toggleSelect(this)">
+    <div class="check">✓</div>
+    <div class="prop-label"><span class="tag">B</span><span class="prop-name">Relevo Metálico</span></div>
+    <div class="preview-zone">
+
+      <div class="pill-p2-wrap pill-pos-1">
+        <div class="pill pill-p2-inner" style="border-radius:12px; background:linear-gradient(155deg,rgba(18,48,88,.98) 0%,rgba(9,25,52,.98) 45%,rgba(14,38,72,.98) 100%); box-shadow:0 1px 0 rgba(255,255,255,.18) inset,0 -1px 0 rgba(0,0,0,.55) inset,1px 0 0 rgba(255,255,255,.09) inset,-1px 0 0 rgba(0,0,0,.35) inset,0 0 0 1px rgba(201,168,76,.3),0 24px 48px rgba(0,0,0,.7),0 8px 16px rgba(0,0,0,.45),0 2px 4px rgba(0,0,0,.9); position:relative;">
+          <div style="position:absolute;bottom:-5px;left:4px;right:4px;height:5px;background:linear-gradient(to right,rgba(4,12,28,.95),rgba(8,22,48,.9),rgba(4,12,28,.95));border-radius:0 0 10px 10px;box-shadow:0 8px 16px rgba(0,0,0,.4);"></div>
+          <div class="pill-rule"></div>
+          <span class="pill-num">+19<span class="pill-gold">a</span></span>
+          <span class="pill-lbl">Anos de Experiência</span>
+        </div>
+      </div>
+
+      <div class="pill-p2-wrap pill-pos-2">
+        <div class="pill" style="border-radius:12px; background:linear-gradient(155deg,rgba(18,48,88,.98) 0%,rgba(9,25,52,.98) 45%,rgba(14,38,72,.98) 100%); box-shadow:0 1px 0 rgba(255,255,255,.18) inset,0 -1px 0 rgba(0,0,0,.55) inset,1px 0 0 rgba(255,255,255,.09) inset,-1px 0 0 rgba(0,0,0,.35) inset,0 0 0 1px rgba(201,168,76,.3),0 24px 48px rgba(0,0,0,.7),0 8px 16px rgba(0,0,0,.45),0 2px 4px rgba(0,0,0,.9); position:relative;">
+          <div style="position:absolute;bottom:-5px;left:4px;right:4px;height:5px;background:linear-gradient(to right,rgba(4,12,28,.95),rgba(8,22,48,.9),rgba(4,12,28,.95));border-radius:0 0 10px 10px;"></div>
+          <div class="pill-rule"></div>
+          <span class="pill-num">+60</span>
+          <span class="pill-lbl">Parceiros Comerciais</span>
+        </div>
+      </div>
+
+      <div class="pill-p2-wrap pill-pos-3">
+        <div class="pill" style="border-radius:12px; background:linear-gradient(155deg,rgba(18,48,88,.98) 0%,rgba(9,25,52,.98) 45%,rgba(14,38,72,.98) 100%); box-shadow:0 1px 0 rgba(255,255,255,.18) inset,0 -1px 0 rgba(0,0,0,.55) inset,1px 0 0 rgba(255,255,255,.09) inset,-1px 0 0 rgba(0,0,0,.35) inset,0 0 0 1px rgba(201,168,76,.3),0 24px 48px rgba(0,0,0,.7),0 8px 16px rgba(0,0,0,.45),0 2px 4px rgba(0,0,0,.9); position:relative;">
+          <div style="position:absolute;bottom:-5px;left:4px;right:4px;height:5px;background:linear-gradient(to right,rgba(4,12,28,.95),rgba(8,22,48,.9),rgba(4,12,28,.95));border-radius:0 0 10px 10px;"></div>
+          <div class="pill-rule"></div>
+          <span class="pill-num">4</span>
+          <span class="pill-lbl">Frentes integradas</span>
+        </div>
+      </div>
+
+    </div>
+    <p class="prop-desc">
+      <strong>Espessura física + highlights de metalurgia</strong>
+      Uma borda inferior visível cria a ilusão de espessura real. Múltiplos inset shadows simulam reflexo metálico — topo claro, laterais em degradê, base escura. Parece um crachá ou placa de metal.
+    </p>
+    <div class="tradeoffs">
+      <div class="tpro">Muito premium · Sensação física convincente</div>
+      <div class="tcon">Exige cuidado no hover para não parecer pesado</div>
+    </div>
+  </div>
+
+
+  <!-- ═══════ P3 — CRISTAL EMPILHADO ═══════ -->
+  <div class="prop" data-choice="c" onclick="toggleSelect(this)">
+    <div class="check">✓</div>
+    <div class="prop-label"><span class="tag">C</span><span class="prop-name">Cristal Empilhado</span></div>
+    <div class="preview-zone">
+
+      <div class="pill-p3-wrap pill-pos-1">
+        <div class="pill" style="border-radius:13px;background:rgba(11,31,58,.97);border:1px solid rgba(201,168,76,.32);box-shadow:0 1px 0 rgba(255,255,255,.1) inset,0 16px 32px rgba(0,0,0,.55),0 4px 8px rgba(0,0,0,.35);position:relative;z-index:2;min-width:110px;">
+          <div class="pill-rule"></div>
+          <span class="pill-num">+19<span class="pill-gold">a</span></span>
+          <span class="pill-lbl">Anos de Experiência</span>
+        </div>
+      </div>
+
+      <div class="pill-p3-wrap pill-pos-2">
+        <div class="pill" style="border-radius:13px;background:rgba(11,31,58,.97);border:1px solid rgba(201,168,76,.32);box-shadow:0 1px 0 rgba(255,255,255,.1) inset,0 16px 32px rgba(0,0,0,.55),0 4px 8px rgba(0,0,0,.35);position:relative;z-index:2;min-width:110px;">
+          <div class="pill-rule"></div>
+          <span class="pill-num">+60</span>
+          <span class="pill-lbl">Parceiros Comerciais</span>
+        </div>
+      </div>
+
+      <div class="pill-p3-wrap pill-pos-3">
+        <div class="pill" style="border-radius:13px;background:rgba(11,31,58,.97);border:1px solid rgba(201,168,76,.32);box-shadow:0 1px 0 rgba(255,255,255,.1) inset,0 16px 32px rgba(0,0,0,.55),0 4px 8px rgba(0,0,0,.35);position:relative;z-index:2;min-width:110px;">
+          <div class="pill-rule"></div>
+          <span class="pill-num">4</span>
+          <span class="pill-lbl">Frentes integradas</span>
+        </div>
+      </div>
+
+    </div>
+    <p class="prop-desc">
+      <strong>Camadas em Z visíveis — profundidade real</strong>
+      Dois clones semitransparentes aparecem atrás de cada pill com offset crescente. Cria a ilusão de um objeto com espessura volumétrica, como cristal ou vidro empilhado. Profundidade percebida muito alta.
+    </p>
+    <div class="tradeoffs">
+      <div class="tpro">Profundidade Z convincente · Muito único</div>
+      <div class="tcon">Requer z-index cuidadoso quando pills se sobrepõem</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Row 2 -->
+<div class="row2">
+
+  <!-- ═══════ P4 — NEON PROFUNDIDADE ═══════ -->
+  <div class="prop" data-choice="d" onclick="toggleSelect(this)">
+    <div class="check">✓</div>
+    <div class="prop-label"><span class="tag">D</span><span class="prop-name">Neon Profundidade</span></div>
+    <div class="preview-zone">
+
+      <div class="pill pill-pos-1 pill-p4">
+        <div class="pill-rule"></div>
+        <span class="pill-num" style="text-shadow:0 0 16px rgba(201,168,76,.5);">+19<span class="pill-gold">a</span></span>
+        <span class="pill-lbl" style="color:rgba(201,168,76,.6);">Anos de Experiência</span>
+      </div>
+
+      <div class="pill pill-pos-2 pill-p4">
+        <div class="pill-rule"></div>
+        <span class="pill-num" style="text-shadow:0 0 16px rgba(201,168,76,.5);">+60</span>
+        <span class="pill-lbl" style="color:rgba(201,168,76,.6);">Parceiros Comerciais</span>
+      </div>
+
+      <div class="pill pill-pos-3 pill-p4">
+        <div class="pill-rule"></div>
+        <span class="pill-num" style="text-shadow:0 0 16px rgba(201,168,76,.5);">4</span>
+        <span class="pill-lbl" style="color:rgba(201,168,76,.6);">Frentes integradas</span>
+      </div>
+
+    </div>
+    <p class="prop-desc">
+      <strong>Emissão de luz dourada multicamada</strong>
+      A pill parece emitir luz — glow interno (inset) + 3 camadas de glow externo em opacidades decrescentes + sombra colorida profunda. O número brilha com text-shadow. Efeito de back-light premium.
+    </p>
+    <div class="tradeoffs">
+      <div class="tpro">Alto impacto visual · Muito diferenciado no setor</div>
+      <div class="tcon">Pode contrastar forte demais com o resto da seção</div>
+    </div>
+  </div>
+
+
+  <!-- ═══════ P5 — EXTRUDIDO ISOMÉTRICO ═══════ -->
+  <div class="prop" data-choice="e" onclick="toggleSelect(this)">
+    <div class="check">✓</div>
+    <div class="prop-label"><span class="tag">E</span><span class="prop-name">Extrudido Isométrico</span></div>
+    <div class="preview-zone">
+
+      <div class="pill pill-pos-1 pill-p5">
+        <div class="pill-rule"></div>
+        <span class="pill-num">+19<span class="pill-gold">a</span></span>
+        <span class="pill-lbl">Anos de Experiência</span>
+      </div>
+
+      <div class="pill pill-pos-2 pill-p5">
+        <div class="pill-rule"></div>
+        <span class="pill-num">+60</span>
+        <span class="pill-lbl">Parceiros Comerciais</span>
+      </div>
+
+      <div class="pill pill-pos-3 pill-p5">
+        <div class="pill-rule"></div>
+        <span class="pill-num">4</span>
+        <span class="pill-lbl">Frentes integradas</span>
+      </div>
+
+    </div>
+    <p class="prop-desc">
+      <strong>Sombra hard-edge escalonada — sai da tela</strong>
+      8 camadas de box-shadow com offset crescente criam a ilusão de um objeto sólido extrudado da superfície. Como se a pill fosse esculpida em relevo. Muito gráfico e físico.
+    </p>
+    <div class="tradeoffs">
+      <div class="tpro">3D mais "sólido" de todos · Presença forte</div>
+      <div class="tcon">Estilo mais gráfico — verificar fit com o tom do site</div>
+    </div>
+  </div>
+
+</div>
+
+<p style="text-align:center;color:#1e3a5a;font-size:12px;margin-top:40px;">
+  Clique para selecionar — ou diga qual prefere e o que ajustar
+</p>
+
+<script>
+function toggleSelect(el) {
+  document.querySelectorAll('.prop').forEach(p => p.classList.remove('selected'))
+  el.classList.add('selected')
+  if (window.__sp_select) window.__sp_select(el.dataset.choice, el.querySelector('.prop-name')?.textContent || '')
+}
+</script>
+</body>
+</html>

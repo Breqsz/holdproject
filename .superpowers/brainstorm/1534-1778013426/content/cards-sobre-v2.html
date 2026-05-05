@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cards SobreNos — Proposta C Ajustada</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #040d1c;
+  color: #e0e8f0;
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  padding: 40px 20px 80px;
+  min-height: 100vh;
+}
+.page-title {
+  text-align: center; font-size: 10px; font-weight: 700;
+  letter-spacing: .22em; text-transform: uppercase; color: #c9a84c; margin-bottom: 6px;
+}
+.page-sub { text-align: center; color: #4a6a8a; font-size: 13px; margin-bottom: 48px; }
+
+/* ── Full section preview ── */
+.section-preview {
+  max-width: 860px;
+  margin: 0 auto;
+  border-radius: 18px;
+  background: #0b1f3a;
+  padding: 40px 40px 40px 44px;
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  box-shadow: 0 24px 80px rgba(0,0,0,.6);
+}
+
+/* Left editorial text */
+.prev-left { flex: 1; min-width: 0; }
+.prev-eyebrow {
+  font-size: 10px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+  color: #ae251c; margin-bottom: 12px;
+}
+.prev-title {
+  font-size: 22px; font-weight: 800; line-height: 1.18; letter-spacing: -.025em;
+  color: #fff; margin-bottom: 14px; max-width: 28ch;
+}
+.prev-body {
+  font-size: 12px; line-height: 1.65; color: #7a9ab8; max-width: 36ch;
+}
+
+/* Right card column */
+.prev-right { width: 200px; flex-shrink: 0; }
+
+/* ── Grid Assimétrico (C) — sem sobreposição, textos centralizados ── */
+.asym-grid {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Featured card */
+.ag-featured {
+  border-radius: 14px;
+  background: linear-gradient(140deg, #0d2747 0%, #142f54 100%);
+  border: 1px solid rgba(201,168,76,.3);
+  box-shadow: 0 10px 36px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.08);
+  padding: 16px 14px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+.ag-featured::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 80% 10%, rgba(201,168,76,.14) 0%, transparent 60%);
+  pointer-events: none;
+}
+.ag-featured-num {
+  font-size: 40px; font-weight: 900; letter-spacing: -.05em;
+  line-height: 1; color: #fff; position: relative;
+  font-variant-numeric: tabular-nums;
+  display: block;
+}
+.ag-featured-rule {
+  width: 40px; height: 2px;
+  background: linear-gradient(90deg, #ae251c, #c9a84c);
+  border-radius: 2px;
+  margin: 10px auto;
+}
+.ag-featured-lbl {
+  font-size: 10px; color: #7a9ab8; line-height: 1.4;
+  display: block;
+}
+
+/* 2 compact cards side by side */
+.ag-row {
+  display: flex;
+  gap: 10px;
+}
+.ag-small {
+  flex: 1;
+  border-radius: 11px;
+  background: rgba(11,31,58,.97);
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow: 0 4px 18px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.05);
+  padding: 12px 8px;
+  display: flex; flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 2px;
+}
+.ag-small-num {
+  font-size: 22px; font-weight: 800; letter-spacing: -.04em;
+  line-height: 1; color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+.ag-small-rule {
+  width: 20px; height: 1.5px;
+  background: linear-gradient(90deg, #ae251c, #c9a84c);
+  border-radius: 2px;
+  margin: 5px 0;
+}
+.ag-small-lbl {
+  font-size: 8px; color: #7a9ab8; line-height: 1.3;
+}
+
+/* ── Label below ── */
+.confirm-label {
+  text-align: center;
+  margin-top: 28px;
+  font-size: 11px;
+  color: #4a6a8a;
+}
+.confirm-label strong { color: #c9a84c; }
+</style>
+</head>
+<body>
+
+<p class="page-title">Proposta C — Grid Assimétrico · Ajustada</p>
+<p class="page-sub">Sem o "a" em +19 · Textos centralizados</p>
+
+<div class="section-preview">
+
+  <!-- Left text (replica do SobreNos) -->
+  <div class="prev-left">
+    <p class="prev-eyebrow">Quem Somos</p>
+    <p class="prev-title">Mais do que viabilizar crédito. Estruturamos decisões com estratégia e propósito.</p>
+    <p class="prev-body">Planejamento no início. Estratégia no caminho. Resultado como consequência.</p>
+  </div>
+
+  <!-- Right: Grid Assimétrico C ajustado -->
+  <div class="prev-right">
+    <div class="asym-grid">
+
+      <!-- Card destaque: +19 anos -->
+      <div class="ag-featured">
+        <span class="ag-featured-num">+19</span>
+        <div class="ag-featured-rule"></div>
+        <span class="ag-featured-lbl">Anos de Experiência em consultoria patrimonial</span>
+      </div>
+
+      <!-- 2 compactos -->
+      <div class="ag-row">
+        <div class="ag-small">
+          <span class="ag-small-num">+60</span>
+          <div class="ag-small-rule"></div>
+          <span class="ag-small-lbl">Parceiros Comerciais</span>
+        </div>
+        <div class="ag-small">
+          <span class="ag-small-num">4</span>
+          <div class="ag-small-rule"></div>
+          <span class="ag-small-lbl">Frentes integradas</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<p class="confirm-label">
+  <strong>Design aprovado?</strong> · Confirme no terminal para implementar
+</p>
+
+</body>
+</html>

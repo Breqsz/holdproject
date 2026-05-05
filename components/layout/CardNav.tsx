@@ -4,6 +4,9 @@ import React, { useLayoutEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { gsap } from 'gsap'
 import { ArrowUpRight } from 'lucide-react'
+import { useLocale } from '@/lib/i18n'
+
+type Locale = 'pt' | 'en'
 
 type CardNavLink = {
   label: string
@@ -18,42 +21,74 @@ type CardNavItem = {
   links: CardNavLink[]
 }
 
-const ITEMS: CardNavItem[] = [
-  {
-    label: 'Soluções',
-    bgColor: '#142f54',
-    textColor: '#ffffff',
-    links: [
-      { label: 'Consórcios',    href: '/consorcios/',    ariaLabel: 'Ver soluções de consórcio' },
-      { label: 'Seguros',       href: '/seguros/',       ariaLabel: 'Ver soluções de seguros' },
-      { label: 'Saúde & Vida',  href: '/saude/',         ariaLabel: 'Ver soluções de saúde e vida' },
-      { label: 'Investimentos', href: '/investimentos/', ariaLabel: 'Ver soluções de investimentos' },
-    ],
-  },
-  {
-    label: 'A Hold',
-    bgColor: '#0b1f3a',
-    textColor: '#ffffff',
-    links: [
-      { label: 'Sobre Nós',        href: '/#sobre-nos',         ariaLabel: 'Conheça a Hold Corretora' },
-      { label: 'Equipe',           href: '/equipe/',            ariaLabel: 'Conheça a equipe Hold Corretora' },
-      { label: 'Para Escritórios', href: '/#para-escritorios',  ariaLabel: 'Soluções para escritórios parceiros' },
-    ],
-  },
-  {
-    label: 'Suporte',
-    bgColor: '#c9a84c',
-    textColor: '#ffffff',
-    links: [
-      { label: 'Perguntas Frequentes', href: '/#faq',     ariaLabel: 'Perguntas frequentes' },
-      { label: 'Fale Conosco',         href: '/#contato', ariaLabel: 'Entre em contato com a Hold Corretora' },
-    ],
-  },
-]
+function LocaleToggle({ locale, setLocale, dark }: { locale: Locale; setLocale: (l: Locale) => void; dark?: boolean }) {
+  const outer = dark
+    ? 'bg-white/10 border border-white/15'
+    : 'bg-[#07162a]/[0.06] border border-[#07162a]/10'
+  const activeBtn = dark
+    ? 'bg-white text-[#07162a] shadow-sm'
+    : 'bg-[#07162a] text-white shadow-sm'
+  const inactiveBtn = dark
+    ? 'text-white/45 hover:text-white/80'
+    : 'text-[#07162a]/40 hover:text-[#07162a]/70'
+
+  return (
+    <div
+      className={`flex items-center rounded-lg p-[3px] gap-[2px] ${outer}`}
+      style={{ fontFamily: 'var(--font-outfit)' }}
+    >
+      {(['pt', 'en'] as Locale[]).map((l) => (
+        <button
+          key={l}
+          onClick={() => setLocale(l)}
+          className={`text-[11px] font-semibold tracking-wide px-2.5 py-[5px] rounded-md transition-all duration-200 leading-none uppercase ${
+            locale === l ? activeBtn : inactiveBtn
+          }`}
+        >
+          {l}
+        </button>
+      ))}
+    </div>
+  )
+}
 
 export default function CardNav() {
+  const { t, locale, setLocale } = useLocale()
   const [isOpen, setIsOpen] = useState(false)
   const [isExpanded, setIsExpanded] = useState(false)
+
+  const ITEMS: CardNavItem[] = [
+    {
+      label: t('cardnav.solutions'),
+      bgColor: '#142f54',
+      textColor: '#ffffff',
+      links: [
+        { label: t('cardnav.link.consorcios'),    href: '/consorcios/',    ariaLabel: t('cardnav.aria.consorcios') },
+        { label: t('cardnav.link.seguros'),       href: '/seguros/',       ariaLabel: t('cardnav.aria.seguros') },
+        { label: t('cardnav.link.saude'),         href: '/saude/',         ariaLabel: t('cardnav.aria.saude') },
+        { label: t('cardnav.link.investimentos'), href: '/investimentos/', ariaLabel: t('cardnav.aria.investimentos') },
+      ],
+    },
+    {
+      label: t('cardnav.hold'),
+      bgColor: '#0b1f3a',
+      textColor: '#ffffff',
+      links: [
+        { label: t('cardnav.link.sobre'),       href: '/#sobre-nos',        ariaLabel: t('cardnav.aria.sobre') },
+        { label: t('cardnav.link.equipe'),      href: '/equipe/',            ariaLabel: t('cardnav.aria.equipe') },
+        { label: t('cardnav.link.escritorios'), href: '/#para-escritorios', ariaLabel: t('cardnav.aria.escritorios') },
+      ],
+    },
+    {
+      label: t('cardnav.support'),
+      bgColor: '#c9a84c',
+      textColor: '#ffffff',
+      links: [
+        { label: t('cardnav.link.faq'),    href: '/#faq',     ariaLabel: t('cardnav.aria.faq') },
+        { label: t('cardnav.link.contato'), href: '/#contato', ariaLabel: t('cardnav.aria.contato') },
+      ],
+    },
+  ]
   const navRef = useRef<HTMLDivElement | null>(null)
   const cardsRef = useRef<HTMLDivElement[]>([])
   const tlRef = useRef<gsap.core.Timeline | null>(null)
@@ -173,7 +208,7 @@ export default function CardNav() {
             type="button"
             className="group h-full flex flex-col items-center justify-center cursor-pointer gap-[6px] order-2 md:order-none bg-transparent border-0 p-2"
             onClick={toggle}
-            aria-label={isExpanded ? 'Fechar menu' : 'Abrir menu'}
+            aria-label={isExpanded ? t('cardnav.menu.close') : t('cardnav.menu.open')}
             aria-expanded={isExpanded}
           >
             <span
@@ -198,14 +233,17 @@ export default function CardNav() {
             <span className="text-[#ae251c] text-sm font-medium">Corretora</span>
           </Link>
 
-          {/* CTA — desktop only */}
-          <Link
-            href="/#contato"
-            className="hidden md:inline-flex items-center h-[calc(100%-0.8rem)] rounded-[calc(0.75rem-0.2rem)] px-5 text-sm font-semibold text-white no-underline transition-opacity duration-200 hover:opacity-90"
-            style={{ backgroundColor: '#ae251c', fontFamily: 'var(--font-outfit)' }}
-          >
-            Falar Conosco
-          </Link>
+          {/* PT/EN toggle + CTA — desktop only */}
+          <div className="hidden md:flex self-stretch items-center gap-2">
+            <LocaleToggle locale={locale} setLocale={setLocale} />
+            <Link
+              href="/#contato"
+              className="inline-flex items-center h-[calc(100%-0.8rem)] rounded-[calc(0.75rem-0.2rem)] px-5 text-sm font-semibold text-white no-underline transition-opacity duration-200 hover:opacity-90"
+              style={{ backgroundColor: '#ae251c', fontFamily: 'var(--font-outfit)' }}
+            >
+              {t('cardnav.cta')}
+            </Link>
+          </div>
         </div>
 
         {/* Cards panel */}
@@ -244,6 +282,11 @@ export default function CardNav() {
               </div>
             </div>
           ))}
+
+          {/* PT/EN toggle — mobile only, shown at the bottom of the open panel */}
+          <div className="md:hidden flex items-center px-2 pb-1 pt-0.5">
+            <LocaleToggle locale={locale} setLocale={setLocale} dark />
+          </div>
         </div>
       </nav>
     </div>

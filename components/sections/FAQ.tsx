@@ -7,31 +7,7 @@ import { useLocale } from '@/lib/i18n'
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number]
 
-interface FaqItem {
-  q: string
-  a: string
-}
-
-const faqs: FaqItem[] = [
-  { q: 'O que é consórcio?', a: 'O consórcio é uma modalidade de compra baseada na formação de grupos de pessoas com objetivos em comum, regulamentado pela Lei nº 11.795/2008 e fiscalizado pelo Banco Central do Brasil.' },
-  { q: 'Como funciona o consórcio?', a: 'Os participantes pagam parcelas mensais que formam um fundo comum. Mensalmente ocorrem assembleias onde consorciados são contemplados por sorteio ou lance.' },
-  { q: 'O consórcio tem juros?', a: 'Não. Os custos envolvem: taxa de administração, fundo de reserva (quando previsto) e seguro (se contratado).' },
-  { q: 'Posso escolher o valor da carta de crédito?', a: 'Sim. No momento da adesão você define o valor conforme seu objetivo e capacidade de pagamento.' },
-  { q: 'O que é carta de crédito?', a: 'É o valor contratado, disponibilizado após a contemplação para aquisição do bem ou serviço. Funciona como pagamento à vista.' },
-  { q: 'Como posso ser contemplado?', a: 'Por sorteio ou lance. Modalidades: lance livre, lance fixo, lance fidelidade.' },
-  { q: 'O que é lance embutido?', a: 'Utilização de parte da própria carta de crédito como lance para aumentar as chances de contemplação.' },
-  { q: 'Qual a diferença entre meia parcela, parcela reduzida e upgrade?', a: 'Meia parcela: valor reduzido até contemplação. Parcela reduzida: redução só no fundo comum. Upgrade: aumenta crédito até 100% após contemplação.' },
-  { q: 'O que acontece após a contemplação?', a: 'A administradora realiza análise de crédito. Aprovado, o consorciado pode utilizar a carta conforme as regras do grupo.' },
-  { q: 'Quanto tempo tenho para usar a carta de crédito?', a: 'Não há prazo obrigatório imediato. Pode usar a qualquer momento dentro do prazo do grupo, com valor atualizado conforme contrato.' },
-  { q: 'Posso usar o FGTS no consórcio?', a: 'Sim, em consórcios imobiliários: ofertar lances, amortizar saldo devedor, complementar valor do imóvel.' },
-  { q: 'As parcelas podem mudar?', a: 'Sim. Podem ser reajustadas com base em índices como IPCA ou INCC para manter o poder de compra.' },
-  { q: 'O que acontece se eu atrasar parcelas?', a: 'Impede participação em sorteios e lances. Inadimplência prolongada pode cancelar a cota.' },
-  { q: 'Posso desistir do consórcio?', a: 'Sim. Tem direito à devolução dos valores pagos ao fundo comum, conforme regras contratuais.' },
-  { q: 'Posso vender ou transferir minha cota?', a: 'Sim, mediante aprovação da administradora.' },
-  { q: 'Consórcio ou financiamento: qual a diferença?', a: 'Consórcio: sem juros, médio/longo prazo, contemplação por sorteio ou lance. Financiamento: crédito imediato, com juros, custo total mais elevado.' },
-  { q: 'O consórcio é seguro?', a: 'Sim. Regulamentado pela Lei nº 11.795/2008 e fiscalizado pelo Banco Central do Brasil.' },
-  { q: 'O consórcio é investimento?', a: 'Pode ser estruturado como ferramenta de alavancagem patrimonial. Performance depende da estratégia e momento de mercado.' },
-]
+const FAQ_COUNT = 12
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -43,6 +19,11 @@ const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.05 } }
 export default function FAQ() {
   const { t } = useLocale()
   const [openItems, setOpenItems] = useState<number[]>([])
+
+  const faqs = Array.from({ length: FAQ_COUNT }, (_, i) => ({
+    q: t(`faq.item.${i + 1}.q`),
+    a: t(`faq.item.${i + 1}.a`),
+  }))
 
   function toggle(index: number) {
     setOpenItems((prev) =>

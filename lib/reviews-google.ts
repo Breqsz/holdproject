@@ -61,5 +61,6 @@ export const googleReviews: GoogleReview[] = [
 export const googleSummary = {
   rating: 4.9,
   count: 39,
-  href: 'https://www.google.com/search?q=HOLD+SEGUROS+uberlandia',
+  href: 'https://www.google.com/search?q=HOLD+SEGUROS+uberlandia#lrd=0x94a44501a8679115:0x231b333094479e8d,1,,,,',
+  writeHref: 'https://www.google.com/search?q=HOLD+SEGUROS+uberlandia#lrd=0x94a44501a8679115:0x231b333094479e8d,3,,,,',
 } as const

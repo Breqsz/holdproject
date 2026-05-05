@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SobreNos — Espaço Direito · 3 Propostas</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #050e1e;
+  color: #e0e8f0;
+  font-family: system-ui, -apple-system, sans-serif;
+  padding: 36px 20px 60px;
+}
+
+/* ── Page chrome ── */
+.page-title { text-align:center; font-size:11px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:#c9a84c; margin-bottom:6px; }
+.page-sub   { text-align:center; color:#4a6a8a; font-size:13px; margin-bottom:44px; }
+
+/* ── Card shell ── */
+.proposals { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; max-width:1200px; margin:0 auto; }
+.card {
+  border-radius:16px; border:2px solid rgba(255,255,255,.05);
+  background:#07162a; cursor:pointer;
+  transition:border-color .25s, transform .2s;
+  overflow:hidden; position:relative;
+}
+.card:hover { transform:translateY(-3px); }
+.card.selected { border-color:#c9a84c; box-shadow:0 0 0 3px rgba(201,168,76,.15); }
+.check {
+  position:absolute; top:12px; right:12px; z-index:20;
+  width:26px; height:26px; border-radius:50%;
+  background:#c9a84c; display:none;
+  align-items:center; justify-content:center;
+  font-size:13px; color:#07162a; font-weight:700;
+}
+.card.selected .check { display:flex; }
+.card-label { padding:16px 20px 10px; display:flex; align-items:center; gap:10px; }
+.tag { font-size:10px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; padding:4px 10px; border-radius:999px; background:rgba(201,168,76,.1); color:#c9a84c; border:1px solid rgba(201,168,76,.22); }
+.card-name { font-size:13px; font-weight:600; color:#e0e8f0; }
+
+/* ── Section preview (left text + right slot) ── */
+.preview {
+  margin: 0 16px 16px;
+  border-radius:10px;
+  background:#0b1f3a;
+  padding:28px 24px;
+  min-height:260px;
+  display:flex; gap:20px; align-items:flex-start;
+}
+.preview-left {
+  flex:1; min-width:0;
+}
+.eyebrow { font-size:9px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:#ae251c; margin-bottom:10px; }
+.headline { font-size:18px; font-weight:800; letter-spacing:-.02em; line-height:1.15; color:#fff; margin-bottom:8px; }
+.subtitle { font-size:10px; line-height:1.55; color:#7a9ab8; max-width:22ch; }
+
+.preview-right {
+  width:160px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  min-height:200px;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   A — Stat orbit: 3 stat pills staggered + float animation
+───────────────────────────────────────────────────────────── */
+.stat-orbit {
+  position:relative; width:160px; height:200px;
+}
+.stat-pill {
+  position:absolute;
+  background:rgba(11,31,58,.95);
+  border:1px solid rgba(201,168,76,.22);
+  border-radius:12px;
+  padding:10px 14px;
+  display:flex; flex-direction:column; gap:2px;
+  box-shadow:0 8px 32px rgba(0,0,0,.4);
+}
+.stat-pill .num {
+  font-size:22px; font-weight:800; letter-spacing:-.03em; color:#fff;
+  font-variant-numeric:tabular-nums;
+}
+.stat-pill .num span { color:#c9a84c; }
+.stat-pill .lbl { font-size:9px; color:#7a9ab8; line-height:1.4; }
+.stat-pill .rule { width:28px; height:2px; background:linear-gradient(90deg,#ae251c,#c9a84c); border-radius:2px; margin-bottom:4px; }
+
+.pill-a { top:0; left:0; animation:floatA 4s ease-in-out infinite; }
+.pill-b { top:60px; right:0; animation:floatB 5s ease-in-out infinite; }
+.pill-c { bottom:0; left:16px; animation:floatC 4.5s ease-in-out infinite; }
+
+@keyframes floatA { 0%,100%{transform:translateY(0)}  50%{transform:translateY(-8px)} }
+@keyframes floatB { 0%,100%{transform:translateY(0)}  50%{transform:translateY(7px)} }
+@keyframes floatC { 0%,100%{transform:translateY(0)}  50%{transform:translateY(-6px)} }
+
+/* ─────────────────────────────────────────────────────────────
+   B — Brand seal: rotating gold ring + wordmark inside
+───────────────────────────────────────────────────────────── */
+.seal-wrap {
+  position:relative; width:150px; height:150px;
+  display:flex; align-items:center; justify-content:center;
+}
+.seal-ring {
+  position:absolute; inset:0;
+  border-radius:50%;
+  border:1.5px solid transparent;
+  background:
+    linear-gradient(#0b1f3a,#0b1f3a) padding-box,
+    conic-gradient(from 0deg, #c9a84c 0%, rgba(201,168,76,.1) 40%, #ae251c 60%, #c9a84c 100%) border-box;
+  animation:spinRing 8s linear infinite;
+}
+.seal-ring2 {
+  position:absolute; inset:10px;
+  border-radius:50%;
+  border:1px solid rgba(201,168,76,.15);
+}
+@keyframes spinRing { to { transform:rotate(360deg); } }
+
+.seal-inner {
+  position:relative; z-index:2;
+  display:flex; flex-direction:column; align-items:center; gap:3px;
+  text-align:center;
+}
+.seal-hold {
+  font-size:22px; font-weight:900; letter-spacing:-.03em; color:#fff;
+  line-height:1;
+}
+.seal-sub { font-size:7px; letter-spacing:.22em; text-transform:uppercase; color:#c9a84c; }
+.seal-div { width:28px; height:1px; background:linear-gradient(90deg,transparent,#c9a84c,transparent); margin:3px 0; }
+.seal-yr { font-size:8px; letter-spacing:.1em; color:#4a6a8a; }
+
+/* Orbiting dot */
+.orbit-dot {
+  position:absolute; width:6px; height:6px; border-radius:50%;
+  background:#c9a84c;
+  top:50%; left:50%;
+  transform-origin:0 0;
+  animation:orbitDot 8s linear infinite;
+}
+@keyframes orbitDot {
+  from { transform:rotate(0deg) translateX(71px) translateY(-3px); }
+  to   { transform:rotate(360deg) translateX(71px) translateY(-3px); }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   C — Trust stack: 2 floating glass cards
+───────────────────────────────────────────────────────────── */
+.trust-stack {
+  position:relative; width:160px; height:200px;
+}
+.trust-card {
+  position:absolute;
+  border-radius:12px;
+  padding:10px 12px;
+  background:rgba(11,31,58,.96);
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 12px 40px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.06);
+}
+.tc-google {
+  top:0; left:0; right:0;
+  animation:floatA 4.5s ease-in-out infinite;
+}
+.tc-bcb {
+  bottom:0; left:10px; right:10px;
+  animation:floatB 5s ease-in-out infinite;
+}
+.tc-stars { display:flex; gap:2px; margin-bottom:4px; }
+.tc-star { width:10px; height:10px; color:#c9a84c; }
+.tc-rating { font-size:18px; font-weight:800; color:#fff; letter-spacing:-.03em; line-height:1; }
+.tc-count { font-size:9px; color:#7a9ab8; margin-top:2px; }
+.tc-google-lbl { font-size:8px; letter-spacing:.1em; text-transform:uppercase; color:#4a6a8a; margin-top:6px; border-top:1px solid rgba(255,255,255,.06); padding-top:6px; display:flex; align-items:center; gap:4px; }
+.g-dot { width:6px; height:6px; border-radius:50%; background:conic-gradient(#4285F4 0 25%,#EA4335 25% 50%,#FBBC05 50% 75%,#34A853 75%); }
+
+.tc-shield { width:22px; height:22px; margin-bottom:6px; }
+.tc-bcb-title { font-size:10px; font-weight:700; color:#e0e8f0; }
+.tc-bcb-sub { font-size:8.5px; color:#7a9ab8; line-height:1.4; margin-top:2px; }
+.shield-icon { fill:none; stroke:#c9a84c; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
+
+/* ── Descriptions ── */
+.desc { padding:0 20px 14px; color:#7a9ab8; font-size:12px; line-height:1.6; }
+.desc strong { color:#e0e8f0; display:block; margin-bottom:4px; font-size:13px; }
+.pros-cons { padding:0 20px 20px; display:flex; gap:10px; }
+.pro, .con { flex:1; border-radius:8px; padding:8px 10px; font-size:10.5px; line-height:1.5; }
+.pro { background:rgba(201,168,76,.07); border:1px solid rgba(201,168,76,.18); color:#c9a84c; }
+.con { background:rgba(122,154,184,.05); border:1px solid rgba(122,154,184,.12); color:#7a9ab8; }
+.pro::before { content:'✓ '; }
+.con::before { content:'± '; }
+
+.footer-note { text-align:center; color:#2a4a6a; font-size:12px; margin-top:40px; }
+</style>
+</head>
+<body>
+
+<p class="page-title">SobreNos — Espaço direito · 3 Propostas</p>
+<p class="page-sub">Clique na proposta que mais agrada</p>
+
+<div class="proposals">
+
+  <!-- ── A: Stat orbit ── -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="check">✓</div>
+    <div class="card-label">
+      <span class="tag">A</span>
+      <span class="card-name">Stat pills flutuantes</span>
+    </div>
+    <div class="preview">
+      <div class="preview-left">
+        <p class="eyebrow">Sobre nós</p>
+        <p class="headline">Mais do que<br>viabilizar crédito.</p>
+        <p class="subtitle">Estruturamos decisões com estratégia e propósito.</p>
+      </div>
+      <div class="preview-right">
+        <div class="stat-orbit">
+          <div class="stat-pill pill-a">
+            <div class="rule"></div>
+            <div class="num">+19<span>a</span></div>
+            <div class="lbl">anos de<br>mercado</div>
+          </div>
+          <div class="stat-pill pill-b">
+            <div class="rule"></div>
+            <div class="num">+60</div>
+            <div class="lbl">parceiros<br>ativos</div>
+          </div>
+          <div class="stat-pill pill-c">
+            <div class="rule"></div>
+            <div class="num">4</div>
+            <div class="lbl">frentes de<br>atuação</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="desc">
+      <strong>Números em cards flutuando com drift animado</strong>
+      Os 3 stats (+19 anos, +60 parceiros, 4 frentes) ganham protagonismo visual — cada um num pill escuro com borda dourada, animando sutilmente em alturas diferentes. Move o grid de stats atual para cá.
+    </div>
+    <div class="pros-cons">
+      <div class="pro">Stats ganham peso visual<br>Motion elegante e sutil</div>
+      <div class="con">Remove o grid de stats abaixo<br>Precisa reposicionar conteúdo</div>
+    </div>
+  </div>
+
+  <!-- ── B: Brand seal ── -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="check">✓</div>
+    <div class="card-label">
+      <span class="tag">B</span>
+      <span class="card-name">Selo de marca animado</span>
+    </div>
+    <div class="preview">
+      <div class="preview-left">
+        <p class="eyebrow">Sobre nós</p>
+        <p class="headline">Mais do que<br>viabilizar crédito.</p>
+        <p class="subtitle">Estruturamos decisões com estratégia e propósito.</p>
+      </div>
+      <div class="preview-right">
+        <div class="seal-wrap">
+          <div class="seal-ring"></div>
+          <div class="seal-ring2"></div>
+          <div class="orbit-dot"></div>
+          <div class="seal-inner">
+            <div class="seal-hold">HOLD</div>
+            <div class="seal-sub">Corretora</div>
+            <div class="seal-div"></div>
+            <div class="seal-yr">Est. 2006</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="desc">
+      <strong>Anel dourado girando em torno do logotipo</strong>
+      Um círculo fino com gradiente conic dourado/vermelho gira lentamente ao redor do wordmark HOLD. Um ponto dourado orbita o anel. Efeito de "selo premium" ou "lacre de qualidade" — muito elegante e único.
+    </div>
+    <div class="pros-cons">
+      <div class="pro">Muito premium e diferenciado<br>Reforça identidade da marca</div>
+      <div class="con">Mais decorativo que informativo<br>Pode parecer genérico</div>
+    </div>
+  </div>
+
+  <!-- ── C: Trust stack ── -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="check">✓</div>
+    <div class="card-label">
+      <span class="tag">C</span>
+      <span class="card-name">Stack de confiança</span>
+    </div>
+    <div class="preview">
+      <div class="preview-left">
+        <p class="eyebrow">Sobre nós</p>
+        <p class="headline">Mais do que<br>viabilizar crédito.</p>
+        <p class="subtitle">Estruturamos decisões com estratégia e propósito.</p>
+      </div>
+      <div class="preview-right">
+        <div class="trust-stack">
+          <!-- Google rating card -->
+          <div class="trust-card tc-google">
+            <div class="tc-stars">
+              <svg class="tc-star" viewBox="0 0 20 20" fill="#c9a84c"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="tc-star" viewBox="0 0 20 20" fill="#c9a84c"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="tc-star" viewBox="0 0 20 20" fill="#c9a84c"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="tc-star" viewBox="0 0 20 20" fill="#c9a84c"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+              <svg class="tc-star" viewBox="0 0 20 20" fill="#c9a84c"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            </div>
+            <div class="tc-rating">4,9</div>
+            <div class="tc-count">39 avaliações</div>
+            <div class="tc-google-lbl"><div class="g-dot"></div>Google Reviews</div>
+          </div>
+          <!-- BCB card -->
+          <div class="trust-card tc-bcb">
+            <svg class="tc-shield" viewBox="0 0 24 24">
+              <path class="shield-icon" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <path class="shield-icon" d="M9 12l2 2 4-4"/>
+            </svg>
+            <div class="tc-bcb-title">Autorizada pelo BCB</div>
+            <div class="tc-bcb-sub">Operações regulamentadas pelo Banco Central do Brasil</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="desc">
+      <strong>2 cards de credibilidade sobrepostos e flutuando</strong>
+      Card de avaliação Google (4,9★ · 39 avaliações) empilhado sobre card de autorização BCB. Os dois animam com drift e entram com fade+slide. Prova social + credencial regulatória num formato premium.
+    </div>
+    <div class="pros-cons">
+      <div class="pro">Prova social visível<br>Credencial regulatória em destaque</div>
+      <div class="con">Conteúdo duplicado (já existe na seção de depoimentos)<br>Mais denso</div>
+    </div>
+  </div>
+
+</div>
+
+<p class="footer-note">Clique para selecionar · depois responda qual prefere</p>
+
+<script>
+function toggleSelect(el) {
+  document.querySelectorAll('.card').forEach(c => c !== el && c.classList.remove('selected'))
+  el.classList.toggle('selected')
+}
+</script>
+</body>
+</html>

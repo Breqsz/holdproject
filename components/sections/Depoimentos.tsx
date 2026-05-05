@@ -49,37 +49,48 @@ export default function Depoimentos() {
               {t('testimonials.title')}
             </motion.h2>
 
-            {/* Google badge */}
-            <motion.a
-              variants={fadeUp}
-              href={googleSummary.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-5 inline-flex items-center gap-3 rounded-full bg-[#07162a]/[0.04] ring-1 ring-[#07162a]/10 px-4 py-2 hover:ring-[#07162a]/25 transition-colors"
-              aria-label={t('testimonials.googleBadge')}
-            >
-              <GoogleGIcon size={18} />
-              <span className="flex items-center gap-1.5 text-[#c9a84c] tabular text-sm font-bold">
-                {googleSummary.rating.toString().replace('.', ',')}
-                <Star size={14} fill="#c9a84c" color="#c9a84c" />
-              </span>
-              <span className="text-[#07162a]/55 text-xs">
-                · {googleSummary.count} avaliações no Google
-              </span>
-            </motion.a>
+            {/* Google badge + write review */}
+            <motion.div variants={fadeUp} className="mt-5 flex flex-wrap items-center gap-3">
+              <a
+                href={googleSummary.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-3 rounded-full bg-[#07162a]/[0.04] ring-1 ring-[#07162a]/10 px-4 py-2 hover:ring-[#07162a]/25 transition-colors"
+                aria-label={t('testimonials.googleBadge')}
+              >
+                <GoogleGIcon size={18} />
+                <span className="flex items-center gap-1.5 text-[#c9a84c] tabular text-sm font-bold">
+                  {googleSummary.rating.toString().replace('.', ',')}
+                  <Star size={14} fill="#c9a84c" color="#c9a84c" />
+                </span>
+                <span className="text-[#07162a]/55 text-xs">
+                  · {googleSummary.count} {t('testimonials.reviewCount')}
+                </span>
+              </a>
+
+              <a
+                href={googleSummary.writeHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full bg-[#07162a] px-4 py-2 text-xs font-semibold text-white hover:bg-[#0b1f3a] transition-colors"
+              >
+                <GoogleGIcon size={14} />
+                {t('testimonials.writeReview')}
+              </a>
+            </motion.div>
           </div>
 
           <motion.div variants={fadeUp} className="flex items-center gap-2">
             <button
               onClick={scrollPrev}
-              aria-label="Depoimento anterior"
+              aria-label={t('testimonials.prev')}
               className="w-11 h-11 rounded-full bg-[#07162a]/[0.08] hover:bg-[#07162a]/[0.14] transition-colors flex items-center justify-center text-[#07162a]"
             >
               <ArrowLeft size={18} strokeWidth={1.7} />
             </button>
             <button
               onClick={scrollNext}
-              aria-label="Próximo depoimento"
+              aria-label={t('testimonials.next')}
               className="w-11 h-11 rounded-full bg-[#07162a]/[0.08] hover:bg-[#07162a]/[0.14] transition-colors flex items-center justify-center text-[#07162a]"
             >
               <ArrowRight size={18} strokeWidth={1.7} />

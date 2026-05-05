@@ -113,6 +113,13 @@
   .section-wide  { padding-top: var(--section-wide);  padding-bottom: var(--section-wide);  }
 }
 
+/* Custom scrollbar — thin gold-on-navy */
+::-webkit-scrollbar        { width: 5px; }
+::-webkit-scrollbar-track  { background: #07162a; }
+::-webkit-scrollbar-thumb  { background: #1e4a7a; border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: #c9a84c; }
+* { scrollbar-width: thin; scrollbar-color: #1e4a7a #07162a; }
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

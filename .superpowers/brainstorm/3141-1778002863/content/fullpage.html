@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hold — Full Page Mockup</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#e0e0e0}
+.wrap{max-width:640px;margin:0 auto;box-shadow:0 0 60px rgba(0,0,0,.4);background:#07162a}
+
+/* ── NAV ── */
+.cnav{margin:12px auto;width:90%;background:#fff;border-radius:11px;height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 15px;box-shadow:0 3px 16px rgba(0,0,0,.22);position:relative;z-index:10}
+.cnav-logo{font-size:13px;font-weight:800;color:#07162a}.cnav-logo em{color:#ae251c;font-style:normal;font-weight:500;font-size:11px;margin-left:2px}
+.cnav-ham{display:flex;flex-direction:column;gap:4px}.cnav-ham span{display:block;width:18px;height:1.5px;background:#07162a;border-radius:2px}
+.cnav-cta{font-size:10px;font-weight:600;background:#ae251c;color:#fff;padding:5px 11px;border-radius:7px}
+
+/* ── HERO CARD ── */
+.hero-outer{background:#07162a;position:relative;overflow:hidden}
+.orb{position:absolute;border-radius:50%;filter:blur(55px);pointer-events:none}
+.ob1{width:260px;height:260px;background:#1a4b8a;opacity:.17;top:-55px;right:-55px}
+.ob2{width:120px;height:120px;background:#ae251c;opacity:.10;bottom:130px;left:-15px}
+.hcard{margin:0 10px;border-radius:16px;overflow:hidden;height:460px;position:relative}
+.hcard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;transition:opacity .65s ease}
+.hcard img.off{opacity:0}
+.hdim{position:absolute;inset:0;background:linear-gradient(to top,rgba(7,22,42,.95) 0%,rgba(7,22,42,.55) 38%,rgba(7,22,42,.18) 100%)}
+.hcontent{position:absolute;bottom:0;left:0;right:0;z-index:2;padding:22px 24px}
+
+/* toggle */
+.tpill{display:inline-flex;background:rgba(255,255,255,.07);border-radius:100px;padding:3px;gap:2px;margin-bottom:12px;backdrop-filter:blur(8px)}
+.tbtn{font-size:10px;font-weight:600;padding:5px 14px;border-radius:100px;color:rgba(255,255,255,.4);cursor:pointer;transition:all .25s}
+.tbtn.on{background:#ae251c;color:#fff}
+
+/* headline */
+.h1r{font-size:30px;font-weight:800;color:#ae251c;letter-spacing:-.045em;overflow:hidden;height:34px;display:flex;align-items:flex-end}
+.h1w{font-size:30px;font-weight:800;color:#fff;letter-spacing:-.045em}
+.h1b{font-size:30px;font-weight:800;color:#ae251c;letter-spacing:-.045em;overflow:hidden;height:34px;display:flex;align-items:flex-end}
+.wslide{display:inline-block;animation:ws .55s cubic-bezier(.16,1,.3,1) both}
+@keyframes ws{from{transform:translateY(110%)}to{transform:translateY(0)}}
+.dot{color:#fff}
+.hsub{font-size:11px;color:rgba(255,255,255,.4);line-height:1.55;max-width:250px;margin:10px 0 14px}
+.ctarow{display:flex;gap:8px;flex-wrap:wrap}
+.bwa{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;background:#ae251c;color:#fff;padding:8px 16px;border-radius:100px}
+.bsec{font-size:11px;font-weight:500;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.55);padding:8px 14px;border-radius:100px}
+
+/* marquee */
+.mstrip{background:#07162a;border-top:1px solid rgba(255,255,255,.05);padding:11px 0;overflow:hidden}
+.mtrack{display:inline-flex;animation:mq 18s linear infinite;white-space:nowrap}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.mw{font-size:10px;font-weight:800;color:rgba(255,255,255,.11);text-transform:uppercase;letter-spacing:.13em;padding:0 16px}
+.ms{color:rgba(174,37,28,.4);font-size:9px}
+
+/* ── LIGHT SECTIONS shared ── */
+.ls{background:#F5F5F5;padding:40px 20px}
+.ls+.ls{border-top:1px solid #e4e4e4}
+.ann{display:inline-block;background:rgba(79,142,247,.12);border:1px solid rgba(79,142,247,.28);color:#4f8ef7;font-size:9px;font-weight:700;padding:2px 7px;border-radius:4px;margin-bottom:6px;letter-spacing:.05em}
+.ey{font-size:10px;font-weight:700;color:#ae251c;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px}
+.sh2{font-size:26px;font-weight:800;color:#07162a;letter-spacing:-.035em;line-height:1.1;margin-bottom:5px}
+.ssub{font-size:11px;color:#6a8aaa;line-height:1.55;margin-bottom:22px;max-width:310px}
+
+/* solutions grid */
+.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.sc{border-radius:13px;overflow:hidden;padding:18px;min-height:150px;display:flex;flex-direction:column;justify-content:space-between;position:relative}
+.sc-lb{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;opacity:.55;margin-bottom:4px}
+.sc-t{font-size:14px;font-weight:800;letter-spacing:-.03em;line-height:1.15;margin-bottom:5px}
+.sc-d{font-size:10px;line-height:1.5;opacity:.55}
+.sc-ar{position:absolute;top:14px;right:14px;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px}
+.con{background:linear-gradient(135deg,#020c30,#0b2d6e);color:#fff}.con .sc-ar{background:rgba(255,255,255,.08);color:#fff}
+.seg{background:linear-gradient(135deg,#6e1a14,#ae251c);color:#fff}.seg .sc-ar{background:rgba(255,255,255,.1);color:#fff}
+.sau{background:linear-gradient(135deg,#e8f0fc,#d0e2f8);color:#07162a}.sau .sc-ar{background:rgba(7,22,42,.08);color:#07162a}
+.inv{background:linear-gradient(135deg,#0a0a0a,#1a1a1a);color:#fff}.inv .sc-t{color:#c9a84c}.inv .sc-ar{background:rgba(201,168,76,.15);color:#c9a84c}
+
+/* logos strip */
+.ltrack{display:inline-flex;gap:24px;animation:mq 22s linear infinite;white-space:nowrap;padding:14px 0}
+.lp{font-size:10px;font-weight:700;color:#bbb;letter-spacing:.04em}
+
+/* dark about */
+.da{background:#07162a;padding:40px 22px}
+.da .ey{color:rgba(174,37,28,.65)}
+.da .sh2{color:#fff}
+.da .ssub{color:rgba(255,255,255,.35)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:28px}
+.stat{text-align:center;padding:18px 10px;background:rgba(255,255,255,.04);border-radius:11px;border:1px solid rgba(255,255,255,.06)}
+.sn{font-size:24px;font-weight:800;color:#ae251c;letter-spacing:-.04em;margin-bottom:3px}
+.sl{font-size:9px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.07em;line-height:1.4}
+.princ{border-top:1px solid rgba(255,255,255,.06)}
+.pr{padding:16px 0;border-bottom:1px solid rgba(255,255,255,.06);display:flex;gap:14px}
+.pr-t{font-size:12px;font-weight:700;color:rgba(255,255,255,.4);width:80px;flex-shrink:0}
+.pr-b{font-size:11px;color:rgba(255,255,255,.28);line-height:1.6}
+
+/* how-steps */
+.steps{display:flex;flex-direction:column;gap:0;margin-top:20px}
+.step{display:flex;gap:12px;padding:16px 0;border-bottom:1px solid #e8e8e8;align-items:flex-start}
+.step:last-child{border-bottom:none}
+.snum{width:26px;height:26px;border-radius:50%;background:#ae251c;color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.stitle{font-size:12px;font-weight:700;color:#07162a;letter-spacing:-.02em;margin-bottom:3px}
+.sdesc{font-size:10px;color:#6a8aaa;line-height:1.5}
+
+/* testimonial */
+.tcard{background:#fff;border-radius:13px;padding:18px;margin-top:18px;border:1px solid #ebebeb}
+.tst{color:#f59e0b;font-size:11px;margin-bottom:7px}
+.tb{font-size:11px;color:#444;line-height:1.6;margin-bottom:11px}
+.ta{display:flex;align-items:center;gap:9px}
+.tav{width:30px;height:30px;border-radius:50%;background:#dde8f5;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px}
+.tn{font-size:11px;font-weight:700;color:#07162a}
+.tr{font-size:10px;color:#aaa}
+
+/* faq */
+.fi{padding:14px 0;border-bottom:1px solid #e8e8e8}
+.fq{font-size:12px;font-weight:700;color:#07162a;display:flex;justify-content:space-between}
+.fp{font-size:15px;color:#ae251c;font-weight:300}
+.fa{font-size:10px;color:#6a8aaa;line-height:1.55;margin-top:7px}
+
+/* contact */
+.dc{background:#07162a;padding:40px 22px}
+.ci{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:26px 22px}
+.cl{font-size:10px;font-weight:700;color:rgba(174,37,28,.75);text-transform:uppercase;letter-spacing:.1em;margin-bottom:7px}
+.ch2{font-size:21px;font-weight:800;color:#fff;letter-spacing:-.035em;line-height:1.15;margin-bottom:5px}
+.csub{font-size:11px;color:rgba(255,255,255,.3);line-height:1.55;margin-bottom:18px}
+.ctabs{display:flex;gap:6px;margin-bottom:16px}
+.ctab{font-size:10px;font-weight:600;padding:6px 14px;border-radius:100px;background:rgba(255,255,255,.06);color:rgba(255,255,255,.4)}
+.ctab.on{background:#ae251c;color:#fff}
+.ff{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:9px;padding:11px 13px;margin-bottom:9px;font-size:11px;color:rgba(255,255,255,.25)}
+.fsub{width:100%;padding:12px;border-radius:9px;background:#ae251c;color:#fff;font-size:12px;font-weight:700;text-align:center;margin-top:4px}
+
+/* footer */
+.ft{background:#020c30;padding:28px 22px}
+.flogo{font-size:15px;font-weight:800;color:#fff;margin-bottom:3px}
+.flogo em{color:#ae251c;font-style:normal;font-weight:500;font-size:12px}
+.ftag{font-size:10px;color:rgba(255,255,255,.2);margin-bottom:16px}
+.flinks{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.fl{font-size:10px;color:rgba(255,255,255,.28)}
+.fcopy{font-size:9px;color:rgba(255,255,255,.13);border-top:1px solid rgba(255,255,255,.05);padding-top:14px}
+
+/* sticky bar */
+.sbar{position:sticky;bottom:0;z-index:100;background:rgba(10,10,10,.93);backdrop-filter:blur(12px);border-top:1px solid rgba(255,255,255,.08);padding:12px 20px;display:flex;justify-content:center;gap:10px}
+.bap{font-size:12px;font-weight:600;padding:9px 20px;border-radius:100px;border:1.5px solid transparent;cursor:pointer}
+.byes{background:#ae251c;color:#fff;border-color:#ae251c}
+.btw{background:transparent;color:#888;border-color:#333}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero-outer">
+    <div class="orb ob1"></div><div class="orb ob2"></div>
+    <div class="cnav">
+      <div class="cnav-ham"><span></span><span></span></div>
+      <div class="cnav-logo">HOLD <em>Corretora</em></div>
+      <div class="cnav-cta">Falar Conosco</div>
+    </div>
+    <div class="hcard">
+      <img id="ipf" src="/images/hero/persona_hero.jpg" alt="pf"/>
+      <img id="ipj" class="off" src="/images/hero/office_hero.avif" alt="pj"/>
+      <div class="hdim"></div>
+      <div class="hcontent">
+        <div class="tpill">
+          <div class="tbtn on" id="bpf" onclick="aud('pf')">Para você</div>
+          <div class="tbtn" id="bpj" onclick="aud('pj')">Para sua empresa</div>
+        </div>
+        <div class="h1r"><span id="wtop" class="wslide">Seguros</span></div>
+        <div class="h1w">com</div>
+        <div class="h1b"><span id="wbot" class="wslide">inteligência</span><span class="dot">.</span></div>
+        <div class="hsub" id="hsub">Proteção inteligente para o que mais importa na sua vida e família.</div>
+        <div class="ctarow">
+          <div class="bwa">💬 WhatsApp</div>
+          <div class="bsec" id="bsec">Ver soluções →</div>
+        </div>
+      </div>
+    </div>
+    <div class="mstrip">
+      <div class="mtrack">
+        <span class="mw">Segurança</span><span class="ms">✦</span><span class="mw">Planejamento</span><span class="ms">✦</span><span class="mw">Acompanhamento</span><span class="ms">✦</span><span class="mw">Resultados</span><span class="ms">✦</span>
+        <span class="mw">Segurança</span><span class="ms">✦</span><span class="mw">Planejamento</span><span class="ms">✦</span><span class="mw">Acompanhamento</span><span class="ms">✦</span><span class="mw">Resultados</span><span class="ms">✦</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOLUÇÕES -->
+  <div class="ls">
+    <div class="ann">SEÇÃO 2</div><div class="ey">Nossas Soluções</div>
+    <div class="sh2">O que a Hold<br/>faz por você.</div>
+    <div class="ssub">Proteção e crescimento patrimonial com acompanhamento especializado.</div>
+    <div class="sgrid">
+      <div class="sc con"><div><div class="sc-lb">Consórcio</div><div class="sc-t">Patrimônio<br/>sem juros</div></div><div class="sc-d">Imóveis, veículos, agro. Estratégia completa.</div><div class="sc-ar">↗</div></div>
+      <div class="sc seg"><div><div class="sc-lb">Seguros</div><div class="sc-t">Proteção<br/>sob medida</div></div><div class="sc-d">Auto, vida, residencial e empresarial.</div><div class="sc-ar">↗</div></div>
+      <div class="sc sau"><div><div class="sc-lb">Saúde & Vida</div><div class="sc-t">Cobertura<br/>completa</div></div><div class="sc-d">Planos individuais, familiares e empresariais.</div><div class="sc-ar">↗</div></div>
+      <div class="sc inv"><div><div class="sc-lb">Investimentos</div><div class="sc-t">Soluções<br/>financeiras</div></div><div class="sc-d">Renda fixa, variável e previdência.</div><div class="sc-ar">↗</div></div>
+    </div>
+  </div>
+
+  <!-- PARCEIROS -->
+  <div class="ls" style="padding-top:20px;padding-bottom:32px">
+    <div class="ann">SEÇÃO 3</div><div class="ey">Parceiros</div>
+    <div style="overflow:hidden"><div class="ltrack">
+      <div class="lp">HDI Seguros</div><div class="lp">MAPFRE</div><div class="lp">Bradesco</div><div class="lp">Unimed</div><div class="lp">SulAmérica</div><div class="lp">MAG Seguros</div><div class="lp">Tokio Marine</div>
+      <div class="lp">HDI Seguros</div><div class="lp">MAPFRE</div><div class="lp">Bradesco</div><div class="lp">Unimed</div><div class="lp">SulAmérica</div>
+    </div></div>
+  </div>
+
+  <!-- SOBRE NÓS -->
+  <div class="da">
+    <div class="ann" style="background:rgba(174,37,28,.1);border-color:rgba(174,37,28,.28);color:#ae251c">SEÇÃO 4</div>
+    <div class="ey">Sobre a Hold</div>
+    <div class="sh2" style="color:#fff">Especialistas em<br/>proteção que cresce.</div>
+    <div class="ssub" style="color:rgba(255,255,255,.33)">Mais de uma década conectando pessoas às melhores soluções do Brasil.</div>
+    <div class="stats">
+      <div class="stat"><div class="sn">15+</div><div class="sl">Anos de mercado</div></div>
+      <div class="stat"><div class="sn">3k+</div><div class="sl">Clientes protegidos</div></div>
+      <div class="stat"><div class="sn">98%</div><div class="sl">Satisfação</div></div>
+    </div>
+    <div class="princ">
+      <div class="pr"><div class="pr-t">Missão</div><div class="pr-b">Simplificar acesso a soluções financeiras com ética, clareza e resultado.</div></div>
+      <div class="pr"><div class="pr-t">Visão</div><div class="pr-b">Ser a corretora de referência no Brasil por inteligência e impacto positivo.</div></div>
+      <div class="pr"><div class="pr-t">Valores</div><div class="pr-b">Transparência · Comprometimento · Inovação · Resultados reais.</div></div>
+    </div>
+  </div>
+
+  <!-- COMO FUNCIONA -->
+  <div class="ls">
+    <div class="ann">SEÇÃO 5 · PF = Como Funciona / PJ = Para Escritórios</div>
+    <div class="ey">Como Funciona</div>
+    <div class="sh2">Simples do início<br/>ao fim.</div>
+    <div class="steps">
+      <div class="step"><div class="snum">1</div><div><div class="stitle">Diagnóstico gratuito</div><div class="sdesc">Entendemos seu perfil e objetivos sem compromisso.</div></div></div>
+      <div class="step"><div class="snum">2</div><div><div class="stitle">Proposta personalizada</div><div class="sdesc">Comparamos as melhores opções do mercado para o seu caso.</div></div></div>
+      <div class="step"><div class="snum">3</div><div><div class="stitle">Contratação assistida</div><div class="sdesc">Cuidamos de toda a burocracia. Você só assina o que faz sentido.</div></div></div>
+      <div class="step"><div class="snum">4</div><div><div class="stitle">Acompanhamento contínuo</div><div class="sdesc">Suporte ativo pós-contratação. Sempre ao seu lado.</div></div></div>
+    </div>
+  </div>
+
+  <!-- DEPOIMENTOS -->
+  <div class="ls" style="padding-top:20px">
+    <div class="ann">SEÇÃO 6</div><div class="ey">Depoimentos</div>
+    <div class="sh2">O que nossos<br/>clientes dizem.</div>
+    <div class="tcard">
+      <div class="tst">★★★★★</div>
+      <div class="tb">"A Hold mudou minha relação com seguros. Antes era complicado e caro — agora tenho cobertura completa com um atendimento que realmente entende o que preciso."</div>
+      <div class="ta"><div class="tav">👤</div><div><div class="tn">Ana Paula Mendes</div><div class="tr">Cliente desde 2021</div></div></div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="ls" style="padding-top:20px">
+    <div class="ann">SEÇÃO 7</div><div class="ey">Dúvidas Frequentes</div>
+    <div class="sh2">Perguntas<br/>comuns.</div>
+    <div class="fi"><div class="fq">A Hold atende PF e PJ?<span class="fp">+</span></div><div class="fa">Sim. Temos soluções para indivíduos, famílias e empresas de todos os portes.</div></div>
+    <div class="fi"><div class="fq">Como funciona a contratação?<span class="fp">+</span></div></div>
+    <div class="fi"><div class="fq">Quais seguradoras vocês trabalham?<span class="fp">+</span></div></div>
+  </div>
+
+  <!-- CONTATO -->
+  <div class="dc">
+    <div class="ann" style="background:rgba(174,37,28,.1);border-color:rgba(174,37,28,.28);color:#ae251c">SEÇÃO 8</div>
+    <div class="ci">
+      <div class="cl">Fale com a Hold</div>
+      <div class="ch2">Vamos conversar<br/>sobre você.</div>
+      <div class="csub">Nossos especialistas respondem em menos de 24h. Sem compromisso.</div>
+      <div class="ctabs"><div class="ctab on">Sou cliente</div><div class="ctab">Sou escritório/parceiro</div></div>
+      <div class="ff">Nome completo</div>
+      <div class="ff">WhatsApp</div>
+      <div class="ff">O que você precisa?</div>
+      <div class="fsub">Enviar mensagem →</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="ft">
+    <div class="flogo">HOLD <em>Corretora</em></div>
+    <div class="ftag">Proteção e crescimento patrimonial</div>
+    <div class="flinks"><span class="fl">Consórcios</span><span class="fl">Seguros</span><span class="fl">Saúde</span><span class="fl">Investimentos</span><span class="fl">Sobre</span><span class="fl">Contato</span></div>
+    <div class="fcopy">© 2025 Hold Corretora · Todos os direitos reservados</div>
+  </div>
+
+</div>
+
+<div class="sbar">
+  <button class="bap byes" onclick="send('approved')">✓ Aprovar design completo</button>
+  <button class="bap btw" onclick="send('tweak')">Quero ajustar algo</button>
+</div>
+
+<script>
+const F=['Consórcio','Seguros','Saúde','Investimentos'],V=['inteligência','confiança','estratégia','clareza','método']
+let i=0
+function anim(el,w){el.style.animation='none';el.offsetHeight;el.textContent=w;el.style.animation=''}
+setInterval(()=>{i=(i+1)%Math.max(F.length,V.length);anim(document.getElementById('wtop'),F[i%F.length]);anim(document.getElementById('wbot'),V[i%V.length])},3800)
+function aud(a){
+  const pf=a==='pf'
+  document.getElementById('ipf').classList.toggle('off',!pf)
+  document.getElementById('ipj').classList.toggle('off',pf)
+  document.getElementById('bpf').classList.toggle('on',pf)
+  document.getElementById('bpj').classList.toggle('on',!pf)
+  document.getElementById('hsub').textContent=pf?'Proteção inteligente para o que mais importa na sua vida e família.':'Soluções corporativas de proteção e crescimento para o seu negócio.'
+  document.getElementById('bsec').textContent=pf?'Ver soluções →':'Para escritórios →'
+}
+function send(c){fetch('/select',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({choice:c,text:c==='approved'?'Design aprovado':'Ajuste necessário'})}).catch(()=>{})}
+</script>
+</body>
+</html>

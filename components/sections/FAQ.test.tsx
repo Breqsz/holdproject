@@ -44,7 +44,7 @@ vi.mock('@/lib/i18n', () => ({
     t: (key: string) => {
       const map: Record<string, string> = {
         'faq.eyebrow': 'Perguntas Frequentes',
-        'faq.title': 'Tem dúvidas sobre consórcio? A gente responde.',
+        'faq.title': 'Dúvidas sobre nossos serviços? A gente responde.',
       }
       return map[key] ?? key
     },
@@ -55,13 +55,13 @@ vi.mock('@/lib/i18n', () => ({
 // Helpers
 // ---------------------------------------------------------------------------
 
-const FIRST_Q = 'O que é consórcio?'
+const FIRST_Q = 'O que é a Hold Corretora?'
 const FIRST_A =
-  'O consórcio é uma modalidade de compra baseada na formação de grupos de pessoas com objetivos em comum, regulamentado pela Lei nº 11.795/2008 e fiscalizado pelo Banco Central do Brasil.'
+  'A Hold é uma corretora especializada em consultoria estratégica de patrimônio. Atuamos nas frentes de consórcio, seguros, saúde e investimentos, estruturando soluções personalizadas ao perfil e objetivo de cada cliente.'
 
-const SECOND_Q = 'Como funciona o consórcio?'
+const SECOND_Q = 'Quais serviços a Hold oferece?'
 const SECOND_A =
-  'Os participantes pagam parcelas mensais que formam um fundo comum. Mensalmente ocorrem assembleias onde consorciados são contemplados por sorteio ou lance.'
+  'Trabalhamos com quatro frentes integradas: Consórcio (planejamento patrimonial sem juros), Seguros (proteção individual e empresarial), Saúde (planos personalizados para PF e PJ) e Investimentos (crescimento e gestão patrimonial com visão de longo prazo).'
 
 // ---------------------------------------------------------------------------
 // Tests
@@ -80,36 +80,30 @@ describe('FAQ', () => {
     expect(
       screen.getByRole('heading', {
         level: 2,
-        name: 'Tem dúvidas sobre consórcio? A gente responde.',
+        name: 'Dúvidas sobre nossos serviços? A gente responde.',
       })
     ).toBeInTheDocument()
   })
 
-  it('renders all 18 accordion trigger buttons', () => {
+  it('renders all 12 accordion trigger buttons', () => {
     const buttons = screen.getAllByRole('button')
-    expect(buttons).toHaveLength(18)
+    expect(buttons).toHaveLength(12)
   })
 
-  it('renders all 18 question texts', () => {
+  it('renders all 12 question texts', () => {
     const questions = [
-      'O que é consórcio?',
-      'Como funciona o consórcio?',
+      'O que é a Hold Corretora?',
+      'Quais serviços a Hold oferece?',
+      'Como funciona o atendimento da Hold?',
+      'O que é consórcio e como funciona?',
       'O consórcio tem juros?',
-      'Posso escolher o valor da carta de crédito?',
-      'O que é carta de crédito?',
-      'Como posso ser contemplado?',
-      'O que é lance embutido?',
-      'Qual a diferença entre meia parcela, parcela reduzida e upgrade?',
-      'O que acontece após a contemplação?',
-      'Quanto tempo tenho para usar a carta de crédito?',
-      'Posso usar o FGTS no consórcio?',
-      'As parcelas podem mudar?',
-      'O que acontece se eu atrasar parcelas?',
-      'Posso desistir do consórcio?',
-      'Posso vender ou transferir minha cota?',
       'Consórcio ou financiamento: qual a diferença?',
-      'O consórcio é seguro?',
-      'O consórcio é investimento?',
+      'Como posso ser contemplado no consórcio?',
+      'Posso usar o FGTS no consórcio?',
+      'A Hold trabalha com seguros para empresas?',
+      'Posso contratar plano de saúde pela Hold?',
+      'Como funciona a parceria para escritórios de investimentos?',
+      'A Hold é regulamentada?',
     ]
     questions.forEach((q) => {
       expect(screen.getByText(q)).toBeInTheDocument()
@@ -166,17 +160,15 @@ describe('FAQ', () => {
     expect(screen.getByText(SECOND_A)).toBeInTheDocument()
   })
 
-  it('renders the last FAQ item about consórcio as investment', () => {
-    expect(screen.getByText('O consórcio é investimento?')).toBeInTheDocument()
+  it('renders the last FAQ item about Hold being regulated', () => {
+    expect(screen.getByText('A Hold é regulamentada?')).toBeInTheDocument()
   })
 
   it('last item answer is shown after clicking', async () => {
     const user = userEvent.setup()
-    await user.click(screen.getByText('O consórcio é investimento?'))
+    await user.click(screen.getByText('A Hold é regulamentada?'))
     expect(
-      screen.getByText(
-        /Pode ser estruturado como ferramenta de alavancagem patrimonial/
-      )
+      screen.getByText(/administradoras autorizadas pelo Banco Central do Brasil/)
     ).toBeInTheDocument()
   })
 })

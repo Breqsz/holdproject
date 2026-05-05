@@ -258,10 +258,10 @@ function ParaEmpresaContent() {
   const { t } = useLocale()
 
   const diferenciais = [
-    { icon: BarChart3, text: 'Mesa de Consórcios estruturada com suporte técnico e comercial dedicado' },
-    { icon: Users,     text: 'Capacitação da equipe e integração com o fluxo do seu escritório' },
-    { icon: Shield,    text: 'Operação autorizada e fiscalizada pelo Banco Central do Brasil' },
-    { icon: Handshake, text: 'Modelo de parceria flexível, respeitando a dinâmica e cultura do seu negócio' },
+    { icon: BarChart3, text: t('clients.company.diff.1') },
+    { icon: Users,     text: t('clients.company.diff.2') },
+    { icon: Shield,    text: t('clients.company.diff.3') },
+    { icon: Handshake, text: t('clients.company.diff.4') },
   ]
 
   return (

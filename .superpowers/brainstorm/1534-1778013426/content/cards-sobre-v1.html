@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cards SobreNos — 3 Propostas</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #040d1c;
+  color: #e0e8f0;
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  padding: 40px 20px 80px;
+  min-height: 100vh;
+}
+
+/* ── Page header ── */
+.page-title {
+  text-align: center;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: #c9a84c;
+  margin-bottom: 6px;
+}
+.page-sub {
+  text-align: center;
+  color: #4a6a8a;
+  font-size: 13px;
+  margin-bottom: 48px;
+}
+
+/* ── Cards wrapper (3 proposals side by side) ── */
+.proposals {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+/* ── Each proposal card shell ── */
+.prop-card {
+  border-radius: 18px;
+  border: 2px solid rgba(255,255,255,.05);
+  background: #071526;
+  cursor: pointer;
+  transition: border-color .25s, box-shadow .25s, transform .2s;
+  overflow: hidden;
+  position: relative;
+}
+.prop-card:hover { transform: translateY(-3px); }
+.prop-card.selected {
+  border-color: #c9a84c;
+  box-shadow: 0 0 0 3px rgba(201,168,76,.18), 0 20px 60px rgba(0,0,0,.5);
+}
+.check-badge {
+  position: absolute; top: 14px; right: 14px; z-index: 20;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: #c9a84c;
+  display: none;
+  align-items: center; justify-content: center;
+  font-size: 14px; color: #07162a; font-weight: 800;
+}
+.prop-card.selected .check-badge { display: flex; }
+
+/* ── Prop header ── */
+.prop-header {
+  padding: 18px 20px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid rgba(255,255,255,.05);
+}
+.prop-tag {
+  font-size: 9px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 999px;
+  background: rgba(201,168,76,.1); color: #c9a84c;
+  border: 1px solid rgba(201,168,76,.22);
+}
+.prop-name { font-size: 12px; font-weight: 600; color: #7a9ab8; }
+
+/* ── Section preview ── */
+.preview {
+  margin: 16px;
+  border-radius: 12px;
+  background: #0b1f3a;
+  padding: 20px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  min-height: 280px;
+}
+
+/* Left text column */
+.prev-left {
+  flex: 1; min-width: 0;
+}
+.prev-eyebrow {
+  font-size: 8px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+  color: #ae251c; margin-bottom: 8px;
+}
+.prev-title {
+  font-size: 14px; font-weight: 800; line-height: 1.2; letter-spacing: -.02em;
+  color: #fff; margin-bottom: 8px; max-width: 22ch;
+}
+.prev-body {
+  font-size: 9.5px; line-height: 1.6; color: #7a9ab8; max-width: 28ch;
+}
+
+/* Right slot */
+.prev-right {
+  width: 148px; flex-shrink: 0;
+}
+
+/* ── Description & tradeoffs ── */
+.prop-desc {
+  padding: 0 20px 14px;
+  font-size: 12px; line-height: 1.6; color: #7a9ab8;
+}
+.prop-desc strong { display: block; color: #e0e8f0; font-size: 13px; margin-bottom: 4px; }
+
+.tradeoffs {
+  padding: 0 20px 22px;
+  display: flex; gap: 8px;
+}
+.tpro, .tcon {
+  flex: 1; border-radius: 8px; padding: 8px 10px;
+  font-size: 10.5px; line-height: 1.5;
+}
+.tpro {
+  background: rgba(201,168,76,.07);
+  border: 1px solid rgba(201,168,76,.18);
+  color: #c9a84c;
+}
+.tcon {
+  background: rgba(122,154,184,.05);
+  border: 1px solid rgba(122,154,184,.12);
+  color: #7a9ab8;
+}
+.tpro::before { content: '✓ '; }
+.tcon::before { content: '± '; }
+
+
+/* ═══════════════════════════════════════════════════════════
+   PROPOSTA A — COLUNA PREMIUM 3D
+   3 cards em coluna sem overlap, com vidro + glow + regra-gold
+═══════════════════════════════════════════════════════════ */
+.col-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 148px;
+}
+.cs-card {
+  border-radius: 12px;
+  background: rgba(11,31,58,.96);
+  border: 1px solid rgba(201,168,76,.2);
+  box-shadow:
+    0 4px 20px rgba(0,0,0,.45),
+    inset 0 1px 0 rgba(255,255,255,.06);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  transition: transform .2s, box-shadow .2s;
+  perspective: 600px;
+  transform: perspective(600px) rotateX(2deg);
+}
+.cs-card:hover {
+  transform: perspective(600px) rotateX(0deg) translateY(-2px);
+  box-shadow: 0 12px 32px rgba(0,0,0,.55), 0 0 20px rgba(201,168,76,.12);
+}
+.cs-rule {
+  width: 24px; height: 2px;
+  background: linear-gradient(90deg, #ae251c, #c9a84c);
+  border-radius: 2px;
+  margin-bottom: 5px;
+}
+.cs-num {
+  font-size: 24px; font-weight: 800; letter-spacing: -.04em;
+  line-height: 1; color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+.cs-num em { font-style: normal; color: #c9a84c; }
+.cs-lbl {
+  font-size: 8.5px; line-height: 1.35; color: #7a9ab8;
+  margin-top: 2px;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   PROPOSTA B — ESCADA PARALAXE
+   Cards deslocados como escada em profundidade, sem sobreposição
+═══════════════════════════════════════════════════════════ */
+.stair-wrap {
+  position: relative;
+  width: 148px;
+  height: 260px;
+}
+/* Each card is shifted down + slightly right to create stair depth */
+.stair-card {
+  position: absolute;
+  width: 130px;
+  border-radius: 12px;
+  background: rgba(11,31,58,.97);
+  border: 1px solid rgba(201,168,76,.2);
+  box-shadow: 0 8px 28px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.06);
+  padding: 10px 12px;
+  display: flex; flex-direction: column; gap: 2px;
+}
+.stair-1 { top: 0px; left: 0px; }
+.stair-2 { top: 84px; left: 14px; }
+.stair-3 { top: 168px; left: 4px; }
+
+/* Connecting line */
+.stair-line {
+  position: absolute;
+  left: 16px;
+  width: 2px;
+  background: linear-gradient(to bottom, rgba(201,168,76,.5), rgba(174,37,28,.25));
+  border-radius: 2px;
+}
+.stair-line-1 { top: 70px; height: 18px; }
+.stair-line-2 { top: 154px; height: 18px; }
+
+.stair-num {
+  font-size: 22px; font-weight: 800; letter-spacing: -.04em;
+  line-height: 1; color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+.stair-num em { font-style: normal; color: #c9a84c; }
+.stair-lbl {
+  font-size: 8px; line-height: 1.4; color: #7a9ab8;
+  margin-top: 2px;
+}
+.stair-tag {
+  font-size: 7.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: #ae251c; margin-bottom: 4px;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   PROPOSTA C — GRID 2×2 ASSIMÉTRICO (1 destaque + 2 compactos)
+   Card principal ocupa faixa superior, 2 menores em linha abaixo
+═══════════════════════════════════════════════════════════ */
+.asym-grid {
+  width: 148px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+/* Featured card (spans full width, taller) */
+.ag-featured {
+  border-radius: 12px;
+  background: linear-gradient(140deg, #0d2747 0%, #142f54 100%);
+  border: 1px solid rgba(201,168,76,.3);
+  box-shadow: 0 8px 30px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.08);
+  padding: 12px 14px;
+  position: relative;
+  overflow: hidden;
+}
+.ag-featured::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 80% 10%, rgba(201,168,76,.12) 0%, transparent 60%);
+  pointer-events: none;
+}
+.ag-featured-num {
+  font-size: 32px; font-weight: 900; letter-spacing: -.05em;
+  line-height: 1; color: #fff; position: relative;
+  font-variant-numeric: tabular-nums;
+}
+.ag-featured-num em { font-style: normal; color: #c9a84c; }
+.ag-featured-lbl {
+  font-size: 9px; color: #7a9ab8; margin-top: 4px; line-height: 1.4;
+}
+.ag-rule {
+  width: 100%; height: 1px;
+  background: linear-gradient(90deg, rgba(201,168,76,.4), transparent);
+  margin: 8px 0;
+}
+
+/* 2 compact cards in a row */
+.ag-row {
+  display: flex;
+  gap: 8px;
+}
+.ag-small {
+  flex: 1;
+  border-radius: 10px;
+  background: rgba(11,31,58,.97);
+  border: 1px solid rgba(255,255,255,.07);
+  box-shadow: 0 4px 16px rgba(0,0,0,.4);
+  padding: 9px 10px;
+  display: flex; flex-direction: column; gap: 1px;
+}
+.ag-small-num {
+  font-size: 18px; font-weight: 800; letter-spacing: -.04em;
+  line-height: 1; color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+.ag-small-num em { font-style: normal; color: #c9a84c; }
+.ag-small-lbl {
+  font-size: 7.5px; color: #7a9ab8; line-height: 1.3; margin-top: 2px;
+}
+
+
+/* ── Selection JS bridge (events) ── */
+</style>
+</head>
+<body>
+
+<p class="page-title">SobreNos — Cards ao lado do título · 3 Propostas</p>
+<p class="page-sub">Clique no card para selecionar · Seção "Mais do que viabilizar crédito"</p>
+
+<div class="proposals">
+
+  <!-- ══════════════════ A — COLUNA PREMIUM 3D ══════════════════ -->
+  <div class="prop-card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="check-badge">✓</div>
+
+    <div class="prop-header">
+      <span class="prop-tag">A</span>
+      <span class="prop-name">Coluna Premium 3D</span>
+    </div>
+
+    <div class="preview">
+      <div class="prev-left">
+        <p class="prev-eyebrow">Quem Somos</p>
+        <p class="prev-title">Mais do que viabilizar crédito.</p>
+        <p class="prev-body">Planejamento no início. Estratégia no caminho. Resultado como consequência.</p>
+      </div>
+      <div class="prev-right">
+        <div class="col-stack">
+
+          <div class="cs-card">
+            <div class="cs-rule"></div>
+            <span class="cs-num">+19<em>a</em></span>
+            <span class="cs-lbl">Anos de Experiência</span>
+          </div>
+
+          <div class="cs-card">
+            <div class="cs-rule"></div>
+            <span class="cs-num">+60</span>
+            <span class="cs-lbl">Parceiros Comerciais</span>
+          </div>
+
+          <div class="cs-card">
+            <div class="cs-rule"></div>
+            <span class="cs-num">4</span>
+            <span class="cs-lbl">Frentes integradas</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <p class="prop-desc">
+      <strong>Coluna com vidro + perspectiva 3D sutil</strong>
+      Três cards em coluna com espaçamento uniforme, sem sobreposição. Cada card tem efeito de vidro escuro (glassmorphism), borda ouro e sombra profunda. Hover levanta o card individualmente.
+    </p>
+    <div class="tradeoffs">
+      <div class="tpro">Sem sobreposição · Legível · Fácil de implementar</div>
+      <div class="tcon">Mais convencional que as outras opções</div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════ B — ESCADA PARALAXE ══════════════════ -->
+  <div class="prop-card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="check-badge">✓</div>
+
+    <div class="prop-header">
+      <span class="prop-tag">B</span>
+      <span class="prop-name">Escada Paralaxe</span>
+    </div>
+
+    <div class="preview">
+      <div class="prev-left">
+        <p class="prev-eyebrow">Quem Somos</p>
+        <p class="prev-title">Mais do que viabilizar crédito.</p>
+        <p class="prev-body">Planejamento no início. Estratégia no caminho. Resultado como consequência.</p>
+      </div>
+      <div class="prev-right">
+        <div class="stair-wrap">
+
+          <!-- Connecting lines between cards -->
+          <div class="stair-line stair-line-1"></div>
+          <div class="stair-line stair-line-2"></div>
+
+          <div class="stair-card stair-1">
+            <span class="stair-tag">Experiência</span>
+            <span class="stair-num">+19<em>a</em></span>
+            <span class="stair-lbl">Anos no mercado</span>
+          </div>
+
+          <div class="stair-card stair-2">
+            <span class="stair-tag">Rede</span>
+            <span class="stair-num">+60</span>
+            <span class="stair-lbl">Parceiros Comerciais</span>
+          </div>
+
+          <div class="stair-card stair-3">
+            <span class="stair-tag">Soluções</span>
+            <span class="stair-num">4</span>
+            <span class="stair-lbl">Frentes integradas</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <p class="prop-desc">
+      <strong>Cards em escada conectados por linha</strong>
+      Cada card desloca levemente para a direita, criando profundidade visual sem sobreposição. Uma linha dourada conecta os cards verticalmente, transmitindo progressão e trajetória.
+    </p>
+    <div class="tradeoffs">
+      <div class="tpro">Visual dinâmico · Transmite evolução e trajetória</div>
+      <div class="tcon">Exige altura fixa · Mais complexo de animar</div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════ C — GRID ASSIMÉTRICO ══════════════════ -->
+  <div class="prop-card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="check-badge">✓</div>
+
+    <div class="prop-header">
+      <span class="prop-tag">C</span>
+      <span class="prop-name">Grid Assimétrico</span>
+    </div>
+
+    <div class="preview">
+      <div class="prev-left">
+        <p class="prev-eyebrow">Quem Somos</p>
+        <p class="prev-title">Mais do que viabilizar crédito.</p>
+        <p class="prev-body">Planejamento no início. Estratégia no caminho. Resultado como consequência.</p>
+      </div>
+      <div class="prev-right">
+        <div class="asym-grid">
+
+          <!-- Featured: o mais importante -->
+          <div class="ag-featured">
+            <span class="ag-featured-num">+19<em>a</em></span>
+            <div class="ag-rule"></div>
+            <span class="ag-featured-lbl">Anos de Experiência em consultoria patrimonial</span>
+          </div>
+
+          <!-- 2 compactos lado a lado -->
+          <div class="ag-row">
+            <div class="ag-small">
+              <span class="ag-small-num">+60</span>
+              <span class="ag-small-lbl">Parceiros Comerciais</span>
+            </div>
+            <div class="ag-small">
+              <span class="ag-small-num">4</span>
+              <span class="ag-small-lbl">Frentes integradas</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <p class="prop-desc">
+      <strong>1 card destaque + 2 compactos em linha</strong>
+      O dado mais impactante (19 anos) ocupa um card principal com gradiente e brilho. Abaixo, dois cards menores lado a lado para os outros dois números. Hierarquia visual clara e moderna.
+    </p>
+    <div class="tradeoffs">
+      <div class="tpro">Hierarquia clara · Layout premium · Compacto</div>
+      <div class="tcon">O destaque favorece 1 stat sobre os outros</div>
+    </div>
+  </div>
+
+</div>
+
+<p style="text-align:center; color:#1e3a5a; font-size:12px; margin-top:44px;">
+  Clique para selecionar — ou diga no terminal qual preferiu e o que quer ajustar
+</p>
+
+<script>
+function toggleSelect(el) {
+  const parent = el.closest('.proposals');
+  parent.querySelectorAll('.prop-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  // Send event to superpowers bridge if available
+  if (window.__sp_select) window.__sp_select(el.dataset.choice, el.querySelector('.prop-name')?.textContent || '');
+}
+</script>
+
+</body>
+</html>
