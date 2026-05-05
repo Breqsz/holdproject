@@ -9,7 +9,7 @@ import {
   useState,
   type ComponentPropsWithoutRef,
 } from 'react'
-import { motion, AnimatePresence, type Transition } from 'framer-motion'
+import { motion, AnimatePresence, type Transition, type TargetAndTransition } from 'framer-motion'
 
 type StaggerFrom = 'first' | 'last' | 'center' | 'random' | number
 type SplitBy = 'characters' | 'words' | 'lines' | string
@@ -18,9 +18,9 @@ export interface RotatingTextProps
   extends Omit<ComponentPropsWithoutRef<typeof motion.span>, 'transition' | 'initial' | 'animate' | 'exit' | 'children'> {
   texts: string[]
   transition?: Transition
-  initial?: Record<string, unknown>
-  animate?: Record<string, unknown>
-  exit?: Record<string, unknown>
+  initial?: TargetAndTransition
+  animate?: TargetAndTransition
+  exit?: TargetAndTransition
   animatePresenceMode?: 'wait' | 'sync' | 'popLayout'
   animatePresenceInitial?: boolean
   rotationInterval?: number

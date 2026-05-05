@@ -118,13 +118,12 @@ export default function Footer() {
             <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#c9a84c]">
               Filiada
             </span>
-            <div className="flex items-center gap-3">
-              {/* Lojacorr lockup — placeholder until official SVG/PNG is provided */}
-              <div className="inline-flex items-center gap-2 rounded-md bg-white/[0.04] ring-1 ring-white/10 px-3 py-2">
-                <span className="text-white font-bold tracking-tight text-base">lojacorr</span>
-                <span className="text-[#c9a84c] text-xs">·</span>
-                <span className="text-[#7a9ab8] text-[10px] uppercase tracking-wider">network</span>
-              </div>
+            <div className="flex items-center gap-4">
+              <img
+                src="/images/LojaCorr.svg"
+                alt="Lojacorr"
+                className="h-8 w-auto opacity-90"
+              />
               <span className="text-[#7a9ab8] text-xs leading-relaxed max-w-sm">
                 {t('footer.lojacorr')}
               </span>

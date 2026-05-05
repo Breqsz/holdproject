@@ -67,7 +67,7 @@ const useResizeObserver = (
   dependencies: unknown[],
 ) => {
   useEffect(() => {
-    if (!('ResizeObserver' in window)) {
+    if (typeof window.ResizeObserver === 'undefined') {
       const handleResize = () => callback()
       window.addEventListener('resize', handleResize)
       callback()

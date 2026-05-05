@@ -50,7 +50,8 @@
       "PowerShell(cd \"E:\\\\Projetos\\\\holdcorretora.com\"; Get-ChildItem -Force | Select-Object Name, @{N='IsDir';E={$_.PSIsContainer}})",
       "Bash(git -C \"E:/Projetos/hold\" add docs/superpowers/specs/2026-05-04-hold-site-iteration-v2-design.md)",
       "Bash(git -C E:/Projetos/hold commit -m ' *)",
-      "Bash(npm --prefix \"E:/Projetos/hold\" ls motion)"
+      "Bash(npm --prefix \"E:/Projetos/hold\" ls motion)",
+      "Bash(npm run *)"
     ]
   }
 }

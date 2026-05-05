@@ -79,7 +79,7 @@ export default function CurvedLoop({
     return () => cancelAnimationFrame(frame)
   }, [spacing, speed, ready])
 
-  const onPointerDown = (e: RPointerEvent<SVGSVGElement>) => {
+  const onPointerDown = (e: RPointerEvent<HTMLDivElement>) => {
     if (!interactive) return
     dragRef.current = true
     lastXRef.current = e.clientX
@@ -87,7 +87,7 @@ export default function CurvedLoop({
     ;(e.target as Element).setPointerCapture?.(e.pointerId)
   }
 
-  const onPointerMove = (e: RPointerEvent<SVGSVGElement>) => {
+  const onPointerMove = (e: RPointerEvent<HTMLDivElement>) => {
     if (!interactive || !dragRef.current || !textPathRef.current) return
     const dx = e.clientX - lastXRef.current
     lastXRef.current = e.clientX

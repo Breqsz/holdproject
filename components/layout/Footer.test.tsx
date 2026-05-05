@@ -69,9 +69,10 @@ describe('Footer', () => {
     expect(screen.getByText(/Uberlândia, MG/)).toBeInTheDocument()
   })
 
-  it('renders the Lojacorr membership block', () => {
+  it('renders the Lojacorr membership block with logo image', () => {
     expect(screen.getByText('Filiada')).toBeInTheDocument()
-    expect(screen.getByText('lojacorr')).toBeInTheDocument()
+    const logo = screen.getByAltText('Lojacorr') as HTMLImageElement
+    expect(logo.src).toContain('/images/LojaCorr.svg')
     expect(
       screen.getByText('Membro Lojacorr — Maior rede de corretoras do Brasil'),
     ).toBeInTheDocument()
