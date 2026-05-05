@@ -51,7 +51,7 @@ export default function ParaEscritorios() {
   return (
     <section
       id="para-escritorios"
-      className="section-pad bg-[#07162a]"
+      className="section-pad bg-[#F5F5F5]"
       style={{ fontFamily: 'var(--font-outfit)' }}
     >
       <div className="max-w-6xl mx-auto px-6 lg:px-8">
@@ -66,7 +66,7 @@ export default function ParaEscritorios() {
         >
           <motion.h2
             variants={fadeUp}
-            className="mt-5 text-display text-white"
+            className="mt-5 text-display text-[#07162a]"
             style={{ fontSize: 'clamp(2rem, 4.4vw, 3.25rem)' }}
           >
             {t('partners.title')}
@@ -74,14 +74,14 @@ export default function ParaEscritorios() {
 
           <motion.p
             variants={fadeUp}
-            className="mt-6 max-w-[60ch] text-pretty text-lg leading-relaxed text-[#7a9ab8]"
+            className="mt-6 max-w-[60ch] text-pretty text-lg leading-relaxed text-[#07162a]/60"
           >
             {t('partners.subtitle')}
           </motion.p>
 
           <motion.p
             variants={fadeUp}
-            className="mt-4 max-w-[60ch] leading-relaxed text-[#e0e8f0]/80"
+            className="mt-4 max-w-[60ch] leading-relaxed text-[#07162a]/70"
           >
             {t('partners.body')}
           </motion.p>
@@ -115,7 +115,7 @@ export default function ParaEscritorios() {
                 <span className="mt-0.5 shrink-0">
                   <Check size={16} color="#ae251c" />
                 </span>
-                <span className="text-[#e0e8f0]/90 text-sm leading-relaxed">{item}</span>
+                <span className="text-[#07162a]/80 text-sm leading-relaxed">{item}</span>
               </motion.div>
             ))}
           </div>
@@ -131,7 +131,7 @@ export default function ParaEscritorios() {
           className="mt-20 relative"
         >
           {/* Static rail */}
-          <div aria-hidden className="hidden md:block absolute left-0 right-0 top-[18px] h-px bg-[#142f54]/40" />
+          <div aria-hidden className="hidden md:block absolute left-0 right-0 top-[18px] h-px bg-[#07162a]/10" />
           {/* Scroll-linked progress line */}
           <motion.div
             aria-hidden
@@ -153,10 +153,10 @@ export default function ParaEscritorios() {
                   </span>
                 </motion.div>
 
-                <p className="text-white font-semibold text-sm leading-snug">
+                <p className="text-[#07162a] font-semibold text-sm leading-snug">
                   {t(`${key}.title`)}
                 </p>
-                <p className="text-[#7a9ab8] text-xs leading-relaxed">
+                <p className="text-[#07162a]/55 text-xs leading-relaxed">
                   {t(`${key}.desc`)}
                 </p>
               </motion.div>
