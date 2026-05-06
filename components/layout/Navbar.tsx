@@ -169,27 +169,32 @@ export default function Navbar() {
                 stiffness: 100,
                 damping: 20,
               }}
-              className="flex items-center gap-3 mt-6"
+              className="mt-8"
             >
-              <button
-                onClick={() => setLocale('pt')}
-                className={[
-                  'text-base font-bold px-3 py-1 transition-colors duration-200',
-                  locale === 'pt' ? 'text-[#ae251c]' : 'text-[#7a9ab8]',
-                ].join(' ')}
-              >
-                PT
-              </button>
-              <span className="text-[#7a9ab8]">/</span>
-              <button
-                onClick={() => setLocale('en')}
-                className={[
-                  'text-base font-bold px-3 py-1 transition-colors duration-200',
-                  locale === 'en' ? 'text-[#ae251c]' : 'text-[#7a9ab8]',
-                ].join(' ')}
-              >
-                EN
-              </button>
+              <div className="flex items-center rounded-full bg-white/[0.06] ring-1 ring-white/10 p-1">
+                <button
+                  onClick={() => setLocale('pt')}
+                  className={[
+                    'text-sm font-bold px-5 py-2 rounded-full transition-all duration-200',
+                    locale === 'pt'
+                      ? 'bg-[#ae251c] text-white shadow-[0_2px_10px_rgba(174,37,28,0.45)]'
+                      : 'text-[#7a9ab8] hover:text-white',
+                  ].join(' ')}
+                >
+                  PT
+                </button>
+                <button
+                  onClick={() => setLocale('en')}
+                  className={[
+                    'text-sm font-bold px-5 py-2 rounded-full transition-all duration-200',
+                    locale === 'en'
+                      ? 'bg-[#ae251c] text-white shadow-[0_2px_10px_rgba(174,37,28,0.45)]'
+                      : 'text-[#7a9ab8] hover:text-white',
+                  ].join(' ')}
+                >
+                  EN
+                </button>
+              </div>
             </motion.div>
           </motion.div>
         )}
