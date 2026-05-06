@@ -178,7 +178,7 @@ export default function Navbar() {
                     'text-sm font-bold px-5 py-2 rounded-full transition-all duration-200',
                     locale === 'pt'
                       ? 'bg-[#ae251c] text-white shadow-[0_2px_10px_rgba(174,37,28,0.45)]'
-                      : 'text-[#7a9ab8] hover:text-white',
+                      : 'text-white/35',
                   ].join(' ')}
                 >
                   PT
@@ -189,7 +189,7 @@ export default function Navbar() {
                     'text-sm font-bold px-5 py-2 rounded-full transition-all duration-200',
                     locale === 'en'
                       ? 'bg-[#ae251c] text-white shadow-[0_2px_10px_rgba(174,37,28,0.45)]'
-                      : 'text-[#7a9ab8] hover:text-white',
+                      : 'text-white/35',
                   ].join(' ')}
                 >
                   EN
