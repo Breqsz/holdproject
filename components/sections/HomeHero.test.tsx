@@ -1,17 +1,13 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
 import HomeHero from './HomeHero'
-import { AudienceProvider } from '@/lib/audience'
 
 vi.mock('framer-motion', () => {
   const React = require('react')
   const motion = new Proxy({}, {
     get: (_t, tag: string) =>
-      React.forwardRef(({ children, initial, animate, whileInView, viewport,
-        transition, layoutId, exit, whileHover, whileTap, style, layout, ...rest }: any, ref: unknown) => {
-        void initial; void animate; void whileInView; void viewport; void transition
-        void layoutId; void exit; void whileHover; void whileTap; void layout
+      React.forwardRef(({ children, initial, animate, transition, style, ...rest }: any, ref: unknown) => {
+        void initial; void animate; void transition
         return React.createElement(tag, { ...rest, style, ref }, children)
       }),
   })
@@ -19,117 +15,100 @@ vi.mock('framer-motion', () => {
   return {
     motion,
     AnimatePresence: ({ children }: { children: React.ReactNode }) => children,
-    useReducedMotion: () => false,
     useMotionValue: make,
     useSpring: make,
-    useTransform: make,
   }
 })
 
 vi.mock('next/link', () => ({
-  default: ({ href, children, ...rest }: { href: string; children: React.ReactNode } & Record<string, unknown>) => {
+  default: ({ href, children, ...rest }: any) => {
     const React = require('react')
     return React.createElement('a', { href, ...rest }, children)
   },
 }))
 
 vi.mock('next/image', () => ({
-  default: ({ src, alt, style, ...rest }: { src: string; alt: string; style?: React.CSSProperties } & Record<string, unknown>) => {
+  default: ({ src, alt, ...rest }: any) => {
     const React = require('react')
-    return React.createElement('img', { src, alt, style, ...rest })
+    return React.createElement('img', { src, alt, ...rest })
   },
+}))
+
+vi.mock('@/lib/utils', () => ({
+  formatWhatsAppLink: (number: string, message: string) =>
+    `https://wa.me/${number}?text=${encodeURIComponent(message)}`,
 }))
 
 vi.mock('@/lib/i18n', () => ({
   useLocale: () => ({
     locale: 'pt',
     setLocale: vi.fn(),
-    t: (key: string) => ({ 'hero.middle': 'com' } as Record<string,string>)[key] ?? key,
+    t: (key: string) => ({
+      'hero.eyebrow':            'Ecossistema HOLD',
+      'hero.title.line1':        'Um ecossistema.',
+      'hero.title.line2':        'Quatro frentes.',
+      'hero.title.line3':        'Uma estratégia para proteger, planejar e expandir patrimônios.',
+      'hero.subtitle':           'Soluções em saúde, seguros, consórcios e finanças integradas.',
+      'hero.cta.specialist':     'Fale com um especialista',
+      'hero.cta.solutions':      'Conheça nossas soluções',
+      'hero.service.saude':      'Saúde',
+      'hero.service.seguros':    'Seguros',
+      'hero.service.consorcios': 'Consórcios',
+      'hero.service.financas':   'Soluções Financeiras',
+      'hero.photo.alt':          'Família atendida pela Hold Corretora',
+      'hero.wa.pf':              'Olá! Quero conversar com um especialista da Hold.',
+    } as Record<string, string>)[key] ?? key,
   }),
 }))
 
-function renderHero() {
-  return render(<AudienceProvider><HomeHero /></AudienceProvider>)
-}
-
 describe('HomeHero', () => {
-  beforeEach(() => { window.localStorage.clear() })
-
   it('renders section with id="home"', () => {
-    renderHero()
+    render(<HomeHero />)
     expect(document.querySelector('#home')).not.toBeNull()
   })
 
-  it('renders the static "com" middle line', () => {
-    renderHero()
-    expect(screen.getAllByText('com').length).toBeGreaterThan(0)
+  it('renders all three headline lines', () => {
+    render(<HomeHero />)
+    expect(screen.getByText('Um ecossistema.')).toBeInTheDocument()
+    expect(screen.getByText('Quatro frentes.')).toBeInTheDocument()
+    expect(screen.getByText('Uma estratégia para proteger, planejar e expandir patrimônios.')).toBeInTheDocument()
   })
 
-  it('renders "Consórcio" as initial frente', () => {
-    renderHero()
-    expect(screen.getAllByText('Consórcio').length).toBeGreaterThan(0)
+  it('renders all four service indicators', () => {
+    render(<HomeHero />)
+    expect(screen.getByText('Saúde')).toBeInTheDocument()
+    expect(screen.getByText('Seguros')).toBeInTheDocument()
+    expect(screen.getByText('Consórcios')).toBeInTheDocument()
+    expect(screen.getByText('Soluções Financeiras')).toBeInTheDocument()
   })
 
-  it('renders "inteligência" as initial valor', () => {
-    renderHero()
-    expect(screen.getAllByText('inteligência').length).toBeGreaterThan(0)
+  it('renders primary CTA linking to WhatsApp', () => {
+    render(<HomeHero />)
+    const link = screen.getByRole('link', { name: /Fale com um especialista/i })
+    expect(link).toBeInTheDocument()
+    expect(link.getAttribute('href')).toMatch(/wa\.me/)
   })
 
-  it('shows persona_hero with opacity 1 for PF (default)', () => {
-    renderHero()
+  it('renders secondary CTA linking to #solucoes', () => {
+    render(<HomeHero />)
+    const link = screen.getByRole('link', { name: /Conheça nossas soluções/i })
+    expect(link).toHaveAttribute('href', '#solucoes')
+  })
+
+  it('renders the family hero photo', () => {
+    render(<HomeHero />)
     const imgs = Array.from(document.querySelectorAll('img'))
-    const pfImg = imgs.find(img => img.getAttribute('src')?.includes('persona_hero'))
-    expect(pfImg).not.toBeNull()
-    expect(pfImg!.style.opacity).toBe('1')
+    expect(imgs.some(img => img.getAttribute('src')?.includes('family-hero'))).toBe(true)
   })
 
-  it('shows office_hero with opacity 0 for PF (default)', () => {
-    renderHero()
-    const imgs = Array.from(document.querySelectorAll('img'))
-    const pjImg = imgs.find(img => img.getAttribute('src')?.includes('office_hero'))
-    expect(pjImg).not.toBeNull()
-    expect(pjImg!.style.opacity).toBe('0')
+  it('does not render AudienceToggle', () => {
+    render(<HomeHero />)
+    expect(screen.queryByRole('button', { name: /Para você/i })).toBeNull()
+    expect(screen.queryByRole('button', { name: /Para sua empresa/i })).toBeNull()
   })
 
-  it('swaps image opacity when switching to PJ', async () => {
-    const user = userEvent.setup()
-    renderHero()
-    await user.click(screen.getByRole('button', { name: 'Para sua empresa' }))
-    const imgs = Array.from(document.querySelectorAll('img'))
-    const pfImg = imgs.find(img => img.getAttribute('src')?.includes('persona_hero'))
-    const pjImg = imgs.find(img => img.getAttribute('src')?.includes('office_hero'))
-    expect(pfImg!.style.opacity).toBe('0')
-    expect(pjImg!.style.opacity).toBe('1')
-  })
-
-  it('renders audience toggle buttons', () => {
-    renderHero()
-    expect(screen.getByRole('button', { name: 'Para você' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Para sua empresa' })).toBeInTheDocument()
-  })
-
-  it('shows PF subtitle by default', () => {
-    renderHero()
-    expect(screen.getByText(/Proteção inteligente para o que mais importa/i)).toBeInTheDocument()
-  })
-
-  it('shows PJ subtitle when switched to empresa', async () => {
-    const user = userEvent.setup()
-    renderHero()
-    await user.click(screen.getByRole('button', { name: 'Para sua empresa' }))
-    expect(screen.getByText(/Soluções corporativas de proteção/i)).toBeInTheDocument()
-  })
-
-  it('renders WhatsApp CTA and "Conhecer soluções" for PF', () => {
-    renderHero()
-    expect(screen.getByRole('link', { name: /Falar no WhatsApp/i })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: /Conhecer soluções/i })).toHaveAttribute('href', '#solucoes')
-  })
-
-  it('renders "Para escritórios" secondary CTA when PJ', async () => {
-    const user = userEvent.setup()
-    renderHero()
-    await user.click(screen.getByRole('button', { name: 'Para sua empresa' }))
-    expect(screen.getByRole('link', { name: /Para escritórios/i })).toHaveAttribute('href', '#para-escritorios')
+  it('renders eyebrow text', () => {
+    render(<HomeHero />)
+    expect(screen.getByText('Ecossistema HOLD')).toBeInTheDocument()
   })
 })
