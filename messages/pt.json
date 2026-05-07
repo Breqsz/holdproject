@@ -342,5 +342,26 @@
   "clients.company.diff.1": "Mesa de Consórcios estruturada com suporte técnico e comercial dedicado",
   "clients.company.diff.2": "Capacitação da equipe e integração com o fluxo do seu escritório",
   "clients.company.diff.3": "Operação autorizada e fiscalizada pelo Banco Central do Brasil",
-  "clients.company.diff.4": "Modelo de parceria flexível, respeitando a dinâmica e cultura do seu negócio"
+  "clients.company.diff.4": "Modelo de parceria flexível, respeitando a dinâmica e cultura do seu negócio",
+
+  "navbar.logo.aria": "Hold Corretora — Página inicial",
+  "navbar.home": "Home",
+  "navbar.solucoes": "Soluções",
+  "navbar.sobre": "Sobre",
+  "navbar.contato": "Contato",
+  "navbar.cta": "Fale com um especialista",
+  "navbar.menu.open": "Abrir menu",
+  "navbar.menu.close": "Fechar menu",
+  "navbar.dd.title": "Nossas Soluções",
+  "navbar.dd.partners": "60+ parceiros estratégicos",
+  "navbar.dd.saude": "Planos de Saúde",
+  "navbar.dd.saude.desc": "Individual, familiar e empresarial",
+  "navbar.dd.seguros": "Seguros",
+  "navbar.dd.seguros.desc": "Vida, residencial, auto e empresarial",
+  "navbar.dd.consorcios": "Consórcios",
+  "navbar.dd.consorcios.desc": "Imóvel, veículo e serviços",
+  "navbar.dd.financeiro": "Soluções Financeiras",
+  "navbar.dd.financeiro.desc": "Estratégia e planejamento patrimonial",
+  "navbar.dd.footer": "Atuação independente e integrada",
+  "navbar.dd.ver_todas": "Ver todas"
 }

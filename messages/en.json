@@ -342,5 +342,26 @@
   "clients.company.diff.1": "Structured Consortium Desk with dedicated technical and commercial support",
   "clients.company.diff.2": "Team training and integration with your firm's workflow",
   "clients.company.diff.3": "Operation authorized and supervised by the Central Bank of Brazil",
-  "clients.company.diff.4": "Flexible partnership model respecting your business's dynamics and culture"
+  "clients.company.diff.4": "Flexible partnership model respecting your business's dynamics and culture",
+
+  "navbar.logo.aria": "Hold Corretora — Home",
+  "navbar.home": "Home",
+  "navbar.solucoes": "Solutions",
+  "navbar.sobre": "About",
+  "navbar.contato": "Contact",
+  "navbar.cta": "Talk to a specialist",
+  "navbar.menu.open": "Open menu",
+  "navbar.menu.close": "Close menu",
+  "navbar.dd.title": "Our Solutions",
+  "navbar.dd.partners": "60+ strategic partners",
+  "navbar.dd.saude": "Health Plans",
+  "navbar.dd.saude.desc": "Individual, family and corporate",
+  "navbar.dd.seguros": "Insurance",
+  "navbar.dd.seguros.desc": "Life, home, auto and business",
+  "navbar.dd.consorcios": "Consortiums",
+  "navbar.dd.consorcios.desc": "Property, vehicle and services",
+  "navbar.dd.financeiro": "Financial Solutions",
+  "navbar.dd.financeiro.desc": "Strategy and wealth planning",
+  "navbar.dd.footer": "Independent and integrated advisory",
+  "navbar.dd.ver_todas": "See all"
 }
