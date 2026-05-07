@@ -2,106 +2,152 @@ import { describe, it, expect, vi } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
 import CardNav from './CardNav'
 
-// ---------------------------------------------------------------------------
-// Mocks
-// ---------------------------------------------------------------------------
-
-vi.mock('gsap', () => ({
-  gsap: {
-    set: vi.fn(),
-    timeline: vi.fn(() => ({
-      to: vi.fn().mockReturnThis(),
-      play: vi.fn(),
-      reverse: vi.fn(),
-      kill: vi.fn(),
-      progress: vi.fn().mockReturnThis(),
-      eventCallback: vi.fn().mockReturnThis(),
-    })),
-  },
+vi.mock('@/lib/i18n', () => ({
+  useLocale: () => ({
+    locale: 'pt' as const,
+    setLocale: vi.fn(),
+    t: (key: string) =>
+      ({
+        'navbar.logo.aria':           'Hold Corretora — Página inicial',
+        'navbar.home':                'Home',
+        'navbar.solucoes':            'Soluções',
+        'navbar.sobre':               'Sobre',
+        'navbar.contato':             'Contato',
+        'navbar.cta':                 'Fale com um especialista',
+        'navbar.menu.open':           'Abrir menu',
+        'navbar.menu.close':          'Fechar menu',
+        'navbar.dd.title':            'Nossas Soluções',
+        'navbar.dd.partners':         '60+ parceiros estratégicos',
+        'navbar.dd.saude':            'Planos de Saúde',
+        'navbar.dd.saude.desc':       'Individual, familiar e empresarial',
+        'navbar.dd.seguros':          'Seguros',
+        'navbar.dd.seguros.desc':     'Vida, residencial, auto e empresarial',
+        'navbar.dd.consorcios':       'Consórcios',
+        'navbar.dd.consorcios.desc':  'Imóvel, veículo e serviços',
+        'navbar.dd.financeiro':       'Soluções Financeiras',
+        'navbar.dd.financeiro.desc':  'Estratégia e planejamento patrimonial',
+        'navbar.dd.footer':           'Atuação independente e integrada',
+        'navbar.dd.ver_todas':        'Ver todas',
+      }[key] ?? key),
+  }),
 }))
 
-// next/link → render plain anchor for assertions
 vi.mock('next/link', () => ({
-  default: ({ href, children, ...rest }: { href: string; children: React.ReactNode } & Record<string, unknown>) => {
+  default: ({
+    href,
+    children,
+    ...rest
+  }: { href: string; children: React.ReactNode } & Record<string, unknown>) => {
     const React = require('react')
     return React.createElement('a', { href, ...rest }, children)
   },
 }))
 
-// ---------------------------------------------------------------------------
-// Tests
-// ---------------------------------------------------------------------------
+vi.mock('framer-motion', () => ({
+  motion: {
+    div: ({ children, ...p }: React.ComponentProps<'div'>) => {
+      const React = require('react')
+      return React.createElement('div', p, children)
+    },
+    a: ({ children, ...p }: React.ComponentProps<'a'>) => {
+      const React = require('react')
+      return React.createElement('a', p, children)
+    },
+  },
+  AnimatePresence: ({ children }: { children: React.ReactNode }) => children,
+}))
 
 describe('CardNav', () => {
-  it('renders the HOLD Corretora logo', () => {
+  it('renders logo link with correct aria-label', () => {
     render(<CardNav />)
-    expect(screen.getByText('HOLD')).toBeInTheDocument()
-    expect(screen.getByText('Corretora')).toBeInTheDocument()
+    expect(
+      screen.getByRole('link', { name: 'Hold Corretora — Página inicial' }),
+    ).toBeInTheDocument()
   })
 
   it('logo links to /', () => {
     render(<CardNav />)
-    const logo = screen.getByRole('link', { name: /HOLD/i })
-    expect(logo).toHaveAttribute('href', '/')
+    expect(
+      screen.getByRole('link', { name: 'Hold Corretora — Página inicial' }),
+    ).toHaveAttribute('href', '/')
   })
 
-  it('renders "Falar Conosco" CTA linking to /#contato', () => {
+  it('renders desktop nav links', () => {
     render(<CardNav />)
-    const cta = screen.getByRole('link', { name: 'Falar Conosco' })
-    expect(cta).toHaveAttribute('href', '/#contato')
+    expect(screen.getByRole('link', { name: 'Home' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Soluções' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Sobre' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Contato' })).toBeInTheDocument()
   })
 
-  it('hamburger is initially closed (aria-expanded false)', () => {
+  it('CTA links to /#contato', () => {
     render(<CardNav />)
-    const btn = screen.getByRole('button', { name: 'Abrir menu' })
-    expect(btn).toHaveAttribute('aria-expanded', 'false')
+    const ctas = screen.getAllByRole('link', { name: 'Fale com um especialista' })
+    expect(ctas[0]).toHaveAttribute('href', '/#contato')
   })
 
-  it('card panel is initially hidden', () => {
+  it('hamburger button is initially closed', () => {
     render(<CardNav />)
-    expect(document.querySelector('.card-nav-content')).toHaveAttribute('aria-hidden', 'true')
+    expect(
+      screen.getByRole('button', { name: 'Abrir menu' }),
+    ).toHaveAttribute('aria-expanded', 'false')
   })
 
-  it('renders all three card labels', () => {
+  it('Soluções dropdown is closed by default', () => {
     render(<CardNav />)
-    expect(screen.getByText('Soluções')).toBeInTheDocument()
-    expect(screen.getByText('A Hold')).toBeInTheDocument()
-    expect(screen.getByText('Suporte')).toBeInTheDocument()
+    expect(screen.queryByRole('menu')).not.toBeInTheDocument()
   })
 
-  it('renders Soluções links pointing to dedicated routes', () => {
+  it('clicking Soluções opens dropdown with 4 products', () => {
     render(<CardNav />)
-    expect(screen.getByRole('link', { name: 'Ver soluções de consórcio',     hidden: true })).toHaveAttribute('href', '/consorcios/')
-    expect(screen.getByRole('link', { name: 'Ver soluções de seguros',       hidden: true })).toHaveAttribute('href', '/seguros/')
-    expect(screen.getByRole('link', { name: 'Ver soluções de saúde e vida',  hidden: true })).toHaveAttribute('href', '/saude/')
-    expect(screen.getByRole('link', { name: 'Ver soluções de investimentos', hidden: true })).toHaveAttribute('href', '/investimentos/')
+    fireEvent.click(screen.getByRole('button', { name: 'Soluções' }))
+    expect(screen.getByRole('menu')).toBeInTheDocument()
+    expect(screen.getByRole('menuitem', { name: /Planos de Saúde/i })).toBeInTheDocument()
+    expect(screen.getByRole('menuitem', { name: /Seguros/i })).toBeInTheDocument()
+    expect(screen.getByRole('menuitem', { name: /Consórcios/i })).toBeInTheDocument()
+    expect(screen.getByRole('menuitem', { name: /Soluções Financeiras/i })).toBeInTheDocument()
   })
 
-  it('renders A Hold section links with correct hrefs', () => {
+  it('Soluções button has aria-expanded=true when open', () => {
     render(<CardNav />)
-    expect(screen.getByRole('link', { name: 'Conheça a Hold Corretora',                  hidden: true })).toHaveAttribute('href', '/#sobre-nos')
-    expect(screen.getByRole('link', { name: 'Conheça a equipe Hold Corretora',           hidden: true })).toHaveAttribute('href', '/equipe/')
-    expect(screen.getByRole('link', { name: 'Soluções para escritórios parceiros',       hidden: true })).toHaveAttribute('href', '/#para-escritorios')
+    fireEvent.click(screen.getByRole('button', { name: 'Soluções' }))
+    expect(
+      screen.getByRole('button', { name: 'Soluções' }),
+    ).toHaveAttribute('aria-expanded', 'true')
   })
 
-  it('renders Suporte links with correct hrefs', () => {
+  it('dropdown product links have correct hrefs', () => {
     render(<CardNav />)
-    expect(screen.getByRole('link', { name: 'Perguntas frequentes',                       hidden: true })).toHaveAttribute('href', '/#faq')
-    expect(screen.getByRole('link', { name: 'Entre em contato com a Hold Corretora',      hidden: true })).toHaveAttribute('href', '/#contato')
+    fireEvent.click(screen.getByRole('button', { name: 'Soluções' }))
+    expect(
+      screen.getByRole('menuitem', { name: /Planos de Saúde/i }),
+    ).toHaveAttribute('href', '/saude/')
+    expect(
+      screen.getByRole('menuitem', { name: /Seguros/i }),
+    ).toHaveAttribute('href', '/seguros/')
+    expect(
+      screen.getByRole('menuitem', { name: /Consórcios/i }),
+    ).toHaveAttribute('href', '/consorcios/')
+    expect(
+      screen.getByRole('menuitem', { name: /Soluções Financeiras/i }),
+    ).toHaveAttribute('href', '/investimentos/')
   })
 
-  it('opens the menu when hamburger is clicked', () => {
+  it('hamburger opens mobile menu', () => {
     render(<CardNav />)
     fireEvent.click(screen.getByRole('button', { name: 'Abrir menu' }))
-    expect(screen.getByRole('button', { name: 'Fechar menu' })).toHaveAttribute('aria-expanded', 'true')
-    expect(document.querySelector('.card-nav-content')).toHaveAttribute('aria-hidden', 'false')
+    expect(
+      screen.getByRole('button', { name: 'Fechar menu' }),
+    ).toHaveAttribute('aria-expanded', 'true')
   })
 
-  it('resets hamburger icon on close click', () => {
+  it('mobile menu contains all nav link texts', () => {
     render(<CardNav />)
     fireEvent.click(screen.getByRole('button', { name: 'Abrir menu' }))
-    fireEvent.click(screen.getByRole('button', { name: 'Fechar menu' }))
-    // isOpen resets; aria-expanded stays true until GSAP reverse completes
-    expect(screen.getByRole('button', { name: 'Fechar menu' })).not.toHaveAttribute('aria-expanded', 'false')
+    const dialog = screen.getByRole('dialog')
+    expect(dialog.textContent).toContain('Home')
+    expect(dialog.textContent).toContain('Soluções')
+    expect(dialog.textContent).toContain('Sobre')
+    expect(dialog.textContent).toContain('Contato')
   })
 })
