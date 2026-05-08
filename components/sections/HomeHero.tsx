@@ -1,31 +1,17 @@
 'use client'
 
-import { useRef } from 'react'
+import { useState, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion, useMotionValue, useSpring } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import { useLocale } from '@/lib/i18n'
 import { formatWhatsAppLink } from '@/lib/utils'
+import TextType from '@/components/ui/TextType'
 
-const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number]
 const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? ''
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.13, delayChildren: 0.08 } },
-}
-const itemVariants = {
-  hidden: { opacity: 0, y: 28 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.85, ease: EASE_OUT_EXPO } },
-}
-
-const SERVICES = [
-  { key: 'hero.service.saude',       color: '#22c55e' },
-  { key: 'hero.service.seguros',     color: '#3b82f6' },
-  { key: 'hero.service.consorcios',  color: '#a855f7' },
-  { key: 'hero.service.financas',    color: '#c9a84c' },
-] as const
+const TITLE_TEXT = 'Uma estratégia para proteger, planejar e expandir patrimônios.'
 
 function MagneticCTA({ href, label }: { href: string; label: string }) {
   const ref = useRef<HTMLAnchorElement>(null)
@@ -64,83 +50,72 @@ function MagneticCTA({ href, label }: { href: string; label: string }) {
 export default function HomeHero() {
   const { t } = useLocale()
   const wa = formatWhatsAppLink(WHATSAPP, t('hero.wa.pf'))
+  const [isTypingDone, setIsTypingDone] = useState(false)
 
   return (
     <section
       id="home"
-      className="relative min-h-[100dvh] overflow-hidden"
-      style={{ background: 'linear-gradient(125deg,#040d1a 0%,#071528 45%,#0a1c36 100%)' }}
+      className="relative min-h-[100dvh] overflow-hidden bg-[#040d1a]"
     >
-      {/* Atmosphere orbs */}
-      <div aria-hidden className="pointer-events-none absolute -right-20 -top-16 h-[480px] w-[480px] rounded-full bg-[#1a3f7a] opacity-[.20] blur-[110px]" />
-      <div aria-hidden className="pointer-events-none absolute bottom-0 left-12 h-[240px] w-[240px] rounded-full bg-[#ae251c] opacity-[.07] blur-[90px]" />
-      <div aria-hidden className="pointer-events-none absolute right-[12%] top-[40%] h-[280px] w-[280px] rounded-full bg-[#2a5ca0] opacity-[.12] blur-[80px]" />
+      {/* Background image */}
+      <Image
+        src="/images/hero/HOME_IMAGE_2.jpg"
+        alt={t('hero.photo.alt')}
+        fill
+        priority
+        quality={100}
+        sizes="100vw"
+        className="object-cover"
+        style={{ zIndex: 0, objectPosition: '100% 0%' }}
+      />
 
       {/* Dot grid */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.06]"
-        style={{ backgroundImage: 'radial-gradient(circle,rgba(255,255,255,.055) 1px,transparent 1px)', backgroundSize: '24px 24px' }}
+        className="pointer-events-none absolute inset-0 opacity-[0.04]"
+        style={{ zIndex: 2, backgroundImage: 'radial-gradient(circle,rgba(255,255,255,.055) 1px,transparent 1px)', backgroundSize: '24px 24px' }}
       />
 
-      <div className="relative z-10 grid min-h-[100dvh] grid-cols-1 lg:grid-cols-[1.1fr_1fr]">
+      {/* Content */}
+      <div className="relative flex min-h-[100dvh] items-center" style={{ zIndex: 10 }}>
+        <div
+          className="w-full px-6 sm:px-10 lg:pl-20 xl:pl-24"
+          style={{ paddingTop: 'clamp(80px,10vh,120px)', paddingBottom: 'clamp(40px,6vh,80px)' }}
+        >
+          <div className="max-w-[600px]">
 
-        {/* ── Left — copy ── */}
-        <div className="flex flex-col justify-center px-6 pb-10 pt-32 sm:px-10 lg:pl-16 lg:pr-10 xl:pl-20">
-          <motion.div variants={containerVariants} initial="hidden" animate="visible" className="flex flex-col">
-
-            {/* Eyebrow */}
-            <motion.div variants={itemVariants} className="mb-6 flex items-center gap-3">
-              <div className="h-px w-4" style={{ background: 'linear-gradient(to right,rgba(174,37,28,.8),transparent)' }} />
-              <span className="text-[10px] font-semibold uppercase tracking-[0.22em]" style={{ color: 'rgba(174,37,28,.9)' }}>
-                {t('hero.eyebrow')}
-              </span>
-            </motion.div>
-
-            {/* H1 */}
-            <motion.h1
-              variants={itemVariants}
-              className="font-extrabold leading-[1.08] tracking-[-0.035em]"
-              style={{ fontSize: 'clamp(2.4rem,5.2vw,3.8rem)' }}
+            {/* H1 — typing effect */}
+            <h1
+              className="font-extrabold leading-[1.1] tracking-[-0.03em] text-white"
+              style={{ fontSize: 'clamp(2.2rem,4.8vw,3.6rem)' }}
             >
-              <span className="block text-[#e8eef5]">{t('hero.title.line1')}</span>
-              <span className="block text-[#e8eef5]">{t('hero.title.line2')}</span>
-              <span
-                className="mt-1.5 block font-medium tracking-[-0.02em] text-[#e8eef5]/42"
-                style={{ fontSize: 'clamp(1.1rem,2.2vw,1.45rem)' }}
-              >
-                {t('hero.title.line3')}
-              </span>
-            </motion.h1>
+              <TextType
+                text={TITLE_TEXT}
+                as="span"
+                typingSpeed={55}
+                variableSpeed={{ min: 30, max: 90 }}
+                initialDelay={400}
+                loop={false}
+                showCursor={!isTypingDone}
+                cursorCharacter="|"
+                cursorClassName="text-[#ae251c] font-light"
+                onTypingComplete={() => setIsTypingDone(true)}
+              />
+            </h1>
 
-            {/* Subtitle */}
-            <motion.p
-              variants={itemVariants}
-              className="mt-5 max-w-[46ch] text-pretty text-[0.9rem] leading-[1.75] text-[#e8eef5]/38"
+            {/* Subtitle — fades in when title finishes typing */}
+            <p
+              className="mt-6 max-w-[44ch] text-pretty text-[0.9rem] leading-[1.8] text-white/65 transition-opacity duration-1000 ease-in-out"
+              style={{ opacity: isTypingDone ? 1 : 0 }}
             >
               {t('hero.subtitle')}
-            </motion.p>
+            </p>
 
-            {/* Services */}
-            <motion.div variants={itemVariants} className="mt-5 flex flex-wrap items-center gap-y-2">
-              {SERVICES.map(({ key, color }, i) => (
-                <span
-                  key={key}
-                  className="flex items-center gap-1.5 text-[0.7rem] font-semibold tracking-[0.04em] text-[#e8eef5]/50"
-                  style={
-                    i < SERVICES.length - 1
-                      ? { paddingRight: '12px', marginRight: '12px', borderRight: '1px solid rgba(255,255,255,.07)' }
-                      : undefined
-                  }
-                >
-                  <span className="h-[4px] w-[4px] shrink-0 rounded-full" style={{ background: color }} />
-                  {t(key)}
-                </span>
-              ))}
-            </motion.div>
-
-            {/* CTAs */}
-            <motion.div variants={itemVariants} className="mt-6 flex flex-wrap items-center gap-3">
+            {/* CTAs — slight delay after subtitle */}
+            <div
+              className="mt-8 flex flex-wrap items-center gap-3 transition-opacity duration-1000 ease-in-out delay-300"
+              style={{ opacity: isTypingDone ? 1 : 0 }}
+            >
               <MagneticCTA href={wa} label={t('hero.cta.specialist')} />
               <Link
                 href="#solucoes"
@@ -149,76 +124,10 @@ export default function HomeHero() {
                 {t('hero.cta.solutions')}
                 <ArrowRight size={14} />
               </Link>
-            </motion.div>
-
-          </motion.div>
-        </div>
-
-        {/* ── Right — photo double-bezel (desktop) ── */}
-        <div className="hidden lg:flex items-center p-8">
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3, duration: 0.9, ease: EASE_OUT_EXPO }}
-            className="relative h-[calc(100dvh-8rem)] w-full max-h-[680px]"
-          >
-            {/* Outer bezel shell */}
-            <div
-              className="absolute inset-0 rounded-[18px] border border-white/[0.08] bg-white/[0.025] p-[5px]"
-              style={{ boxShadow: '0 0 40px rgba(174,37,28,.06)' }}
-            >
-              {/* Red corner glow */}
-              <div
-                aria-hidden
-                className="pointer-events-none absolute -bottom-5 -right-5 h-20 w-20 rounded-full"
-                style={{ background: 'radial-gradient(circle,rgba(174,37,28,.22),transparent 70%)' }}
-              />
-              {/* Inner bezel core */}
-              <div
-                className="relative h-full w-full overflow-hidden rounded-[14px]"
-                style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,.07)' }}
-              >
-                <Image
-                  src="/images/hero/family-hero.webp"
-                  alt={t('hero.photo.alt')}
-                  fill
-                  priority
-                  quality={90}
-                  sizes="(max-width:1024px) 100vw, 50vw"
-                  className="object-cover object-center"
-                />
-                {/* Dark overlay */}
-                <div aria-hidden className="absolute inset-0" style={{ background: 'linear-gradient(160deg,rgba(6,15,30,.42),rgba(10,24,48,.15) 50%,rgba(6,15,30,.50))' }} />
-                {/* Left fade */}
-                <div aria-hidden className="absolute inset-0" style={{ background: 'linear-gradient(to right,#060f1e 0%,rgba(6,15,30,.55) 28%,transparent 58%)' }} />
-              </div>
             </div>
-          </motion.div>
-        </div>
 
-        {/* ── Mobile photo ── */}
-        <div className="lg:hidden mx-6 mb-10 aspect-[4/3]">
-          <div
-            className="relative h-full w-full rounded-[14px] border border-white/[0.08] bg-white/[0.025] p-[4px]"
-            style={{ boxShadow: '0 0 30px rgba(174,37,28,.05)' }}
-          >
-            <div
-              className="relative h-full w-full overflow-hidden rounded-[11px]"
-              style={{ boxShadow: 'inset 0 1px 0 rgba(255,255,255,.06)' }}
-            >
-              <Image
-                src="/images/hero/family-hero.webp"
-                alt={t('hero.photo.alt')}
-                fill
-                quality={85}
-                sizes="100vw"
-                className="object-cover object-center"
-              />
-              <div aria-hidden className="absolute inset-0" style={{ background: 'linear-gradient(160deg,rgba(6,15,30,.35),rgba(10,24,48,.1) 50%,rgba(6,15,30,.45))' }} />
-            </div>
           </div>
         </div>
-
       </div>
     </section>
   )
