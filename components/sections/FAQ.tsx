@@ -7,7 +7,7 @@ import { useLocale } from '@/lib/i18n'
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number]
 
-const FAQ_COUNT = 12
+const FAQ_COUNT = 15
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
