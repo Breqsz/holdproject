@@ -136,7 +136,7 @@ export default function HomeHero() {
 
             {/* Subtitle */}
             <p
-              className="mt-6 max-w-[48ch] text-pretty text-[0.9rem] leading-[1.8] text-[#142f54] transition-opacity duration-1000 ease-in-out"
+              className="mt-6 max-w-[48ch] text-pretty text-[1rem] leading-[1.8] text-[#142f54] transition-opacity duration-1000 ease-in-out"
               style={{ opacity: isTypingDone ? 1 : 0 }}
             >
               {t('hero.subtitle')}
