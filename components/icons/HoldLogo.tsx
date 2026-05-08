@@ -7,7 +7,7 @@ interface HoldLogoProps {
   subtitle?: 'consorcio' | 'corretora'
 }
 
-export function HoldLogo({ className, style, variant = 'dark', subtitle = false }: HoldLogoProps) {
+export function HoldLogo({ className, style, variant = 'dark', subtitle }: HoldLogoProps) {
   const text = variant === 'dark' ? '#ffffff' : '#07162a'
   const red = '#ae251c'
   const sub = variant === 'dark' ? 'rgba(255,255,255,0.72)' : 'rgba(7,22,42,0.72)'
