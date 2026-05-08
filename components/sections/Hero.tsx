@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef } from 'react'
+import Image from 'next/image'
 import { motion, useMotionValue, useSpring } from 'framer-motion'
 import { ArrowRight, Shield, BarChart2, Eye, TrendingUp } from 'lucide-react'
 import { useLocale } from '@/lib/i18n'
@@ -195,11 +196,14 @@ export default function Hero() {
                   '0 0 0 2px rgba(255,255,255,0.14), 0 0 0 14px rgba(20,47,84,0.32), 0 0 0 28px rgba(20,47,84,0.14)',
               }}
             >
-              <img
-                src="/personagem/jacimar-avatar-3d.webp"
+              <Image
+                src="/personagem/jacimar-avatar-3d.png"
                 alt={t('hero.character.alt')}
-                className="h-full w-full object-contain"
-                style={{ mixBlendMode: 'multiply' }}
+                fill
+                quality={100}
+                priority
+                sizes="290px"
+                style={{ objectFit: 'contain', mixBlendMode: 'multiply' }}
               />
               <div
                 aria-hidden

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { useLocale } from '@/lib/i18n'
+import { HoldLogo } from '@/components/icons/HoldLogo'
 
 const NAV_LINKS = [
   { key: 'nav.home', href: '#home' },
@@ -36,9 +37,10 @@ export default function Navbar() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
         className={[
-          'fixed top-4 left-1/2 -translate-x-1/2 z-50',
-          'rounded-full px-6 py-3',
-          'flex items-center gap-8',
+          'fixed top-4 left-4 right-4 z-50',
+          'rounded-full py-3',
+          'pl-5 pr-5 sm:pl-9 sm:pr-9 lg:pl-[76px] lg:pr-[76px] xl:pl-[92px] xl:pr-[92px]',
+          'grid grid-cols-[1fr_auto_1fr] items-center gap-4',
           'transition-all duration-300',
           scrolled
             ? 'bg-[#0b1f3a]/95 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.4)] border border-white/10'
@@ -47,13 +49,17 @@ export default function Navbar() {
         style={{ fontFamily: 'var(--font-outfit)' }}
       >
         {/* Logo */}
-        <a href="#home" className="flex items-baseline gap-1 shrink-0">
-          <span className="text-white font-bold text-lg tracking-wide">HOLD</span>
-          <span className="text-[#ae251c] text-sm font-medium">Corretora</span>
+        <a href="#home" className="flex items-center shrink-0 justify-self-start">
+          <HoldLogo
+            subtitle="corretora"
+            variant="dark"
+            className="w-auto"
+            style={{ height: 'clamp(2.25rem, 2.8vw, 2.75rem)' }}
+          />
         </a>
 
-        {/* Desktop nav links */}
-        <div className="hidden md:flex items-center gap-6">
+        {/* Desktop nav links — centered */}
+        <div className="hidden md:flex items-center gap-6 justify-self-center">
           {NAV_LINKS.map((link) => (
             <a
               key={link.key}
@@ -65,39 +71,40 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* PT/EN toggle */}
-        <div className="hidden md:flex items-center gap-1 shrink-0">
-          <button
-            onClick={() => setLocale('pt')}
-            className={[
-              'text-xs font-semibold px-2 py-1 rounded transition-colors duration-200',
-              locale === 'pt'
-                ? 'text-[#ae251c]'
-                : 'text-[#7a9ab8] hover:text-[#e0e8f0]',
-            ].join(' ')}
-          >
-            PT
-          </button>
-          <span className="text-[#7a9ab8] text-xs">/</span>
-          <button
-            onClick={() => setLocale('en')}
-            className={[
-              'text-xs font-semibold px-2 py-1 rounded transition-colors duration-200',
-              locale === 'en'
-                ? 'text-[#ae251c]'
-                : 'text-[#7a9ab8] hover:text-[#e0e8f0]',
-            ].join(' ')}
-          >
-            EN
-          </button>
-        </div>
+        {/* Right group — PT/EN toggle + mobile hamburger */}
+        <div className="flex items-center gap-3 justify-self-end">
+          <div className="hidden md:flex items-center gap-1">
+            <button
+              onClick={() => setLocale('pt')}
+              className={[
+                'text-xs font-semibold px-2 py-1 rounded transition-colors duration-200',
+                locale === 'pt'
+                  ? 'text-[#ae251c]'
+                  : 'text-[#7a9ab8] hover:text-[#e0e8f0]',
+              ].join(' ')}
+            >
+              PT
+            </button>
+            <span className="text-[#7a9ab8] text-xs">/</span>
+            <button
+              onClick={() => setLocale('en')}
+              className={[
+                'text-xs font-semibold px-2 py-1 rounded transition-colors duration-200',
+                locale === 'en'
+                  ? 'text-[#ae251c]'
+                  : 'text-[#7a9ab8] hover:text-[#e0e8f0]',
+              ].join(' ')}
+            >
+              EN
+            </button>
+          </div>
 
-        {/* Mobile hamburger */}
-        <button
-          className="md:hidden ml-auto text-[#e0e8f0] p-1"
-          onClick={() => setMenuOpen((v) => !v)}
-          aria-label="Toggle menu"
-        >
+          {/* Mobile hamburger */}
+          <button
+            className="md:hidden text-[#e0e8f0] p-1"
+            onClick={() => setMenuOpen((v) => !v)}
+            aria-label="Toggle menu"
+          >
           <AnimatePresence mode="wait" initial={false}>
             {menuOpen ? (
               <motion.span
@@ -123,7 +130,8 @@ export default function Navbar() {
               </motion.span>
             )}
           </AnimatePresence>
-        </button>
+          </button>
+        </div>
       </motion.nav>
 
       {/* Mobile full-screen overlay */}

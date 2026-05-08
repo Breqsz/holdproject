@@ -47,6 +47,7 @@ export default function Footer() {
 
             {/* HOLD — logo oficial SVG */}
             <HoldLogo
+              subtitle="corretora"
               variant="dark"
               className="w-auto"
               style={{ height: 'clamp(2.6rem, 5vw, 4rem)' }}
