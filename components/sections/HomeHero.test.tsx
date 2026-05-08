@@ -111,4 +111,17 @@ describe('HomeHero', () => {
     render(<HomeHero />)
     expect(screen.getByText('Ecossistema HOLD')).toBeInTheDocument()
   })
+
+  it('renders the mobile gradient overlay div', () => {
+    render(<HomeHero />)
+    const overlay = document.querySelector('[data-testid="mobile-overlay"]')
+    expect(overlay).toBeTruthy()
+  })
+
+  it('overlay has gradient-to-right classes', () => {
+    render(<HomeHero />)
+    const overlay = document.querySelector('[data-testid="mobile-overlay"]')
+    expect(overlay?.className).toContain('from-white')
+    expect(overlay?.className).toContain('to-transparent')
+  })
 })

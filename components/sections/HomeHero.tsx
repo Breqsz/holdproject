@@ -74,8 +74,16 @@ export default function HomeHero() {
         priority
         quality={100}
         sizes="100vw"
-        className="object-cover"
-        style={{ zIndex: 0, objectPosition: '100% 0%' }}
+        className="object-cover object-center md:object-[100%_0%]"
+        style={{ zIndex: 0 }}
+      />
+
+      {/* Mobile gradient overlay — garante legibilidade do texto */}
+      <div
+        data-testid="mobile-overlay"
+        aria-hidden
+        className="md:hidden absolute inset-0 bg-gradient-to-r from-white via-white/90 to-transparent"
+        style={{ zIndex: 1 }}
       />
 
       {/* Dot grid */}
@@ -91,7 +99,7 @@ export default function HomeHero() {
           className="w-full px-6 sm:px-10 lg:pl-20 xl:pl-24"
           style={{ paddingTop: 'clamp(80px,10vh,120px)', paddingBottom: 'clamp(40px,6vh,80px)' }}
         >
-          <div className="max-w-[640px]">
+          <div className="max-w-[85%] sm:max-w-[640px]">
 
             {/* H1 — three lines: line1 biggest, line2 slightly smaller, line3 typed small */}
             <h1 className="tracking-[-0.03em]">
