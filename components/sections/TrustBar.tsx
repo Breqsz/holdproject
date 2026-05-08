@@ -19,8 +19,10 @@ export default function TrustBar() {
   const handleScroll = useCallback(() => {
     const el = scrollRef.current
     if (!el) return
-    const itemWidth = el.scrollWidth / ITEMS.length
-    const index = Math.round(el.scrollLeft / itemWidth)
+    const firstItem = el.firstElementChild as HTMLElement | null
+    if (!firstItem) return
+    const stride = firstItem.offsetWidth + 16 // gap-4 = 16px
+    const index = Math.round(el.scrollLeft / stride)
     setActiveDot(Math.min(index, ITEMS.length - 1))
   }, [])
 
@@ -55,6 +57,7 @@ export default function TrustBar() {
         <div
           ref={scrollRef}
           onScroll={handleScroll}
+          aria-label="Diferenciais Hold"
           className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth px-6 py-4 gap-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {ITEMS.map(({ Icon, line1, line2 }, i) => (
@@ -72,7 +75,7 @@ export default function TrustBar() {
         </div>
 
         {/* Dots */}
-        <div className="flex justify-center gap-1.5 pb-3">
+        <div aria-hidden="true" className="flex justify-center gap-1.5 pb-3">
           {ITEMS.map((_, i) => (
             <div
               key={i}
