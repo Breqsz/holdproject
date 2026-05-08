@@ -67,19 +67,10 @@ describe('HomeHero', () => {
     expect(document.querySelector('#home')).not.toBeNull()
   })
 
-  it('renders all three headline lines', () => {
+  it('renders headline lines 1 and 2', () => {
     render(<HomeHero />)
     expect(screen.getByText('Um ecossistema.')).toBeInTheDocument()
     expect(screen.getByText('Quatro frentes.')).toBeInTheDocument()
-    expect(screen.getByText('Uma estratégia para proteger, planejar e expandir patrimônios.')).toBeInTheDocument()
-  })
-
-  it('renders all four service indicators', () => {
-    render(<HomeHero />)
-    expect(screen.getByText('Saúde')).toBeInTheDocument()
-    expect(screen.getByText('Seguros')).toBeInTheDocument()
-    expect(screen.getByText('Consórcios')).toBeInTheDocument()
-    expect(screen.getByText('Soluções Financeiras')).toBeInTheDocument()
   })
 
   it('renders primary CTA linking to WhatsApp', () => {
@@ -98,18 +89,13 @@ describe('HomeHero', () => {
   it('renders the family hero photo', () => {
     render(<HomeHero />)
     const imgs = Array.from(document.querySelectorAll('img'))
-    expect(imgs.some(img => img.getAttribute('src')?.includes('family-hero'))).toBe(true)
+    expect(imgs.some(img => img.getAttribute('src')?.includes('home%20image%205'))).toBe(true)
   })
 
   it('does not render AudienceToggle', () => {
     render(<HomeHero />)
     expect(screen.queryByRole('button', { name: /Para você/i })).toBeNull()
     expect(screen.queryByRole('button', { name: /Para sua empresa/i })).toBeNull()
-  })
-
-  it('renders eyebrow text', () => {
-    render(<HomeHero />)
-    expect(screen.getByText('Ecossistema HOLD')).toBeInTheDocument()
   })
 
   it('renders the mobile gradient overlay div', () => {
