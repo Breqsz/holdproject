@@ -96,10 +96,11 @@ export default function ComoFunciona() {
             className="pointer-events-none select-none flex justify-center lg:justify-end lg:shrink-0"
           >
             <Image
-              src="/personagem/jacimar-avatar-question.webp"
+              src="/personagem/jacimar-avatar-question.png"
               alt=""
-              width={260}
-              height={400}
+              width={600}
+              height={920}
+              quality={95}
               className="w-56 sm:w-72 lg:w-[22rem] xl:w-[26rem] h-auto drop-shadow-xl"
             />
           </motion.div>

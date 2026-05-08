@@ -2,6 +2,7 @@
 
 import { MessageCircle, MapPin, Phone } from 'lucide-react'
 import { useLocale } from '@/lib/i18n'
+import { HoldLogo } from '@/components/icons/HoldLogo'
 
 function IconInstagram({ size = 16 }: { size?: number }) {
   return (
@@ -41,30 +42,32 @@ export default function Footer() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
 
         {/* Main footer hero — HOLD CORRETORA × LOJACORR — centered */}
-        <div className="mb-14 flex flex-col items-center text-center gap-4">
-          <div className="flex items-end gap-4 sm:gap-6 flex-wrap justify-center">
-            <div className="flex items-baseline gap-2.5">
-              <span
-                className="text-display text-white tracking-tight leading-none"
-                style={{ fontSize: 'clamp(2.8rem, 6vw, 5rem)' }}
-              >
-                HOLD
-              </span>
-              <span className="text-[#c9a84c] font-semibold tracking-wider" style={{ fontSize: 'clamp(0.85rem, 1.4vw, 1.1rem)' }}>
-                Corretora
-              </span>
-            </div>
+        <div className="mb-14 flex flex-col items-center text-center gap-6">
+          <div className="flex items-center gap-8 sm:gap-12 flex-wrap justify-center">
 
-            <span className="text-[#1e4a7a] font-light select-none" style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}>×</span>
-
-            <img
-              src="/images/LojaCorr.webp"
-              alt="Lojacorr"
-              loading="lazy"
-              decoding="async"
-              className="brightness-200 contrast-125 w-auto"
-              style={{ height: 'clamp(2.4rem, 4.8vw, 4.2rem)' }}
+            {/* HOLD — logo oficial SVG */}
+            <HoldLogo
+              variant="dark"
+              className="w-auto"
+              style={{ height: 'clamp(2.6rem, 5vw, 4rem)' }}
             />
+
+            <span className="text-[#1e4a7a] font-light select-none" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}>×</span>
+
+            {/* Lojacorr */}
+            <div className="flex flex-col items-center gap-1.5">
+              <span className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#c9a84c]">
+                Corretora Parceira
+              </span>
+              <img
+                src="/images/LojaCorr.webp"
+                alt="Lojacorr"
+                loading="lazy"
+                decoding="async"
+                className="brightness-200 contrast-125 w-auto"
+                style={{ height: 'clamp(3.5rem, 7vw, 6rem)' }}
+              />
+            </div>
           </div>
 
           <p className="text-[#7a9ab8] text-sm leading-relaxed max-w-sm">
@@ -77,7 +80,7 @@ export default function Footer() {
 
           {/* Navegação */}
           <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
-            <h4 className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#ae251c] mb-5">
+            <h4 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#ae251c] mb-5">
               {t('footer.nav.title')}
             </h4>
             <ul className="space-y-2.5">
@@ -85,7 +88,7 @@ export default function Footer() {
                 <li key={link.key}>
                   <a
                     href={link.href}
-                    className="text-[#7a9ab8] hover:text-white text-sm transition-colors duration-200"
+                    className="text-[#7a9ab8] hover:text-white text-[0.9rem] transition-colors duration-200"
                   >
                     {t(link.key)}
                   </a>
@@ -96,7 +99,7 @@ export default function Footer() {
 
           {/* Redes Sociais */}
           <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
-            <h4 className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#ae251c] mb-5">
+            <h4 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#ae251c] mb-5">
               {t('footer.social.title')}
             </h4>
             <div className="flex gap-2.5 mb-7">
@@ -131,13 +134,13 @@ export default function Footer() {
 
           {/* Contato */}
           <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
-            <h4 className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#ae251c] mb-5">
+            <h4 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#ae251c] mb-5">
               {t('nav.contact')}
             </h4>
             <ul className="space-y-3">
               <li className="flex items-start gap-2.5">
                 <MapPin size={14} className="text-[#c9a84c] shrink-0 mt-0.5" strokeWidth={1.7} />
-                <span className="text-[#7a9ab8] text-sm leading-relaxed">
+                <span className="text-[#7a9ab8] text-[0.9rem] leading-relaxed">
                   Uberlândia, MG
                 </span>
               </li>
@@ -147,7 +150,7 @@ export default function Footer() {
                   href={waHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#7a9ab8] hover:text-white text-sm transition-colors duration-200"
+                  className="text-[#7a9ab8] hover:text-white text-[0.9rem] transition-colors duration-200"
                 >
                   WhatsApp
                 </a>
