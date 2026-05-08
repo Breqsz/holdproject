@@ -77,7 +77,7 @@ export default function CardNav() {
         aria-label="Menu principal"
         style={{ fontFamily: 'var(--font-outfit)' }}
       >
-        <div className="grid grid-cols-[1fr_auto_1fr] items-center px-6 sm:px-10 lg:px-20 xl:px-24 h-16">
+        <div className="grid grid-cols-[2fr_auto_1fr] items-center px-6 sm:px-10 lg:px-20 xl:px-24 h-16">
 
           {/* Logo — alinha com o U do hero */}
           <Link
@@ -95,7 +95,7 @@ export default function CardNav() {
           </Link>
 
           {/* Desktop nav links — centro real da viewport */}
-          <div className="hidden md:flex items-center gap-0.5 justify-self-center">
+          <div className="hidden md:flex items-center gap-3 justify-self-center">
             <Link href="/#home" className={NAV_LINK_CLS} onClick={closeAll}>
               {t('navbar.home')}
             </Link>
