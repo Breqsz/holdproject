@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowRight, Check } from 'lucide-react'
 import ConsorcioIcon from '@/components/icons/sectors/ConsorcioIcon'
 import SegurosIcon from '@/components/icons/sectors/SegurosIcon'
 import SaudeIcon from '@/components/icons/sectors/SaudeIcon'
@@ -14,12 +14,15 @@ const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number]
 type Service = {
   href: string
   Icon: React.ComponentType<{ size?: number; className?: string; style?: React.CSSProperties }>
-  label: string
   title: string
   desc: string
-  accent: string
+  bullets?: string[]
+  extendedDesc?: string
   bg: string
-  text?: string
+  isLight?: boolean
+  iconColor: string
+  hoverGlow?: string
+  ariaLabel: string
 }
 
 const containerVariants = {
@@ -33,61 +36,107 @@ const cardVariants = {
 }
 
 function SectorCard({ service }: { service: Service }) {
-  const { t } = useLocale()
-  const { href, Icon, label, title, desc, accent, bg, text } = service
-  const isLight = !!text
+  const {
+    href, Icon, title, desc, bullets, extendedDesc,
+    bg, isLight, iconColor, hoverGlow, ariaLabel,
+  } = service
+
+  const titleColor = isLight ? '#142f54' : '#ffffff'
+  const descColor = isLight ? 'rgba(7,22,42,0.62)' : 'rgba(255,255,255,0.66)'
+  const extendedColor = isLight ? 'rgba(7,22,42,0.5)' : 'rgba(255,255,255,0.5)'
+  const bulletColor = isLight ? 'rgba(7,22,42,0.78)' : 'rgba(255,255,255,0.82)'
+  const borderColor = isLight ? 'rgba(7,22,42,0.08)' : 'rgba(255,255,255,0.08)'
 
   return (
-    <motion.div variants={cardVariants} whileHover={{ y: -6 }} transition={{ duration: 0.4, ease: EASE_OUT_EXPO }} className="h-full">
+    <motion.div
+      variants={cardVariants}
+      whileHover={{ y: -6 }}
+      transition={{ duration: 0.4, ease: EASE_OUT_EXPO }}
+      className="h-full"
+    >
       <Link
         href={href}
-        className="group relative block overflow-hidden rounded-2xl transition-all duration-500 h-full"
-        style={{
-          background: bg,
-          border: `1px solid ${isLight ? 'rgba(7,22,42,0.08)' : 'rgba(255,255,255,0.08)'}`,
-        }}
+        aria-label={ariaLabel}
+        className="group relative block overflow-hidden rounded-2xl h-full transition-shadow duration-500 hover:shadow-[0_24px_60px_-20px_rgba(0,0,0,0.45)]"
+        style={{ background: bg, border: `1px solid ${borderColor}` }}
       >
-        <span
-          aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 rounded-2xl"
-          style={{ background: `radial-gradient(300px circle at 80% 10%, ${accent}28, transparent 60%)` }}
-        />
-        <div className="relative p-8 md:p-9 flex flex-col gap-4 h-full">
-          <div
-            className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
-            style={{ background: `${accent}20`, border: `1px solid ${accent}44` }}
-          >
-            <Icon size={22} style={{ color: accent }} />
-          </div>
-
+        {/* Top-right navy triangle accent on the light card (matches image) */}
+        {isLight && (
           <span
-            className="text-[10px] font-bold tracking-[0.2em] uppercase"
-            style={{ color: isLight ? 'rgba(7,22,42,0.4)' : 'rgba(255,255,255,0.38)' }}
-          >
-            {label}
-          </span>
+            aria-hidden
+            className="pointer-events-none absolute top-0 right-0 h-[88px] w-[88px]"
+            style={{
+              background: 'linear-gradient(225deg, #07162a 0%, #142f54 100%)',
+              clipPath: 'polygon(100% 0%, 0% 0%, 100% 100%)',
+            }}
+          />
+        )}
+
+        {/* Hover spotlight on dark cards */}
+        {!isLight && hoverGlow && (
+          <span
+            aria-hidden
+            className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+            style={{ background: hoverGlow }}
+          />
+        )}
+
+        <div className="relative flex h-full flex-col gap-5 p-7 md:p-8">
+          <Icon size={32} style={{ color: iconColor }} />
 
           <h3
-            className="text-display tracking-tight leading-tight"
-            style={{ color: text ?? '#fff', fontSize: 'clamp(1.45rem, 2.4vw, 1.9rem)' }}
+            className="text-display tracking-tight leading-[1.08]"
+            style={{
+              color: titleColor,
+              fontSize: 'clamp(1.45rem, 2.3vw, 1.95rem)',
+            }}
           >
             {title}
           </h3>
 
           <p
-            className="text-sm leading-relaxed max-w-[38ch] mt-auto"
-            style={{ color: isLight ? 'rgba(7,22,42,0.6)' : 'rgba(255,255,255,0.58)' }}
+            className="text-[13.5px] leading-[1.65] max-w-[42ch]"
+            style={{ color: descColor }}
           >
             {desc}
           </p>
 
-          <div
-            className="flex items-center gap-2 text-xs font-semibold tracking-wide uppercase"
-            style={{ color: isLight ? accent : 'rgba(255,255,255,0.65)' }}
-          >
-            {t('solucoes.explore')}
-            <ArrowUpRight size={13} className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </div>
+          {extendedDesc && (
+            <p
+              className="text-[12px] leading-[1.7]"
+              style={{ color: extendedColor }}
+            >
+              {extendedDesc}
+            </p>
+          )}
+
+          {bullets && bullets.length > 0 && (
+            <ul className="flex flex-col gap-2.5">
+              {bullets.map((b) => (
+                <li
+                  key={b}
+                  className="flex items-start gap-2.5 text-[13px] leading-snug"
+                  style={{ color: bulletColor }}
+                >
+                  <span
+                    aria-hidden
+                    className="mt-[3px] inline-flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-[3px]"
+                    style={{ background: '#ae251c' }}
+                  >
+                    <Check size={9} strokeWidth={3.5} className="text-white" />
+                  </span>
+                  <span>{b}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          <div className="flex-1" />
+
+          <span className="inline-flex items-center gap-2 self-start rounded-md bg-[#ae251c] px-5 py-2.5 text-[11px] font-bold uppercase tracking-[0.2em] text-white transition-colors duration-200 group-hover:bg-[#c42d23]">
+            Conhecer
+            <ArrowRight size={12} className="transition-transform duration-300 group-hover:translate-x-0.5" />
+          </span>
         </div>
       </Link>
     </motion.div>
@@ -97,48 +146,62 @@ function SectorCard({ service }: { service: Service }) {
 export default function SolucoesGrid() {
   const { t } = useLocale()
 
+  const splitBullets = (key: string) =>
+    t(key).split('|').map((s) => s.trim()).filter(Boolean)
+
   const SERVICES: Service[] = [
     {
       href: '/saude/',
       Icon: SaudeIcon,
-      label: t('solucoes.saude.label'),
       title: t('solucoes.saude.title'),
       desc: t('solucoes.saude.desc'),
-      accent: '#142f54',
-      bg: 'linear-gradient(135deg, #f0f6ff 0%, #d4e3f5 100%)',
-      text: '#07162a',
+      bullets: splitBullets('solucoes.saude.bullets'),
+      bg: 'linear-gradient(160deg, #ffffff 0%, #f3f5f8 100%)',
+      isLight: true,
+      iconColor: '#ae251c',
+      ariaLabel: t('solucoes.saude.label'),
     },
     {
       href: '/seguros/',
       Icon: SegurosIcon,
-      label: t('solucoes.seguros.label'),
       title: t('solucoes.seguros.title'),
       desc: t('solucoes.seguros.desc'),
-      accent: '#ae251c',
-      bg: 'linear-gradient(135deg, #6e1a14 0%, #ae251c 100%)',
+      extendedDesc: t('solucoes.seguros.tipos'),
+      bg: 'linear-gradient(155deg, #060f1c 0%, #0b1f3a 100%)',
+      iconColor: '#ffffff',
+      hoverGlow: 'radial-gradient(380px circle at 80% 0%, rgba(174,37,28,0.18), transparent 60%)',
+      ariaLabel: t('solucoes.seguros.label'),
     },
     {
       href: '/consorcios/',
       Icon: ConsorcioIcon,
-      label: t('solucoes.consorcio.label'),
       title: t('solucoes.consorcio.title'),
       desc: t('solucoes.consorcio.desc'),
-      accent: '#3b6cb5',
-      bg: 'linear-gradient(135deg, #020c30 0%, #0b2d6e 100%)',
+      bullets: splitBullets('solucoes.consorcio.bullets'),
+      bg: 'linear-gradient(155deg, #020b18 0%, #07162a 100%)',
+      iconColor: '#ffffff',
+      hoverGlow: 'radial-gradient(380px circle at 80% 0%, rgba(174,37,28,0.18), transparent 60%)',
+      ariaLabel: t('solucoes.consorcio.label'),
     },
     {
       href: '/investimentos/',
       Icon: InvestimentosIcon,
-      label: t('solucoes.invest.label'),
       title: t('solucoes.invest.title'),
       desc: t('solucoes.invest.desc'),
-      accent: '#c9a84c',
-      bg: 'linear-gradient(135deg, #0a0a0a 0%, #181818 100%)',
+      bullets: splitBullets('solucoes.invest.bullets'),
+      bg: 'linear-gradient(150deg, #07162a 0%, #1a0a14 60%, #ae251c 100%)',
+      iconColor: '#ae251c',
+      hoverGlow: 'radial-gradient(420px circle at 90% 0%, rgba(174,37,28,0.22), transparent 60%)',
+      ariaLabel: t('solucoes.invest.label'),
     },
   ]
 
   return (
-    <section id="solucoes" className="section-pad bg-[#F5F5F5]" style={{ fontFamily: 'var(--font-outfit)' }}>
+    <section
+      id="solucoes"
+      className="section-pad bg-[#F5F5F5]"
+      style={{ fontFamily: 'var(--font-outfit)' }}
+    >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
 
         <motion.div
