@@ -210,7 +210,7 @@ export default function EstrategiaManifesto() {
             <motion.div
               initial={{ opacity: 0, y: 14 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.55, ease: EASE }}
+              transition={{ duration: 0.7, delay: 0.65, ease: EASE }}
               className="absolute bottom-6 left-6 right-6 lg:bottom-8 lg:left-12 lg:right-12 px-5 py-5 lg:px-7 lg:py-6 rounded-xl"
               style={{
                 background: 'rgba(11,31,58,0.78)',
