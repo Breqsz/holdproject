@@ -4,8 +4,9 @@ import dynamic from 'next/dynamic'
 import HomeHero from '@/components/sections/HomeHero'
 import { useAudience } from '@/lib/audience'
 
+const EstrategiaManifesto = dynamic(() => import('@/components/sections/EstrategiaManifesto'))
+const StatsBar        = dynamic(() => import('@/components/sections/StatsBar'))
 const SolucoesGrid    = dynamic(() => import('@/components/sections/SolucoesGrid'))
-const Parceiros       = dynamic(() => import('@/components/sections/Parceiros'))
 const SobreNos        = dynamic(() => import('@/components/sections/SobreNos'))
 const ParaEscritorios = dynamic(() => import('@/components/sections/ParaEscritorios'))
 const ComoFunciona    = dynamic(() => import('@/components/sections/ComoFunciona'))
@@ -22,8 +23,9 @@ export default function Home() {
     <>
       <HomeHero />
 
+      <EstrategiaManifesto />
       <SolucoesGrid />
-      <Parceiros />
+      <StatsBar />
       <SobreNos />
       {showPJ ? <ParaEscritorios /> : <ComoFunciona />}
       <Depoimentos />

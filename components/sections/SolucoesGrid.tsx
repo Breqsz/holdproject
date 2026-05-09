@@ -99,13 +99,14 @@ export default function SolucoesGrid() {
 
   const SERVICES: Service[] = [
     {
-      href: '/consorcios/',
-      Icon: ConsorcioIcon,
-      label: t('solucoes.consorcio.label'),
-      title: t('solucoes.consorcio.title'),
-      desc: t('solucoes.consorcio.desc'),
-      accent: '#3b6cb5',
-      bg: 'linear-gradient(135deg, #020c30 0%, #0b2d6e 100%)',
+      href: '/saude/',
+      Icon: SaudeIcon,
+      label: t('solucoes.saude.label'),
+      title: t('solucoes.saude.title'),
+      desc: t('solucoes.saude.desc'),
+      accent: '#142f54',
+      bg: 'linear-gradient(135deg, #f0f6ff 0%, #d4e3f5 100%)',
+      text: '#07162a',
     },
     {
       href: '/seguros/',
@@ -117,14 +118,13 @@ export default function SolucoesGrid() {
       bg: 'linear-gradient(135deg, #6e1a14 0%, #ae251c 100%)',
     },
     {
-      href: '/saude/',
-      Icon: SaudeIcon,
-      label: t('solucoes.saude.label'),
-      title: t('solucoes.saude.title'),
-      desc: t('solucoes.saude.desc'),
-      accent: '#142f54',
-      bg: 'linear-gradient(135deg, #f0f6ff 0%, #d4e3f5 100%)',
-      text: '#07162a',
+      href: '/consorcios/',
+      Icon: ConsorcioIcon,
+      label: t('solucoes.consorcio.label'),
+      title: t('solucoes.consorcio.title'),
+      desc: t('solucoes.consorcio.desc'),
+      accent: '#3b6cb5',
+      bg: 'linear-gradient(135deg, #020c30 0%, #0b2d6e 100%)',
     },
     {
       href: '/investimentos/',
