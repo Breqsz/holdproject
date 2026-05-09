@@ -49,67 +49,73 @@ vi.mock('framer-motion', async () => {
   }
 })
 
-describe('EstrategiaManifesto', () => {
-  it('renders the manifesto eyebrow label', () => {
-    render(<EstrategiaManifesto />)
-    expect(screen.getByText('Manifesto')).toBeInTheDocument()
+describe('EstrategiaManifesto v4 — Editorial Spread Navy', () => {
+  it('exposes id="estrategia" on the section', () => {
+    const { container } = render(<EstrategiaManifesto />)
+    expect(container.querySelector('#estrategia')).toBeInTheDocument()
   })
 
-  it('renders the editorial tagline', () => {
-    render(<EstrategiaManifesto />)
-    expect(screen.getByText(/Mais do que produtos/i)).toBeInTheDocument()
-    expect(screen.getByText(/Entregamos planejamento, segurança e resultado/i)).toBeInTheDocument()
-  })
-
-  it('renders the editorial headline in the dark card', () => {
-    render(<EstrategiaManifesto />)
-    expect(screen.getByText(/Sua estratégia/i)).toBeInTheDocument()
-    expect(screen.getByText(/^começa com/)).toBeInTheDocument()
-    expect(screen.getByText(/E termina com/i)).toBeInTheDocument()
-    expect(screen.getByText(/^resultado\.$/)).toBeInTheDocument()
-  })
-
-  it('renders the body paragraphs with key positioning terms', () => {
-    render(<EstrategiaManifesto />)
-    expect(screen.getByText(/A Hold Corretora é especializada/i)).toBeInTheDocument()
-    expect(screen.getByText(/proteção patrimonial/)).toBeInTheDocument()
-    expect(screen.getByText(/sucessão/)).toBeInTheDocument()
-    expect(screen.getByText(/eficiência financeira/)).toBeInTheDocument()
-  })
-
-  it('renders the consultancy photo with descriptive alt text', () => {
-    render(<EstrategiaManifesto />)
-    const img = screen.getByAltText(/Consultoria estratégica Hold Corretora/i) as HTMLImageElement
-    expect(img).toBeInTheDocument()
-    expect(img.getAttribute('src')).toContain('office-hero')
-  })
-
-  it('renders the heritage signature', () => {
-    render(<EstrategiaManifesto />)
-    expect(screen.getByText(/Hold Corretora · Desde 2006/i)).toBeInTheDocument()
-  })
-
-  it('renders the corner "Estratégia" label on the photo', () => {
+  it('renders the "Estratégia" eyebrow', () => {
     render(<EstrategiaManifesto />)
     expect(screen.getByText(/^Estratégia$/i)).toBeInTheDocument()
   })
 
-  it('renders all three principles (Missão, Visão, Valores) as headings', () => {
+  it('renders the tri-color serif headline', () => {
     render(<EstrategiaManifesto />)
-    expect(screen.getByRole('heading', { name: 'Missão' })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Visão' })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Valores' })).toBeInTheDocument()
+    expect(screen.getByText('Mais do que produtos.')).toBeInTheDocument()
+    expect(screen.getByText('Uma estratégia completa')).toBeInTheDocument()
+    expect(screen.getByText('para o seu patrimônio.')).toBeInTheDocument()
   })
 
-  it('renders each principle body text', () => {
+  it('renders an h2 heading element', () => {
+    render(<EstrategiaManifesto />)
+    const h2s = screen.getAllByRole('heading', { level: 2 })
+    expect(h2s.length).toBeGreaterThanOrEqual(1)
+  })
+
+  it('renders body paragraph highlights "19 anos de experiência" and "60 parceiros"', () => {
+    render(<EstrategiaManifesto />)
+    expect(screen.getByText('19 anos de experiência')).toBeInTheDocument()
+    expect(screen.getByText('60 parceiros')).toBeInTheDocument()
+  })
+
+  it('body paragraph contains positioning copy', () => {
+    const { container } = render(<EstrategiaManifesto />)
+    expect(container.textContent).toContain('Hold Corretora atua como parceira estratégica')
+    expect(container.textContent).toContain('estruturando soluções completas')
+  })
+
+  it('renders the cinematic image with descriptive alt and quem-somos src', () => {
+    render(<EstrategiaManifesto />)
+    const img = screen.getByAltText(/Hold Corretora.*escrit/i) as HTMLImageElement
+    expect(img).toBeInTheDocument()
+    expect(img.getAttribute('src')).toContain('quem-somos')
+  })
+
+  it('renders the manifesto quote with three accent terms', () => {
+    const { container } = render(<EstrategiaManifesto />)
+    expect(container.textContent).toContain('Integramos saúde, seguros, consórcios e finanças')
+    expect(screen.getByText('proteção patrimonial')).toBeInTheDocument()
+    expect(screen.getByText('sucessão')).toBeInTheDocument()
+    expect(screen.getByText('eficiência financeira')).toBeInTheDocument()
+  })
+
+  it('renders the M · V · V transition eyebrow', () => {
+    render(<EstrategiaManifesto />)
+    expect(screen.getByText(/M\s*·\s*V\s*·\s*V/)).toBeInTheDocument()
+  })
+
+  it('renders all three MVV titles as h3 headings', () => {
+    render(<EstrategiaManifesto />)
+    expect(screen.getByRole('heading', { level: 3, name: 'Missão' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 3, name: 'Visão' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 3, name: 'Valores' })).toBeInTheDocument()
+  })
+
+  it('renders each MVV body text', () => {
     render(<EstrategiaManifesto />)
     expect(screen.getByText(/Ajudar pessoas e empresas a tomar melhores decisões/i)).toBeInTheDocument()
     expect(screen.getByText(/Ser referência para pessoas e empresas/i)).toBeInTheDocument()
     expect(screen.getByText(/Agimos com integridade/i)).toBeInTheDocument()
-  })
-
-  it('exposes id="estrategia" on the section', () => {
-    const { container } = render(<EstrategiaManifesto />)
-    expect(container.querySelector('#estrategia')).toBeInTheDocument()
   })
 })
