@@ -6,11 +6,17 @@
 
 ## Contexto
 
-Redesign do componente `EstrategiaManifesto` (manifesto cinematográfico + Missão/Visão/Valores) para alinhar visualmente com a DNA da nova `SolucoesGrid` (referência fornecida pelo usuário): slab navy escuro unificado, tipografia serif Cormorant Garamond, badges circulares com cores alternadas, hairlines dourados, dot-grid texturizado, recortes arquitetônicos diagonais.
+Redesign do componente `EstrategiaManifesto` (manifesto cinematográfico + Missão/Visão/Valores) para alinhar visualmente com a DNA da referência oficial em `contextoprojeto/Captura de tela 2026-05-06 201859.png` (mesma referência da nova SolucoesGrid premium): slab navy escuro unificado, tipografia serif Cormorant Garamond, badges circulares com cores alternadas, hairlines dourados, dot-grid texturizado, recortes arquitetônicos diagonais.
 
-A versão atual usa fundo claro (`#f7f7f6 → #ecedee`) com card escuro embutido e MVV em ícones vermelhos sobre branco. A nova versão move toda a seção para slab navy unificado em estilo editorial-magazine.
+A versão v3 atual (commit checkpoint `7f45f61d`) usa fundo claro (`#f7f7f6 → #ecedee`) com card escuro embutido e MVV em ícones vermelhos sobre branco. A nova versão move toda a seção para slab navy unificado em estilo editorial-magazine.
 
 **Páginas onde o componente aparece:** `app/page.tsx` (linha 26).
+
+**Copy canônico (não alterar):** Textos do manifesto e MVV vêm do documento oficial `contextoprojeto/instrucaocor.jpeg` (REESTRUTURAÇÃO SITE DA CORRETORA, aprovado pelo cliente). Especificamente:
+- Tagline: "Mais do que produtos. Uma estratégia completa para o seu patrimônio."
+- Manifesto: "Integramos saúde, seguros, consórcios e finanças em uma gestão estratégica voltada à proteção patrimonial, sucessão e eficiência financeira."
+- Body: "Com mais de 19 anos de experiência e acesso a mais de 60 parceiros, a Hold Corretora atua como parceira estratégica na proteção, no planejamento e no crescimento patrimonial de pessoas e empresas, estruturando soluções completas e personalizadas em saúde, seguros, consórcios e finanças."
+- MVV: textos preservados do componente atual (não foram alterados desde o brief original).
 
 ## Visão Geral da Composição
 
@@ -110,10 +116,12 @@ A versão atual usa fundo claro (`#f7f7f6 → #ecedee`) com card escuro embutido
 - Aplicado no wrapper article
 
 **Imagem Next.js:**
-- src: `/images/manifesto/vista-estrategica.webp`
-- alt: "Sala executiva ao entardecer — gestão estratégica patrimonial Hold Corretora"
+- src: `/images/hero/quem-somos.jpg`
+- alt: "Hold Corretora — escritório institucional, gestão estratégica patrimonial"
 - fill, sizes "(max-width: 1024px) 100vw, 760px"
-- objectFit cover, objectPosition: '40% center'
+- objectFit cover, objectPosition: 'center 30%' (corredor central + teto + parede teal-cinza preserva profundidade no portrait crop)
+
+**Nota:** A imagem `vista-estrategica.webp` referenciada na versão v3 do componente NÃO existe no projeto (path `/images/manifesto/` ausente). Substituída por `quem-somos.jpg` (já em `/public/images/hero/`), confirmada pelo usuário em 2026-05-08. Paleta cinza-azulada fria casa com slab navy + serif Cormorant.
 
 **Hairline gold tracejando a diagonal:**
 
