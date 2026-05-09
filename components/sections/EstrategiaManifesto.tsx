@@ -149,7 +149,7 @@ export default function EstrategiaManifesto() {
           </div>
 
           {/* Right column — cinematic image */}
-          <motion.article
+          <motion.div
             initial={{ opacity: 0, scale: 0.98 }}
             animate={inView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 1.1, delay: 0.25, ease: EASE }}
@@ -246,7 +246,7 @@ export default function EstrategiaManifesto() {
                 .
               </p>
             </motion.div>
-          </motion.article>
+          </motion.div>
         </div>
 
         {/* ── Régua de transição ── */}
