@@ -1,8 +1,12 @@
 'use client'
 
+import { useRef } from 'react'
+import { motion, useInView } from 'framer-motion'
 import { MessageCircle, MapPin, Phone } from 'lucide-react'
 import { useLocale } from '@/lib/i18n'
 import { HoldLogo } from '@/components/icons/HoldLogo'
+
+const EASE = [0.16, 1, 0.3, 1] as [number, number, number, number]
 
 function IconInstagram({ size = 16 }: { size?: number }) {
   return (
@@ -34,6 +38,9 @@ export default function Footer() {
   const waNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER
   const waHref = waNumber ? `https://wa.me/${waNumber}` : '#'
 
+  const heroRef = useRef<HTMLDivElement>(null)
+  const heroInView = useInView(heroRef, { once: true, amount: 0.3 })
+
   return (
     <footer className="bg-[#020c30]" style={{ fontFamily: 'var(--font-outfit)' }}>
       {/* Top hairline — gold tint */}
@@ -41,25 +48,48 @@ export default function Footer() {
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
 
-        {/* Main footer hero — HOLD CORRETORA × LOJACORR — centered */}
-        <div className="mb-14 flex flex-col items-center text-center gap-6">
+        {/* Main footer hero — HOLD CORRETORA × LOJACORR — Cinematic seal stamp */}
+        <div ref={heroRef} className="mb-14 flex flex-col items-center text-center gap-6">
           <div className="flex items-center gap-8 sm:gap-12 flex-wrap justify-center">
+            <motion.span
+              className="inline-block"
+              initial={{ clipPath: 'inset(0 100% 0 0)' }}
+              animate={heroInView ? { clipPath: 'inset(0 0 0 0)' } : {}}
+              transition={{ duration: 0.95, delay: 0.1, ease: EASE }}
+            >
+              <HoldLogo
+                subtitle="corretora"
+                variant="dark"
+                className="w-auto"
+                style={{ height: 'clamp(2.6rem, 5vw, 4rem)' }}
+              />
+            </motion.span>
 
-            {/* HOLD — logo oficial SVG */}
-            <HoldLogo
-              subtitle="corretora"
-              variant="dark"
-              className="w-auto"
-              style={{ height: 'clamp(2.6rem, 5vw, 4rem)' }}
-            />
+            <motion.span
+              aria-hidden
+              className="inline-block text-[#1e4a7a] font-light select-none"
+              style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', transformOrigin: 'center' }}
+              initial={{ opacity: 0, scale: 1.4, rotate: 8 }}
+              animate={heroInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
+              transition={{ duration: 0.55, delay: 0.85, ease: EASE }}
+            >
+              ×
+            </motion.span>
 
-            <span className="text-[#1e4a7a] font-light select-none" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}>×</span>
-
-            {/* Lojacorr */}
-            <div className="flex flex-col items-center gap-1.5">
-              <span className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#c9a84c]">
+            <motion.div
+              className="flex flex-col items-center gap-1.5"
+              initial={{ clipPath: 'inset(0 0 0 100%)' }}
+              animate={heroInView ? { clipPath: 'inset(0 0 0 0)' } : {}}
+              transition={{ duration: 0.95, delay: 0.4, ease: EASE }}
+            >
+              <motion.span
+                className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#c9a84c]"
+                initial={{ opacity: 0 }}
+                animate={heroInView ? { opacity: 1 } : {}}
+                transition={{ duration: 0.45, delay: 1.1, ease: 'easeOut' }}
+              >
                 Corretora Parceira
-              </span>
+              </motion.span>
               <img
                 src="/images/LojaCorr.webp"
                 alt="Lojacorr"
@@ -68,12 +98,17 @@ export default function Footer() {
                 className="brightness-200 contrast-125 w-auto"
                 style={{ height: 'clamp(3.5rem, 7vw, 6rem)' }}
               />
-            </div>
+            </motion.div>
           </div>
 
-          <p className="text-[#7a9ab8] text-sm leading-relaxed max-w-sm">
+          <motion.p
+            className="text-[#7a9ab8] text-sm leading-relaxed max-w-sm"
+            initial={{ opacity: 0, y: 8 }}
+            animate={heroInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 1.35, ease: 'easeOut' }}
+          >
             {t('footer.tagline')}
-          </p>
+          </motion.p>
         </div>
 
         {/* 3-column grid */}

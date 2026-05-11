@@ -68,7 +68,7 @@ export default function HomeHero() {
     >
       {/* Background image */}
       <Image
-        src="/images/hero/home%20image%205.jpg.jpeg"
+        src="/images/hero/HOME_IMAGE_6.jpg"
         alt={t('hero.photo.alt')}
         fill
         priority

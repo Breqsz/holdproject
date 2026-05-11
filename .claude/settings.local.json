@@ -64,7 +64,28 @@
       "Bash(start *)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:50172)",
       "mcp__claude_ai_Vercel__deploy_to_vercel",
-      "Bash(vercel deploy *)"
+      "Bash(vercel deploy *)",
+      "Bash(git tag *)",
+      "Bash(python3 -c ' *)",
+      "Bash(git stash *)",
+      "Bash(sort -t'-' -k2 -rn)",
+      "Bash(Get-Content \"C:\\\\Users\\\\guiro\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\E--Projetos-hold\\\\91922c4d-7c40-4503-8e86-016738eff06d\\\\tasks\\\\bybnyz9qq.output\" -Wait)",
+      "Bash(Select-String --line-buffered \"ready|error|localhost|warn\" -i)",
+      "Bash(Get-Content *)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\guiro\" -Recurse -Filter \"*HOME NOVO*\" -ErrorAction SilentlyContinue)",
+      "PowerShell(ls \"C:\\\\Users\\\\guiro\\\\Downloads\" | Where-Object { $_.Name -match \"hold|Hold|HOLD|site|Site\" } | Select-Object Name, FullName)",
+      "Bash(grep -li \"cons\" *.svg)",
+      "Bash(grep -li \"CONS\" *.svg)",
+      "PowerShell(Get-ChildItem \"E:\\\\Projetos\\\\hold\\\\public\\\\LOGO HOLD CORRETORA\\\\SVG\\\\\" | Select-Object Name, @{Name='KB';Expression={[math]::Round\\($_.Length/1KB,1\\)}} | Sort-Object KB -Descending | Format-Table -AutoSize)",
+      "Bash(Get-Process -Name \"node\" -ErrorAction SilentlyContinue)",
+      "Bash(Stop-Process -Force)",
+      "Bash(Write-Host \"Processos node encerrados\")",
+      "Bash(sort -t'-' -k2 -n)",
+      "Bash(git *)",
+      "Bash(C:/Users/guiro/.claude/plugins/cache/claude-plugins-official/superpowers/5.1.0/scripts/start-server.sh *)",
+      "Bash(cwebp -version)",
+      "Bash(C:\\\\Users\\\\guiro\\\\.claude\\\\plugins\\\\cache\\\\claude-plugins-official\\\\superpowers\\\\5.1.0\\\\skills\\\\brainstorming\\\\scripts\\\\start-server.sh *)",
+      "WebFetch(domain:consorce.com)"
     ]
   }
 }

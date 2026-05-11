@@ -7,7 +7,6 @@ import { useAudience } from '@/lib/audience'
 const EstrategiaManifesto = dynamic(() => import('@/components/sections/EstrategiaManifesto'))
 const StatsBar        = dynamic(() => import('@/components/sections/StatsBar'))
 const SolucoesGrid    = dynamic(() => import('@/components/sections/SolucoesGrid'))
-const SobreNos        = dynamic(() => import('@/components/sections/SobreNos'))
 const ParaEscritorios = dynamic(() => import('@/components/sections/ParaEscritorios'))
 const ComoFunciona    = dynamic(() => import('@/components/sections/ComoFunciona'))
 const Depoimentos     = dynamic(() => import('@/components/sections/Depoimentos'))
@@ -26,7 +25,6 @@ export default function Home() {
       <EstrategiaManifesto />
       <SolucoesGrid />
       <StatsBar />
-      <SobreNos />
       {showPJ ? <ParaEscritorios /> : <ComoFunciona />}
       <Depoimentos />
       <TrustBar />

@@ -171,46 +171,64 @@ export default function EstrategiaManifesto() {
           />
         </div>
 
-        {/* ── Movement 2 — MVV compact ── */}
+        {/* ── Movement 2 — MVV compact (Hairline pour + optical rhythm) ── */}
         <div className="max-w-[1080px] mx-auto">
-          {/* Eyebrow */}
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.9, ease: EASE }}
-            className="flex items-center justify-center gap-3 mb-11"
-          >
-            <span
+          {/* Eyebrow — gold hairlines write themselves outward, label fades in */}
+          <div className="flex items-center justify-center gap-3 mb-10">
+            <motion.span
               aria-hidden
-              className="block h-px w-6"
-              style={{ background: 'rgba(201,168,76,0.6)' }}
+              className="block h-px w-5"
+              style={{ background: 'rgba(201,168,76,0.6)', transformOrigin: 'center' }}
+              initial={{ scaleX: 0 }}
+              animate={inView ? { scaleX: 1 } : {}}
+              transition={{ duration: 0.7, delay: 0.9, ease: EASE }}
             />
-            <span
-              className="text-[10px] font-semibold uppercase"
-              style={{ letterSpacing: '0.28em', color: '#c9a84c' }}
+            <motion.span
+              className="text-[11px] font-semibold uppercase"
+              style={{ letterSpacing: '0.32em', color: '#c9a84c' }}
+              initial={{ opacity: 0 }}
+              animate={inView ? { opacity: 1 } : {}}
+              transition={{ duration: 0.45, delay: 1.15, ease: 'easeOut' }}
             >
               Princípios Hold
-            </span>
-            <span
+            </motion.span>
+            <motion.span
               aria-hidden
-              className="block h-px w-6"
-              style={{ background: 'rgba(201,168,76,0.6)' }}
+              className="block h-px w-5"
+              style={{ background: 'rgba(201,168,76,0.6)', transformOrigin: 'center' }}
+              initial={{ scaleX: 0 }}
+              animate={inView ? { scaleX: 1 } : {}}
+              transition={{ duration: 0.7, delay: 0.9, ease: EASE }}
             />
-          </motion.div>
+          </div>
 
-          {/* Three columns — Cormorant italic label + running body */}
-          <div className="grid grid-cols-1 md:grid-cols-3">
+          {/* Three columns — vertical hairline dividers draw downward, then content fades */}
+          <div className="relative grid grid-cols-1 md:grid-cols-3">
+            <motion.span
+              aria-hidden
+              className="hidden md:block absolute top-0 bottom-0 w-px"
+              style={{ left: 'calc(100% / 3)', background: 'var(--hairline-gold)', transformOrigin: 'top' }}
+              initial={{ scaleY: 0 }}
+              animate={inView ? { scaleY: 1 } : {}}
+              transition={{ duration: 0.85, delay: 1.05, ease: EASE }}
+            />
+            <motion.span
+              aria-hidden
+              className="hidden md:block absolute top-0 bottom-0 w-px"
+              style={{ left: 'calc(200% / 3)', background: 'var(--hairline-gold)', transformOrigin: 'top' }}
+              initial={{ scaleY: 0 }}
+              animate={inView ? { scaleY: 1 } : {}}
+              transition={{ duration: 0.85, delay: 1.05, ease: EASE }}
+            />
             {PRINCIPLES.map(({ title, body }, i) => (
               <motion.div
                 key={title}
-                initial={{ opacity: 0, y: 16 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.75, delay: 1.0 + i * 0.08, ease: EASE }}
+                initial={{ opacity: 0 }}
+                animate={inView ? { opacity: 1 } : {}}
+                transition={{ duration: 0.55, delay: 1.4 + i * 0.08, ease: 'easeOut' }}
                 className={[
-                  'flex flex-col gap-[18px] py-6 md:py-2 px-0 md:px-9',
-                  i > 0
-                    ? 'border-t md:border-t-0 md:border-l pt-6 md:pt-2'
-                    : '',
+                  'flex flex-col gap-[14px] py-6 md:py-3 px-0 md:px-10',
+                  i > 0 ? 'border-t md:border-t-0 pt-6 md:pt-3' : '',
                 ]
                   .filter(Boolean)
                   .join(' ')}
@@ -223,17 +241,16 @@ export default function EstrategiaManifesto() {
                   style={{
                     fontFamily: 'var(--font-cormorant)',
                     fontStyle: 'italic',
-                    fontWeight: 500,
-                    fontSize: 'clamp(1.5rem, 2.2vw, 1.875rem)',
-                    letterSpacing: '-0.01em',
+                    fontWeight: 600,
+                    fontSize: 'clamp(1.625rem, 2.4vw, 2.125rem)',
+                    letterSpacing: '-0.012em',
                     color: '#c9a84c',
                   }}
                 >
                   {title}
                 </h3>
-
                 <p
-                  className="text-[15px] leading-[1.65] text-[#d4dfeb]"
+                  className="text-[15px] leading-[1.55] text-[#d4dfeb]"
                   style={{ fontFamily: 'var(--font-outfit)' }}
                 >
                   {body}
