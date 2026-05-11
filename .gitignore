@@ -7,3 +7,14 @@ out/
 .DS_Store
 
 .vercel
+
+# TypeScript incremental build cache
+*.tsbuildinfo
+
+# Local Claude Code / impeccable / superpowers state
+.impeccable/
+.superpowers/
+docs/superpowers/
+
+# Local project context (refs, screenshots, PDFs)
+contextoprojeto/
