@@ -3,38 +3,29 @@
 import { useRef } from 'react'
 import Image from 'next/image'
 import { motion, useInView } from 'framer-motion'
-import { Target, Eye, Gem } from 'lucide-react'
 
 const EASE = [0.16, 1, 0.3, 1] as [number, number, number, number]
 
 type Principle = {
-  Icon: typeof Target
   title: string
   body: string
-  badge: string
 }
 
 const PRINCIPLES: Principle[] = [
   {
-    Icon: Target,
     title: 'Missão',
     body:
       'Ajudar pessoas e empresas a tomar melhores decisões, conectando saúde, seguros, consórcios e finanças de forma simples e estratégica.',
-    badge: '#e8463a',
   },
   {
-    Icon: Eye,
     title: 'Visão',
     body:
       'Ser referência para pessoas e empresas que buscam segurança para decidir e consistência para crescer.',
-    badge: '#5a86c0',
   },
   {
-    Icon: Gem,
     title: 'Valores',
     body:
       'Agimos com integridade, falamos com transparência, cuidamos com responsabilidade, respeitamos cada história, pensamos no longo prazo e nunca negociamos a confiança.',
-    badge: '#c9a84c',
   },
 ]
 
@@ -180,50 +171,76 @@ export default function EstrategiaManifesto() {
           />
         </div>
 
-        {/* ── Movement 2 — MVV badges ── */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-0 max-w-[1080px] mx-auto">
-          {PRINCIPLES.map(({ Icon, title, body, badge }, i) => (
-            <motion.div
-              key={title}
-              initial={{ opacity: 0, y: 16 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.75, delay: 0.95 + i * 0.1, ease: EASE }}
-              className={[
-                'relative flex flex-col gap-5',
-                i > 0 ? 'pt-8 md:pt-0 border-t md:border-t-0 md:border-l md:pl-10' : '',
-                i < PRINCIPLES.length - 1 ? 'md:pr-10' : '',
-              ]
-                .filter(Boolean)
-                .join(' ')}
-              style={
-                i > 0 ? { borderColor: 'rgba(201,168,76,0.16)' } : undefined
-              }
+        {/* ── Movement 2 — MVV compact ── */}
+        <div className="max-w-[1080px] mx-auto">
+          {/* Eyebrow */}
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.9, ease: EASE }}
+            className="flex items-center justify-center gap-3 mb-11"
+          >
+            <span
+              aria-hidden
+              className="block h-px w-6"
+              style={{ background: 'rgba(201,168,76,0.6)' }}
+            />
+            <span
+              className="text-[10px] font-semibold uppercase"
+              style={{ letterSpacing: '0.28em', color: '#c9a84c' }}
             >
-              <div
-                className="w-12 h-12 rounded-full flex items-center justify-center"
-                style={{
-                  background: `${badge}1f`,
-                  border: `1px solid ${badge}6b`,
-                  boxShadow: `inset 0 0 12px ${badge}1a`,
-                }}
-              >
-                <Icon size={22} strokeWidth={1.6} style={{ color: badge }} />
-              </div>
+              Princípios Hold
+            </span>
+            <span
+              aria-hidden
+              className="block h-px w-6"
+              style={{ background: 'rgba(201,168,76,0.6)' }}
+            />
+          </motion.div>
 
-              <h3
-                className="text-display text-white"
-                style={{
-                  fontSize: 'clamp(1.4rem, 2.1vw, 1.75rem)',
-                }}
+          {/* Three columns — Cormorant italic label + running body */}
+          <div className="grid grid-cols-1 md:grid-cols-3">
+            {PRINCIPLES.map(({ title, body }, i) => (
+              <motion.div
+                key={title}
+                initial={{ opacity: 0, y: 16 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.75, delay: 1.0 + i * 0.08, ease: EASE }}
+                className={[
+                  'flex flex-col gap-[18px] py-6 md:py-2 px-0 md:px-9',
+                  i > 0
+                    ? 'border-t md:border-t-0 md:border-l pt-6 md:pt-2'
+                    : '',
+                ]
+                  .filter(Boolean)
+                  .join(' ')}
+                style={
+                  i > 0 ? { borderColor: 'rgba(201,168,76,0.16)' } : undefined
+                }
               >
-                {title}
-              </h3>
+                <h3
+                  className="leading-none italic"
+                  style={{
+                    fontFamily: 'var(--font-cormorant)',
+                    fontStyle: 'italic',
+                    fontWeight: 500,
+                    fontSize: 'clamp(1.5rem, 2.2vw, 1.875rem)',
+                    letterSpacing: '-0.01em',
+                    color: '#c9a84c',
+                  }}
+                >
+                  {title}
+                </h3>
 
-              <p className="text-base leading-relaxed text-[#7a9ab8]">
-                {body}
-              </p>
-            </motion.div>
-          ))}
+                <p
+                  className="text-[15px] leading-[1.65] text-[#d4dfeb]"
+                  style={{ fontFamily: 'var(--font-outfit)' }}
+                >
+                  {body}
+                </p>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
