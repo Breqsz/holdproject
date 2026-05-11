@@ -156,9 +156,9 @@ export default function SolucoesGrid() {
       title: t('solucoes.saude.title'),
       desc: t('solucoes.saude.desc'),
       bullets: splitBullets('solucoes.saude.bullets'),
-      bg: 'linear-gradient(160deg, #ffffff 0%, #f3f5f8 100%)',
-      isLight: true,
-      iconColor: '#ae251c',
+      bg: 'linear-gradient(155deg, #0c1f3a 0%, #142f54 100%)',
+      iconColor: '#ffffff',
+      hoverGlow: 'radial-gradient(380px circle at 80% 0%, rgba(174,37,28,0.18), transparent 60%)',
       ariaLabel: t('solucoes.saude.label'),
     },
     {

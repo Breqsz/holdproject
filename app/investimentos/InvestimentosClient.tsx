@@ -125,7 +125,7 @@ export default function InvestimentosClient() {
       </section>
 
       {/* Pillars */}
-      <section className="section-pad bg-[#0b1f3a]" style={{ fontFamily: 'var(--font-outfit)' }}>
+      <section className="section-pad bg-[#07162a]" style={{ fontFamily: 'var(--font-outfit)' }}>
         <div className="max-w-6xl mx-auto px-6 lg:px-8">
           <div className="max-w-3xl mb-14">
             <Reveal>
