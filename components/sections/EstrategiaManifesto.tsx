@@ -81,67 +81,34 @@ export default function EstrategiaManifesto() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           {/* Left column — text */}
           <div className="lg:col-span-5 order-2 lg:order-1">
-            {/* Eyebrow */}
-            <motion.div
-              initial={{ opacity: 0, x: -8 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.7, ease: EASE }}
-              className="flex items-center gap-3 mb-7 lg:mb-8"
-            >
-              <span className="block h-1.5 w-1.5 rounded-full bg-[#c9a84c]" />
-              <span
-                className="text-[11px] font-semibold uppercase"
-                style={{
-                  letterSpacing: '0.32em',
-                  color: 'rgba(201,168,76,0.78)',
-                }}
-              >
-                Estratégia
-              </span>
-            </motion.div>
-
-            {/* Headline serif tri-color */}
+            {/* Headline — editorial one-liner */}
             <motion.h2
               initial={{ opacity: 0, y: 18 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.85, delay: 0.1, ease: EASE }}
-              className="leading-[1.12] tracking-[-0.015em]"
+              className="text-white max-w-[18ch]"
               style={{
-                fontFamily: 'var(--font-cormorant)',
-                fontSize: 'clamp(2rem, 4vw, 3.2rem)',
-                fontWeight: 500,
+                fontSize: 'clamp(2rem, 3.6vw, 3rem)',
+                lineHeight: 1.06,
+                letterSpacing: '-0.025em',
+                fontWeight: 800,
               }}
             >
-              <span className="block" style={{ color: 'rgba(201,168,76,0.55)' }}>
-                Mais do que produtos.
-              </span>
-              <span className="block text-white">Uma estratégia completa</span>
-              <span className="block italic" style={{ color: '#c9a84c' }}>
-                para o seu patrimônio.
-              </span>
+              Uma estratégia completa para o{' '}
+              <span style={{ color: '#c9a84c' }}>seu patrimônio.</span>
             </motion.h2>
-
-            {/* Gold short rule */}
-            <motion.div
-              initial={{ opacity: 0, scaleX: 0 }}
-              animate={inView ? { opacity: 1, scaleX: 1 } : {}}
-              transition={{ duration: 0.7, delay: 0.3, ease: EASE }}
-              className="mt-7 mb-7 h-px w-16 origin-left"
-              style={{ background: 'var(--hairline-gold)' }}
-            />
 
             {/* Body */}
             <motion.p
               initial={{ opacity: 0, y: 12 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.75, delay: 0.4, ease: EASE }}
-              className="text-[14px] leading-[1.78] max-w-[44ch]"
-              style={{ color: 'rgba(255,255,255,0.65)' }}
+              className="mt-8 text-base leading-relaxed max-w-[60ch] text-pretty text-[#7a9ab8]"
             >
               Com mais de{' '}
-              <span className="text-white/95 font-medium">19 anos de experiência</span>{' '}
+              <span className="font-semibold text-[#e0e8f0]">19 anos de experiência</span>{' '}
               e acesso a mais de{' '}
-              <span className="text-white/95 font-medium">60 parceiros</span>, a Hold
+              <span className="font-semibold text-[#e0e8f0]">60 parceiros</span>, a Hold
               Corretora atua como parceira estratégica na proteção, no planejamento e
               no crescimento patrimonial de pessoas e empresas, estruturando soluções
               completas e personalizadas em saúde, seguros, consórcios e finanças.
@@ -161,7 +128,7 @@ export default function EstrategiaManifesto() {
             }}
           >
             <Image
-              src="/images/hero/quem-somos.jpg"
+              src="/images/hero/AdobeStock_447632877.jpeg"
               alt="Hold Corretora — escritório institucional, gestão estratégica patrimonial"
               fill
               sizes="(max-width: 1024px) 100vw, 760px"
@@ -196,73 +163,11 @@ export default function EstrategiaManifesto() {
               style={{ border: '1px solid rgba(255,255,255,0.06)' }}
             />
 
-            {/* Bottom dark gradient for quote bar legibility */}
-            <div
-              aria-hidden
-              className="absolute inset-x-0 bottom-0 h-1/2 pointer-events-none"
-              style={{
-                background:
-                  'linear-gradient(180deg, transparent 0%, rgba(5,15,31,0.85) 65%, rgba(5,15,31,0.95) 100%)',
-              }}
-            />
-
-            {/* Glass quote bar overlay */}
-            <motion.div
-              initial={{ opacity: 0, y: 14 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.65, ease: EASE }}
-              className="absolute bottom-6 left-6 right-6 lg:bottom-8 lg:left-12 lg:right-12 px-5 py-5 lg:px-7 lg:py-6 rounded-xl"
-              style={{
-                background: 'rgba(11,31,58,0.78)',
-                backdropFilter: 'blur(14px)',
-                WebkitBackdropFilter: 'blur(14px)',
-                border: '1px solid rgba(255,255,255,0.10)',
-                boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.06)',
-              }}
-            >
-              <p
-                className="italic"
-                style={{
-                  fontFamily: 'var(--font-cormorant)',
-                  fontWeight: 500,
-                  fontSize: 'clamp(1.05rem, 1.5vw, 1.3rem)',
-                  lineHeight: 1.45,
-                  color: 'rgba(255,255,255,0.92)',
-                }}
-              >
-                Integramos saúde, seguros, consórcios e finanças em uma gestão
-                estratégica voltada à{' '}
-                <span className="not-italic font-bold" style={{ color: '#e8463a' }}>
-                  proteção patrimonial
-                </span>
-                ,{' '}
-                <span className="not-italic font-bold" style={{ color: '#e8463a' }}>
-                  sucessão
-                </span>{' '}
-                e{' '}
-                <span className="not-italic font-bold" style={{ color: '#e8463a' }}>
-                  eficiência financeira
-                </span>
-                .
-              </p>
-            </motion.div>
           </motion.div>
         </div>
 
         {/* ── Régua de transição ── */}
         <div className="text-center mt-20 lg:mt-24 mb-14 lg:mb-16">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            transition={{ duration: 0.6, delay: 0.7, ease: EASE }}
-            className="text-[10px] font-semibold uppercase mb-3"
-            style={{
-              letterSpacing: '0.4em',
-              color: 'rgba(201,168,76,0.6)',
-            }}
-          >
-            M · V · V
-          </motion.div>
           <motion.div
             initial={{ opacity: 0, scaleX: 0 }}
             animate={inView ? { opacity: 1, scaleX: 1 } : {}}
@@ -306,22 +211,15 @@ export default function EstrategiaManifesto() {
               </div>
 
               <h3
-                className="italic text-white"
+                className="text-display text-white"
                 style={{
-                  fontFamily: 'var(--font-cormorant)',
-                  fontSize: 'clamp(1.55rem, 2.3vw, 1.95rem)',
-                  fontWeight: 500,
-                  lineHeight: 1.2,
-                  letterSpacing: '-0.005em',
+                  fontSize: 'clamp(1.4rem, 2.1vw, 1.75rem)',
                 }}
               >
                 {title}
               </h3>
 
-              <p
-                className="text-[13.5px] leading-[1.72]"
-                style={{ color: 'rgba(255,255,255,0.62)' }}
-              >
+              <p className="text-base leading-relaxed text-[#7a9ab8]">
                 {body}
               </p>
             </motion.div>
