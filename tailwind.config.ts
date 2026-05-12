@@ -25,7 +25,6 @@ const config: Config = {
         },
         invest: {
           graphite: '#1a1a2e',
-          gold: '#c9a84c',
         },
       },
       animation: {

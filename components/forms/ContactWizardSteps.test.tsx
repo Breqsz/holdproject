@@ -132,21 +132,21 @@ describe('StepperNav', () => {
 describe('StepPerfil', () => {
   it('renders both profile options', () => {
     render(<StepPerfil type="" onSelect={vi.fn()} />)
-    expect(screen.getByText('Sou cliente')).toBeInTheDocument()
-    expect(screen.getByText('Sou parceiro')).toBeInTheDocument()
+    expect(screen.getByText('Cliente')).toBeInTheDocument()
+    expect(screen.getByText('Parceiro')).toBeInTheDocument()
   })
 
-  it('calls onSelect("client") when Sou cliente is clicked', async () => {
+  it('calls onSelect("client") when Cliente is clicked', async () => {
     const onSelect = vi.fn()
     render(<StepPerfil type="" onSelect={onSelect} />)
-    await userEvent.click(screen.getByText('Sou cliente'))
+    await userEvent.click(screen.getByText('Cliente'))
     expect(onSelect).toHaveBeenCalledWith('client')
   })
 
-  it('calls onSelect("partner") when Sou parceiro is clicked', async () => {
+  it('calls onSelect("partner") when Parceiro is clicked', async () => {
     const onSelect = vi.fn()
     render(<StepPerfil type="" onSelect={onSelect} />)
-    await userEvent.click(screen.getByText('Sou parceiro'))
+    await userEvent.click(screen.getByText('Parceiro'))
     expect(onSelect).toHaveBeenCalledWith('partner')
   })
 

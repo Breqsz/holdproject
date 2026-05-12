@@ -83,7 +83,7 @@ export default function TrustBar() {
               className={[
                 'h-[3px] rounded-full transition-all duration-300',
                 i === activeDot
-                  ? 'w-6 bg-[#c9a84c]'
+                  ? 'w-6 bg-[#ae251c]'
                   : 'w-3 bg-white/20',
               ].join(' ')}
             />

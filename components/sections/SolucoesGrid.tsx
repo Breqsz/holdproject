@@ -19,8 +19,8 @@ type Service = {
   title: string
   desc: string
   bullets: string[]
-  bulletColumns: 1 | 2 | 3
-  bg: string
+  /** Canonical solid color per frente — used as the top hairline bar */
+  color: string
   image: string
   imagePosition?: string
   ariaLabel: string
@@ -36,42 +36,8 @@ const cardVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE_OUT_EXPO } },
 }
 
-function BulletList({
-  bullets,
-  columns,
-}: {
-  bullets: string[]
-  columns: 1 | 2 | 3
-}) {
-  const colClass =
-    columns === 3
-      ? 'grid-cols-2 sm:grid-cols-3'
-      : columns === 2
-      ? 'grid-cols-2'
-      : 'grid-cols-1'
-
-  return (
-    <ul className={`grid ${colClass} gap-x-3 gap-y-1.5`}>
-      {bullets.map((b) => (
-        <li
-          key={b}
-          className="flex items-start gap-2 text-[11.5px] sm:text-[12px] leading-[1.4]"
-          style={{ color: 'rgba(255,255,255,0.82)' }}
-        >
-          <span
-            aria-hidden
-            className="mt-[6px] inline-block h-[3px] w-[3px] shrink-0 rounded-full"
-            style={{ background: RED }}
-          />
-          <span>{b}</span>
-        </li>
-      ))}
-    </ul>
-  )
-}
-
-function SectorCard({ service }: { service: Service }) {
-  const { href, Icon, title, desc, bullets, bulletColumns, bg, image, imagePosition, ariaLabel } = service
+function SectorCard({ service, index }: { service: Service; index: number }) {
+  const { href, title, desc, bullets, color, image, imagePosition, ariaLabel } = service
 
   return (
     <motion.div
@@ -83,60 +49,42 @@ function SectorCard({ service }: { service: Service }) {
       <Link
         href={href}
         aria-label={ariaLabel}
-        className="group relative block overflow-hidden rounded-2xl h-full min-h-[560px] transition-shadow duration-500 hover:shadow-[0_28px_70px_-22px_rgba(0,0,0,0.55)]"
-        style={{
-          background: bg,
-          border: '1px solid rgba(255,255,255,0.06)',
-        }}
+        className="group relative block overflow-hidden rounded-2xl h-full min-h-[520px] transition-shadow duration-500 hover:shadow-[0_28px_70px_-22px_rgba(0,0,0,0.55)]"
+        style={{ border: '1px solid rgba(255,255,255,0.06)' }}
       >
-        {/* Image — right side, diagonal clip-path */}
-        <div
-          aria-hidden
-          className="absolute inset-y-0 right-0 w-[40%] sm:w-[36%] overflow-hidden transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-          style={{
-            clipPath: 'polygon(28% 0, 100% 0, 100% 100%, 0 100%)',
-          }}
-        >
+        {/* Full-bleed image */}
+        <div className="absolute inset-0 overflow-hidden">
           <Image
             src={image}
             alt=""
             fill
-            sizes="(max-width: 640px) 80vw, (max-width: 1024px) 50vw, 480px"
-            quality={90}
-            className="object-cover"
+            sizes="(max-width: 640px) 92vw, (max-width: 1024px) 50vw, 600px"
+            quality={92}
+            className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
             style={{ objectPosition: imagePosition ?? 'center' }}
           />
-          {/* Brand-side fade */}
+          {/* Bottom-up gradient — keeps text legible without burying the image */}
           <div
             aria-hidden
             className="absolute inset-0"
             style={{
               background:
-                'linear-gradient(90deg, rgba(7,22,42,0.65) 0%, rgba(7,22,42,0.22) 30%, transparent 60%)',
-            }}
-          />
-          {/* Bottom vignette */}
-          <div
-            aria-hidden
-            className="absolute inset-0"
-            style={{
-              background:
-                'linear-gradient(180deg, transparent 55%, rgba(7,22,42,0.45) 100%)',
+                'linear-gradient(180deg, rgba(7,22,42,0.05) 0%, rgba(7,22,42,0.35) 45%, rgba(7,22,42,0.92) 100%)',
             }}
           />
         </div>
 
-        {/* Red diagonal hairline along the cut */}
+        {/* Top hairline bar in canonical service color */}
         <span
           aria-hidden
-          className="pointer-events-none absolute inset-y-0 right-[40%] sm:right-[36%] w-[2px]"
-          style={{
-            background:
-              'linear-gradient(180deg, transparent 0%, rgba(174,37,28,0.55) 50%, transparent 100%)',
-            transform: 'skewX(-18deg)',
-            transformOrigin: 'top right',
-          }}
+          className="absolute top-0 left-0 right-0 h-[3px]"
+          style={{ background: color }}
         />
+
+        {/* Index top-left */}
+        <span className="absolute top-5 left-6 text-[10.5px] font-bold tracking-[0.22em] uppercase text-white/70">
+          {String(index + 1).padStart(2, '0')} / 04
+        </span>
 
         {/* Hover spotlight */}
         <span
@@ -144,59 +92,52 @@ function SectorCard({ service }: { service: Service }) {
           className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
           style={{
             background:
-              'radial-gradient(420px circle at 18% 22%, rgba(174,37,28,0.16), transparent 60%)',
+              'radial-gradient(520px circle at 18% 22%, rgba(174,37,28,0.14), transparent 60%)',
           }}
         />
 
-        {/* Content — left column */}
-        <div className="relative flex h-full flex-col gap-4 p-6 sm:p-7 lg:p-8 w-[62%] sm:w-[66%]">
-          {/* Icon badge */}
-          <div
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full"
-            style={{
-              background: 'rgba(255,255,255,0.06)',
-              border: '1px solid rgba(255,255,255,0.12)',
-            }}
-          >
-            <Icon size={20} style={{ color: RED }} />
-          </div>
+        {/* Bottom-anchored content */}
+        <div className="relative z-10 flex h-full flex-col justify-end p-6 sm:p-7 lg:p-8">
+          <span className="text-[10px] font-semibold tracking-[0.24em] uppercase text-white/55 mb-3">
+            Hold · {title}
+          </span>
 
           <h3
-            className="text-display tracking-tight leading-[1.05] text-white"
+            className="text-display text-white tracking-tight leading-[1.02] mb-3"
             style={{
-              fontSize: 'clamp(1.15rem, 1.9vw, 1.5rem)',
+              fontSize: 'clamp(1.8rem, 2.6vw, 2.2rem)',
               letterSpacing: '-0.02em',
-              textShadow: '0 1px 16px rgba(0,0,0,0.35)',
+              textShadow: '0 1px 16px rgba(0,0,0,0.45)',
             }}
           >
             {title}
           </h3>
 
           <p
-            className="text-[12px] sm:text-[12.5px] leading-[1.5] max-w-[34ch]"
+            className="text-[12.5px] sm:text-[13px] leading-[1.5] max-w-[36ch] mb-4"
             style={{
-              color: 'rgba(255,255,255,0.7)',
-              textShadow: '0 1px 12px rgba(0,0,0,0.4)',
+              color: 'rgba(255,255,255,0.78)',
+              textShadow: '0 1px 12px rgba(0,0,0,0.5)',
             }}
           >
             {desc}
           </p>
 
-          {/* Hairline divider */}
-          <span
+          {/* Bullets — hidden idle, revealed on hover */}
+          <div
             aria-hidden
-            className="block h-px w-10 mt-1"
-            style={{ background: 'rgba(255,255,255,0.18)' }}
-          />
-
-          {/* Bullets */}
-          <BulletList bullets={bullets} columns={bulletColumns} />
-
-          <div className="flex-1" />
-
-          <span
-            className="inline-flex items-center gap-2 self-start text-[10.5px] font-semibold uppercase tracking-[0.2em] text-white/85 transition-colors duration-200 group-hover:text-white"
+            className="overflow-hidden transition-[max-height,opacity] duration-500 ease-out opacity-0 max-h-0 group-hover:opacity-100 group-hover:max-h-44 mb-4"
           >
+            <div className="flex flex-wrap gap-x-3 gap-y-1.5 pt-3 border-t border-white/15">
+              {bullets.map((b) => (
+                <span key={b} className="text-[11px] text-white/85 leading-tight pt-2">
+                  · {b}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <span className="inline-flex items-center gap-2.5 self-start text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white">
             Conhecer
             <span
               aria-hidden
@@ -225,8 +166,7 @@ export default function SolucoesGrid() {
       title: t('solucoes.saude.title'),
       desc: t('solucoes.saude.desc'),
       bullets: splitBullets('solucoes.saude.bullets'),
-      bulletColumns: 1,
-      bg: 'linear-gradient(155deg, #0c1f3a 0%, #142f54 100%)',
+      color: '#142f54',
       image: '/images/hero/card-saude.jpg',
       imagePosition: 'center 40%',
       ariaLabel: t('solucoes.saude.label'),
@@ -237,8 +177,7 @@ export default function SolucoesGrid() {
       title: t('solucoes.seguros.title'),
       desc: t('solucoes.seguros.desc'),
       bullets: splitBullets('solucoes.seguros.bullets'),
-      bulletColumns: 3,
-      bg: 'linear-gradient(155deg, #060f1c 0%, #0b1f3a 100%)',
+      color: '#0b1f3a',
       image: '/images/hero/card-seguros.jpg',
       imagePosition: 'center',
       ariaLabel: t('solucoes.seguros.label'),
@@ -249,8 +188,7 @@ export default function SolucoesGrid() {
       title: t('solucoes.consorcio.title'),
       desc: t('solucoes.consorcio.desc'),
       bullets: splitBullets('solucoes.consorcio.bullets'),
-      bulletColumns: 2,
-      bg: 'linear-gradient(155deg, #020b18 0%, #07162a 100%)',
+      color: '#07162a',
       image: '/images/hero/card-consorcios.jpg',
       imagePosition: 'center 45%',
       ariaLabel: t('solucoes.consorcio.label'),
@@ -261,8 +199,7 @@ export default function SolucoesGrid() {
       title: t('solucoes.invest.title'),
       desc: t('solucoes.invest.desc'),
       bullets: splitBullets('solucoes.invest.bullets'),
-      bulletColumns: 1,
-      bg: 'linear-gradient(150deg, #07162a 0%, #1a0a14 60%, #ae251c 100%)',
+      color: '#ae251c',
       image: '/images/hero/card-financeiras.jpg',
       imagePosition: 'center',
       ariaLabel: t('solucoes.invest.label'),
@@ -302,8 +239,8 @@ export default function SolucoesGrid() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.15 }}
         >
-          {SERVICES.map((s) => (
-            <SectorCard key={s.href} service={s} />
+          {SERVICES.map((s, i) => (
+            <SectorCard key={s.href} service={s} index={i} />
           ))}
         </motion.div>
       </div>

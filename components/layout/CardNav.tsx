@@ -8,11 +8,7 @@ import { HoldLogo } from '@/components/icons/HoldLogo'
 
 const EASE: [number, number, number, number] = [0.32, 0.72, 0, 1]
 
-const NAV_LINK_CLS =
-  'relative inline-flex items-center gap-1 px-[13px] py-[6px] text-[13.5px] font-medium ' +
-  'text-white/50 rounded-lg bg-transparent border-0 cursor-pointer whitespace-nowrap ' +
-  'font-[inherit] tracking-[0.1px] transition-colors duration-200 no-underline ' +
-  'hover:text-white hover:bg-white/[0.05]'
+const NAV_LINK_CLS = 'nav-link'
 
 const LANG_BTN_CLS =
   'text-[11px] font-bold tracking-[0.8px] px-2.5 py-1 rounded-md border-0 ' +
@@ -29,7 +25,7 @@ const DD_ITEMS = [
 function DdIcon({ type }: { type: string }): React.ReactElement | null {
   const s = {
     width: 15, height: 15, viewBox: '0 0 24 24',
-    fill: 'none', stroke: '#c9a84c',
+    fill: 'none', stroke: '#7a9ab8',
     strokeWidth: 1.6, strokeLinecap: 'round' as const,
   }
   if (type === 'health') return <svg {...s}><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
@@ -71,7 +67,7 @@ export default function CardNav() {
           'fixed top-0 left-0 right-0 z-50 bg-[#07162a]',
           'transition-[border-color,box-shadow] duration-300',
           scrolled
-            ? 'border-b border-[rgba(201,168,76,0.28)] shadow-[0_8px_36px_rgba(0,0,0,0.42)]'
+            ? 'border-b border-white/[0.12] shadow-[0_8px_36px_rgba(0,0,0,0.42)]'
             : 'border-b border-transparent',
         ].join(' ')}
         aria-label="Menu principal"
@@ -95,7 +91,7 @@ export default function CardNav() {
           </Link>
 
           {/* Desktop nav links — centro real da viewport */}
-          <div className="hidden md:flex items-center gap-6 justify-self-center">
+          <div className="hidden md:flex items-center gap-9 justify-self-center">
             <Link href="/#home" className={NAV_LINK_CLS} onClick={closeAll}>
               {t('navbar.home')}
             </Link>
@@ -103,7 +99,7 @@ export default function CardNav() {
             {/* Soluções with dropdown */}
             <div className="relative" ref={ddRef}>
               <button
-                className={`${NAV_LINK_CLS} flex ${ddOpen ? 'text-white bg-white/[0.05]' : ''}`}
+                className={`${NAV_LINK_CLS} ${ddOpen ? 'is-active' : ''}`}
                 onClick={() => setDdOpen(v => !v)}
                 aria-expanded={ddOpen}
                 aria-controls="solucoes-dropdown"
@@ -128,7 +124,7 @@ export default function CardNav() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.21, ease: EASE }}
-                    className="absolute top-[calc(100%+10px)] left-1/2 -translate-x-1/2 w-[540px] bg-[#0b1f3a] border border-[rgba(201,168,76,0.14)] rounded-2xl p-[18px] shadow-[0_24px_60px_rgba(0,0,0,0.55),0_0_0_1px_rgba(0,0,0,0.25)] z-10"
+                    className="absolute top-[calc(100%+10px)] left-1/2 -translate-x-1/2 w-[540px] bg-[#0b1f3a] border border-white/[0.08] rounded-2xl p-[18px] shadow-[0_24px_60px_rgba(0,0,0,0.55),0_0_0_1px_rgba(0,0,0,0.25)] z-10"
                   >
                     <div className="flex items-center justify-between mb-3 pb-3 border-b border-white/[0.06]">
                       <span className="text-[9.5px] font-bold tracking-[1.8px] uppercase text-white/30">
@@ -144,9 +140,9 @@ export default function CardNav() {
                           href={item.href}
                           role="menuitem"
                           onClick={closeAll}
-                          className="flex items-start gap-3 p-3 rounded-[10px] border border-transparent hover:bg-white/[0.04] hover:border-[rgba(201,168,76,0.14)] transition-all duration-200 no-underline"
+                          className="flex items-start gap-3 p-3 rounded-[10px] border border-transparent hover:bg-white/[0.04] hover:border-white/[0.10] transition-all duration-200 no-underline"
                         >
-                          <div className="w-[34px] h-[34px] rounded-[9px] bg-[rgba(201,168,76,0.09)] border border-[rgba(201,168,76,0.14)] flex items-center justify-center flex-shrink-0">
+                          <div className="w-[34px] h-[34px] rounded-[9px] bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0">
                             <DdIcon type={item.icon} />
                           </div>
                           <div>
@@ -166,7 +162,7 @@ export default function CardNav() {
                       <Link
                         href="/#solucoes"
                         onClick={closeAll}
-                        className="flex items-center gap-1 text-[11px] font-semibold text-[#c9a84c] opacity-75 hover:opacity-100 transition-opacity no-underline"
+                        className="flex items-center gap-1 text-[11px] font-semibold text-white/70 hover:text-white transition-colors no-underline"
                       >
                         {t('navbar.dd.ver_todas')}
                         <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">

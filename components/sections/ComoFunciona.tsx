@@ -1,227 +1,172 @@
-'use client'
-
-import { useEffect, useState } from 'react'
 import Image from 'next/image'
-import { motion } from 'framer-motion'
-import { Check, ShieldCheck, ArrowRight } from 'lucide-react'
-import { useLocale } from '@/lib/i18n'
-import { formatWhatsAppLink } from '@/lib/utils'
-
-const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number]
-const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? ''
-
-const GANHO_COUNT = 8
-
-const stepKeys = [
-  'comoFunciona.step1',
-  'comoFunciona.step2',
-  'comoFunciona.step3',
-  'comoFunciona.step4',
-] as const
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 28, filter: 'blur(6px)' },
-  visible: {
-    opacity: 1,
-    y: 0,
-    filter: 'blur(0px)',
-    transition: { duration: 0.85, ease: EASE_OUT_EXPO },
-  },
-}
-
-const stagger = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.12 } },
-}
 
 export default function ComoFunciona() {
-  const { t } = useLocale()
-  const [activeStep, setActiveStep] = useState(0)
-
-  useEffect(() => {
-    const id = setInterval(() => setActiveStep((prev) => (prev + 1) % 4), 2500)
-    return () => clearInterval(id)
-  }, [])
-
-  const ganhos = Array.from({ length: GANHO_COUNT }, (_, i) => t(`comoFunciona.gain.${i + 1}`))
-  const wa = formatWhatsAppLink(WHATSAPP, t('comoFunciona.wa'))
-
   return (
     <section
       id="como-funciona"
-      className="section-pad bg-[#F5F5F5]"
+      className="como-funciona-v2 section-pad bg-[#F5F5F5]"
       style={{ fontFamily: 'var(--font-outfit)' }}
     >
-      <div className="max-w-6xl mx-auto px-6 lg:px-8">
+      <style>{`
+        .como-funciona-v2 {
+          position: relative;
+          color: #07162a;
+        }
+        .como-funciona-v2 .v2-radio {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          opacity: 0;
+          pointer-events: none;
+        }
+        .como-funciona-v2 .v2-inner {
+          max-width: 1280px;
+          margin: 0 auto;
+          padding: 0 1.5rem;
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 2.25rem;
+        }
+        @media (min-width: 900px) {
+          .como-funciona-v2 .v2-inner {
+            grid-template-columns: 1.4fr 1fr;
+            grid-template-areas:
+              "head portrait"
+              "prose portrait"
+              "chips portrait";
+            align-items: start;
+            gap: 2.5rem 3rem;
+          }
+          .como-funciona-v2 .v2-headline { grid-area: head; }
+          .como-funciona-v2 .v2-prose { grid-area: prose; }
+          .como-funciona-v2 .v2-chips { grid-area: chips; }
+          .como-funciona-v2 .v2-portrait { grid-area: portrait; align-self: end; }
+        }
+        .como-funciona-v2 .v2-headline {
+          font-size: clamp(2rem, 4.4vw, 3.25rem);
+          font-weight: 700;
+          letter-spacing: -0.025em;
+          line-height: 1.05;
+          margin: 0;
+          color: #07162a;
+        }
+        .como-funciona-v2 .v2-h-word {
+          color: rgba(7, 22, 42, 0.55);
+          transition: color 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .como-funciona-v2 .v2-prose {
+          position: relative;
+          min-height: 13em;
+        }
+        .como-funciona-v2 .v2-pillar-body {
+          position: absolute;
+          inset: 0;
+          font-size: clamp(1.1rem, 1.45vw, 1.25rem);
+          line-height: 1.55;
+          color: rgba(7, 22, 42, 0.82);
+          margin: 0;
+          max-width: 40ch;
+          opacity: 0;
+          transform: translateY(8px);
+          pointer-events: none;
+          transition:
+            opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+            transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .como-funciona-v2:has(#v2-r-1:checked) .v2-pb-1,
+        .como-funciona-v2:has(#v2-r-2:checked) .v2-pb-2,
+        .como-funciona-v2:has(#v2-r-3:checked) .v2-pb-3 {
+          opacity: 1;
+          transform: translateY(0);
+          pointer-events: auto;
+        }
+        .como-funciona-v2:has(#v2-r-1:checked) .v2-h-word { color: #07162a; }
+        .como-funciona-v2:has(#v2-r-2:checked) .v2-h-word { color: #ae251c; }
+        .como-funciona-v2:has(#v2-r-3:checked) .v2-h-word { color: #142f54; }
+        .como-funciona-v2 .v2-chips {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.6rem;
+          margin: 0;
+          padding: 0;
+        }
+        .como-funciona-v2 .v2-chip {
+          cursor: pointer;
+          user-select: none;
+          font-size: 0.78rem;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          padding: 0.7rem 1.15rem;
+          color: #07162a;
+          border: 1px solid rgba(7, 22, 42, 0.22);
+          background: transparent;
+          transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .como-funciona-v2:has(#v2-r-1:checked) .v2-chip:nth-of-type(1),
+        .como-funciona-v2:has(#v2-r-2:checked) .v2-chip:nth-of-type(2),
+        .como-funciona-v2:has(#v2-r-3:checked) .v2-chip:nth-of-type(3) {
+          border-color: #07162a;
+          background: #07162a;
+          color: #F5F5F5;
+        }
+        .como-funciona-v2:has(#v2-r-1:focus-visible) .v2-chip:nth-of-type(1),
+        .como-funciona-v2:has(#v2-r-2:focus-visible) .v2-chip:nth-of-type(2),
+        .como-funciona-v2:has(#v2-r-3:focus-visible) .v2-chip:nth-of-type(3) {
+          outline: 2px solid #07162a;
+          outline-offset: 3px;
+        }
+        .como-funciona-v2 .v2-portrait {
+          width: 100%;
+          height: auto;
+          max-width: 22rem;
+          margin-left: auto;
+          display: block;
+          filter: drop-shadow(0 18px 36px rgba(7, 22, 42, 0.15));
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .como-funciona-v2 .v2-pillar-body,
+          .como-funciona-v2 .v2-h-word,
+          .como-funciona-v2 .v2-chip {
+            transition: none;
+          }
+        }
+      `}</style>
 
-        {/* Header — texto à esquerda, personagem preenche o espaço vazio à direita */}
-        <div className="flex flex-col lg:flex-row lg:items-end gap-6 lg:gap-4">
+      <input type="radio" id="v2-r-1" name="como-funciona-pillar" defaultChecked className="v2-radio" aria-label="Inteligência" />
+      <input type="radio" id="v2-r-2" name="como-funciona-pillar" className="v2-radio" aria-label="Transparência" />
+      <input type="radio" id="v2-r-3" name="como-funciona-pillar" className="v2-radio" aria-label="Acompanhamento" />
 
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="flex-1 max-w-3xl"
-          >
-            <motion.h2
-              variants={fadeUp}
-              className="mt-5 text-display text-[#07162a]"
-              style={{ fontSize: 'clamp(2rem, 4.4vw, 3.25rem)' }}
-            >
-              {t('comoFunciona.title')}
-            </motion.h2>
+      <div className="v2-inner">
+        <h2 className="v2-headline">
+          O jeito <span className="v2-h-word">HOLD</span> de ser.
+        </h2>
 
-            <motion.p
-              variants={fadeUp}
-              className="mt-6 max-w-[60ch] text-pretty text-lg leading-relaxed text-[#07162a]/60"
-            >
-              {t('comoFunciona.subtitle')}
-            </motion.p>
-
-            <motion.p
-              variants={fadeUp}
-              className="mt-4 max-w-[60ch] leading-relaxed text-[#07162a]/70"
-            >
-              {t('comoFunciona.body')}
-            </motion.p>
-          </motion.div>
-
-          {/* Personagem 3D */}
-          <motion.div
-            initial={{ opacity: 0, y: 32 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.9, ease: EASE_OUT_EXPO, delay: 0.25 }}
-            className="pointer-events-none select-none flex justify-center lg:justify-end lg:shrink-0"
-          >
-            <Image
-              src="/personagem/jacimar-avatar-question.png"
-              alt=""
-              width={600}
-              height={920}
-              quality={95}
-              className="w-56 sm:w-72 lg:w-[22rem] xl:w-[26rem] h-auto drop-shadow-xl"
-            />
-          </motion.div>
-
+        <div className="v2-prose">
+          <p className="v2-pillar-body v2-pb-1">
+            Inteligência aplicada antes da proposta. Cada plano nasce de um diagnóstico real, com números seus, não de um catálogo. 19 anos calibrando a leitura de risco e oportunidade para mais de 60 parcerias.
+          </p>
+          <p className="v2-pillar-body v2-pb-2">
+            Contrato lido em conjunto, taxas explicadas, condições documentadas. Quando você assina, sabe o que assinou, e sabe a quem ligar se algo mudar. Transparência operacional como compromisso, não slogan.
+          </p>
+          <p className="v2-pillar-body v2-pb-3">
+            A conversa não termina na contratação. Revisões periódicas, ajustes quando a vida muda, e a mesma consultoria do início ao resultado. Continuidade é o que separa serviço de relacionamento.
+          </p>
         </div>
 
-        {/* Ganhos — two-column list */}
-        <motion.div
-          variants={stagger}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="mt-16"
-        >
-          <div className="flex items-center gap-4 mb-8">
-            <motion.h3
-              variants={fadeUp}
-              className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#ae251c]"
-            >
-              {t('comoFunciona.diff.title')}
-            </motion.h3>
-            <motion.div variants={fadeUp} className="rule-gold h-px flex-1 max-w-[160px]" />
-          </div>
+        <div className="v2-chips">
+          <label htmlFor="v2-r-1" className="v2-chip">Inteligência</label>
+          <label htmlFor="v2-r-2" className="v2-chip">Transparência</label>
+          <label htmlFor="v2-r-3" className="v2-chip">Acompanhamento</label>
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-3">
-            {ganhos.map((item, i) => (
-              <motion.div key={i} variants={fadeUp} className="flex items-start gap-3">
-                <span className="mt-0.5 shrink-0">
-                  <Check size={16} color="#ae251c" />
-                </span>
-                <span className="text-[#07162a]/80 text-sm leading-relaxed">{item}</span>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* 4 steps timeline */}
-        <motion.div
-          variants={stagger}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="mt-20 relative"
-        >
-          {/* Rail */}
-          <div aria-hidden className="hidden md:block absolute left-0 right-0 top-[18px] h-px bg-[#07162a]/10" />
-          {/* Active-step progress line */}
-          <motion.div
-            aria-hidden
-            animate={{ scaleX: (activeStep + 1) / 4 }}
-            transition={{ duration: 0.5, ease: EASE_OUT_EXPO }}
-            style={{ transformOrigin: 'left' }}
-            className="hidden md:block absolute left-0 right-0 top-[18px] h-px bg-gradient-to-r from-[#c9a84c] via-[#ae251c] to-[#c9a84c]"
-          />
-
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-6 relative">
-            {stepKeys.map((key, i) => {
-              const isActive = activeStep === i
-              return (
-                <motion.div key={key} variants={fadeUp} className="flex flex-col gap-3">
-                  <div className="flex items-center gap-3 md:block">
-                    <span
-                      className={`relative inline-flex h-9 w-9 items-center justify-center rounded-full text-sm font-bold tabular transition-all duration-500 ${
-                        isActive
-                          ? 'bg-[#c9a84c] text-[#07162a]'
-                          : 'bg-[#07162a] ring-1 ring-[#c9a84c]/40 text-[#c9a84c]'
-                      }`}
-                      style={{ boxShadow: isActive ? '0 0 22px rgba(201,168,76,0.6)' : 'none' }}
-                    >
-                      {i + 1}
-                    </span>
-                  </div>
-
-                  <p className={`font-semibold text-sm leading-snug transition-colors duration-500 ${isActive ? 'text-[#07162a]' : 'text-[#07162a]/40'}`}>
-                    {t(`${key}.title`)}
-                  </p>
-                  <p className={`text-xs leading-relaxed transition-colors duration-500 ${isActive ? 'text-[#07162a]/65' : 'text-[#07162a]/30'}`}>
-                    {t(`${key}.desc`)}
-                  </p>
-                </motion.div>
-              )
-            })}
-          </div>
-        </motion.div>
-
-        {/* Badge */}
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="mt-16 flex justify-center"
-        >
-          <div className="rounded-full bg-[#0b1f3a] ring-1 ring-[#c9a84c]/25 px-6 py-3 flex items-center gap-3">
-            <ShieldCheck size={18} className="text-[#c9a84c] shrink-0" strokeWidth={1.7} />
-            <span className="text-[#e0e8f0] text-sm font-medium">
-              {t('comoFunciona.badge')}
-            </span>
-          </div>
-        </motion.div>
-
-        {/* CTA */}
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="mt-8 flex justify-center"
-        >
-          <a
-            href={wa}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group inline-flex items-center gap-3 bg-[#ae251c] hover:bg-[#c42d23] text-white px-8 py-3.5 rounded-full font-semibold transition-colors duration-200"
-          >
-            {t('comoFunciona.cta')}
-            <span className="w-8 h-8 rounded-full bg-black/20 flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:translate-x-0.5">
-              <ArrowRight size={16} />
-            </span>
-          </a>
-        </motion.div>
+        <Image
+          src="/personagem/jacimar-avatar-question.png"
+          alt=""
+          width={600}
+          height={920}
+          quality={95}
+          className="v2-portrait"
+        />
       </div>
     </section>
   )

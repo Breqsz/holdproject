@@ -148,7 +148,7 @@ function ProcessSteps() {
         <h3 className="text-display text-white" style={{ fontSize: 'clamp(1.5rem, 2.6vw, 2rem)' }}>
           {t('process.title')}
         </h3>
-        <div className="rule-gold h-px flex-1 max-w-[140px]" />
+        <div className="rule-accent h-px flex-1 max-w-[140px]" />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-6">
@@ -295,7 +295,7 @@ function ParaEmpresaContent() {
           <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#ae251c]">
             {t('partners.diff.title')}
           </p>
-          <div className="rule-gold h-px flex-1 max-w-[100px]" />
+          <div className="rule-accent h-px flex-1 max-w-[100px]" />
         </div>
 
         <ul className="mt-6 space-y-4">

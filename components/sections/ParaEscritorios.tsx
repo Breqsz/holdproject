@@ -93,7 +93,7 @@ export default function ParaEscritorios() {
             >
               {t('partners.diff.title')}
             </motion.h3>
-            <motion.div variants={fadeUp} className="rule-gold h-px flex-1 max-w-[160px]" />
+            <motion.div variants={fadeUp} className="rule-accent h-px flex-1 max-w-[160px]" />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-3">
@@ -127,7 +127,7 @@ export default function ParaEscritorios() {
           <motion.div
             aria-hidden
             style={{ scaleX: lineScaleX, transformOrigin: 'left' }}
-            className="hidden md:block absolute left-0 right-0 top-[18px] h-px bg-gradient-to-r from-[#c9a84c] via-[#ae251c] to-[#c9a84c]"
+            className="hidden md:block absolute left-0 right-0 top-[18px] h-px bg-[#ae251c]"
           />
 
           <div className="grid grid-cols-1 md:grid-cols-5 gap-10 md:gap-6 relative">
@@ -139,7 +139,7 @@ export default function ParaEscritorios() {
                   transition={{ duration: 0.7, ease: EASE_OUT_EXPO, delay: i * 0.08 }}
                   viewport={{ once: true }}
                 >
-                  <span className="relative inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#07162a] ring-1 ring-[#c9a84c]/40 text-[#c9a84c] text-sm font-bold tabular shadow-[0_0_22px_rgba(201,168,76,0.0)] hover:shadow-[0_0_22px_rgba(201,168,76,0.45)] transition-shadow">
+                  <span className="relative inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#07162a] ring-1 ring-[#ae251c]/40 text-[#ae251c] text-sm font-bold tabular shadow-[0_0_22px_rgba(174,37,28,0.0)] hover:shadow-[0_0_18px_rgba(174,37,28,0.30)] transition-shadow">
                     {i + 1}
                   </span>
                 </motion.div>
@@ -163,8 +163,8 @@ export default function ParaEscritorios() {
           viewport={{ once: true }}
           className="mt-16 flex justify-center"
         >
-          <div className="rounded-full bg-[#0b1f3a] ring-1 ring-[#c9a84c]/25 px-6 py-3 flex items-center gap-3">
-            <ShieldCheck size={18} className="text-[#c9a84c] shrink-0" strokeWidth={1.7} />
+          <div className="rounded-full bg-[#0b1f3a] ring-1 ring-white/15 px-6 py-3 flex items-center gap-3">
+            <ShieldCheck size={18} className="text-white shrink-0" strokeWidth={1.7} />
             <span className="text-[#e0e8f0] text-sm font-medium">
               {t('partners.badge')}
             </span>
@@ -181,7 +181,7 @@ export default function ParaEscritorios() {
         >
           <a
             href="#contato"
-            className="group inline-flex items-center gap-3 bg-[#ae251c] hover:bg-[#c42d23] text-white px-8 py-3.5 rounded-full font-semibold transition-colors duration-200"
+            className="group inline-flex items-center gap-3 bg-[#ae251c] hover:bg-[#921e16] text-white px-8 py-3.5 rounded-full font-semibold transition-colors duration-200"
           >
             {t('partners.cta')}
             <span className="w-8 h-8 rounded-full bg-black/20 flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:translate-x-0.5">

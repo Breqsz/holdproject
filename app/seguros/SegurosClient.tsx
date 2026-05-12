@@ -162,7 +162,7 @@ export default function SegurosClient() {
       <section className="section-tight bg-[#0b1f3a]" id="seguros-form" style={{ fontFamily: 'var(--font-outfit)' }}>
         <div className="max-w-6xl mx-auto px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-start">
           <Reveal>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#c9a84c]">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#7a9ab8]">
               Estamos estruturando
             </p>
             <h2
@@ -176,7 +176,7 @@ export default function SegurosClient() {
               estudos de caso e orientação por perfil. Enquanto isso, deixe seu contato e
               nosso time prepara um atendimento personalizado para você.
             </p>
-            <div className="mt-8 rule-gold h-px w-24" />
+            <div className="mt-8 rule-accent h-px w-24" />
             <p className="mt-6 text-sm text-[#7a9ab8]">
               Atendimento humano · diagnóstico em &lt; 24h · sem compromisso.
             </p>

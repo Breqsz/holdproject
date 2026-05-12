@@ -36,7 +36,7 @@ describe('SolucoesGrid', () => {
   it('renders the section heading', () => {
     render(<SolucoesGrid />)
     expect(
-      screen.getByRole('heading', { level: 2, name: /Um ecossistema/i })
+      screen.getByRole('heading', { level: 2, name: /Estratégia sem conflito/i })
     ).toBeInTheDocument()
   })
 

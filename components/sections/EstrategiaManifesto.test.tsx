@@ -27,7 +27,7 @@ vi.mock('next/image', () => ({
 
 vi.mock('framer-motion', async () => {
   const React = await import('react')
-  const passthrough = (tag: keyof JSX.IntrinsicElements) =>
+  const passthrough = (tag: string) =>
     React.forwardRef<HTMLElement, Record<string, unknown>>(({ children, ...rest }, ref) =>
       React.createElement(tag, { ref, ...stripMotion(rest) }, children as React.ReactNode),
     )
@@ -42,29 +42,25 @@ vi.mock('framer-motion', async () => {
 
   return {
     motion: new Proxy({}, {
-      get: (_t, key: string) => passthrough(key as keyof JSX.IntrinsicElements),
+      get: (_t, key: string) => passthrough(key),
     }),
     useInView: () => true,
     AnimatePresence: ({ children }: { children: React.ReactNode }) => children,
   }
 })
 
-describe('EstrategiaManifesto v4 — Editorial Spread Navy', () => {
+describe('EstrategiaManifesto — Bracket card + estrategia.jpg', () => {
   it('exposes id="estrategia" on the section', () => {
     const { container } = render(<EstrategiaManifesto />)
     expect(container.querySelector('#estrategia')).toBeInTheDocument()
   })
 
-  it('renders the "Estratégia" eyebrow', () => {
-    render(<EstrategiaManifesto />)
-    expect(screen.getByText(/^Estratégia$/i)).toBeInTheDocument()
-  })
-
-  it('renders the tri-color serif headline', () => {
-    render(<EstrategiaManifesto />)
-    expect(screen.getByText('Mais do que produtos.')).toBeInTheDocument()
-    expect(screen.getByText('Uma estratégia completa')).toBeInTheDocument()
-    expect(screen.getByText('para o seu patrimônio.')).toBeInTheDocument()
+  it('renders the manifesto headline with the italic accent clause', () => {
+    const { container } = render(<EstrategiaManifesto />)
+    expect(container.textContent).toContain('Integramos saúde, seguros, consórcios e finanças')
+    expect(container.textContent).toContain('proteção patrimonial')
+    expect(container.textContent).toContain('sucessão')
+    expect(container.textContent).toContain('eficiência financeira')
   })
 
   it('renders an h2 heading element', () => {
@@ -82,27 +78,19 @@ describe('EstrategiaManifesto v4 — Editorial Spread Navy', () => {
   it('body paragraph contains positioning copy', () => {
     const { container } = render(<EstrategiaManifesto />)
     expect(container.textContent).toContain('Hold Corretora atua como parceira estratégica')
-    expect(container.textContent).toContain('estruturando soluções completas')
+    expect(container.textContent).toContain('Estruturamos soluções completas')
   })
 
-  it('renders the cinematic image with descriptive alt and quem-somos src', () => {
+  it('renders the cinematic image with estrategia.jpg src', () => {
     render(<EstrategiaManifesto />)
-    const img = screen.getByAltText(/Hold Corretora.*escrit/i) as HTMLImageElement
+    const img = screen.getByAltText(/Hold Corretora.*equipe.*reuni/i) as HTMLImageElement
     expect(img).toBeInTheDocument()
-    expect(img.getAttribute('src')).toContain('quem-somos')
+    expect(img.getAttribute('src')).toContain('estrategia')
   })
 
-  it('renders the manifesto quote with three accent terms', () => {
-    const { container } = render(<EstrategiaManifesto />)
-    expect(container.textContent).toContain('Integramos saúde, seguros, consórcios e finanças')
-    expect(screen.getByText('proteção patrimonial')).toBeInTheDocument()
-    expect(screen.getByText('sucessão')).toBeInTheDocument()
-    expect(screen.getByText('eficiência financeira')).toBeInTheDocument()
-  })
-
-  it('renders the M · V · V transition eyebrow', () => {
+  it('renders the Princípios Hold eyebrow', () => {
     render(<EstrategiaManifesto />)
-    expect(screen.getByText(/M\s*·\s*V\s*·\s*V/)).toBeInTheDocument()
+    expect(screen.getByText(/Princípios Hold/i)).toBeInTheDocument()
   })
 
   it('renders all three MVV titles as h3 headings', () => {

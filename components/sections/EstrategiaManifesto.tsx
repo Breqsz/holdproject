@@ -6,6 +6,8 @@ import { motion, useInView } from 'framer-motion'
 
 const EASE = [0.16, 1, 0.3, 1] as [number, number, number, number]
 
+const RED = '#ae251c'
+
 type Principle = {
   title: string
   body: string
@@ -43,11 +45,11 @@ export default function EstrategiaManifesto() {
         fontFamily: 'var(--font-outfit)',
       }}
     >
-      {/* Top edge gold hairline */}
+      {/* Top edge editorial hairline */}
       <div
         aria-hidden
         className="absolute inset-x-0 top-0 h-px"
-        style={{ background: 'var(--hairline-gold)' }}
+        style={{ background: 'var(--hairline-accent)' }}
       />
 
       {/* Backdrop dot-grid */}
@@ -62,100 +64,137 @@ export default function EstrategiaManifesto() {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            'radial-gradient(ellipse at 50% 30%, rgba(201,168,76,0.06), transparent 60%)',
+            'radial-gradient(ellipse at 50% 30%, rgba(122,154,184,0.08), transparent 60%)',
           mixBlendMode: 'soft-light',
         }}
       />
 
-      <div className="relative max-w-[1180px] mx-auto px-6 lg:px-10">
-        {/* ── Movement 1 — Manifesto editorial ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-          {/* Left column — text */}
-          <div className="lg:col-span-5 order-2 lg:order-1">
-            {/* Headline — editorial one-liner */}
-            <motion.h2
+      <div className="relative max-w-[1200px] mx-auto px-6 lg:px-10">
+        {/* ── Movement 1 — Cinematic image with overlaid bracket text ── */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.985 }}
+          animate={inView ? { opacity: 1, scale: 1 } : {}}
+          transition={{ duration: 1.1, delay: 0.15, ease: EASE }}
+          className="relative overflow-hidden aspect-[4/5] sm:aspect-[16/10] lg:aspect-[16/9] lg:max-h-[640px]"
+          style={{
+            boxShadow:
+              '0 30px 80px -30px rgba(0,0,0,0.7), 0 12px 32px -16px rgba(0,0,0,0.5)',
+            background: '#050f1f',
+          }}
+        >
+          {/* Image */}
+          <Image
+            src="/images/estrategia.jpg"
+            alt="Hold Corretora — equipe em reunião estratégica no escritório"
+            fill
+            priority={false}
+            sizes="(max-width: 1024px) 100vw, 1160px"
+            className="object-cover"
+            style={{ objectPosition: 'center 45%' }}
+          />
+
+          {/* Heavy left-side gradient — Consorce style */}
+          <div
+            aria-hidden
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background:
+                'linear-gradient(90deg, rgba(7,22,42,0.96) 0%, rgba(7,22,42,0.92) 28%, rgba(7,22,42,0.65) 50%, rgba(7,22,42,0.20) 75%, rgba(7,22,42,0.0) 100%)',
+            }}
+          />
+
+          {/* Inner border highlight */}
+          <div
+            aria-hidden
+            className="absolute inset-0 pointer-events-none"
+            style={{ border: '1px solid rgba(255,255,255,0.06)' }}
+          />
+
+          {/* Overlay text — free-flowing, no card */}
+          <div className="absolute inset-0 flex items-center">
+            <motion.div
               initial={{ opacity: 0, y: 18 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.85, delay: 0.1, ease: EASE }}
-              className="text-white max-w-[18ch]"
-              style={{
-                fontSize: 'clamp(2rem, 3.6vw, 3rem)',
-                lineHeight: 1.06,
-                letterSpacing: '-0.025em',
-                fontWeight: 800,
-              }}
+              transition={{ duration: 0.85, delay: 0.3, ease: EASE }}
+              className="w-full max-w-[620px] px-7 sm:px-12 lg:px-16 lg:pl-20"
             >
-              Uma estratégia completa para o{' '}
-              <span style={{ color: '#c9a84c' }}>seu patrimônio.</span>
-            </motion.h2>
+              {/* Headline — two-part editorial */}
+              <motion.h2
+                initial={{ opacity: 0, y: 14 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.85, delay: 0.4, ease: EASE }}
+                className="text-balance"
+                style={{
+                  fontSize: 'clamp(1.625rem, 3vw, 2.625rem)',
+                  lineHeight: 1.12,
+                  letterSpacing: '-0.022em',
+                  fontWeight: 600,
+                  color: '#ffffff',
+                  textShadow: '0 2px 18px rgba(0,0,0,0.45)',
+                }}
+              >
+                Integramos saúde, seguros, consórcios e finanças em uma gestão
+                estratégica.
+                <span
+                  className="block mt-3"
+                  style={{
+                    fontFamily: 'var(--font-cormorant)',
+                    fontStyle: 'italic',
+                    fontWeight: 600,
+                    color: RED,
+                    fontSize: 'clamp(1.75rem, 3.2vw, 2.875rem)',
+                    lineHeight: 1.08,
+                    letterSpacing: '-0.018em',
+                  }}
+                >
+                  Voltada à proteção patrimonial, sucessão e eficiência
+                  financeira.
+                </span>
+              </motion.h2>
 
-            {/* Body */}
-            <motion.p
-              initial={{ opacity: 0, y: 12 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.75, delay: 0.4, ease: EASE }}
-              className="mt-8 text-base leading-relaxed max-w-[60ch] text-pretty text-[#7a9ab8]"
-            >
-              Com mais de{' '}
-              <span className="font-semibold text-[#e0e8f0]">19 anos de experiência</span>{' '}
-              e acesso a mais de{' '}
-              <span className="font-semibold text-[#e0e8f0]">60 parceiros</span>, a Hold
-              Corretora atua como parceira estratégica na proteção, no planejamento e
-              no crescimento patrimonial de pessoas e empresas, estruturando soluções
-              completas e personalizadas em saúde, seguros, consórcios e finanças.
-            </motion.p>
+              {/* Body — two paragraphs */}
+              <motion.p
+                initial={{ opacity: 0, y: 10 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.75, delay: 0.7, ease: EASE }}
+                className="mt-8 text-[13.5px] sm:text-[14.5px] leading-[1.65] max-w-[56ch]"
+                style={{
+                  color: '#c8d2e0',
+                  fontWeight: 400,
+                  textShadow: '0 1px 12px rgba(0,0,0,0.55)',
+                }}
+              >
+                A Hold Corretora atua como parceira estratégica na proteção, no
+                planejamento e no crescimento patrimonial de pessoas e empresas,
+                com mais de{' '}
+                <span style={{ color: '#ffffff', fontWeight: 600 }}>
+                  19 anos de experiência
+                </span>{' '}
+                e acesso a mais de{' '}
+                <span style={{ color: '#ffffff', fontWeight: 600 }}>
+                  60 parceiros
+                </span>
+                .
+              </motion.p>
+
+              <motion.p
+                initial={{ opacity: 0, y: 10 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.75, delay: 0.85, ease: EASE }}
+                className="mt-5 text-[13.5px] sm:text-[14.5px] leading-[1.65] max-w-[56ch]"
+                style={{
+                  color: '#c8d2e0',
+                  fontWeight: 400,
+                  textShadow: '0 1px 12px rgba(0,0,0,0.55)',
+                }}
+              >
+                Estruturamos soluções completas e personalizadas em saúde,
+                seguros, consórcios e finanças — com proximidade, transparência
+                e visão de longo prazo.
+              </motion.p>
+            </motion.div>
           </div>
-
-          {/* Right column — cinematic image */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={inView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 1.1, delay: 0.25, ease: EASE }}
-            className="lg:col-span-7 order-1 lg:order-2 relative overflow-hidden aspect-[16/9] lg:aspect-[4/5] lg:max-h-[680px] lg:[clip-path:polygon(8%_0,100%_0,100%_100%,0_100%)]"
-            style={{
-              boxShadow:
-                '0 30px 80px -30px rgba(0,0,0,0.7), 0 12px 32px -16px rgba(0,0,0,0.5)',
-              background: '#050f1f',
-            }}
-          >
-            <Image
-              src="/images/hero/AdobeStock_447632877.jpeg"
-              alt="Hold Corretora — escritório institucional, gestão estratégica patrimonial"
-              fill
-              sizes="(max-width: 1024px) 100vw, 760px"
-              className="object-cover"
-              style={{ objectPosition: 'center 30%' }}
-            />
-
-            {/* Diagonal gold hairline (desktop only) */}
-            <svg
-              aria-hidden
-              className="absolute inset-0 hidden lg:block pointer-events-none"
-              viewBox="0 0 100 100"
-              preserveAspectRatio="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <line
-                x1={8}
-                y1={0}
-                x2={0}
-                y2={100}
-                stroke="#c9a84c"
-                strokeOpacity={0.32}
-                strokeWidth={0.18}
-                vectorEffect="non-scaling-stroke"
-              />
-            </svg>
-
-            {/* Inner border highlight */}
-            <div
-              aria-hidden
-              className="absolute inset-0 pointer-events-none"
-              style={{ border: '1px solid rgba(255,255,255,0.06)' }}
-            />
-
-          </motion.div>
-        </div>
+        </motion.div>
 
         {/* ── Régua de transição ── */}
         <div className="text-center mt-20 lg:mt-24 mb-14 lg:mb-16">
@@ -166,26 +205,25 @@ export default function EstrategiaManifesto() {
             className="h-px max-w-[240px] mx-auto"
             style={{
               background:
-                'linear-gradient(90deg, transparent 0%, var(--hairline-gold) 50%, transparent 100%)',
+                'linear-gradient(90deg, transparent 0%, var(--hairline-accent) 50%, transparent 100%)',
             }}
           />
         </div>
 
-        {/* ── Movement 2 — MVV compact (Hairline pour + optical rhythm) ── */}
+        {/* ── Movement 2 — MVV compact ── */}
         <div className="max-w-[1080px] mx-auto">
-          {/* Eyebrow — gold hairlines write themselves outward, label fades in */}
           <div className="flex items-center justify-center gap-3 mb-10">
             <motion.span
               aria-hidden
               className="block h-px w-5"
-              style={{ background: 'rgba(201,168,76,0.6)', transformOrigin: 'center' }}
+              style={{ background: 'rgba(224,232,240,0.55)', transformOrigin: 'center' }}
               initial={{ scaleX: 0 }}
               animate={inView ? { scaleX: 1 } : {}}
               transition={{ duration: 0.7, delay: 0.9, ease: EASE }}
             />
             <motion.span
               className="text-[11px] font-semibold uppercase"
-              style={{ letterSpacing: '0.32em', color: '#c9a84c' }}
+              style={{ letterSpacing: '0.32em', color: '#7a9ab8' }}
               initial={{ opacity: 0 }}
               animate={inView ? { opacity: 1 } : {}}
               transition={{ duration: 0.45, delay: 1.15, ease: 'easeOut' }}
@@ -195,19 +233,18 @@ export default function EstrategiaManifesto() {
             <motion.span
               aria-hidden
               className="block h-px w-5"
-              style={{ background: 'rgba(201,168,76,0.6)', transformOrigin: 'center' }}
+              style={{ background: 'rgba(224,232,240,0.55)', transformOrigin: 'center' }}
               initial={{ scaleX: 0 }}
               animate={inView ? { scaleX: 1 } : {}}
               transition={{ duration: 0.7, delay: 0.9, ease: EASE }}
             />
           </div>
 
-          {/* Three columns — vertical hairline dividers draw downward, then content fades */}
           <div className="relative grid grid-cols-1 md:grid-cols-3">
             <motion.span
               aria-hidden
               className="hidden md:block absolute top-0 bottom-0 w-px"
-              style={{ left: 'calc(100% / 3)', background: 'var(--hairline-gold)', transformOrigin: 'top' }}
+              style={{ left: 'calc(100% / 3)', background: 'var(--hairline-accent)', transformOrigin: 'top' }}
               initial={{ scaleY: 0 }}
               animate={inView ? { scaleY: 1 } : {}}
               transition={{ duration: 0.85, delay: 1.05, ease: EASE }}
@@ -215,7 +252,7 @@ export default function EstrategiaManifesto() {
             <motion.span
               aria-hidden
               className="hidden md:block absolute top-0 bottom-0 w-px"
-              style={{ left: 'calc(200% / 3)', background: 'var(--hairline-gold)', transformOrigin: 'top' }}
+              style={{ left: 'calc(200% / 3)', background: 'var(--hairline-accent)', transformOrigin: 'top' }}
               initial={{ scaleY: 0 }}
               animate={inView ? { scaleY: 1 } : {}}
               transition={{ duration: 0.85, delay: 1.05, ease: EASE }}
@@ -233,7 +270,7 @@ export default function EstrategiaManifesto() {
                   .filter(Boolean)
                   .join(' ')}
                 style={
-                  i > 0 ? { borderColor: 'rgba(201,168,76,0.16)' } : undefined
+                  i > 0 ? { borderColor: 'rgba(122,154,184,0.16)' } : undefined
                 }
               >
                 <h3
@@ -244,7 +281,7 @@ export default function EstrategiaManifesto() {
                     fontWeight: 600,
                     fontSize: 'clamp(1.625rem, 2.4vw, 2.125rem)',
                     letterSpacing: '-0.012em',
-                    color: '#c9a84c',
+                    color: RED,
                   }}
                 >
                   {title}

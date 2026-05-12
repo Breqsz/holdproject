@@ -28,7 +28,7 @@ interface ServiceLeadFormProps {
 }
 
 const inputClass =
-  'w-full bg-[#07162a] border border-[#142f54] focus:border-[#c9a84c] focus:ring-1 focus:ring-[#c9a84c]/30 text-white placeholder-[#4a6a8a] rounded-lg px-4 py-3 outline-none transition-all duration-200'
+  'w-full bg-[#07162a] border border-[#142f54] focus:border-[#7a9ab8] focus:ring-1 focus:ring-[#7a9ab8]/30 text-white placeholder-[#4a6a8a] rounded-lg px-4 py-3 outline-none transition-all duration-200'
 
 export function ServiceLeadForm({
   service,

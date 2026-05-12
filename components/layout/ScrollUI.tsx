@@ -27,7 +27,7 @@ export default function ScrollUI() {
       <motion.div
         aria-hidden
         style={{ scaleX, transformOrigin: 'left' }}
-        className="fixed top-0 left-0 right-0 z-50 h-[3px] bg-gradient-to-r from-[#c9a84c] via-[#ae251c] to-[#c9a84c] pointer-events-none"
+        className="fixed top-0 left-0 right-0 z-50 h-[3px] bg-[#ae251c] pointer-events-none"
       />
 
       {/* Back-to-top — appears when 85 % of page is scrolled, sits above the WhatsApp button */}
@@ -40,7 +40,7 @@ export default function ScrollUI() {
             exit={{ opacity: 0, y: 8 }}
             transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="fixed bottom-24 right-6 z-40 flex h-11 w-11 items-center justify-center rounded-full bg-[#07162a] ring-1 ring-white/15 text-[#c9a84c] shadow-lg hover:bg-[#142f54] hover:ring-[#c9a84c]/40 transition-colors duration-200"
+            className="fixed bottom-24 right-6 z-40 flex h-11 w-11 items-center justify-center rounded-full bg-[#07162a] ring-1 ring-white/15 text-[#7a9ab8] shadow-lg hover:bg-[#142f54] hover:ring-[#7a9ab8]/40 transition-colors duration-200"
           >
             <ChevronUp size={20} strokeWidth={2} />
           </motion.button>

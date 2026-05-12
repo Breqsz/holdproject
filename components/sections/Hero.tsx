@@ -57,7 +57,7 @@ function MagneticCTA({ href, label }: { href: string; label: string }) {
       onMouseMove={handleMove}
       onMouseLeave={reset}
       style={{ x: sx, y: sy }}
-      className="magnetic group inline-flex items-center gap-2 rounded-full bg-[#ae251c] px-5 py-2.5 text-sm font-bold text-white shadow-[0_4px_18px_rgba(174,37,28,0.4)] transition-colors duration-200 hover:bg-[#c42d23]"
+      className="magnetic group inline-flex items-center gap-2 rounded-full bg-[#ae251c] px-5 py-2.5 text-sm font-bold text-white shadow-[0_4px_14px_rgba(174,37,28,0.18)] transition-colors duration-200 hover:bg-[#921e16]"
     >
       {label}
       <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-black/20 transition-transform duration-300 group-hover:translate-x-0.5">
@@ -99,7 +99,7 @@ export default function Hero() {
               <span className="inline-flex items-center rounded-full border border-[#ae251c]/30 bg-[#ae251c]/15 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#ae251c]">
                 {t('hero.eyebrow')}
               </span>
-              <div className="rule-gold h-px max-w-[120px] flex-1" />
+              <div className="rule-accent h-px max-w-[120px] flex-1" />
             </motion.div>
 
             {/* H1 — three lines, fluid clamp scale */}
@@ -182,7 +182,7 @@ export default function Hero() {
               className="glass-card absolute left-4 top-12 z-20 rounded-2xl px-5 py-3.5"
             >
               <div className="tabular text-[1.7rem] font-bold leading-none tracking-tight text-white">+19</div>
-              <div className="mt-1.5 text-[9px] font-semibold uppercase tracking-[0.18em] text-[#c9a84c]">
+              <div className="mt-1.5 text-[9px] font-semibold uppercase tracking-[0.18em] text-[#7a9ab8]">
                 {t('about.stat.years')}
               </div>
             </motion.div>
@@ -220,7 +220,7 @@ export default function Hero() {
               className="glass-card absolute bottom-12 right-4 z-20 rounded-2xl px-5 py-3.5"
             >
               <div className="tabular text-[1.7rem] font-bold leading-none tracking-tight text-white">+60</div>
-              <div className="mt-1.5 text-[9px] font-semibold uppercase tracking-[0.18em] text-[#c9a84c]">
+              <div className="mt-1.5 text-[9px] font-semibold uppercase tracking-[0.18em] text-[#7a9ab8]">
                 {t('about.stat.partners')}
               </div>
             </motion.div>

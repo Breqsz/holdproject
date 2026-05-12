@@ -45,7 +45,7 @@ function WaCTA({ href, label }: { href: string; label: string }) {
       onMouseMove={handleMove}
       onMouseLeave={() => { x.set(0); y.set(0) }}
       style={{ x: sx, y: sy }}
-      className="group inline-flex items-center gap-2 rounded-full bg-[#ae251c] pl-4 pr-2 h-10 text-sm font-bold text-white shadow-[0_4px_18px_rgba(174,37,28,0.35)] transition-colors duration-300 hover:bg-[#c42d23]"
+      className="group inline-flex items-center gap-2 rounded-full bg-[#ae251c] pl-4 pr-2 h-10 text-sm font-bold text-white shadow-[0_4px_14px_rgba(174,37,28,0.18)] transition-colors duration-300 hover:bg-[#921e16]"
     >
       <WaIcon />
       {label}
@@ -114,7 +114,7 @@ export default function HomeHero() {
               </motion.span>
 
               <motion.span
-                className="block font-bold text-[#ae251c] leading-[1.1] mt-1"
+                className="block font-bold text-[#07162a] leading-[1.1] mt-1"
                 style={{ fontSize: 'clamp(1.8rem,3.9vw,3rem)' }}
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -136,7 +136,7 @@ export default function HomeHero() {
                   loop={false}
                   showCursor={!isTypingDone}
                   cursorCharacter="|"
-                  cursorClassName="text-[#ae251c] font-light"
+                  cursorClassName="text-[#07162a]/45 font-light"
                   onTypingComplete={() => setIsTypingDone(true)}
                 />
               </span>

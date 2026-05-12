@@ -100,7 +100,7 @@ function TeamCard({ member, index }: { member: TeamMember; index: number }) {
               <span className="tabular text-[10px] uppercase tracking-[0.2em] text-white/70 font-semibold">
                 {seq} / 06
               </span>
-              <span className="text-[10px] uppercase tracking-[0.16em] text-[#c9a84c]/80 italic">
+              <span className="text-[10px] uppercase tracking-[0.16em] text-white/60 italic">
                 Hold Corretora
               </span>
             </div>
@@ -136,7 +136,7 @@ export default function EquipeClient() {
       <section className="relative overflow-hidden bg-gradient-to-br from-[#07162a] via-[#0a1c36] to-[#0b1f3a] pt-32 pb-20 md:pt-40 md:pb-28">
         <div aria-hidden className="dot-grid pointer-events-none absolute inset-0 opacity-[0.06]" />
         <div aria-hidden className="pointer-events-none absolute -right-20 -top-20 h-[440px] w-[440px] rounded-full bg-[#1a4b8a] opacity-[.18] blur-[110px]" />
-        <div aria-hidden className="pointer-events-none absolute -bottom-16 left-12 h-[300px] w-[300px] rounded-full bg-[#c9a84c] opacity-[.10] blur-[100px]" />
+        <div aria-hidden className="pointer-events-none absolute -bottom-16 left-12 h-[300px] w-[300px] rounded-full bg-[#ae251c] opacity-[.08] blur-[100px]" />
 
         <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-8">
           <Reveal>
@@ -144,7 +144,7 @@ export default function EquipeClient() {
               <span className="inline-flex items-center rounded-full border border-[#ae251c]/30 bg-[#ae251c]/15 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#ae251c]">
                 Quem cuida
               </span>
-              <div className="rule-gold h-px max-w-[120px] flex-1" />
+              <div className="rule-accent h-px max-w-[120px] flex-1" />
             </div>
           </Reveal>
 
@@ -153,7 +153,7 @@ export default function EquipeClient() {
               className="mt-6 text-display text-white max-w-4xl text-pretty"
               style={{ fontSize: 'clamp(2.25rem, 5.4vw, 4rem)' }}
             >
-              Time consultivo, <span className="text-[#c9a84c] italic font-light">presente em cada etapa</span>.
+              Time consultivo, <span className="text-[#7a9ab8] italic font-light">presente em cada etapa</span>.
             </h1>
           </Reveal>
 
@@ -185,7 +185,7 @@ export default function EquipeClient() {
       >
         <div className="max-w-6xl mx-auto px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-start">
           <Reveal>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#c9a84c]">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#7a9ab8]">
               Contato direto
             </p>
             <h2
@@ -198,7 +198,7 @@ export default function EquipeClient() {
               Sem call center, sem fila. Você é direcionado para a frente especializada que faz sentido
               para o seu caso e atendido por quem realmente vai conduzir o seu projeto.
             </p>
-            <div className="mt-8 rule-gold h-px w-24" />
+            <div className="mt-8 rule-accent h-px w-24" />
             <div className="mt-8 flex flex-wrap gap-3">
               <a
                 href={wa}

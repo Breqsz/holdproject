@@ -13,6 +13,7 @@ import { formatWhatsAppLink } from '@/lib/utils'
 import { Reveal } from '@/components/motion/Reveal'
 import { AudienceToggle } from '@/components/AudienceToggle'
 import { WhatsAppIcon } from '@/components/icons/WhatsAppIcon'
+import ConsorcioJornada from '@/components/sections/ConsorcioJornada'
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number]
 const SPRING = { type: 'spring' as const, stiffness: 110, damping: 22 }
@@ -65,7 +66,7 @@ function HeroSection() {
               <span className="inline-flex items-center rounded-full border border-[#ae251c]/30 bg-[#ae251c]/15 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#ae251c]">
                 Consórcios · Hold Corretora
               </span>
-              <div className="rule-gold h-px max-w-[120px] flex-1" />
+              <div className="rule-accent h-px max-w-[120px] flex-1" />
             </div>
           </Reveal>
 
@@ -261,27 +262,8 @@ function ParaVoceContent() {
         </AnimatePresence>
       </div>
 
-      {/* Process Steps */}
-      <div className="mt-20">
-        <div className="flex items-center gap-4 mb-12">
-          <h3 className="text-display text-white" style={{ fontSize: 'clamp(1.5rem, 2.6vw, 2rem)' }}>
-            {t('process.title')}
-          </h3>
-          <div className="rule-gold h-px flex-1 max-w-[140px]" />
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-6 relative">
-          <div aria-hidden className="hidden md:block absolute left-0 right-0 top-[18px] h-px bg-gradient-to-r from-transparent via-[#142f54] to-transparent" />
-          {[1, 2, 3, 4].map((n, i) => (
-            <Reveal key={n} delay={i * 0.06} className="flex flex-col gap-3">
-              <span className="relative inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#07162a] ring-1 ring-[#c9a84c]/40 text-[#c9a84c] text-sm font-bold tabular">
-                {n}
-              </span>
-              <p className="font-semibold text-[#e0e8f0]">{t(`process.step${n}.title`)}</p>
-              <p className="text-sm text-[#7a9ab8] leading-relaxed">{t(`process.step${n}.desc`)}</p>
-            </Reveal>
-          ))}
-        </div>
-      </div>
+      {/* Jornada — moved from home ComoFunciona */}
+      <ConsorcioJornada />
     </motion.div>
   )
 }
@@ -322,7 +304,7 @@ function ParaEmpresaContent() {
           <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#ae251c]">
             {t('partners.diff.title')}
           </p>
-          <div className="rule-gold h-px flex-1 max-w-[100px]" />
+          <div className="rule-accent h-px flex-1 max-w-[100px]" />
         </div>
 
         <ul className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-4">

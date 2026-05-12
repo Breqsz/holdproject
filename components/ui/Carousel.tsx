@@ -45,7 +45,7 @@ function CarouselItemCard({ item, index, itemWidth, round, trackItemOffset, x, t
       className={`relative shrink-0 flex flex-col overflow-hidden cursor-grab active:cursor-grabbing ${
         round
           ? 'items-center justify-center text-center bg-[#07162a] border-0'
-          : 'bg-[#071526] border border-[rgba(201,168,76,0.18)] rounded-[14px]'
+          : 'bg-[#071526] border border-white/[0.10] rounded-[14px]'
       }`}
       style={{
         width: itemWidth,
@@ -63,7 +63,7 @@ function CarouselItemCard({ item, index, itemWidth, round, trackItemOffset, x, t
           </div>
 
           {/* Hairline divider */}
-          <div className="h-px mx-5 flex-shrink-0" style={{ background: 'linear-gradient(90deg, transparent, rgba(201,168,76,0.22), transparent)' }} />
+          <div className="h-px mx-5 flex-shrink-0" style={{ background: 'linear-gradient(90deg, transparent, rgba(122,154,184,0.28), transparent)' }} />
 
           {/* Stats footer */}
           <div className="p-5 pt-4">
@@ -71,7 +71,7 @@ function CarouselItemCard({ item, index, itemWidth, round, trackItemOffset, x, t
               {item.icon}
             </span>
             <div className="font-black text-4xl leading-none tracking-tight text-white">{item.title}</div>
-            <div className="mt-2 h-px w-8 bg-gradient-to-r from-[#ae251c] to-[#c9a84c] rounded-full" />
+            <div className="mt-2 h-px w-8 bg-gradient-to-r from-[#ae251c] to-[#ae251c]/30 rounded-full" />
             <p className="mt-2 text-sm text-[#7a9ab8] leading-snug">{item.description}</p>
           </div>
         </>
@@ -84,7 +84,7 @@ function CarouselItemCard({ item, index, itemWidth, round, trackItemOffset, x, t
           </div>
           <div className="p-7 pt-0">
             <div className="font-black text-5xl leading-none tracking-tight text-white">{item.title}</div>
-            <div className="mt-3 h-px w-10 bg-gradient-to-r from-[#ae251c] to-[#c9a84c] rounded-full" />
+            <div className="mt-3 h-px w-10 bg-gradient-to-r from-[#ae251c] to-[#ae251c]/30 rounded-full" />
             <p className="mt-3 text-base text-[#7a9ab8] leading-snug">{item.description}</p>
           </div>
         </>
@@ -262,7 +262,7 @@ export default function Carousel({
               key={index}
               className={`h-2 w-2 rounded-full cursor-pointer transition-colors duration-150 ${
                 activeIndex === index
-                  ? round ? 'bg-white' : 'bg-[#c9a84c]'
+                  ? round ? 'bg-white' : 'bg-[#ae251c]'
                   : round ? 'bg-[#555]' : 'bg-[#142f54]'
               }`}
               animate={{ scale: activeIndex === index ? 1.2 : 1 }}

@@ -156,7 +156,7 @@ export default function Contato() {
                   type="button"
                   onClick={handleNext}
                   disabled={loading}
-                  className="inline-flex items-center gap-2 bg-[#ae251c] hover:bg-[#c42d23] disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold rounded-full px-7 py-2.5 text-sm transition-colors duration-200"
+                  className="inline-flex items-center gap-2 bg-[#ae251c] hover:bg-[#921e16] disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold rounded-full px-7 py-2.5 text-sm transition-colors duration-200"
                 >
                   {loading && <Loader2 size={15} className="animate-spin" />}
                   {step < 3 ? t('contact.wizard.next') : isClient ? t('contact.wizard.send') : t('partners.cta')}

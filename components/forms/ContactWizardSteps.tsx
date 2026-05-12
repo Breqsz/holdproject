@@ -52,7 +52,7 @@ export const SEGMENTS = [
 // ── Primitives ─────────────────────────────────────────────────────────────────
 
 export const inputCls =
-  'w-full bg-[#07162a] border border-[#142f54] focus:border-[#c9a84c] focus:ring-1 focus:ring-[#c9a84c]/30 text-white placeholder-[#4a6a8a] rounded-lg px-4 py-3 outline-none transition-all duration-200 text-sm'
+  'w-full bg-[#07162a] border border-[#142f54] focus:border-[#7a9ab8] focus:ring-1 focus:ring-[#7a9ab8]/30 text-white placeholder-[#4a6a8a] rounded-lg px-4 py-3 outline-none transition-all duration-200 text-sm'
 
 export function Label({ children }: { children: React.ReactNode }) {
   return (
@@ -87,15 +87,15 @@ export function StepperNav({ step, isPartner }: { step: number; isPartner: boole
             <div className="flex flex-col items-center gap-1.5 shrink-0">
               <span
                 className={`inline-flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold transition-all duration-500 ${
-                  isDone   ? 'bg-[#c9a84c] text-[#07162a]'
-                  : isActive ? 'bg-[#ae251c] text-white shadow-[0_0_18px_rgba(174,37,28,0.45)]'
+                  isDone   ? 'bg-[#7a9ab8] text-[#07162a]'
+                  : isActive ? 'bg-[#ae251c] text-white shadow-[0_0_14px_rgba(174,37,28,0.22)]'
                   : 'bg-[#07162a] ring-1 ring-[#142f54] text-[#4a6a8a]'
                 }`}
               >
                 {isDone ? <Check size={13} strokeWidth={2.5} /> : n}
               </span>
               <span className={`text-[10px] font-medium whitespace-nowrap transition-colors duration-300 ${
-                isActive ? 'text-white' : isDone ? 'text-[#c9a84c]' : 'text-[#4a6a8a]'
+                isActive ? 'text-white' : isDone ? 'text-[#7a9ab8]' : 'text-[#4a6a8a]'
               }`}>
                 {label}
               </span>
@@ -103,7 +103,7 @@ export function StepperNav({ step, isPartner }: { step: number; isPartner: boole
             {i < 2 && (
               <div
                 className="flex-1 h-px mx-2 -mt-[14px] transition-colors duration-500"
-                style={{ background: step > n ? '#c9a84c' : '#142f54' }}
+                style={{ background: step > n ? '#7a9ab8' : '#142f54' }}
               />
             )}
           </div>
@@ -139,7 +139,7 @@ export function StepPerfil({
               : 'border-[#142f54] hover:border-[#1e4a7a]'
           }`}
         >
-          <Icon size={24} className={`shrink-0 mt-0.5 ${type === id ? 'text-[#ae251c]' : 'text-[#c9a84c]'}`} />
+          <Icon size={24} className={`shrink-0 mt-0.5 ${type === id ? 'text-[#ae251c]' : 'text-[#7a9ab8]'}`} />
           <div className="flex-1 min-w-0">
             <p className="font-semibold text-white text-sm">{title}</p>
             <p className="text-[#7a9ab8] text-xs mt-1 leading-relaxed">{desc}</p>
@@ -318,8 +318,8 @@ export function DoneState({
       transition={{ duration: 0.5, ease: EASE }}
       className="text-center py-4"
     >
-      <div className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-[#c9a84c]/15 ring-1 ring-[#c9a84c]/30 mb-5">
-        <Check size={28} className="text-[#c9a84c]" strokeWidth={2} />
+      <div className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-white/[0.08] ring-1 ring-white/20 mb-5">
+        <Check size={28} className="text-white" strokeWidth={2} />
       </div>
       <h3 className="text-white font-semibold text-xl mb-2">{t('contact.wizard.done.title')}</h3>
       <p className="text-[#7a9ab8] text-sm leading-relaxed max-w-xs mx-auto mb-7">

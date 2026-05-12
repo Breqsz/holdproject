@@ -22,7 +22,7 @@ describe('TrustBar', () => {
   it('first dot is active by default', () => {
     render(<TrustBar />)
     const dots = document.querySelectorAll('[data-testid="trustbar-dot"]')
-    expect(dots[0].className).toContain('bg-[#c9a84c]')
-    expect(dots[1].className).not.toContain('bg-[#c9a84c]')
+    expect(dots[0].className).toContain('bg-[#ae251c]')
+    expect(dots[1].className).not.toContain('bg-[#ae251c]')
   })
 })

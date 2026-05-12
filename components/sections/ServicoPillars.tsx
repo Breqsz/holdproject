@@ -23,7 +23,7 @@ function SoonBadge({ label, tone = 'light' }: { label: string; tone?: 'light' | 
   const styles = {
     light: 'bg-white/10 text-white/70 ring-white/15',
     dark:  'bg-[#07162a]/10 text-[#07162a]/70 ring-[#07162a]/15',
-    gold:  'bg-[#c9a84c]/10 text-[#c9a84c]/85 ring-[#c9a84c]/25',
+    gold:  'bg-white/10 text-white/85 ring-white/20',
   }[tone]
   return (
     <span className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-widest ring-1 ${styles}`}>
@@ -88,7 +88,7 @@ export default function ServicoPillars() {
                 <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#a0c4ff]">
                   Pilar Principal
                 </p>
-                <div className="rule-gold h-px w-16 opacity-70" />
+                <div className="rule-accent h-px w-16 opacity-70" />
               </div>
 
               <h3
@@ -102,7 +102,7 @@ export default function ServicoPillars() {
                 {t('services.consortium.desc')}
               </p>
 
-              <span className="mt-10 self-start inline-flex items-center gap-2 rounded-full bg-[#ae251c] text-white font-semibold text-sm px-6 py-3 transition-colors duration-200 group-hover:bg-[#c42d23]">
+              <span className="mt-10 self-start inline-flex items-center gap-2 rounded-full bg-[#ae251c] text-white font-semibold text-sm px-6 py-3 transition-colors duration-200 group-hover:bg-[#921e16]">
                 {t('services.consortium.cta')}
                 <ArrowRight size={15} className="transition-transform duration-300 group-hover:translate-x-0.5" />
               </span>
@@ -165,17 +165,17 @@ export default function ServicoPillars() {
               viewport={{ once: true, margin: '-80px' }}
               transition={{ duration: 0.85, ease: EASE_OUT_EXPO, delay: 0.24 }}
               whileHover={{ y: -2 }}
-              className="rounded-2xl overflow-hidden ring-1 ring-[#c9a84c]/20"
+              className="rounded-2xl overflow-hidden ring-1 ring-white/10"
               style={{ background: 'linear-gradient(135deg, #111122 0%, #1a1a2e 100%)' }}
             >
               <div className="p-6 flex flex-col gap-3">
                 <div className="flex items-start justify-between gap-2">
-                  <h3 className="text-lg font-bold text-[#e8d5a3]">
+                  <h3 className="text-lg font-bold text-white">
                     {t('services.invest.title')}
                   </h3>
                   <SoonBadge label={t('services.invest.soon').split('—')[0].trim()} tone="gold" />
                 </div>
-                <p className="text-[#c9a84c]/65 text-sm leading-relaxed">
+                <p className="text-white/65 text-sm leading-relaxed">
                   {t('services.invest.desc')}
                 </p>
               </div>

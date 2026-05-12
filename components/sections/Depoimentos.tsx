@@ -59,9 +59,9 @@ export default function Depoimentos() {
                 aria-label={t('testimonials.googleBadge')}
               >
                 <GoogleGIcon size={18} />
-                <span className="flex items-center gap-1.5 text-[#c9a84c] tabular text-sm font-bold">
+                <span className="flex items-center gap-1.5 text-[#fbbf24] tabular text-sm font-bold">
                   {googleSummary.rating.toString().replace('.', ',')}
-                  <Star size={14} fill="#c9a84c" color="#c9a84c" />
+                  <Star size={14} fill="#fbbf24" color="#fbbf24" />
                 </span>
                 <span className="text-[#07162a]/55 text-xs">
                   · {googleSummary.count} {t('testimonials.reviewCount')}
@@ -116,7 +116,7 @@ export default function Depoimentos() {
 
                     <div className="flex items-center gap-1">
                       {Array.from({ length: item.rating }).map((_, si) => (
-                        <Star key={si} size={14} fill="#c9a84c" color="#c9a84c" />
+                        <Star key={si} size={14} fill="#fbbf24" color="#fbbf24" />
                       ))}
                     </div>
 
@@ -131,7 +131,7 @@ export default function Depoimentos() {
                     </p>
 
                     <div>
-                      <div className="rule-gold h-px w-10 mb-4 opacity-60" />
+                      <div className="rule-accent h-px w-10 mb-4 opacity-60" />
                       <p className="text-[#07162a] font-semibold text-sm">{item.name}</p>
                       <p className="text-[#07162a]/50 text-xs mt-0.5 inline-flex items-center gap-1.5">
                         <GoogleGIcon size={12} />

@@ -43,8 +43,8 @@ export default function Footer() {
 
   return (
     <footer className="bg-[#020c30]" style={{ fontFamily: 'var(--font-outfit)' }}>
-      {/* Top hairline — gold tint */}
-      <div className="rule-gold h-px max-w-7xl mx-auto" />
+      {/* Top hairline — editorial navy tint */}
+      <div className="rule-accent h-px max-w-7xl mx-auto" />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
 
@@ -83,7 +83,7 @@ export default function Footer() {
               transition={{ duration: 0.95, delay: 0.4, ease: EASE }}
             >
               <motion.span
-                className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#c9a84c]"
+                className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#7a9ab8]"
                 initial={{ opacity: 0 }}
                 animate={heroInView ? { opacity: 1 } : {}}
                 transition={{ duration: 0.45, delay: 1.1, ease: 'easeOut' }}
@@ -175,13 +175,13 @@ export default function Footer() {
             </h4>
             <ul className="space-y-3">
               <li className="flex items-start gap-2.5">
-                <MapPin size={14} className="text-[#c9a84c] shrink-0 mt-0.5" strokeWidth={1.7} />
+                <MapPin size={14} className="text-[#e0e8f0]/70 shrink-0 mt-0.5" strokeWidth={1.7} />
                 <span className="text-[#7a9ab8] text-[0.9rem] leading-relaxed">
                   Uberlândia, MG
                 </span>
               </li>
               <li className="flex items-start gap-2.5">
-                <MessageCircle size={14} className="text-[#c9a84c] shrink-0 mt-0.5" strokeWidth={1.7} />
+                <MessageCircle size={14} className="text-[#e0e8f0]/70 shrink-0 mt-0.5" strokeWidth={1.7} />
                 <a
                   href={waHref}
                   target="_blank"
@@ -192,7 +192,7 @@ export default function Footer() {
                 </a>
               </li>
               <li className="flex items-start gap-2.5">
-                <Phone size={14} className="text-[#c9a84c] shrink-0 mt-0.5" strokeWidth={1.7} />
+                <Phone size={14} className="text-[#e0e8f0]/70 shrink-0 mt-0.5" strokeWidth={1.7} />
                 <span className="text-[#7a9ab8] text-sm">
                   holdcorretora.com
                 </span>

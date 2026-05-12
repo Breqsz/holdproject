@@ -109,10 +109,10 @@ describe('ServicoPillars', () => {
       expect(screen.getByText('Crescimento e gestão patrimonial.')).toBeInTheDocument()
     })
 
-    it('renders outer ring with gold colour class', () => {
-      // The outer div of the Investimentos card carries ring-[#c9a84c]/20
+    it('renders outer ring with neutral white class', () => {
+      // The outer div of the Investimentos card carries ring-white/10
       const section = document.querySelector('#servicos')!
-      expect(section.querySelector('.ring-\\[\\#c9a84c\\]\\/20')).not.toBeNull()
+      expect(section.querySelector('.ring-white\\/10')).not.toBeNull()
     })
   })
 })

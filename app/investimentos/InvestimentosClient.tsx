@@ -45,22 +45,22 @@ export default function InvestimentosClient() {
 
   return (
     <>
-      {/* Hero — graphite + gold per design spec */}
+      {/* Hero — graphite + brand red per Soluções Financeiras palette */}
       <section
         className="relative overflow-hidden pt-32 pb-16 md:pt-40 md:pb-24"
         style={{ background: 'linear-gradient(135deg, #111122 0%, #1a1a2e 70%, #0b1f3a 100%)' }}
       >
-        <div aria-hidden className="pointer-events-none absolute -right-20 -top-10 h-[460px] w-[460px] rounded-full bg-[#c9a84c] opacity-[.10] blur-[110px]" />
+        <div aria-hidden className="pointer-events-none absolute -right-20 -top-10 h-[460px] w-[460px] rounded-full bg-[#ae251c] opacity-[.10] blur-[110px]" />
         <div aria-hidden className="pointer-events-none absolute -bottom-12 left-12 h-[280px] w-[280px] rounded-full bg-[#142f54] opacity-[.18] blur-[90px]" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 grid gap-12 lg:grid-cols-[1.1fr_1fr] items-center">
           <div>
             <Reveal>
               <div className="flex items-center gap-3">
-                <span className="inline-flex items-center rounded-full border border-[#c9a84c]/40 bg-[#c9a84c]/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#c9a84c]">
+                <span className="inline-flex items-center rounded-full border border-[#ae251c]/40 bg-[#ae251c]/15 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#ae251c]">
                   Investimentos · Hold
                 </span>
-                <div className="rule-gold h-px max-w-[120px] flex-1" />
+                <div className="rule-accent h-px max-w-[120px] flex-1" />
               </div>
             </Reveal>
 
@@ -69,7 +69,7 @@ export default function InvestimentosClient() {
                 className="mt-6 text-display text-white text-pretty"
                 style={{ fontSize: 'clamp(2.25rem, 5.4vw, 4rem)' }}
               >
-                Patrimônio é sistema. <span className="text-[#c9a84c]">Não produto.</span>
+                Patrimônio é sistema. <span className="text-[#ae251c]">Não produto.</span>
               </h1>
             </Reveal>
 
@@ -99,7 +99,7 @@ export default function InvestimentosClient() {
                 </a>
                 <a
                   href="#invest-form"
-                  className="group inline-flex items-center gap-2 rounded-full bg-[#c9a84c] text-[#1a1a2e] px-6 py-3 text-sm font-bold transition-colors hover:bg-[#e0c073]"
+                  className="group inline-flex items-center gap-2 rounded-full bg-[#ae251c] text-white px-6 py-3 text-sm font-bold shadow-[0_4px_14px_rgba(174,37,28,0.18)] transition-colors hover:bg-[#921e16]"
                 >
                   Agendar diagnóstico
                   <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
@@ -109,7 +109,7 @@ export default function InvestimentosClient() {
           </div>
 
           <Reveal delay={0.2} className="hidden lg:block">
-            <div className="relative aspect-[4/5] rounded-2xl overflow-hidden ring-1 ring-[#c9a84c]/15">
+            <div className="relative aspect-[4/5] rounded-2xl overflow-hidden ring-1 ring-white/10">
               <Image
                 src="/images/hero/investimentos.webp"
                 alt="Análise patrimonial em ambiente executivo com gráficos e indicadores"
@@ -129,7 +129,7 @@ export default function InvestimentosClient() {
         <div className="max-w-6xl mx-auto px-6 lg:px-8">
           <div className="max-w-3xl mb-14">
             <Reveal>
-              <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#c9a84c]">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#ae251c]">
                 Quatro pilares
               </p>
             </Reveal>
@@ -146,8 +146,8 @@ export default function InvestimentosClient() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
             {pillars.map(({ icon: Icon, title, body }, i) => (
               <Reveal key={title} delay={i * 0.06} className="flex items-start gap-5">
-                <div className="shrink-0 w-12 h-12 rounded-xl bg-[#c9a84c]/12 ring-1 ring-[#c9a84c]/30 flex items-center justify-center">
-                  <Icon size={20} className="text-[#c9a84c]" strokeWidth={1.6} />
+                <div className="shrink-0 w-12 h-12 rounded-xl bg-[#ae251c]/15 ring-1 ring-[#ae251c]/30 flex items-center justify-center">
+                  <Icon size={20} className="text-[#ae251c]" strokeWidth={1.6} />
                 </div>
                 <div>
                   <h3 className="text-white font-semibold text-lg">{title}</h3>
@@ -163,7 +163,7 @@ export default function InvestimentosClient() {
       <section className="section-tight bg-[#07162a]" id="invest-form" style={{ fontFamily: 'var(--font-outfit)' }}>
         <div className="max-w-6xl mx-auto px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-start">
           <Reveal>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#c9a84c]">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#ae251c]">
               Diagnóstico patrimonial
             </p>
             <h2
@@ -176,7 +176,7 @@ export default function InvestimentosClient() {
               Estamos finalizando o conteúdo público sobre a frente patrimonial — alocação, parcerias,
               metodologia. Por ora, agendamos uma conversa direta de 30 minutos para entender o seu cenário.
             </p>
-            <div className="mt-8 rule-gold h-px w-24" />
+            <div className="mt-8 rule-accent h-px w-24" />
             <p className="mt-6 text-sm text-[#7a9ab8]">
               Conversas confidenciais · sem caráter de oferta de produto.
             </p>
