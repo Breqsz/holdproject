@@ -5,6 +5,7 @@ import HomeHero from '@/components/sections/HomeHero'
 import { Reveal } from '@/components/motion/Reveal'
 import { useAudience } from '@/lib/audience'
 
+const EstrategiaBand      = dynamic(() => import('@/components/sections/EstrategiaBand'))
 const EstrategiaManifesto = dynamic(() => import('@/components/sections/EstrategiaManifesto'))
 const StatsBar        = dynamic(() => import('@/components/sections/StatsBar'))
 const SolucoesGrid    = dynamic(() => import('@/components/sections/SolucoesGrid'))
@@ -23,6 +24,7 @@ export default function Home() {
     <>
       <HomeHero />
 
+      <EstrategiaBand />
       <EstrategiaManifesto />
       <SolucoesGrid />
       <Reveal><StatsBar /></Reveal>
