@@ -2,6 +2,7 @@
 
 import dynamic from 'next/dynamic'
 import HomeHero from '@/components/sections/HomeHero'
+import { Reveal } from '@/components/motion/Reveal'
 import { useAudience } from '@/lib/audience'
 
 const EstrategiaManifesto = dynamic(() => import('@/components/sections/EstrategiaManifesto'))
@@ -24,12 +25,12 @@ export default function Home() {
 
       <EstrategiaManifesto />
       <SolucoesGrid />
-      <StatsBar />
+      <Reveal><StatsBar /></Reveal>
       {showPJ ? <ParaEscritorios /> : <ComoFunciona />}
       <Depoimentos />
-      <TrustBar />
+      <Reveal><TrustBar /></Reveal>
       <FAQ />
-      <Contato />
+      <Reveal><Contato /></Reveal>
     </>
   )
 }
