@@ -9,10 +9,10 @@
     --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
     --ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);
 
-    /* Section rhythm — fluid for breath */
-    --section-tight: clamp(4rem, 8vw, 6rem);
-    --section-pad:   clamp(6rem, 10vw, 9rem);
-    --section-wide:  clamp(8rem, 12vw, 12rem);
+    /* Section rhythm — fluid for breath; tightened mobile floor */
+    --section-tight: clamp(3rem, 7vw, 6rem);
+    --section-pad:   clamp(4rem, 9vw, 9rem);
+    --section-wide:  clamp(5.5rem, 12vw, 12rem);
 
     /* Surfaces — opaque, never glass-by-default */
     --surface-deep: #07162a;

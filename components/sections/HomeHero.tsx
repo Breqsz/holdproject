@@ -82,7 +82,7 @@ export default function HomeHero() {
       <div
         data-testid="mobile-overlay"
         aria-hidden
-        className="md:hidden absolute inset-0 bg-gradient-to-r from-white via-white/90 to-transparent"
+        className="md:hidden absolute inset-0 bg-gradient-to-b from-white via-white/95 to-white/55"
         style={{ zIndex: 1 }}
       />
 
@@ -99,13 +99,13 @@ export default function HomeHero() {
           className="w-full px-6 sm:px-10 lg:pl-20 xl:pl-24"
           style={{ paddingTop: 'clamp(80px,10vh,120px)', paddingBottom: 'clamp(40px,6vh,80px)' }}
         >
-          <div className="max-w-[85%] sm:max-w-[640px]">
+          <div className="max-w-full sm:max-w-[640px]">
 
             {/* H1 — three lines: line1 biggest, line2 slightly smaller, line3 typed small */}
             <h1 className="tracking-[-0.03em]">
               <motion.span
                 className="block font-extrabold text-[#07162a] leading-[1.1]"
-                style={{ fontSize: 'clamp(2.4rem,5.2vw,4rem)' }}
+                style={{ fontSize: 'clamp(2rem,5.2vw,4rem)' }}
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, ease: EASE_OUT_EXPO, delay: 0.15 }}
@@ -115,7 +115,7 @@ export default function HomeHero() {
 
               <motion.span
                 className="block font-bold text-[#07162a] leading-[1.1] mt-1"
-                style={{ fontSize: 'clamp(1.8rem,3.9vw,3rem)' }}
+                style={{ fontSize: 'clamp(1.5rem,3.9vw,3rem)' }}
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, ease: EASE_OUT_EXPO, delay: 0.42 }}

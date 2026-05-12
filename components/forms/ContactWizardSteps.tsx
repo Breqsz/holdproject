@@ -94,7 +94,7 @@ export function StepperNav({ step, isPartner }: { step: number; isPartner: boole
               >
                 {isDone ? <Check size={13} strokeWidth={2.5} /> : n}
               </span>
-              <span className={`text-[10px] font-medium whitespace-nowrap transition-colors duration-300 ${
+              <span className={`text-[9.5px] sm:text-[10px] font-medium whitespace-nowrap transition-colors duration-300 ${
                 isActive ? 'text-white' : isDone ? 'text-[#7a9ab8]' : 'text-[#4a6a8a]'
               }`}>
                 {label}

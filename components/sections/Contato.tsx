@@ -106,13 +106,13 @@ export default function Contato() {
     <section id="contato" className="section-pad bg-[#0b1f3a]" style={{ fontFamily: 'var(--font-outfit)' }}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <div className="max-w-2xl mb-12">
-          <h2 className="mt-5 text-display text-white" style={{ fontSize: 'clamp(2rem, 4.4vw, 3.25rem)' }}>
+        <div className="max-w-2xl mb-10 sm:mb-12">
+          <h2 className="mt-5 text-display text-white" style={{ fontSize: 'clamp(1.65rem, 4.4vw, 3.25rem)' }}>
             {t('contact.title')}
           </h2>
         </div>
 
-        <div className="max-w-lg mx-auto rounded-2xl bg-[#07162a]/80 ring-1 ring-white/10 px-6 py-8 sm:px-10 sm:py-10">
+        <div className="max-w-lg mx-auto rounded-2xl bg-[#07162a]/80 ring-1 ring-white/10 px-5 py-7 sm:px-10 sm:py-10">
           {done ? (
             <DoneState d={data} onReset={handleReset} waNumber={WHATSAPP} />
           ) : (

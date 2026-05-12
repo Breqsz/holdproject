@@ -40,7 +40,8 @@ export default function ScrollUI() {
             exit={{ opacity: 0, y: 8 }}
             transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="fixed bottom-24 right-6 z-40 flex h-11 w-11 items-center justify-center rounded-full bg-[#07162a] ring-1 ring-white/15 text-[#7a9ab8] shadow-lg hover:bg-[#142f54] hover:ring-[#7a9ab8]/40 transition-colors duration-200"
+            className="fixed right-4 sm:right-6 z-40 flex h-11 w-11 items-center justify-center rounded-full bg-[#07162a] ring-1 ring-white/15 text-[#7a9ab8] shadow-lg hover:bg-[#142f54] hover:ring-[#7a9ab8]/40 transition-colors duration-200"
+            style={{ bottom: 'calc(max(1.25rem, env(safe-area-inset-bottom)) + 4.5rem)' }}
           >
             <ChevronUp size={20} strokeWidth={2} />
           </motion.button>

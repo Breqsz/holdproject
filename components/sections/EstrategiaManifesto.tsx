@@ -116,7 +116,7 @@ export default function EstrategiaManifesto() {
               initial={{ opacity: 0, y: 18 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.85, delay: 0.3, ease: EASE }}
-              className="w-full max-w-[620px] px-7 sm:px-12 lg:px-16 lg:pl-20"
+              className="w-full max-w-[620px] px-5 sm:px-12 lg:px-16 lg:pl-20"
             >
               {/* Headline — two-part editorial */}
               <motion.h2
@@ -125,8 +125,8 @@ export default function EstrategiaManifesto() {
                 transition={{ duration: 0.85, delay: 0.4, ease: EASE }}
                 className="text-balance"
                 style={{
-                  fontSize: 'clamp(1.625rem, 3vw, 2.625rem)',
-                  lineHeight: 1.12,
+                  fontSize: 'clamp(1.35rem, 3vw, 2.625rem)',
+                  lineHeight: 1.15,
                   letterSpacing: '-0.022em',
                   fontWeight: 600,
                   color: '#ffffff',
@@ -142,8 +142,8 @@ export default function EstrategiaManifesto() {
                     fontStyle: 'italic',
                     fontWeight: 600,
                     color: RED,
-                    fontSize: 'clamp(1.75rem, 3.2vw, 2.875rem)',
-                    lineHeight: 1.08,
+                    fontSize: 'clamp(1.4rem, 3.2vw, 2.875rem)',
+                    lineHeight: 1.12,
                     letterSpacing: '-0.018em',
                   }}
                 >
@@ -197,7 +197,7 @@ export default function EstrategiaManifesto() {
         </motion.div>
 
         {/* ── Régua de transição ── */}
-        <div className="text-center mt-20 lg:mt-24 mb-14 lg:mb-16">
+        <div className="text-center mt-12 sm:mt-20 lg:mt-24 mb-10 sm:mb-14 lg:mb-16">
           <motion.div
             initial={{ opacity: 0, scaleX: 0 }}
             animate={inView ? { opacity: 1, scaleX: 1 } : {}}

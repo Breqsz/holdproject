@@ -88,7 +88,7 @@ function StatItem({ icon, value, label, hint, onClick, divider = true, isActive 
         onKeyDown={isClickable ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick() } } : undefined}
         aria-expanded={isClickable ? isActive : undefined}
         className={[
-          'group relative flex items-center gap-3 px-5 py-4 w-full transition-colors duration-200',
+          'group relative flex items-center gap-3 px-4 sm:px-5 py-3.5 sm:py-4 w-full transition-colors duration-200',
           isClickable ? 'cursor-pointer hover:bg-[#fdf5f5]' : 'cursor-default',
           isActive ? 'bg-[#fdf5f5]' : '',
         ].join(' ')}
@@ -98,8 +98,8 @@ function StatItem({ icon, value, label, hint, onClick, divider = true, isActive 
         </span>
 
         <div className="min-w-0 flex-1">
-          <div className="text-[1.4rem] font-extrabold leading-none tracking-tight text-[#07162a]">{value}</div>
-          <div className="mt-0.5 text-[11px] leading-snug text-[#07162a]/55">{label}</div>
+          <div className="text-[1.2rem] sm:text-[1.4rem] font-extrabold leading-none tracking-tight text-[#07162a]">{value}</div>
+          <div className="mt-0.5 text-[10.5px] sm:text-[11px] leading-snug text-[#07162a]/55">{label}</div>
         </div>
 
         {isActive && (
@@ -107,14 +107,14 @@ function StatItem({ icon, value, label, hint, onClick, divider = true, isActive 
         )}
 
         {isClickable && hint && !isActive && (
-          <span className="absolute bottom-1.5 left-5 text-[9px] font-semibold uppercase tracking-[0.12em] text-[#ae251c] opacity-0 transition-opacity duration-200 group-hover:opacity-100 pointer-events-none">
+          <span className="absolute bottom-1.5 left-5 text-[9px] font-semibold uppercase tracking-[0.12em] text-[#ae251c] opacity-0 transition-opacity duration-200 group-hover:opacity-100 pointer-events-none hidden sm:block">
             {hint}
           </span>
         )}
       </div>
 
       {divider && (
-        <div className="self-center h-8 w-px bg-[#07162a]/[0.08] shrink-0" />
+        <div className="hidden sm:block self-center h-8 w-px bg-[#07162a]/[0.08] shrink-0" />
       )}
     </div>
   )
@@ -328,7 +328,7 @@ export default function StatsBar() {
       className="bg-white border-y border-[#07162a]/[0.07]"
       style={{ fontFamily: 'var(--font-outfit)' }}
     >
-      <div className="mx-auto max-w-[1280px] flex flex-wrap sm:flex-nowrap">
+      <div className="mx-auto max-w-[1280px] grid grid-cols-2 sm:flex sm:flex-nowrap [&>*:nth-child(odd)]:border-r sm:[&>*:nth-child(odd)]:border-r-0 [&>*:nth-child(-n+2)]:border-b sm:[&>*:nth-child(-n+2)]:border-b-0 [&>*]:border-[#07162a]/[0.08]">
 
         <StatItem
           icon={<Calendar size={15} className="text-[#ae251c]" strokeWidth={1.8} />}

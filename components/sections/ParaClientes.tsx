@@ -342,7 +342,7 @@ export default function ParaClientes() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Toggle */}
         <div className="flex justify-center mb-12">
-          <div className="bg-[#142f54] rounded-full p-1 inline-flex gap-1 relative">
+          <div className="bg-[#142f54] rounded-full p-1 inline-flex gap-1 relative max-w-full">
             {(['voce', 'empresa'] as TabId[]).map((id) => {
               const label = id === 'voce' ? t('clients.toggle.you') : t('clients.toggle.company')
               const isActive = tab === id
@@ -350,7 +350,7 @@ export default function ParaClientes() {
                 <button
                   key={id}
                   onClick={() => setTab(id)}
-                  className="relative z-10 px-6 py-2 rounded-full text-sm font-semibold transition-colors duration-200"
+                  className="relative z-10 px-4 sm:px-6 py-2 rounded-full text-xs sm:text-sm font-semibold transition-colors duration-200 whitespace-nowrap"
                   style={{ color: isActive ? '#ffffff' : '#7a9ab8' }}
                 >
                   {isActive && (

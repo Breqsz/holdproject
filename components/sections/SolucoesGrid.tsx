@@ -49,7 +49,7 @@ function SectorCard({ service, index }: { service: Service; index: number }) {
       <Link
         href={href}
         aria-label={ariaLabel}
-        className="group relative block overflow-hidden rounded-2xl h-full min-h-[520px] transition-shadow duration-500 hover:shadow-[0_28px_70px_-22px_rgba(0,0,0,0.55)]"
+        className="group relative block overflow-hidden rounded-2xl h-full min-h-[420px] sm:min-h-[520px] transition-shadow duration-500 hover:shadow-[0_28px_70px_-22px_rgba(0,0,0,0.55)]"
         style={{ border: '1px solid rgba(255,255,255,0.06)' }}
       >
         {/* Full-bleed image */}
@@ -97,7 +97,7 @@ function SectorCard({ service, index }: { service: Service; index: number }) {
         />
 
         {/* Bottom-anchored content */}
-        <div className="relative z-10 flex h-full flex-col justify-end p-6 sm:p-7 lg:p-8">
+        <div className="relative z-10 flex h-full flex-col justify-end p-5 sm:p-7 lg:p-8">
           <span className="text-[10px] font-semibold tracking-[0.24em] uppercase text-white/55 mb-3">
             Hold · {title}
           </span>
@@ -105,7 +105,7 @@ function SectorCard({ service, index }: { service: Service; index: number }) {
           <h3
             className="text-display text-white tracking-tight leading-[1.02] mb-3"
             style={{
-              fontSize: 'clamp(1.8rem, 2.6vw, 2.2rem)',
+              fontSize: 'clamp(1.5rem, 2.6vw, 2.2rem)',
               letterSpacing: '-0.02em',
               textShadow: '0 1px 16px rgba(0,0,0,0.45)',
             }}
@@ -123,10 +123,9 @@ function SectorCard({ service, index }: { service: Service; index: number }) {
             {desc}
           </p>
 
-          {/* Bullets — hidden idle, revealed on hover */}
+          {/* Bullets — always visible on mobile/touch, hover-revealed on lg+ pointer */}
           <div
-            aria-hidden
-            className="overflow-hidden transition-[max-height,opacity] duration-500 ease-out opacity-0 max-h-0 group-hover:opacity-100 group-hover:max-h-44 mb-4"
+            className="overflow-hidden mb-4 lg:transition-[max-height,opacity] lg:duration-500 lg:ease-out lg:opacity-0 lg:max-h-0 lg:group-hover:opacity-100 lg:group-hover:max-h-44"
           >
             <div className="flex flex-wrap gap-x-3 gap-y-1.5 pt-3 border-t border-white/15">
               {bullets.map((b) => (
