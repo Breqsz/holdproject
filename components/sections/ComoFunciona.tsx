@@ -49,20 +49,15 @@ export default function ComoFunciona() {
         .como-funciona-v2 .v2-portrait {
           width: 100%;
           height: auto;
-          max-width: 10rem;
+          max-width: 18rem;
           margin-left: auto;
           margin-right: auto;
           display: block;
-          filter: drop-shadow(0 18px 36px rgba(7, 22, 42, 0.15));
-        }
-        @media (min-width: 640px) {
-          .como-funciona-v2 .v2-portrait {
-            max-width: 11rem;
-          }
+          filter: drop-shadow(0 20px 40px rgba(7, 22, 42, 0.16));
         }
         @media (min-width: 900px) {
           .como-funciona-v2 .v2-portrait {
-            max-width: 12rem;
+            max-width: 24rem;
             margin-right: 0;
           }
         }

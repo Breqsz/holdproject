@@ -172,6 +172,10 @@
 
   "contact.eyebrow": "Fale Conosco",
   "contact.title": "Pronto para dar o próximo passo?",
+  "contact.subtitle": "Diga o que você precisa. Em até 2 horas úteis, um consultor da Hold responde — por aqui ou pelo WhatsApp.",
+  "contact.trust.1": "Resposta em até 2h úteis",
+  "contact.trust.2": "Atendimento humano, sem chatbot",
+  "contact.trust.3": "Sem compromisso de contratação",
   "contact.client.title": "Cliente",
   "contact.partner.title": "Parceiro",
   "contact.segment.label": "Segmento",
