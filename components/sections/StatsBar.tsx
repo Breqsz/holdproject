@@ -18,13 +18,13 @@ const PARTNER_LOGOS: LogoItem[] = [
   { src: '/images/logosEmpresasParceiras/bradesco.webp',      alt: 'Bradesco Seguros' },
 ]
 
-const HISTORY_YEARS = [
+const HISTORY_YEARS: readonly { year: string; current?: boolean }[] = [
   { year: '2006' },
   { year: '2009' },
   { year: '2011' },
   { year: '2022' },
   { year: '2026', current: true },
-] as const
+]
 
 const TIMELINE_EASE: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
