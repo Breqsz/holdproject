@@ -8,12 +8,13 @@ import { Loader2 } from 'lucide-react'
 import emailjs from '@emailjs/browser'
 import { toast } from 'sonner'
 import { useAudience } from '@/lib/audience'
+import { useLocale } from '@/lib/i18n'
 import { formatWhatsAppLink } from '@/lib/utils'
 import { WhatsAppIcon } from '@/components/icons/WhatsAppIcon'
 
 const schema = z.object({
-  name: z.string().min(2, 'Nome obrigatório'),
-  whatsapp: z.string().min(10, 'WhatsApp inválido'),
+  name: z.string().min(2),
+  whatsapp: z.string().min(10),
   message: z.string().optional(),
 })
 
@@ -32,10 +33,11 @@ const inputClass =
 
 export function ServiceLeadForm({
   service,
-  introTitle = 'Quero saber mais',
-  introBody = 'Deixe seus dados — retornamos no WhatsApp em horário comercial.',
+  introTitle,
+  introBody,
 }: ServiceLeadFormProps) {
   const { audience } = useAudience()
+  const { t } = useLocale()
   const [loading, setLoading] = useState(false)
   const {
     register,
@@ -44,8 +46,11 @@ export function ServiceLeadForm({
     reset,
   } = useForm<FormData>({ resolver: zodResolver(schema) })
 
-  const audienceLabel = audience === 'pf' ? 'pessoa física' : 'empresa/escritório'
+  const audienceLabel = audience === 'pf' ? t('form.lead.audience.pf') : t('form.lead.audience.pj')
   const wa = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '55XXXXXXXXXXX'
+
+  const finalIntroTitle = introTitle ?? t('form.lead.intro.title.default')
+  const finalIntroBody = introBody ?? t('form.lead.intro.body.default')
 
   async function onSubmit(data: FormData) {
     setLoading(true)
@@ -64,7 +69,7 @@ export function ServiceLeadForm({
       if (sid && tid && pk) {
         await emailjs.send(sid, tid, params, pk)
       }
-      toast.success('Mensagem enviada! Abrindo o WhatsApp…')
+      toast.success(t('form.lead.toast.success'))
 
       const message = [
         `Olá! Sou ${data.name} (${audienceLabel}).`,
@@ -75,7 +80,7 @@ export function ServiceLeadForm({
       window.open(formatWhatsAppLink(wa, message), '_blank')
       reset()
     } catch {
-      toast.error('Erro ao enviar. Pode chamar direto no WhatsApp pelo botão.')
+      toast.error(t('form.lead.toast.error'))
     } finally {
       setLoading(false)
     }
@@ -87,49 +92,49 @@ export function ServiceLeadForm({
         {service}
       </p>
       <h3 className="mt-2 text-display text-white" style={{ fontSize: 'clamp(1.5rem, 2.6vw, 2rem)' }}>
-        {introTitle}
+        {finalIntroTitle}
       </h3>
       <p className="mt-3 text-sm text-[#7a9ab8] leading-relaxed">
-        {introBody}
+        {finalIntroBody}
       </p>
 
       <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-4" noValidate>
         <div>
           <label className="text-[11px] font-medium uppercase tracking-wider text-[#7a9ab8] mb-1.5 block">
-            Nome
+            {t('form.lead.label.name')}
           </label>
           <input
             {...register('name')}
             type="text"
-            placeholder="Seu nome"
+            placeholder={t('form.lead.placeholder.name')}
             className={inputClass}
             autoComplete="name"
           />
-          {errors.name && <p className="text-[#ae251c] text-xs mt-1.5">{errors.name.message}</p>}
+          {errors.name && <p className="text-[#ae251c] text-xs mt-1.5">{t('form.lead.err.name')}</p>}
         </div>
 
         <div>
           <label className="text-[11px] font-medium uppercase tracking-wider text-[#7a9ab8] mb-1.5 block">
-            WhatsApp
+            {t('form.lead.label.whatsapp')}
           </label>
           <input
             {...register('whatsapp')}
             type="tel"
-            placeholder="(34) 99999-9999"
+            placeholder={t('form.lead.placeholder.whatsapp')}
             className={inputClass}
             autoComplete="tel"
           />
-          {errors.whatsapp && <p className="text-[#ae251c] text-xs mt-1.5">{errors.whatsapp.message}</p>}
+          {errors.whatsapp && <p className="text-[#ae251c] text-xs mt-1.5">{t('form.lead.err.whatsapp')}</p>}
         </div>
 
         <div>
           <label className="text-[11px] font-medium uppercase tracking-wider text-[#7a9ab8] mb-1.5 block">
-            Mensagem <span className="opacity-60 normal-case tracking-normal text-[10px]">(opcional)</span>
+            {t('form.lead.label.message')} <span className="opacity-60 normal-case tracking-normal text-[10px]">{t('form.lead.label.message.optional')}</span>
           </label>
           <textarea
             {...register('message')}
             rows={3}
-            placeholder="Conte brevemente o que está buscando…"
+            placeholder={t('form.lead.placeholder.message')}
             className={`${inputClass} resize-none`}
           />
         </div>
@@ -144,7 +149,7 @@ export function ServiceLeadForm({
           ) : (
             <WhatsAppIcon size={18} />
           )}
-          Enviar e abrir no WhatsApp
+          {t('form.lead.submit')}
         </button>
       </form>
     </div>

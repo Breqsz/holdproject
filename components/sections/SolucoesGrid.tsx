@@ -36,7 +36,7 @@ const cardVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE_OUT_EXPO } },
 }
 
-function SectorCard({ service, index }: { service: Service; index: number }) {
+function SectorCard({ service, index, brand, exploreLabel }: { service: Service; index: number; brand: string; exploreLabel: string }) {
   const { href, title, desc, bullets, color, image, imagePosition, ariaLabel } = service
 
   return (
@@ -99,7 +99,7 @@ function SectorCard({ service, index }: { service: Service; index: number }) {
         {/* Bottom-anchored content */}
         <div className="relative z-10 flex h-full flex-col justify-end p-5 sm:p-7 lg:p-8">
           <span className="text-[10px] font-semibold tracking-[0.24em] uppercase text-white/55 mb-3">
-            Hold · {title}
+            {brand} · {title}
           </span>
 
           <h3
@@ -137,7 +137,7 @@ function SectorCard({ service, index }: { service: Service; index: number }) {
           </div>
 
           <span className="inline-flex items-center gap-2.5 self-start text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white">
-            Conhecer
+            {exploreLabel}
             <span
               aria-hidden
               className="inline-flex h-7 w-7 items-center justify-center rounded-full transition-transform duration-300 group-hover:translate-x-1"
@@ -239,7 +239,7 @@ export default function SolucoesGrid() {
           viewport={{ once: true, amount: 0.15 }}
         >
           {SERVICES.map((s, i) => (
-            <SectorCard key={s.href} service={s} index={i} />
+            <SectorCard key={s.href} service={s} index={i} brand={t('solucoes.card.brand')} exploreLabel={t('solucoes.explore')} />
           ))}
         </motion.div>
       </div>

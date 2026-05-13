@@ -2,17 +2,19 @@
 
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
+import { useLocale } from '@/lib/i18n'
 
 const EASE = [0.16, 1, 0.3, 1] as [number, number, number, number]
 
 export default function EstrategiaBand() {
+  const { t } = useLocale()
   const ref = useRef<HTMLElement>(null)
   const inView = useInView(ref, { once: true, margin: '-20%' })
 
   return (
     <section
       ref={ref}
-      aria-label="Mais do que produtos. Uma estratégia completa para o seu patrimônio."
+      aria-label={t('band.aria')}
       className="relative overflow-hidden"
       style={{
         background: '#07162a',
@@ -57,7 +59,7 @@ export default function EstrategiaBand() {
             className="text-[12px] md:text-[13px] font-semibold uppercase text-[#7a9ab8] whitespace-nowrap"
             style={{ letterSpacing: '0.28em' }}
           >
-            Mais do que produtos.
+            {t('band.eyebrow')}
           </motion.span>
 
           {/* Vertical hairline divider (desktop) */}
@@ -101,7 +103,7 @@ export default function EstrategiaBand() {
               letterSpacing: '-0.012em',
             }}
           >
-            Uma estratégia completa para o seu patrimônio.
+            {t('band.tagline')}
           </motion.p>
         </div>
       </div>

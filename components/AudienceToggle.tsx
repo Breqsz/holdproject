@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useAudience } from '@/lib/audience'
+import { useLocale } from '@/lib/i18n'
 
 const SPRING = { type: 'spring' as const, stiffness: 110, damping: 22 }
 
@@ -12,6 +13,7 @@ interface AudienceToggleProps {
 
 export function AudienceToggle({ variant = 'dark', className = '' }: AudienceToggleProps) {
   const { audience, setAudience } = useAudience()
+  const { t } = useLocale()
 
   const wrapper =
     variant === 'dark'
@@ -28,15 +30,15 @@ export function AudienceToggle({ variant = 'dark', className = '' }: AudienceTog
       : 'text-white/70 hover:text-white'
 
   const labels: { id: 'pf' | 'pj'; label: string }[] = [
-    { id: 'pf', label: 'Para você' },
-    { id: 'pj', label: 'Para sua empresa' },
+    { id: 'pf', label: t('audience.pf') },
+    { id: 'pj', label: t('audience.pj') },
   ]
 
   return (
     <div
       className={`relative inline-flex items-center rounded-full p-1 gap-1 ${wrapper} ${className}`}
       role="group"
-      aria-label="Selecionar audiência"
+      aria-label={t('audience.aria')}
     >
       {labels.map(({ id, label }) => {
         const isActive = audience === id

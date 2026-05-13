@@ -1,6 +1,9 @@
-import Image from 'next/image'
+'use client'
+
+import { useLocale } from '@/lib/i18n'
 
 export default function ComoFunciona() {
+  const { t } = useLocale()
   return (
     <section
       id="como-funciona"
@@ -29,18 +32,8 @@ export default function ComoFunciona() {
         }
         @media (min-width: 900px) {
           .como-funciona-v2 .v2-inner {
-            grid-template-columns: 1.4fr 1fr;
-            grid-template-areas:
-              "head portrait"
-              "prose portrait"
-              "chips portrait";
-            align-items: start;
-            gap: 2.5rem 3rem;
+            max-width: 760px;
           }
-          .como-funciona-v2 .v2-headline { grid-area: head; }
-          .como-funciona-v2 .v2-prose { grid-area: prose; }
-          .como-funciona-v2 .v2-chips { grid-area: chips; }
-          .como-funciona-v2 .v2-portrait { grid-area: portrait; align-self: end; }
         }
         .como-funciona-v2 .v2-headline {
           font-size: clamp(2rem, 4.4vw, 3.25rem);
@@ -127,21 +120,6 @@ export default function ComoFunciona() {
           outline: 2px solid #07162a;
           outline-offset: 3px;
         }
-        .como-funciona-v2 .v2-portrait {
-          width: 100%;
-          height: auto;
-          max-width: 18rem;
-          margin-left: auto;
-          margin-right: auto;
-          display: block;
-          filter: drop-shadow(0 18px 36px rgba(7, 22, 42, 0.15));
-        }
-        @media (min-width: 900px) {
-          .como-funciona-v2 .v2-portrait {
-            max-width: 22rem;
-            margin-right: 0;
-          }
-        }
         @media (prefers-reduced-motion: reduce) {
           .como-funciona-v2 .v2-pillar-body,
           .como-funciona-v2 .v2-h-word,
@@ -151,41 +129,33 @@ export default function ComoFunciona() {
         }
       `}</style>
 
-      <input type="radio" id="v2-r-1" name="como-funciona-pillar" defaultChecked className="v2-radio" aria-label="Inteligência" />
-      <input type="radio" id="v2-r-2" name="como-funciona-pillar" className="v2-radio" aria-label="Transparência" />
-      <input type="radio" id="v2-r-3" name="como-funciona-pillar" className="v2-radio" aria-label="Acompanhamento" />
+      <input type="radio" id="v2-r-1" name="como-funciona-pillar" defaultChecked className="v2-radio" aria-label={t('comoFunciona.pillar.intelligence.label')} />
+      <input type="radio" id="v2-r-2" name="como-funciona-pillar" className="v2-radio" aria-label={t('comoFunciona.pillar.transparency.label')} />
+      <input type="radio" id="v2-r-3" name="como-funciona-pillar" className="v2-radio" aria-label={t('comoFunciona.pillar.followup.label')} />
 
       <div className="v2-inner">
         <h2 className="v2-headline">
-          O jeito <span className="v2-h-word">HOLD</span> de ser.
+          {t('comoFunciona.headline.prefix')} <span className="v2-h-word">HOLD</span> {t('comoFunciona.headline.suffix')}
         </h2>
 
         <div className="v2-prose">
           <p className="v2-pillar-body v2-pb-1">
-            Inteligência aplicada antes da proposta. Cada plano nasce de um diagnóstico real, com números seus, não de um catálogo. 19 anos calibrando a leitura de risco e oportunidade para mais de 60 parcerias.
+            {t('comoFunciona.pillar.intelligence.body')}
           </p>
           <p className="v2-pillar-body v2-pb-2">
-            Contrato lido em conjunto, taxas explicadas, condições documentadas. Quando você assina, sabe o que assinou, e sabe a quem ligar se algo mudar. Transparência operacional como compromisso, não slogan.
+            {t('comoFunciona.pillar.transparency.body')}
           </p>
           <p className="v2-pillar-body v2-pb-3">
-            A conversa não termina na contratação. Revisões periódicas, ajustes quando a vida muda, e a mesma consultoria do início ao resultado. Continuidade é o que separa serviço de relacionamento.
+            {t('comoFunciona.pillar.followup.body')}
           </p>
         </div>
 
         <div className="v2-chips">
-          <label htmlFor="v2-r-1" className="v2-chip">Inteligência</label>
-          <label htmlFor="v2-r-2" className="v2-chip">Transparência</label>
-          <label htmlFor="v2-r-3" className="v2-chip">Acompanhamento</label>
+          <label htmlFor="v2-r-1" className="v2-chip">{t('comoFunciona.pillar.intelligence.label')}</label>
+          <label htmlFor="v2-r-2" className="v2-chip">{t('comoFunciona.pillar.transparency.label')}</label>
+          <label htmlFor="v2-r-3" className="v2-chip">{t('comoFunciona.pillar.followup.label')}</label>
         </div>
 
-        <Image
-          src="/personagem/jacimar-avatar-question.png"
-          alt=""
-          width={600}
-          height={920}
-          quality={95}
-          className="v2-portrait"
-        />
       </div>
     </section>
   )

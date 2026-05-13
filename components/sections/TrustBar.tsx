@@ -3,18 +3,20 @@
 import { useRef, useState, useCallback } from 'react'
 import { Target, Landmark, Users, Handshake, TrendingUp } from 'lucide-react'
 import { HoldLogo } from '@/components/icons/HoldLogo'
+import { useLocale } from '@/lib/i18n'
 
-const ITEMS = [
-  { Icon: Target,     line1: 'Atuação independente',        line2: 'e estratégica' },
-  { Icon: Landmark,   line1: 'Instituições regulamentadas', line2: 'e consolidadas' },
-  { Icon: Users,      line1: 'Especialistas em',            line2: 'diferentes áreas' },
-  { Icon: Handshake,  line1: 'Relacionamento próximo,',     line2: 'transparente e contínuo' },
-  { Icon: TrendingUp, line1: 'Soluções completas para',     line2: 'proteger e fazer seu patrimônio crescer' },
-]
+const ICONS = [Target, Landmark, Users, Handshake, TrendingUp]
 
 export default function TrustBar() {
+  const { t } = useLocale()
   const scrollRef = useRef<HTMLDivElement>(null)
   const [activeDot, setActiveDot] = useState(0)
+
+  const ITEMS = ICONS.map((Icon, i) => ({
+    Icon,
+    line1: t(`trustBar.${i + 1}.line1`),
+    line2: t(`trustBar.${i + 1}.line2`),
+  }))
 
   const handleScroll = useCallback(() => {
     const el = scrollRef.current
@@ -23,7 +25,7 @@ export default function TrustBar() {
     if (!firstItem) return
     const stride = firstItem.offsetWidth + 16 // gap-4 = 16px
     const index = Math.round(el.scrollLeft / stride)
-    setActiveDot(Math.min(index, ITEMS.length - 1))
+    setActiveDot(Math.min(index, ICONS.length - 1))
   }, [])
 
   return (
@@ -57,7 +59,7 @@ export default function TrustBar() {
         <div
           ref={scrollRef}
           onScroll={handleScroll}
-          aria-label="Diferenciais Hold"
+          aria-label={t('trustBar.aria')}
           className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth px-6 py-4 gap-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {ITEMS.map(({ Icon, line1, line2 }, i) => (

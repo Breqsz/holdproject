@@ -3,37 +3,23 @@
 import { useRef } from 'react'
 import Image from 'next/image'
 import { motion, useInView } from 'framer-motion'
+import { useLocale } from '@/lib/i18n'
 
 const EASE = [0.16, 1, 0.3, 1] as [number, number, number, number]
 
 const RED = '#ae251c'
 
-type Principle = {
-  title: string
-  body: string
-}
-
-const PRINCIPLES: Principle[] = [
-  {
-    title: 'Missão',
-    body:
-      'Ajudar pessoas e empresas a tomar melhores decisões, conectando saúde, seguros, consórcios e finanças de forma simples e estratégica.',
-  },
-  {
-    title: 'Visão',
-    body:
-      'Ser referência para pessoas e empresas que buscam segurança para decidir e consistência para crescer.',
-  },
-  {
-    title: 'Valores',
-    body:
-      'Agimos com integridade, falamos com transparência, cuidamos com responsabilidade, respeitamos cada história, pensamos no longo prazo e nunca negociamos a confiança.',
-  },
-]
+const PRINCIPLE_KEYS = ['mission', 'vision', 'values'] as const
 
 export default function EstrategiaManifesto() {
+  const { t } = useLocale()
   const ref = useRef<HTMLElement>(null)
   const inView = useInView(ref, { once: true, margin: '-12%' })
+
+  const PRINCIPLES = PRINCIPLE_KEYS.map((k) => ({
+    title: t(`manifesto.${k}.title`),
+    body: t(`manifesto.${k}.body`),
+  }))
 
   return (
     <section
@@ -75,7 +61,7 @@ export default function EstrategiaManifesto() {
           initial={{ opacity: 0, scale: 0.985 }}
           animate={inView ? { opacity: 1, scale: 1 } : {}}
           transition={{ duration: 1.1, delay: 0.15, ease: EASE }}
-          className="relative overflow-hidden aspect-[4/5] sm:aspect-[16/10] lg:aspect-[16/9] lg:max-h-[640px]"
+          className="relative overflow-hidden rounded-2xl sm:rounded-3xl aspect-[4/5] sm:aspect-[16/10] lg:aspect-[16/9] lg:max-h-[640px]"
           style={{
             boxShadow:
               '0 30px 80px -30px rgba(0,0,0,0.7), 0 12px 32px -16px rgba(0,0,0,0.5)',
@@ -85,7 +71,7 @@ export default function EstrategiaManifesto() {
           {/* Image */}
           <Image
             src="/images/estrategia.jpg"
-            alt="Hold Corretora — equipe em reunião estratégica no escritório"
+            alt={t('manifesto.image.alt')}
             fill
             priority={false}
             sizes="(max-width: 1024px) 100vw, 1160px"
@@ -133,26 +119,22 @@ export default function EstrategiaManifesto() {
                   textShadow: '0 2px 18px rgba(0,0,0,0.45)',
                 }}
               >
-                Integramos saúde, seguros, consórcios e finanças em uma gestão
-                estratégica.
+                {t('manifesto.headline.lead')}
                 <span
                   className="block mt-3"
                   style={{
-                    fontFamily: 'var(--font-cormorant)',
-                    fontStyle: 'italic',
-                    fontWeight: 600,
+                    fontWeight: 700,
                     color: RED,
                     fontSize: 'clamp(1.4rem, 3.2vw, 2.875rem)',
                     lineHeight: 1.12,
                     letterSpacing: '-0.018em',
                   }}
                 >
-                  Voltada à proteção patrimonial, sucessão e eficiência
-                  financeira.
+                  {t('manifesto.headline.italic')}
                 </span>
               </motion.h2>
 
-              {/* Body — two paragraphs */}
+              {/* Body — single paragraph */}
               <motion.p
                 initial={{ opacity: 0, y: 10 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -164,33 +146,15 @@ export default function EstrategiaManifesto() {
                   textShadow: '0 1px 12px rgba(0,0,0,0.55)',
                 }}
               >
-                A Hold Corretora atua como parceira estratégica na proteção, no
-                planejamento e no crescimento patrimonial de pessoas e empresas,
-                com mais de{' '}
+                {t('manifesto.body.1.pre')}{' '}
                 <span style={{ color: '#ffffff', fontWeight: 600 }}>
-                  19 anos de experiência
+                  {t('manifesto.body.1.years')}
                 </span>{' '}
-                e acesso a mais de{' '}
+                {t('manifesto.body.1.middle')}{' '}
                 <span style={{ color: '#ffffff', fontWeight: 600 }}>
-                  60 parceiros
+                  {t('manifesto.body.1.partners')}
                 </span>
-                .
-              </motion.p>
-
-              <motion.p
-                initial={{ opacity: 0, y: 10 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.75, delay: 0.85, ease: EASE }}
-                className="mt-5 text-[13.5px] sm:text-[14.5px] leading-[1.65] max-w-[56ch]"
-                style={{
-                  color: '#c8d2e0',
-                  fontWeight: 400,
-                  textShadow: '0 1px 12px rgba(0,0,0,0.55)',
-                }}
-              >
-                Estruturamos soluções completas e personalizadas em saúde,
-                seguros, consórcios e finanças — com proximidade, transparência
-                e visão de longo prazo.
+                {t('manifesto.body.1.suffix')}
               </motion.p>
             </motion.div>
           </div>
@@ -228,7 +192,7 @@ export default function EstrategiaManifesto() {
               animate={inView ? { opacity: 1 } : {}}
               transition={{ duration: 0.45, delay: 1.15, ease: 'easeOut' }}
             >
-              Princípios Hold
+              {t('manifesto.principles.eyebrow')}
             </motion.span>
             <motion.span
               aria-hidden
@@ -274,11 +238,9 @@ export default function EstrategiaManifesto() {
                 }
               >
                 <h3
-                  className="leading-none italic"
+                  className="leading-none"
                   style={{
-                    fontFamily: 'var(--font-cormorant)',
-                    fontStyle: 'italic',
-                    fontWeight: 600,
+                    fontWeight: 700,
                     fontSize: 'clamp(1.625rem, 2.4vw, 2.125rem)',
                     letterSpacing: '-0.012em',
                     color: RED,

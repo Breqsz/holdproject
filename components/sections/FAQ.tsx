@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Plus } from 'lucide-react'
 import { useLocale } from '@/lib/i18n'
@@ -39,21 +40,33 @@ export default function FAQ() {
     >
       <div className="max-w-3xl mx-auto px-6 lg:px-8">
 
-        {/* Header — left-aligned editorial */}
+        {/* Header — centrado com boneco entre título e accordion */}
         <motion.div
           variants={stagger}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="mb-12"
+          className="mb-10 text-center"
         >
           <motion.h2
             variants={fadeUp}
-            className="mt-5 text-display text-[#07162a]"
+            className="text-display text-[#07162a]"
             style={{ fontSize: 'clamp(1.75rem, 3.6vw, 2.75rem)' }}
           >
             {t('faq.title')}
           </motion.h2>
+
+          <motion.div variants={fadeUp} className="mt-6 flex justify-center">
+            <Image
+              src="/personagem/jacimar-avatar-question.png"
+              alt=""
+              width={220}
+              height={340}
+              quality={95}
+              className="w-48 sm:w-56 lg:w-64 h-auto"
+              style={{ filter: 'drop-shadow(0 20px 40px rgba(7,22,42,0.15))' }}
+            />
+          </motion.div>
         </motion.div>
 
         {/* Accordion */}

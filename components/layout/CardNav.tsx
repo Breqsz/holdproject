@@ -115,64 +115,36 @@ export default function CardNav() {
                 </svg>
               </button>
 
+
               <AnimatePresence>
                 {ddOpen && (
                   <motion.div
                     id="solucoes-dropdown"
                     role="menu"
-                    initial={{ opacity: 0, y: -10 }}
+                    initial={{ opacity: 0, y: -8 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.21, ease: EASE }}
-                    className="absolute top-[calc(100%+10px)] left-1/2 -translate-x-1/2 w-[540px] bg-[#0b1f3a] border border-white/[0.08] rounded-2xl p-[18px] shadow-[0_24px_60px_rgba(0,0,0,0.55),0_0_0_1px_rgba(0,0,0,0.25)] z-10"
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.28, ease: EASE }}
+                    className="v1-blade"
                   >
-                    <div className="flex items-center justify-between mb-3 pb-3 border-b border-white/[0.06]">
-                      <span className="text-[9.5px] font-bold tracking-[1.8px] uppercase text-white/30">
-                        {t('navbar.dd.title')}
-                      </span>
-                      <span className="text-[10.5px] text-white/20">{t('navbar.dd.partners')}</span>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-[7px]">
-                      {DD_ITEMS.map(item => (
-                        <Link
-                          key={item.key}
-                          href={item.href}
-                          role="menuitem"
-                          onClick={closeAll}
-                          className="flex items-start gap-3 p-3 rounded-[10px] border border-transparent hover:bg-white/[0.04] hover:border-white/[0.10] transition-all duration-200 no-underline"
-                        >
-                          <div className="w-[34px] h-[34px] rounded-[9px] bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0">
-                            <DdIcon type={item.icon} />
-                          </div>
-                          <div>
-                            <div className="text-[13px] font-semibold text-white mb-0.5 leading-snug">
-                              {t(`navbar.dd.${item.key}`)}
-                            </div>
-                            <div className="text-[11px] text-white/40 leading-snug">
-                              {t(`navbar.dd.${item.key}.desc`)}
-                            </div>
-                          </div>
+                    <div className="v1-inner">
+                      {DD_ITEMS.map((item, i) => (
+                        <Link key={item.key} href={item.href} role="menuitem" onClick={closeAll} className="v1-col">
+                          <span className="v1-num">{String(i + 1).padStart(2, '0')} / 04</span>
+                          <span className="v1-name">{t(`navbar.dd.${item.key}`)}</span>
+                          <span className="v1-sub">{t(`navbar.dd.${item.key}.desc`)}</span>
+                          <span className="v1-arr">Conhecer<svg width="14" height="6" viewBox="0 0 14 6" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true"><path d="M0 3h13M10 0l3 3-3 3"/></svg></span>
                         </Link>
                       ))}
                     </div>
-
-                    <div className="mt-3 pt-3 border-t border-white/[0.06] flex items-center justify-between">
-                      <span className="text-[10.5px] text-white/20">{t('navbar.dd.footer')}</span>
-                      <Link
-                        href="/#solucoes"
-                        onClick={closeAll}
-                        className="flex items-center gap-1 text-[11px] font-semibold text-white/70 hover:text-white transition-colors no-underline"
-                      >
-                        {t('navbar.dd.ver_todas')}
-                        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
-                          <path d="M2 8L8 2M8 2H4M8 2v4"/>
-                        </svg>
-                      </Link>
+                    <div className="v1-foot">
+                      <span className="v1-foot-note">{t('navbar.dd.footer')}</span>
+                      <Link href="/#solucoes" onClick={closeAll} className="v1-foot-cta">{t('navbar.dd.ver_todas')} →</Link>
                     </div>
                   </motion.div>
                 )}
               </AnimatePresence>
+
             </div>
 
             <Link href="/#sobre-nos" className={NAV_LINK_CLS} onClick={closeAll}>

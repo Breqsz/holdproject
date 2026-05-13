@@ -4,6 +4,7 @@ import { useState, useCallback } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Calendar, Handshake, Target, Gem, ChevronDown } from 'lucide-react'
 import LogoLoop from '@/components/motion/LogoLoop'
+import { useLocale } from '@/lib/i18n'
 
 import type { LogoItem } from '@/components/motion/LogoLoop'
 
@@ -17,29 +18,13 @@ const PARTNER_LOGOS: LogoItem[] = [
   { src: '/images/logosEmpresasParceiras/bradesco.webp',      alt: 'Bradesco Seguros' },
 ]
 
-const HISTORY_TIMELINE: { year: string; text: string; current?: boolean }[] = [
-  {
-    year: '2006',
-    text: 'Início — atuação especializada na comercialização de planos de saúde, com o propósito de unir proteção, proximidade e confiança.',
-  },
-  {
-    year: '2009',
-    text: 'Ampliação para o mercado de seguros, passando a operar em todos os ramos e atendendo pessoas e empresas de forma mais estratégica e completa.',
-  },
-  {
-    year: '2011',
-    text: 'Incorporação de consórcios ao portfólio, com visão de planejamento patrimonial e conquista estruturada de bens e objetivos de médio e longo prazo.',
-  },
-  {
-    year: '2022',
-    text: 'Filiação à Rede Lojacorr, a maior rede de corretoras de seguros do país — mais soluções, tecnologia e capacidade operacional.',
-  },
-  {
-    year: '2026',
-    text: 'Expansão para soluções financeiras, completando um ecossistema integrado de proteção, planejamento, crescimento e estruturação patrimonial.',
-    current: true,
-  },
-]
+const HISTORY_YEARS = [
+  { year: '2006' },
+  { year: '2009' },
+  { year: '2011' },
+  { year: '2022' },
+  { year: '2026', current: true },
+] as const
 
 const TIMELINE_EASE: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
@@ -58,12 +43,7 @@ const timelineItem = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: TIMELINE_EASE } },
 }
 
-const FRENTES = [
-  { title: 'Planos de Saúde', desc: 'Cuidado, previsibilidade e acesso às melhores operadoras.' },
-  { title: 'Seguros',         desc: 'Proteção sob medida em todos os ramos, PF e PJ.' },
-  { title: 'Consórcios',      desc: 'Construção patrimonial planejada e estratégica.' },
-  { title: 'Soluções Financeiras', desc: 'Organizar, proteger e expandir patrimônio.' },
-]
+const FRENTE_INDICES = [1, 2, 3, 4] as const
 
 type PanelKey = 'history' | 'partners' | 'frentes' | 'proposito'
 
@@ -144,13 +124,14 @@ function PanelHeader({ eyebrow, title }: { eyebrow: string; title: string }) {
 }
 
 function HistoryPanel() {
+  const { t } = useLocale()
   return (
     <div className="mx-auto max-w-[1280px] px-6 sm:px-8 py-7 sm:py-8">
       {/* Header row: title left, subtitle right */}
       <div className="flex items-end justify-between gap-6 mb-7 sm:mb-8">
         <div>
           <div className="text-[9.5px] font-bold tracking-[0.22em] uppercase text-[#ae251c] mb-1.5">
-            +19 anos
+            {t('statsBar.history.eyebrow')}
           </div>
           <h3
             className="text-[#07162a] tracking-tight leading-tight"
@@ -161,14 +142,14 @@ function HistoryPanel() {
               letterSpacing: '-0.018em',
             }}
           >
-            Nossa história
+            {t('statsBar.history.title')}
           </h3>
         </div>
         <p
           className="hidden sm:block text-[11.5px] text-[#07162a]/45 max-w-[40ch] text-right leading-snug"
           style={{ fontFamily: 'var(--font-cormorant)', fontStyle: 'italic', fontSize: '13.5px' }}
         >
-          Da especialização em saúde ao ecossistema integrado de soluções financeiras.
+          {t('statsBar.history.subtitle')}
         </p>
       </div>
 
@@ -187,7 +168,7 @@ function HistoryPanel() {
           className="absolute left-[6px] sm:left-[7px] top-[10px] bottom-[10px] w-px bg-gradient-to-b from-[#ae251c]/35 via-[#07162a]/15 to-[#07162a]/5"
         />
 
-        {HISTORY_TIMELINE.map((item) => (
+        {HISTORY_YEARS.map((item) => (
           <motion.li
             key={item.year}
             variants={timelineItem}
@@ -232,14 +213,14 @@ function HistoryPanel() {
               </span>
               {item.current && (
                 <span className="text-[8.5px] font-bold tracking-[0.18em] uppercase text-[#ae251c] px-1.5 py-[2px] rounded-sm bg-[#ae251c]/10 leading-none">
-                  Hoje
+                  {t('statsBar.history.today')}
                 </span>
               )}
             </div>
 
             {/* Text */}
             <p className="text-[12.5px] leading-[1.55] text-[#07162a]/65 max-w-[78ch]">
-              {item.text}
+              {t(`statsBar.history.${item.year}`)}
             </p>
           </motion.li>
         ))}
@@ -249,6 +230,7 @@ function HistoryPanel() {
 }
 
 function PartnersPanel() {
+  const { t } = useLocale()
   return (
     <div className="py-3">
       <LogoLoop
@@ -259,25 +241,26 @@ function PartnersPanel() {
         gap={56}
         fadeOut
         fadeOutColor="#fffaf9"
-        ariaLabel="Parceiros estratégicos"
+        ariaLabel={t('statsBar.partnersAria')}
       />
     </div>
   )
 }
 
 function FrentesPanel() {
+  const { t } = useLocale()
   return (
     <div className="mx-auto max-w-[1280px] px-6 sm:px-8 py-6">
-      <PanelHeader eyebrow="4 frentes" title="Estratégicas e integradas" />
+      <PanelHeader eyebrow={t('statsBar.frentes.eyebrow')} title={t('statsBar.frentes.panelTitle')} />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-        {FRENTES.map((f, i) => (
+        {FRENTE_INDICES.map((n) => (
           <div
-            key={f.title}
+            key={n}
             className="rounded-lg border border-[#07162a]/8 bg-white p-3.5"
           >
             <div className="flex items-center gap-2 mb-1.5">
               <span className="text-[9.5px] font-bold tracking-[0.18em] uppercase text-[#ae251c] tabular-nums">
-                {String(i + 1).padStart(2, '0')}
+                {String(n).padStart(2, '0')}
               </span>
               <span
                 className="text-[#07162a]"
@@ -288,11 +271,11 @@ function FrentesPanel() {
                   letterSpacing: '-0.012em',
                 }}
               >
-                {f.title}
+                {t(`statsBar.frentes.${n}.title`)}
               </span>
             </div>
             <p className="text-[11.5px] leading-[1.5] text-[#07162a]/55">
-              {f.desc}
+              {t(`statsBar.frentes.${n}.desc`)}
             </p>
           </div>
         ))}
@@ -302,13 +285,12 @@ function FrentesPanel() {
 }
 
 function PropositoPanel() {
+  const { t } = useLocale()
   return (
     <div className="mx-auto max-w-[1280px] px-6 sm:px-8 py-6">
-      <PanelHeader eyebrow="1 propósito" title="O seu patrimônio" />
+      <PanelHeader eyebrow={t('statsBar.purpose.eyebrow')} title={t('statsBar.purpose.panelTitle')} />
       <p className="max-w-[68ch] text-[13px] leading-[1.6] text-[#07162a]/75">
-        Transformar decisões financeiras e patrimoniais em estratégias seguras,
-        inteligentes e acessíveis, conectando pessoas e empresas às melhores
-        soluções com transparência, proximidade e visão de longo prazo.
+        {t('statsBar.purpose.body')}
       </p>
     </div>
   )
@@ -317,6 +299,7 @@ function PropositoPanel() {
 /* ─── Main component ─────────────────────────────────────────────────────── */
 
 export default function StatsBar() {
+  const { t } = useLocale()
   const [activePanel, setActivePanel] = useState<PanelKey | null>(null)
 
   const togglePanel = useCallback((key: PanelKey) => {
@@ -332,36 +315,36 @@ export default function StatsBar() {
 
         <StatItem
           icon={<Calendar size={15} className="text-[#ae251c]" strokeWidth={1.8} />}
-          value="+19"
-          label="anos de trajetória"
-          hint="Ver história →"
+          value={t('statsBar.years.value')}
+          label={t('statsBar.years.label')}
+          hint={t('statsBar.years.hint')}
           onClick={() => togglePanel('history')}
           isActive={activePanel === 'history'}
         />
 
         <StatItem
           icon={<Handshake size={15} className="text-[#ae251c]" strokeWidth={1.8} />}
-          value="+60"
-          label="parceiros estratégicos"
-          hint="Ver parceiros →"
+          value={t('statsBar.partners.value')}
+          label={t('statsBar.partners.label')}
+          hint={t('statsBar.partners.hint')}
           onClick={() => togglePanel('partners')}
           isActive={activePanel === 'partners'}
         />
 
         <StatItem
           icon={<Target size={15} className="text-[#ae251c]" strokeWidth={1.8} />}
-          value="4"
-          label="frentes integradas"
-          hint="Ver frentes →"
+          value={t('statsBar.frentes.value')}
+          label={t('statsBar.frentes.label')}
+          hint={t('statsBar.frentes.hint')}
           onClick={() => togglePanel('frentes')}
           isActive={activePanel === 'frentes'}
         />
 
         <StatItem
           icon={<Gem size={15} className="text-[#ae251c]" strokeWidth={1.8} />}
-          value="1"
-          label="propósito: o seu patrimônio"
-          hint="Ver propósito →"
+          value={t('statsBar.purpose.value')}
+          label={t('statsBar.purpose.label')}
+          hint={t('statsBar.purpose.hint')}
           onClick={() => togglePanel('proposito')}
           isActive={activePanel === 'proposito'}
           divider={false}

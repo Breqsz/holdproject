@@ -75,7 +75,7 @@ export default function HomeHero() {
         quality={100}
         sizes="100vw"
         className="object-cover object-center md:object-[100%_0%]"
-        style={{ zIndex: 0 }}
+        style={{ zIndex: 0, filter: 'brightness(0.86) contrast(1.04)' }}
       />
 
       {/* Mobile gradient overlay — garante legibilidade do texto */}
