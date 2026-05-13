@@ -63,7 +63,7 @@ export default function FAQ() {
               width={220}
               height={340}
               quality={95}
-              className="w-48 sm:w-56 lg:w-64 h-auto"
+              className="w-32 sm:w-36 lg:w-40 h-auto"
               style={{ filter: 'drop-shadow(0 20px 40px rgba(7,22,42,0.15))' }}
             />
           </motion.div>

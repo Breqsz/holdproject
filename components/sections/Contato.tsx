@@ -107,7 +107,7 @@ export default function Contato() {
     <section id="contato" className="section-pad bg-[#0b1f3a]" style={{ fontFamily: 'var(--font-outfit)' }}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <div className="mb-10 sm:mb-12 flex flex-col-reverse items-start gap-6 md:flex-row md:items-end md:justify-between md:gap-10">
+        <div className="mb-10 sm:mb-12 flex flex-col-reverse items-start gap-5 md:flex-row md:items-end md:justify-between md:gap-10">
           <h2
             className="mt-5 text-display text-white max-w-2xl"
             style={{ fontSize: 'clamp(1.65rem, 4.4vw, 3.25rem)' }}
@@ -121,8 +121,8 @@ export default function Contato() {
             width={220}
             height={340}
             quality={95}
-            className="w-40 sm:w-48 md:w-52 lg:w-60 h-auto shrink-0"
-            style={{ filter: 'drop-shadow(0 24px 48px rgba(0,0,0,0.45))' }}
+            className="hidden md:block w-32 lg:w-40 h-auto shrink-0"
+            style={{ filter: 'drop-shadow(0 16px 32px rgba(0,0,0,0.4))' }}
           />
         </div>
 

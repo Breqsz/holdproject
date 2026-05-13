@@ -88,7 +88,7 @@ export default function Depoimentos() {
               width={220}
               height={340}
               quality={95}
-              className="w-32 lg:w-40 h-auto"
+              className="w-32 sm:w-36 lg:w-40 h-auto"
               style={{ filter: 'drop-shadow(0 18px 36px rgba(7,22,42,0.15))' }}
             />
           </motion.div>
