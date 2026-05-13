@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useLocale } from '@/lib/i18n'
 
 export default function ComoFunciona() {
@@ -32,7 +33,32 @@ export default function ComoFunciona() {
         }
         @media (min-width: 900px) {
           .como-funciona-v2 .v2-inner {
-            max-width: 760px;
+            grid-template-columns: 1.4fr 1fr;
+            grid-template-areas:
+              "head portrait"
+              "prose portrait"
+              "chips portrait";
+            align-items: start;
+            gap: 2.5rem 3rem;
+          }
+          .como-funciona-v2 .v2-headline { grid-area: head; }
+          .como-funciona-v2 .v2-prose { grid-area: prose; }
+          .como-funciona-v2 .v2-chips { grid-area: chips; }
+          .como-funciona-v2 .v2-portrait { grid-area: portrait; align-self: end; justify-self: end; }
+        }
+        .como-funciona-v2 .v2-portrait {
+          width: 100%;
+          height: auto;
+          max-width: 18rem;
+          margin-left: auto;
+          margin-right: auto;
+          display: block;
+          filter: drop-shadow(0 20px 40px rgba(7, 22, 42, 0.16));
+        }
+        @media (min-width: 900px) {
+          .como-funciona-v2 .v2-portrait {
+            max-width: 24rem;
+            margin-right: 0;
           }
         }
         .como-funciona-v2 .v2-headline {
@@ -156,6 +182,14 @@ export default function ComoFunciona() {
           <label htmlFor="v2-r-3" className="v2-chip">{t('comoFunciona.pillar.followup.label')}</label>
         </div>
 
+        <Image
+          src="/personagem/Boneco_v1.png"
+          alt=""
+          width={600}
+          height={920}
+          quality={95}
+          className="v2-portrait"
+        />
       </div>
     </section>
   )

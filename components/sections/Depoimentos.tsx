@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback } from 'react'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Star, ArrowLeft, ArrowRight } from 'lucide-react'
 import useEmblaCarousel from 'embla-carousel-react'
@@ -79,6 +80,18 @@ export default function Depoimentos() {
               </a>
             </motion.div>
           </div>
+
+          <motion.div variants={fadeUp} className="hidden md:block shrink-0">
+            <Image
+              src="/personagem/jacimar-avatar-question.png"
+              alt=""
+              width={220}
+              height={340}
+              quality={95}
+              className="w-32 lg:w-40 h-auto"
+              style={{ filter: 'drop-shadow(0 18px 36px rgba(7,22,42,0.15))' }}
+            />
+          </motion.div>
 
           <motion.div variants={fadeUp} className="flex items-center gap-2">
             <button

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronLeft, ChevronRight, Loader2 } from 'lucide-react'
 import emailjs from '@emailjs/browser'
@@ -106,10 +107,23 @@ export default function Contato() {
     <section id="contato" className="section-pad bg-[#0b1f3a]" style={{ fontFamily: 'var(--font-outfit)' }}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <div className="max-w-2xl mb-10 sm:mb-12">
-          <h2 className="mt-5 text-display text-white" style={{ fontSize: 'clamp(1.65rem, 4.4vw, 3.25rem)' }}>
+        <div className="mb-10 sm:mb-12 flex flex-col-reverse items-start gap-6 md:flex-row md:items-end md:justify-between md:gap-10">
+          <h2
+            className="mt-5 text-display text-white max-w-2xl"
+            style={{ fontSize: 'clamp(1.65rem, 4.4vw, 3.25rem)' }}
+          >
             {t('contact.title')}
           </h2>
+
+          <Image
+            src="/personagem/Boneco_v3.png"
+            alt=""
+            width={220}
+            height={340}
+            quality={95}
+            className="w-40 sm:w-48 md:w-52 lg:w-60 h-auto shrink-0"
+            style={{ filter: 'drop-shadow(0 24px 48px rgba(0,0,0,0.45))' }}
+          />
         </div>
 
         <div className="max-w-lg mx-auto rounded-2xl bg-[#07162a]/80 ring-1 ring-white/10 px-5 py-7 sm:px-10 sm:py-10">
