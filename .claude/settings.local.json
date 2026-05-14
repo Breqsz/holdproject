@@ -98,7 +98,9 @@
       "Bash(netstat -ano)",
       "Bash(C:\\\\Users\\\\guiro\\\\.claude\\\\plugins\\\\cache\\\\claude-plugins-official\\\\superpowers\\\\5.1.0\\\\scripts\\\\start-server.sh *)",
       "Skill(impeccable)",
-      "mcp__claude_ai_Vercel__get_deployment"
+      "mcp__claude_ai_Vercel__get_deployment",
+      "Skill(superpowers:brainstorming)",
+      "Bash(scripts/start-server.sh *)"
     ]
   }
 }

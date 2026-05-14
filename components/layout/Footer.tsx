@@ -59,7 +59,7 @@ export default function Footer() {
         {/* Main footer hero — HOLD CORRETORA × LOJACORR — Cinematic seal stamp */}
 
         <div ref={heroRef} className="mb-14 flex flex-col items-center text-center gap-6">
-          <div className="flex items-center gap-8 sm:gap-12 flex-wrap justify-center">
+          <div className="flex items-center gap-14 sm:gap-20 flex-wrap justify-center">
             <motion.span
               className="inline-block"
               initial={{ clipPath: 'inset(0 100% 0 0)' }}
@@ -70,23 +70,13 @@ export default function Footer() {
                 subtitle="corretora"
                 variant="dark"
                 className="w-auto"
-                style={{ height: 'clamp(2.6rem, 5vw, 4rem)' }}
+                style={{ height: 'clamp(4rem, 8vw, 6.5rem)' }}
               />
-            </motion.span>
-
-            <motion.span
-              aria-hidden
-              className="inline-block text-[#ae251c] font-light select-none"
-              style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', transformOrigin: 'center' }}
-              initial={{ opacity: 0, scale: 1.4, rotate: 8 }}
-              animate={heroInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
-              transition={{ duration: 0.55, delay: 0.85, ease: EASE }}
-            >
-              ×
             </motion.span>
 
             <motion.div
               className="flex flex-col items-center gap-1.5"
+              style={{ transform: 'translateY(-0.4rem)' }}
               initial={{ clipPath: 'inset(0 0 0 100%)' }}
               animate={heroInView ? { clipPath: 'inset(0 0 0 0)' } : {}}
               transition={{ duration: 0.95, delay: 0.4, ease: EASE }}
@@ -97,7 +87,7 @@ export default function Footer() {
                 loading="lazy"
                 decoding="async"
                 className="w-auto"
-                style={{ height: 'clamp(5.5rem, 10vw, 8.5rem)' }}
+                style={{ height: 'clamp(3.6rem, 6.5vw, 5.6rem)' }}
               />
             </motion.div>
           </div>
