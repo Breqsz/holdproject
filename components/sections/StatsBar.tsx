@@ -145,12 +145,6 @@ function HistoryPanel() {
             {t('statsBar.history.title')}
           </h3>
         </div>
-        <p
-          className="hidden sm:block text-[11.5px] text-[#07162a]/45 max-w-[40ch] text-right leading-snug"
-          style={{ fontFamily: 'var(--font-cormorant)', fontStyle: 'italic', fontSize: '13.5px' }}
-        >
-          {t('statsBar.history.subtitle')}
-        </p>
       </div>
 
       {/* Timeline */}
