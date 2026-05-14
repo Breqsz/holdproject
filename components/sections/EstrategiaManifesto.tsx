@@ -405,7 +405,7 @@ export default function EstrategiaManifesto() {
       <div data-impeccable-variant="1" data-impeccable-params='[
         {"id":"density","kind":"range","min":0.7,"max":1.3,"step":0.05,"default":1,"label":"Density"},
         {"id":"split","kind":"steps","default":"50/50","label":"Column split","options":[{"value":"50/50","label":"50 / 50"},{"value":"40/60","label":"40 / 60"}]}
-      ]'>
+      ]' style={{ display: 'none' }}>
         <section className="v1-s">
           <div aria-hidden className="v1-dot dot-grid opacity-[0.3]" />
           <div className="v1-wrap">

@@ -88,15 +88,14 @@ export default function EstrategiaBand() {
             }}
           />
 
-          {/* Editorial italic phrase */}
+          {/* Tagline */}
           <motion.p
             initial={{ opacity: 0, y: 12 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.85, delay: 0.35, ease: EASE }}
             className="text-white text-balance"
             style={{
-              fontFamily: 'var(--font-cormorant)',
-              fontStyle: 'italic',
+              fontFamily: 'var(--font-gellix)',
               fontWeight: 500,
               fontSize: 'clamp(1.25rem, 2.2vw, 1.875rem)',
               lineHeight: 1.2,

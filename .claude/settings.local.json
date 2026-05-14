@@ -85,7 +85,20 @@
       "Bash(C:/Users/guiro/.claude/plugins/cache/claude-plugins-official/superpowers/5.1.0/scripts/start-server.sh *)",
       "Bash(cwebp -version)",
       "Bash(C:\\\\Users\\\\guiro\\\\.claude\\\\plugins\\\\cache\\\\claude-plugins-official\\\\superpowers\\\\5.1.0\\\\skills\\\\brainstorming\\\\scripts\\\\start-server.sh *)",
-      "WebFetch(domain:consorce.com)"
+      "WebFetch(domain:consorce.com)",
+      "mcp__claude_ai_Vercel__list_deployments",
+      "WebFetch(domain:www.consorce.com)",
+      "Bash(curl *)",
+      "PowerShell(Get-NetTCPConnection *)",
+      "Bash(python -c \"import sys,json; d=json.loads\\(sys.stdin.read\\(\\)\\); print\\('ok:', d.get\\('ok'\\), 'port:', d.get\\('serverPort'\\), 'pageFiles:', d.get\\('pageFiles'\\)\\)\")",
+      "WebSearch",
+      "WebFetch(domain:unsplash.com)",
+      "PowerShell($ProgressPreference='SilentlyContinue'; Invoke-WebRequest -Uri 'https://images.unsplash.com/photo-1741156386380-0236c72eb6f9?w=1600&q=80&auto=format&fit=crop' -OutFile 'public/images/hero/card-consorcios.jpg' -UseBasicParsing; $s=\\(Get-Item 'public/images/hero/card-consorcios.jpg'\\).Length; Write-Output \"OK $\\([math]::Round\\($s/1024,1\\)\\) KB\")",
+      "PowerShell(Resolve-Path *)",
+      "Bash(netstat -ano)",
+      "Bash(C:\\\\Users\\\\guiro\\\\.claude\\\\plugins\\\\cache\\\\claude-plugins-official\\\\superpowers\\\\5.1.0\\\\scripts\\\\start-server.sh *)",
+      "Skill(impeccable)",
+      "mcp__claude_ai_Vercel__get_deployment"
     ]
   }
 }
