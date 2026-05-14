@@ -53,7 +53,12 @@ export default function FAQ() {
             className="text-display text-[#07162a]"
             style={{ fontSize: 'clamp(1.75rem, 3.6vw, 2.75rem)' }}
           >
-            {t('faq.title')}
+            {(() => {
+              const title = t('faq.title')
+              const idx = title.indexOf('? ')
+              if (idx === -1) return title
+              return <>{title.slice(0, idx + 1)}<br />{title.slice(idx + 2)}</>
+            })()}
           </motion.h2>
 
           <motion.div variants={fadeUp} className="mt-6 flex justify-center">

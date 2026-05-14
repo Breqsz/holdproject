@@ -10,7 +10,7 @@
   "hero.title": "Um ecossistema estratégico para proteger e expandir o seu patrimônio.",
   "hero.title.line1": "Um ecossistema.",
   "hero.title.line2": "Quatro frentes.",
-  "hero.title.line3": "Uma estratégia para proteger, planejar e expandir patrimônios.",
+  "hero.title.line3": "Estratégias integradas para proteger, organizar e expandir patrimônios.",
   "hero.middle": "com",
   "hero.subtitle": "Planos de saúde, seguros, consórcios e finanças integrados em uma atuação estratégica para pessoas e empresas.",
   "hero.cta.specialist": "Fale com um especialista",
@@ -172,7 +172,7 @@
 
   "contact.eyebrow": "Fale Conosco",
   "contact.title": "Pronto para dar o próximo passo?",
-  "contact.subtitle": "Diga o que você precisa. Em até 2 horas úteis, um consultor da Hold responde — por aqui ou pelo WhatsApp.",
+  "contact.subtitle": "Diga o que você precisa. Em até 2 horas úteis, um consultor da Hold responde, por aqui ou pelo WhatsApp.",
   "contact.trust.1": "Resposta em até 2h úteis",
   "contact.trust.2": "Atendimento humano, sem chatbot",
   "contact.trust.3": "Sem compromisso de contratação",
@@ -431,7 +431,7 @@
   "statsBar.frentes.label": "frentes integradas",
   "statsBar.frentes.hint": "Ver frentes →",
   "statsBar.purpose.value": "1",
-  "statsBar.purpose.label": "propósito: o seu patrimônio",
+  "statsBar.purpose.label": "propósito: você e seu patrimônio",
   "statsBar.purpose.hint": "Ver propósito →",
 
   "statsBar.history.eyebrow": "+19 anos",
@@ -458,7 +458,7 @@
   "statsBar.frentes.4.desc": "Organizar, proteger e expandir patrimônio.",
 
   "statsBar.purpose.eyebrow": "1 propósito",
-  "statsBar.purpose.panelTitle": "O seu patrimônio",
+  "statsBar.purpose.panelTitle": "Você e seu patrimônio",
   "statsBar.purpose.body": "Transformar decisões financeiras e patrimoniais em estratégias seguras, inteligentes e acessíveis, conectando pessoas e empresas às melhores soluções com transparência, proximidade e visão de longo prazo.",
 
   "trustBar.aria": "Diferenciais Hold",

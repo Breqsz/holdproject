@@ -24,6 +24,14 @@ function IconLinkedin({ size = 16 }: { size?: number }) {
   )
 }
 
+function IconFacebook({ size = 16 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+    </svg>
+  )
+}
+
 const navLinks = [
   { key: 'nav.home', href: '#home' },
   { key: 'nav.about', href: '#sobre-nos' },
@@ -49,6 +57,7 @@ export default function Footer() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
 
         {/* Main footer hero — HOLD CORRETORA × LOJACORR — Cinematic seal stamp */}
+
         <div ref={heroRef} className="mb-14 flex flex-col items-center text-center gap-6">
           <div className="flex items-center gap-8 sm:gap-12 flex-wrap justify-center">
             <motion.span
@@ -67,7 +76,7 @@ export default function Footer() {
 
             <motion.span
               aria-hidden
-              className="inline-block text-[#1e4a7a] font-light select-none"
+              className="inline-block text-[#ae251c] font-light select-none"
               style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', transformOrigin: 'center' }}
               initial={{ opacity: 0, scale: 1.4, rotate: 8 }}
               animate={heroInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
@@ -82,34 +91,19 @@ export default function Footer() {
               animate={heroInView ? { clipPath: 'inset(0 0 0 0)' } : {}}
               transition={{ duration: 0.95, delay: 0.4, ease: EASE }}
             >
-              <motion.span
-                className="text-[10px] font-semibold uppercase tracking-[0.28em] text-[#7a9ab8]"
-                initial={{ opacity: 0 }}
-                animate={heroInView ? { opacity: 1 } : {}}
-                transition={{ duration: 0.45, delay: 1.1, ease: 'easeOut' }}
-              >
-                Corretora Parceira
-              </motion.span>
               <img
-                src="/images/LojaCorr.webp"
+                src="/images/footer/Selo%20Vermelho%20-%20Corretora%20Parceira%20-%20Lojacorr%20Seguros.png"
                 alt="Lojacorr"
                 loading="lazy"
                 decoding="async"
-                className="brightness-200 contrast-125 w-auto"
-                style={{ height: 'clamp(3.5rem, 7vw, 6rem)' }}
+                className="w-auto"
+                style={{ height: 'clamp(5.5rem, 10vw, 8.5rem)' }}
               />
             </motion.div>
           </div>
 
-          <motion.p
-            className="text-[#7a9ab8] text-sm leading-relaxed max-w-sm"
-            initial={{ opacity: 0, y: 8 }}
-            animate={heroInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 1.35, ease: 'easeOut' }}
-          >
-            {t('footer.tagline')}
-          </motion.p>
         </div>
+
 
         {/* 3-column grid */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 sm:gap-6">
@@ -140,14 +134,27 @@ export default function Footer() {
             </h4>
             <div className="flex gap-2.5 mb-7">
               <a
-                href="#"
+                href="https://www.instagram.com/hold.corretora"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="Instagram"
                 className="w-10 h-10 rounded-full bg-[#142f54] flex items-center justify-center text-[#7a9ab8] hover:text-white hover:bg-[#1e4a7a] transition-colors"
               >
                 <IconInstagram size={16} />
               </a>
               <a
-                href="#"
+                href="https://www.facebook.com/holdcorretora"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+                className="w-10 h-10 rounded-full bg-[#142f54] flex items-center justify-center text-[#7a9ab8] hover:text-white hover:bg-[#1e4a7a] transition-colors"
+              >
+                <IconFacebook size={16} />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/holdcorretora"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="LinkedIn"
                 className="w-10 h-10 rounded-full bg-[#142f54] flex items-center justify-center text-[#7a9ab8] hover:text-white hover:bg-[#1e4a7a] transition-colors"
               >
