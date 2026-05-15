@@ -46,6 +46,7 @@ export default function SaudeClient() {
   return (
     <>
       {/* Hero — light scheme to differentiate from other pages */}
+
       <section className="relative overflow-hidden pt-32 pb-16 md:pt-40 md:pb-24 bg-[#f4f1ea]">
         <div aria-hidden className="pointer-events-none absolute -right-20 -top-20 h-[460px] w-[460px] rounded-full bg-[#142f54] opacity-[.04] blur-[110px]" />
         <div aria-hidden className="pointer-events-none absolute -bottom-12 left-12 h-[280px] w-[280px] rounded-full bg-[#ae251c] opacity-[.06] blur-[90px]" />
@@ -120,7 +121,9 @@ export default function SaudeClient() {
         </div>
       </section>
 
+
       {/* Benefits */}
+
       <section className="section-pad bg-[#142f54]" style={{ fontFamily: 'var(--font-outfit)' }}>
         <div className="max-w-6xl mx-auto px-6 lg:px-8">
           <div className="max-w-3xl mb-14">
@@ -154,6 +157,7 @@ export default function SaudeClient() {
           </div>
         </div>
       </section>
+
 
       {/* Form section */}
       <section className="section-tight bg-[#142f54]" id="saude-form" style={{ fontFamily: 'var(--font-outfit)' }}>
