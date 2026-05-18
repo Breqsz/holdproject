@@ -1,196 +1,300 @@
 'use client'
 
 import Image from 'next/image'
-import { Heart, Users, Stethoscope, Activity, ArrowRight } from 'lucide-react'
-import { useAudience } from '@/lib/audience'
+import { motion } from 'framer-motion'
+import { Search, HandHeart, Layers, ArrowRight } from 'lucide-react'
 import { formatWhatsAppLink } from '@/lib/utils'
 import { Reveal } from '@/components/motion/Reveal'
-import { AudienceToggle } from '@/components/AudienceToggle'
 import { ServiceLeadForm } from '@/components/forms/ServiceLeadForm'
 import { WhatsAppIcon } from '@/components/icons/WhatsAppIcon'
+import SaudeModalidades from '@/components/sections/saude/SaudeModalidades'
+import SaudeOperadoras from '@/components/sections/saude/SaudeOperadoras'
+import SaudeFAQ from '@/components/sections/saude/SaudeFAQ'
 
+const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number]
 const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? ''
 
-const benefits = [
+const HERO_WA = 'Olá! Quero falar com um especialista em planos de saúde.'
+
+const SOBRE_CHIPS = [
+  'Atendimento consultivo',
+  'Soluções personalizadas',
+  'Acompanhamento próximo',
+]
+
+const DIFERENCIAIS = [
   {
-    icon: Heart,
-    title: 'Individual & Familiar',
-    body: 'Comparativo entre operadoras locais e nacionais, com critérios reais de rede credenciada e custo-benefício.',
+    icon: Search,
+    title: 'Análise estratégica',
+    desc: 'Avaliação técnica considerando perfil, utilização, cobertura e previsibilidade.',
   },
   {
-    icon: Users,
-    title: 'Empresarial',
-    body: 'Planos PME e corporativos — desde 2 vidas até estruturas com centenas de colaboradores. Adesão e migração assistidas.',
+    icon: HandHeart,
+    title: 'Acompanhamento próximo',
+    desc: 'Suporte consultivo em todas as etapas da jornada.',
   },
   {
-    icon: Stethoscope,
-    title: 'Odonto',
-    body: 'Cobertura odontológica como complemento ou avulsa — para indivíduos, famílias e funcionários.',
-  },
-  {
-    icon: Activity,
-    title: 'Telemedicina',
-    body: 'Atendimento remoto integrado a planos selecionados — atendimento 24/7 em parceria com operadoras de referência.',
+    icon: Layers,
+    title: 'Estrutura multissoluções',
+    desc: 'Integração entre saúde, benefícios e planejamento.',
   },
 ]
 
-export default function SaudeClient() {
-  const { audience } = useAudience()
-  const wa = formatWhatsAppLink(
-    WHATSAPP,
-    audience === 'pj'
-      ? 'Olá! Quero conhecer as opções de Plano de Saúde Empresarial.'
-      : 'Olá! Quero comparar planos de saúde para minha família.',
-  )
-
+function HeroSection() {
+  const wa = formatWhatsAppLink(WHATSAPP, HERO_WA)
   return (
-    <>
-      {/* Hero — light scheme to differentiate from other pages */}
+    <section
+      className="relative overflow-hidden pt-32 pb-16 md:pt-40 md:pb-24"
+      style={{ background: 'linear-gradient(135deg, #0d2240 0%, #142f54 60%, #0f2548 100%)' }}
+    >
+      <div aria-hidden className="dot-grid pointer-events-none absolute inset-0 opacity-[0.06]" />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -right-20 -top-20 h-[480px] w-[480px] rounded-full bg-[#1a4b8a] opacity-[.18] blur-[110px]"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -bottom-12 left-12 h-[280px] w-[280px] rounded-full bg-[#ae251c] opacity-[.10] blur-[90px]"
+      />
 
-      <section className="relative overflow-hidden pt-32 pb-16 md:pt-40 md:pb-24 bg-[#f4f1ea]">
-        <div aria-hidden className="pointer-events-none absolute -right-20 -top-20 h-[460px] w-[460px] rounded-full bg-[#142f54] opacity-[.04] blur-[110px]" />
-        <div aria-hidden className="pointer-events-none absolute -bottom-12 left-12 h-[280px] w-[280px] rounded-full bg-[#ae251c] opacity-[.06] blur-[90px]" />
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 grid gap-12 lg:grid-cols-[1.1fr_1fr] items-center">
+        <div>
+          <Reveal>
+            <div className="flex items-center gap-3">
+              <span className="inline-flex items-center rounded-full border border-[#ae251c]/30 bg-[#ae251c]/15 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#ae251c]">
+                Saúde · Hold Corretora
+              </span>
+              <div className="rule-accent h-px max-w-[120px] flex-1" />
+            </div>
+          </Reveal>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 grid gap-12 lg:grid-cols-[1.1fr_1fr] items-center">
-          <div>
-            <Reveal>
-              <div className="flex items-center gap-3">
-                <span className="inline-flex items-center rounded-full border border-[#142f54]/20 bg-[#142f54]/8 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#142f54]">
-                  Saúde · Hold Corretora
-                </span>
-                <div className="h-px max-w-[120px] flex-1 bg-gradient-to-r from-transparent via-[#142f54]/30 to-transparent" />
-              </div>
-            </Reveal>
+          <Reveal delay={0.08}>
+            <h1
+              className="mt-6 text-display text-white text-pretty"
+              style={{ fontSize: 'clamp(1.85rem, 4vw, 3.25rem)' }}
+            >
+              Soluções em saúde estruturadas com estratégia, análise e acompanhamento consultivo.
+            </h1>
+          </Reveal>
 
-            <Reveal delay={0.08}>
-              <h1
-                className="mt-6 text-display text-[#07162a] text-pretty"
-                style={{ fontSize: 'clamp(2.25rem, 5.4vw, 4rem)' }}
+          <Reveal delay={0.16}>
+            <p className="mt-6 max-w-[58ch] text-pretty text-lg leading-relaxed text-[#7a9ab8]">
+              A HOLD conecta pessoas, famílias e empresas às soluções em saúde mais adequadas
+              para cada perfil, necessidade e momento.
+            </p>
+          </Reveal>
+
+          <Reveal delay={0.24}>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a
+                href={wa}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full bg-[#25D366] hover:bg-[#1ebe5d] px-6 py-3 text-sm font-semibold text-white transition-colors"
               >
-                Saúde com escolha consciente — sem letras miúdas.
-              </h1>
-            </Reveal>
-
-            <Reveal delay={0.16}>
-              <p className="mt-6 max-w-[56ch] text-pretty text-lg leading-relaxed text-[#142f54]/75">
-                Comparamos operadoras com critérios reais — rede credenciada, custo, carências, reembolsos —
-                para indicar o plano que faz sentido pra você ou pra sua empresa.
-              </p>
-            </Reveal>
-
-            <Reveal delay={0.24}>
-              <div className="mt-8">
-                <AudienceToggle variant="dark" />
-              </div>
-            </Reveal>
-
-            <Reveal delay={0.32}>
-              <div className="mt-8 flex flex-wrap gap-3">
-                <a
-                  href={wa}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#1ebe5d]"
-                >
-                  <WhatsAppIcon size={16} />
-                  Falar no WhatsApp
-                </a>
-                <a
-                  href="#saude-form"
-                  className="group inline-flex items-center gap-2 rounded-full bg-[#07162a] text-white px-6 py-3 text-sm font-semibold transition-opacity hover:opacity-90"
-                >
-                  Comparar planos
-                  <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
-                </a>
-              </div>
-            </Reveal>
-          </div>
-
-          <Reveal delay={0.2} className="hidden lg:block">
-            <div className="relative aspect-[4/5] rounded-2xl overflow-hidden ring-1 ring-[#142f54]/10 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.18)]">
-              <Image
-                src="/images/hero/saude.webp"
-                alt="Família planejando bem-estar e saúde em ambiente doméstico"
-                fill
-                priority
-                sizes="(max-width: 1024px) 0px, 50vw"
-                className="object-cover"
-              />
+                <WhatsAppIcon size={16} />
+                Falar com especialista
+              </a>
+              <a
+                href="#saude-form"
+                className="group inline-flex items-center gap-2 rounded-full bg-white/[0.08] ring-1 ring-white/15 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/[0.12]"
+              >
+                Comparar planos
+                <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
+              </a>
             </div>
           </Reveal>
         </div>
-      </section>
 
-
-      {/* Benefits */}
-
-      <section className="section-pad bg-[#142f54]" style={{ fontFamily: 'var(--font-outfit)' }}>
-        <div className="max-w-6xl mx-auto px-6 lg:px-8">
-          <div className="max-w-3xl mb-14">
-            <Reveal>
-              <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#ae251c]">
-                Linhas de cobertura
-              </p>
-            </Reveal>
-            <Reveal delay={0.08}>
-              <h2
-                className="mt-4 text-display text-white"
-                style={{ fontSize: 'clamp(1.75rem, 3.6vw, 2.75rem)' }}
-              >
-                Da medicina preventiva à urgência — com clareza.
-              </h2>
-            </Reveal>
+        <Reveal delay={0.32} className="hidden lg:block">
+          <div className="relative aspect-[4/5] rounded-2xl overflow-hidden ring-1 ring-white/10">
+            <Image
+              src="/images/hero/saude.webp"
+              alt="Pessoa avaliando opções de plano de saúde com consultor"
+              fill
+              priority
+              sizes="(max-width: 1024px) 0px, 50vw"
+              className="object-cover"
+            />
+            <div
+              aria-hidden
+              className="absolute inset-0 bg-gradient-to-t from-[#0d2240]/70 via-transparent to-transparent"
+            />
           </div>
+        </Reveal>
+      </div>
+    </section>
+  )
+}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
-            {benefits.map(({ icon: Icon, title, body }, i) => (
-              <Reveal key={title} delay={i * 0.06} className="flex items-start gap-5">
-                <div className="shrink-0 w-12 h-12 rounded-xl bg-[#ae251c]/15 ring-1 ring-[#ae251c]/30 flex items-center justify-center">
-                  <Icon size={20} className="text-[#ae251c]" strokeWidth={1.6} />
-                </div>
-                <div>
-                  <h3 className="text-white font-semibold text-lg">{title}</h3>
-                  <p className="mt-2 text-[#7a9ab8] text-sm leading-relaxed max-w-prose">{body}</p>
-                </div>
-              </Reveal>
+function SobreSection() {
+  return (
+    <section
+      id="saude-sobre"
+      className="section-pad bg-[#07162a]"
+      style={{ fontFamily: 'var(--font-outfit)' }}
+    >
+      <div className="max-w-5xl mx-auto px-6 lg:px-8">
+        <Reveal>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#7a9ab8]">
+            O JEITO HOLD
+          </p>
+        </Reveal>
+        <Reveal delay={0.08}>
+          <h2
+            className="mt-4 text-display text-white"
+            style={{ fontSize: 'clamp(1.75rem, 3.6vw, 2.75rem)' }}
+          >
+            O jeito HOLD de estruturar soluções em saúde
+          </h2>
+        </Reveal>
+        <Reveal delay={0.16}>
+          <p className="mt-6 max-w-[60ch] text-[#7a9ab8] leading-relaxed text-lg">
+            Mais do que intermediar soluções, atuamos de forma consultiva na construção de
+            estratégias em saúde, benefícios e planejamento, conectando cada cliente às
+            decisões mais adequadas ao seu momento, necessidade e visão de futuro.
+          </p>
+        </Reveal>
+        <Reveal delay={0.24}>
+          <div className="mt-10 flex flex-wrap gap-3">
+            {SOBRE_CHIPS.map((chip) => (
+              <span
+                key={chip}
+                className="inline-flex items-center rounded-full border border-[#ae251c]/30 bg-[#ae251c]/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#e0e8f0]"
+              >
+                {chip}
+              </span>
             ))}
           </div>
-        </div>
-      </section>
+        </Reveal>
+      </div>
+    </section>
+  )
+}
 
+function DiferenciaisSection() {
+  return (
+    <section
+      id="saude-diferenciais"
+      className="section-pad bg-[#142f54]"
+      style={{ fontFamily: 'var(--font-outfit)' }}
+    >
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <Reveal>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#7a9ab8]">
+            DIFERENCIAIS
+          </p>
+        </Reveal>
+        <Reveal delay={0.08}>
+          <p
+            className="mt-4 text-display italic text-white max-w-3xl"
+            style={{ fontSize: 'clamp(1.5rem, 3vw, 2.25rem)' }}
+          >
+            O diferencial não está apenas na solução. Está na forma de conduzir cada decisão.
+          </p>
+        </Reveal>
 
-      {/* Form section */}
-      <section className="section-tight bg-[#142f54]" id="saude-form" style={{ fontFamily: 'var(--font-outfit)' }}>
-        <div className="max-w-6xl mx-auto px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-start">
-          <Reveal>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#7a9ab8]">
-              Atendimento consultivo
-            </p>
-            <h2
-              className="mt-4 text-display text-white"
-              style={{ fontSize: 'clamp(1.75rem, 3.6vw, 2.75rem)' }}
-            >
-              Conteúdo completo em construção.
-            </h2>
-            <p className="mt-6 max-w-[58ch] text-pretty text-[#7a9ab8] leading-relaxed">
-              Estamos consolidando comparativos detalhados das operadoras de Uberlândia e nacionais.
-              Deixe seu contato — preparamos uma simulação personalizada já no primeiro retorno.
-            </p>
-            <div className="mt-8 rule-accent h-px w-24" />
-            <p className="mt-6 text-sm text-[#7a9ab8]">
-              Análise por perfil · sem custo · resposta em horário comercial.
-            </p>
-          </Reveal>
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-80px' }}
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.08 } },
+          }}
+          className="mt-16 grid md:grid-cols-3 gap-x-10 gap-y-12"
+        >
+          {DIFERENCIAIS.map((d, i) => {
+            const Icon = d.icon
+            return (
+              <motion.div
+                key={d.title}
+                variants={{
+                  hidden: { opacity: 0, y: 24 },
+                  visible: {
+                    opacity: 1,
+                    y: 0,
+                    transition: { duration: 0.7, ease: EASE_OUT_EXPO },
+                  },
+                }}
+                className={
+                  i === 0
+                    ? ''
+                    : 'md:border-l md:border-white/10 md:pl-8'
+                }
+              >
+                <Icon size={32} strokeWidth={1.6} className="text-[#ae251c]" />
+                <h3 className="mt-6 text-white font-semibold text-lg">{d.title}</h3>
+                <p className="mt-3 text-[#7a9ab8] leading-relaxed text-sm">{d.desc}</p>
+              </motion.div>
+            )
+          })}
+        </motion.div>
+      </div>
+    </section>
+  )
+}
 
-          <Reveal delay={0.12}>
-            <ServiceLeadForm
-              service="Saúde"
-              introTitle="Quero comparar planos"
-              introBody="Conta o que importa pra você (rede, especialidades, faixa etária) — voltamos com 2 ou 3 opções claras."
-            />
-          </Reveal>
-        </div>
-      </section>
+function CtaFinalSection() {
+  const wa = formatWhatsAppLink(WHATSAPP, HERO_WA)
+  return (
+    <section
+      id="saude-form"
+      className="section-tight bg-[#142f54]"
+      style={{ fontFamily: 'var(--font-outfit)' }}
+    >
+      <div className="max-w-6xl mx-auto px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-start">
+        <Reveal>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#7a9ab8]">
+            FALE COM A HOLD
+          </p>
+          <h2
+            className="mt-4 text-display text-white"
+            style={{ fontSize: 'clamp(1.75rem, 3.6vw, 2.75rem)' }}
+          >
+            Conte com a HOLD para estruturar sua solução em saúde com inteligência e segurança.
+          </h2>
+          <p className="mt-6 max-w-[58ch] text-pretty text-[#7a9ab8] leading-relaxed">
+            Nossa equipe está pronta para entender seu cenário e conectar você às alternativas
+            mais adequadas para sua realidade.
+          </p>
+          <div className="mt-8 rule-accent h-px w-24" />
+          <p className="mt-6 text-sm text-[#7a9ab8]">
+            Sem custo · sem compromisso · resposta em horário comercial.
+          </p>
+          <a
+            href={wa}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#25D366] hover:bg-[#1ebe5d] text-white text-sm font-semibold px-6 py-3 transition-colors"
+          >
+            <WhatsAppIcon size={16} />
+            Falar com especialista no WhatsApp
+          </a>
+        </Reveal>
+
+        <Reveal delay={0.12}>
+          <ServiceLeadForm
+            service="Saúde"
+            introTitle="Falar com especialista"
+            introBody="Conta seu cenário — perfil, modalidade, momento. Voltamos com a alternativa mais adequada."
+          />
+        </Reveal>
+      </div>
+    </section>
+  )
+}
+
+export default function SaudeClient() {
+  return (
+    <>
+      <HeroSection />
+      <SobreSection />
+      <SaudeModalidades />
+      <DiferenciaisSection />
+      <SaudeOperadoras />
+      <SaudeFAQ />
+      <CtaFinalSection />
     </>
   )
 }
