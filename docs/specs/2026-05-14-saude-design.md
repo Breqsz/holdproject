@@ -1,8 +1,8 @@
 # Design Spec — Página /saude
 
-**Data:** 2026-05-14  
-**Status:** Aprovado pelo cliente  
-**Serve de esqueleto para:** /seguros, /investimentos (pattern visual, não componente compartilhado)
+**Data:** 2026-05-14
+**Status:** ⚠️ APOSENTADO (2026-05-18) — substituído por [`2026-05-18-saude-design.md`](./2026-05-18-saude-design.md). Não implementado. Mantido por referência histórica.
+**Serve de esqueleto para:** ~~/seguros, /investimentos~~ (decisão revisada — nova spec define o pattern)
 
 ---
 
