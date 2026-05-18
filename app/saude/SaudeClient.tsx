@@ -134,39 +134,21 @@ function SobreSection() {
       className="section-pad bg-[#07162a]"
       style={{ fontFamily: 'var(--font-outfit)' }}
     >
-      <div className="max-w-5xl mx-auto px-6 lg:px-8">
-        <Reveal>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#7a9ab8]">
-            O JEITO HOLD
-          </p>
-        </Reveal>
-        <Reveal delay={0.08}>
-          <h2
-            className="mt-4 text-display text-white"
-            style={{ fontSize: 'clamp(1.75rem, 3.6vw, 2.75rem)' }}
-          >
-            O jeito HOLD de estruturar soluções em saúde
-          </h2>
-        </Reveal>
-        <Reveal delay={0.16}>
-          <p className="mt-6 max-w-[60ch] text-[#7a9ab8] leading-relaxed text-lg">
-            Mais do que intermediar soluções, atuamos de forma consultiva na construção de
-            estratégias em saúde, benefícios e planejamento, conectando cada cliente às
-            decisões mais adequadas ao seu momento, necessidade e visão de futuro.
-          </p>
-        </Reveal>
-        <Reveal delay={0.24}>
-          <div className="mt-10 flex flex-wrap gap-3">
-            {SOBRE_CHIPS.map((chip) => (
-              <span
-                key={chip}
-                className="inline-flex items-center rounded-full border border-[#ae251c]/30 bg-[#ae251c]/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#e0e8f0]"
-              >
-                {chip}
-              </span>
-            ))}
-          </div>
-        </Reveal>
+      <div className="max-w-5xl mx-auto px-6 lg:px-8 saude-sobre-stage">
+        <p className="saude-sobre-eyebrow">O JEITO HOLD</p>
+        <h2 className="saude-sobre-h2">O jeito HOLD de estruturar soluções em saúde</h2>
+        <p className="saude-sobre-body">
+          Mais do que intermediar soluções, atuamos de forma consultiva na construção de
+          estratégias em saúde, benefícios e planejamento.
+        </p>
+        <ol className="saude-sobre-values">
+          {SOBRE_CHIPS.map((chip, i) => (
+            <li key={chip} className="saude-sobre-value">
+              <span className="saude-sobre-value-num">{String(i + 1).padStart(2, '0')}</span>
+              <span className="saude-sobre-value-label">{chip}</span>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   )
