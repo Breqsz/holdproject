@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Plus } from 'lucide-react'
 
@@ -209,6 +210,18 @@ export default function SaudeFAQ() {
           >
             Perguntas frequentes sobre planos de saúde
           </motion.h2>
+
+          <motion.div variants={fadeUp} className="mt-6 flex justify-center">
+            <Image
+              src="/personagem/Boneco_v2.png"
+              alt=""
+              width={220}
+              height={340}
+              quality={95}
+              className="w-32 sm:w-36 lg:w-40 h-auto"
+              style={{ filter: 'drop-shadow(0 20px 40px rgba(7,22,42,0.15))' }}
+            />
+          </motion.div>
         </motion.div>
 
         <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>

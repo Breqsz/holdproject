@@ -60,7 +60,7 @@ describe('SaudeClient', () => {
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: /Soluções em saúde estruturadas com estratégia/i,
+        name: /Soluções em saúde estruturadas com/i,
       })
     ).toBeInTheDocument()
   })

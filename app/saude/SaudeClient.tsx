@@ -7,6 +7,7 @@ import { formatWhatsAppLink } from '@/lib/utils'
 import { Reveal } from '@/components/motion/Reveal'
 import { ServiceLeadForm } from '@/components/forms/ServiceLeadForm'
 import { WhatsAppIcon } from '@/components/icons/WhatsAppIcon'
+import RotatingText from '@/components/motion/RotatingText'
 import SaudeModalidades from '@/components/sections/saude/SaudeModalidades'
 import SaudeOperadoras from '@/components/sections/saude/SaudeOperadoras'
 import SaudeFAQ from '@/components/sections/saude/SaudeFAQ'
@@ -73,7 +74,28 @@ function HeroSection() {
               className="mt-6 text-display text-white text-pretty"
               style={{ fontSize: 'clamp(1.85rem, 4vw, 3.25rem)' }}
             >
-              Soluções em saúde estruturadas com estratégia, análise e acompanhamento consultivo.
+              Soluções em saúde estruturadas com
+              <RotatingText
+                texts={[
+                  'estratégia',
+                  'inteligência',
+                  'consistência',
+                  'excelência',
+                  'proximidade',
+                  'maturidade',
+                  'experiência',
+                  'transparência',
+                ]}
+                mainClassName="mt-3 w-fit px-3 sm:px-4 md:px-5 bg-[#ae251c] text-white overflow-hidden py-1 sm:py-1.5 md:py-2 justify-center rounded-lg"
+                staggerFrom="last"
+                initial={{ y: '100%' }}
+                animate={{ y: 0 }}
+                exit={{ y: '-120%' }}
+                staggerDuration={0.025}
+                splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1 md:pb-1"
+                transition={{ type: 'spring', damping: 30, stiffness: 400 }}
+                rotationInterval={3200}
+              />
             </h1>
           </Reveal>
 
@@ -107,18 +129,27 @@ function HeroSection() {
         </div>
 
         <Reveal delay={0.32} className="hidden lg:block">
-          <div className="relative aspect-[4/5] rounded-2xl overflow-hidden ring-1 ring-white/10">
-            <Image
-              src="/images/hero/saude.webp"
-              alt="Pessoa avaliando opções de plano de saúde com consultor"
-              fill
-              priority
-              sizes="(max-width: 1024px) 0px, 50vw"
-              className="object-cover"
+          <div className="relative aspect-[4/5] flex items-end justify-center">
+            <div
+              aria-hidden
+              className="absolute inset-x-8 bottom-8 top-16 rounded-[2rem] bg-gradient-to-b from-white/[0.04] via-white/[0.02] to-transparent ring-1 ring-white/10"
             />
             <div
               aria-hidden
-              className="absolute inset-0 bg-gradient-to-t from-[#0d2240]/70 via-transparent to-transparent"
+              className="pointer-events-none absolute left-1/2 top-1/3 h-72 w-72 -translate-x-1/2 rounded-full bg-[#1a4b8a]/40 blur-[80px]"
+            />
+            <div
+              aria-hidden
+              className="pointer-events-none absolute bottom-10 left-1/2 h-6 w-2/3 -translate-x-1/2 rounded-[50%] bg-black/40 blur-2xl"
+            />
+            <Image
+              src="/personagem/Saude.png"
+              alt="Especialista HOLD em planos de saúde"
+              width={520}
+              height={780}
+              priority
+              sizes="(max-width: 1024px) 0px, 45vw"
+              className="relative z-10 h-auto w-[72%] object-contain drop-shadow-[0_30px_40px_rgba(0,0,0,0.45)]"
             />
           </div>
         </Reveal>
@@ -222,10 +253,20 @@ function CtaFinalSection() {
   return (
     <section
       id="saude-form"
-      className="section-tight bg-[#142f54]"
-      style={{ fontFamily: 'var(--font-outfit)' }}
+      className="section-tight relative overflow-hidden"
+      style={{
+        fontFamily: 'var(--font-outfit)',
+        background:
+          'linear-gradient(115deg, #142f54 0%, #0d2240 55%, #07162a 100%)',
+      }}
     >
-      <div className="max-w-6xl mx-auto px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-start">
+      <div aria-hidden className="dot-grid pointer-events-none absolute inset-0 opacity-[0.05]" />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -left-24 bottom-0 h-[520px] w-[520px] rounded-full bg-[#1a4b8a] opacity-[.22] blur-[120px]"
+      />
+
+      <div className="relative max-w-6xl mx-auto px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-start">
         <Reveal>
           <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#7a9ab8]">
             FALE COM A HOLD
@@ -253,6 +294,44 @@ function CtaFinalSection() {
             <WhatsAppIcon size={16} />
             Falar com especialista no WhatsApp
           </a>
+
+          <div className="mt-10 hidden md:flex items-end gap-6">
+            <Image
+              src="/personagem/Boneco_v3.png"
+              alt=""
+              width={220}
+              height={340}
+              quality={95}
+              className="w-28 lg:w-32 h-auto shrink-0"
+              style={{ filter: 'drop-shadow(0 18px 36px rgba(0,0,0,0.42))' }}
+            />
+            <ul className="flex flex-col gap-2.5 pb-3 flex-1 min-w-0">
+              <li className="flex items-start gap-2.5 text-[12.5px] leading-[1.5] text-white/72">
+                <span
+                  aria-hidden
+                  className="mt-[7px] block h-[5px] w-[5px] rounded-full shrink-0"
+                  style={{ background: '#ae251c' }}
+                />
+                <span>Análise técnica considerando perfil, utilização e cobertura.</span>
+              </li>
+              <li className="flex items-start gap-2.5 text-[12.5px] leading-[1.5] text-white/72">
+                <span
+                  aria-hidden
+                  className="mt-[7px] block h-[5px] w-[5px] rounded-full shrink-0"
+                  style={{ background: '#ae251c' }}
+                />
+                <span>Curadoria entre as principais operadoras do mercado.</span>
+              </li>
+              <li className="flex items-start gap-2.5 text-[12.5px] leading-[1.5] text-white/72">
+                <span
+                  aria-hidden
+                  className="mt-[7px] block h-[5px] w-[5px] rounded-full shrink-0"
+                  style={{ background: '#ae251c' }}
+                />
+                <span>Acompanhamento consultivo antes, durante e depois da contratação.</span>
+              </li>
+            </ul>
+          </div>
         </Reveal>
 
         <Reveal delay={0.12}>
