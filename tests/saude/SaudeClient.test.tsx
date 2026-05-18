@@ -1,70 +1,138 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import SaudeClient from '@/app/saude/SaudeClient'
-import { AudienceProvider } from '@/lib/audience'
 
 vi.mock('framer-motion', () => {
   const React = require('react')
   const motion = new Proxy(
     {},
     {
-      get: (_t, tag: string) =>
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        ({ children, ...rest }: any) => {
-          const { initial, animate, whileInView, viewport, transition, layoutId, exit, whileHover, whileTap, ...d } = rest
-          void initial; void animate; void whileInView; void viewport; void transition; void layoutId
-          void exit; void whileHover; void whileTap
-          return React.createElement(tag, d, children)
-        },
+      get: (_target, tag: string) =>
+        React.forwardRef(
+          (
+            {
+              children,
+              initial: _i,
+              animate: _a,
+              whileInView: _wiv,
+              variants: _v,
+              viewport: _vp,
+              transition: _t,
+              exit: _e,
+              whileHover: _wh,
+              whileTap: _wt,
+              layoutId: _l,
+              ...rest
+            }: Record<string, unknown>,
+            ref: unknown
+          ) =>
+            React.createElement(tag, { ...rest, ref }, children)
+        ),
     }
   )
-  return { motion, AnimatePresence: ({ children }: { children: React.ReactNode }) => children, useReducedMotion: () => false }
+  return {
+    motion,
+    AnimatePresence: ({ children }: { children: unknown }) => children,
+    useReducedMotion: () => false,
+  }
 })
 
 vi.mock('next/image', () => ({
-  default: ({ alt, src }: { alt: string; src: string }) => {
-    const React = require('react')
-    return React.createElement('img', { alt, src })
-  },
+  __esModule: true,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default: ({ alt, src }: any) => <img alt={alt} src={typeof src === 'string' ? src : ''} />,
 }))
 
-vi.mock('@emailjs/browser', () => ({ default: { send: vi.fn() } }))
-vi.mock('sonner', () => ({ toast: { success: vi.fn(), error: vi.fn() } }))
+vi.mock('@/components/forms/ServiceLeadForm', () => ({
+  ServiceLeadForm: ({ service }: { service: string }) => (
+    <div data-testid="service-lead-form">Form: {service}</div>
+  ),
+}))
 
-function renderClient() {
-  return render(<AudienceProvider><SaudeClient /></AudienceProvider>)
-}
+vi.mock('@/components/motion/LogoLoop', () => ({
+  __esModule: true,
+  default: () => <div data-testid="logo-loop" />,
+}))
 
 describe('SaudeClient', () => {
-  beforeEach(() => { window.localStorage.clear() })
-
-  it('renders the H1 about saúde', () => {
-    renderClient()
-    expect(screen.getByRole('heading', { level: 1, name: /escolha consciente/i })).toBeInTheDocument()
+  it('renders the hero H1 (institutional copy)', () => {
+    render(<SaudeClient />)
+    expect(
+      screen.getByRole('heading', {
+        level: 1,
+        name: /Soluções em saúde estruturadas com estratégia/i,
+      })
+    ).toBeInTheDocument()
   })
 
-  it('renders all 4 cobertura blocks', () => {
-    renderClient()
-    expect(screen.getByText('Individual & Familiar')).toBeInTheDocument()
-    expect(screen.getByText('Empresarial')).toBeInTheDocument()
-    expect(screen.getByText('Odonto')).toBeInTheDocument()
-    expect(screen.getByText('Telemedicina')).toBeInTheDocument()
+  it('renders the "Sobre Nós" section with 3 chips', () => {
+    render(<SaudeClient />)
+    expect(
+      screen.getByRole('heading', {
+        level: 2,
+        name: /O jeito HOLD de estruturar soluções em saúde/i,
+      })
+    ).toBeInTheDocument()
+    expect(screen.getByText('Atendimento consultivo')).toBeInTheDocument()
+    expect(screen.getByText('Soluções personalizadas')).toBeInTheDocument()
+    // "Acompanhamento próximo" aparece como chip AND como título do diferencial
+    const acomp = screen.getAllByText('Acompanhamento próximo')
+    expect(acomp.length).toBeGreaterThanOrEqual(2)
   })
 
-  it('renders the audience toggle', () => {
-    renderClient()
-    expect(screen.getByRole('button', { name: 'Para você' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Para sua empresa' })).toBeInTheDocument()
+  it('renders the Diferenciais headline and the other 2 distinct titles', () => {
+    render(<SaudeClient />)
+    expect(
+      screen.getByText(/O diferencial não está apenas na solução/i)
+    ).toBeInTheDocument()
+    expect(screen.getByText('Análise estratégica')).toBeInTheDocument()
+    expect(screen.getByText('Estrutura multissoluções')).toBeInTheDocument()
   })
 
-  it('renders the WhatsApp CTA in hero', () => {
-    renderClient()
-    expect(screen.getByRole('link', { name: /Falar no WhatsApp/i })).toBeInTheDocument()
+  it('renders the Modalidades section component', () => {
+    render(<SaudeClient />)
+    expect(
+      screen.getByRole('heading', {
+        level: 2,
+        name: /Soluções em saúde para diferentes perfis e formatos de contratação/i,
+      })
+    ).toBeInTheDocument()
   })
 
-  it('renders the lead form', () => {
-    renderClient()
-    expect(screen.getByPlaceholderText('Seu nome')).toBeInTheDocument()
-    expect(screen.getByText(/Quero comparar planos/i)).toBeInTheDocument()
+  it('renders the Operadoras section component', () => {
+    render(<SaudeClient />)
+    expect(
+      screen.getByRole('heading', {
+        level: 2,
+        name: /Trabalhamos com as principais seguradoras e operadoras do mercado/i,
+      })
+    ).toBeInTheDocument()
+  })
+
+  it('renders the FAQ section component', () => {
+    render(<SaudeClient />)
+    expect(
+      screen.getByRole('heading', {
+        level: 2,
+        name: /Perguntas frequentes sobre planos de saúde/i,
+      })
+    ).toBeInTheDocument()
+  })
+
+  it('renders the CTA Final with form and link to #saude-form', () => {
+    render(<SaudeClient />)
+    expect(
+      screen.getByRole('heading', {
+        level: 2,
+        name: /Conte com a HOLD para estruturar sua solução em saúde/i,
+      })
+    ).toBeInTheDocument()
+    expect(screen.getByTestId('service-lead-form')).toBeInTheDocument()
+  })
+
+  it('renders a hero CTA linking to #saude-form', () => {
+    render(<SaudeClient />)
+    const cta = screen.getAllByRole('link').find((a) => a.getAttribute('href') === '#saude-form')
+    expect(cta).toBeDefined()
   })
 })
