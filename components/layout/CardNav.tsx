@@ -128,9 +128,8 @@ export default function CardNav() {
                     className="v1-blade"
                   >
                     <div className="v1-inner">
-                      {DD_ITEMS.map((item, i) => (
+                      {DD_ITEMS.map((item) => (
                         <Link key={item.key} href={item.href} role="menuitem" onClick={closeAll} className="v1-col">
-                          <span className="v1-num">{String(i + 1).padStart(2, '0')} / 04</span>
                           <span className="v1-name">{t(`navbar.dd.${item.key}`)}</span>
                           <span className="v1-sub">{t(`navbar.dd.${item.key}.desc`)}</span>
                           <span className="v1-arr">Conhecer<svg width="14" height="6" viewBox="0 0 14 6" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true"><path d="M0 3h13M10 0l3 3-3 3"/></svg></span>

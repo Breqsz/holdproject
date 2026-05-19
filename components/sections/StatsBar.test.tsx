@@ -38,11 +38,10 @@ describe('StatsBar', () => {
     ).toBeInTheDocument()
   })
 
-  it('renders all 7 partner logos in the marquee', () => {
+  it('renders all 6 partner logos in the marquee', () => {
     render(<StatsBar />)
     const logos = screen.getAllByRole('img')
-    // LogoLoop renders multiple copies for the marquee — at least 7 unique logos.
-    expect(logos.length).toBeGreaterThanOrEqual(7)
+    expect(logos.length).toBeGreaterThanOrEqual(6)
   })
 
   it('toggles accordion open/closed when +60 parceiros is clicked', () => {

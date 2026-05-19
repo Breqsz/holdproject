@@ -13,7 +13,6 @@ const OPERADORAS: LogoItem[] = [
   { src: '/images/logosEmpresasParceiras/PortoSeguro.webp', alt: 'Porto Seguro' },
   { src: '/images/logosEmpresasParceiras/SegurosUnimed.webp', alt: 'Seguros Unimed' },
   { src: '/images/logosEmpresasParceiras/SulAmerica.webp', alt: 'SulAmérica' },
-  { src: '/images/logosEmpresasParceiras/Unimed.webp', alt: 'Unimed' },
 ]
 
 export default function SaudeOperadoras() {

@@ -246,8 +246,7 @@
 }
 .saude-sobre-h2 {
   color: white;
-  font-family: var(--font-cormorant);
-  font-style: italic;
+  font-family: var(--font-outfit);
   font-weight: 500;
   font-size: clamp(2rem, 4.5vw, 3.25rem);
   letter-spacing: -0.018em;
@@ -286,9 +285,8 @@
   cursor: default;
 }
 .saude-sobre-value-num {
-  font-family: var(--font-cormorant);
-  font-style: italic;
-  font-weight: 500;
+  font-family: var(--font-outfit);
+  font-weight: 600;
   font-size: clamp(1.5rem, 2.4vw, 2rem);
   color: #ae251c;
   line-height: 1;
@@ -345,4 +343,94 @@
     transition: none !important;
   }
   .saude-sobre-value:hover { transform: none !important; }
+}
+
+/* ============================================================
+   Saúde — Diferenciais (focus-pulse entrance)
+   Items defocus from afar then snap into focus on enter.
+   ============================================================ */
+.saude-dif {
+  background: #142f54;
+  padding: clamp(4rem, 9vw, 9rem) 0;
+  font-family: var(--font-outfit);
+}
+.saude-dif-wrap {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+.saude-dif-eyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: #7a9ab8;
+  animation: saude-dif-focus 900ms var(--ease-out-quint) 80ms backwards;
+}
+.saude-dif-headline {
+  margin-top: 1rem;
+  font-style: italic;
+  color: #fff;
+  max-width: 48rem;
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  line-height: 1.15;
+  animation: saude-dif-focus 1100ms var(--ease-out-expo) 220ms backwards;
+}
+.saude-dif-grid {
+  margin-top: 4rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem;
+}
+.saude-dif-grid > div + div {
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  padding-left: 2rem;
+}
+.saude-dif-item {
+  animation: saude-dif-focus 1200ms var(--ease-out-expo) backwards;
+  animation-delay: calc(420ms + var(--i, 0) * 160ms);
+}
+.saude-dif-icon { color: #ae251c; }
+.saude-dif-title {
+  margin-top: 1.5rem;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.125rem;
+}
+.saude-dif-desc {
+  margin-top: 0.75rem;
+  color: #7a9ab8;
+  font-size: 0.875rem;
+  line-height: 1.65;
+}
+@keyframes saude-dif-focus {
+  from {
+    opacity: 0;
+    filter: blur(14px);
+    transform: scale(0.88);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .saude-dif-eyebrow,
+  .saude-dif-headline,
+  .saude-dif-item {
+    animation: none;
+    filter: none;
+    transform: none;
+    opacity: 1;
+  }
+}
+@media (max-width: 720px) {
+  .saude-dif-grid { grid-template-columns: 1fr; }
+  .saude-dif-grid > div + div {
+    border-left: 0;
+    padding-left: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 2rem;
+  }
 }

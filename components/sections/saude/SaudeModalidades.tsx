@@ -2,12 +2,13 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Plus } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { ArrowRight } from 'lucide-react'
 import { formatWhatsAppLink } from '@/lib/utils'
-import { WhatsAppIcon } from '@/components/icons/WhatsAppIcon'
+import { WhatsAppRedirectModal } from '@/components/saude/WhatsAppRedirectModal'
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number]
+const RED = '#ae251c'
 const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? ''
 
 type ModalidadeId = 'individual' | 'adesao' | 'empresarial' | 'odonto'
@@ -17,9 +18,11 @@ type Modalidade = {
   seq: string
   title: string
   short: string
-  long: string
+  bullets: string[]
   waMessage: string
-  image: { src: string; fit: 'cover' | 'contain'; alt: string }
+  image: string
+  imagePosition?: string
+  ariaLabel: string
 }
 
 const MODALIDADES: Modalidade[] = [
@@ -27,97 +30,179 @@ const MODALIDADES: Modalidade[] = [
     id: 'individual',
     seq: '01',
     title: 'Individual e Familiar',
-    short: 'Soluções em saúde para pessoas e famílias que buscam proteção, previsibilidade e acesso com segurança.',
-    long: 'Escolher um plano de saúde envolve mais do que comparar preços e coberturas. Cada decisão precisa considerar perfil de utilização, rede credenciada, previsibilidade financeira e momento de vida. A HOLD conecta você e sua família às soluções mais adequadas por meio de análise estratégica, acompanhamento próximo e suporte em todas as etapas.',
-    waMessage: 'Olá! Tenho interesse em planos de saúde Individual ou Familiar.',
-    image: { src: '/images/personas/pessoa-fisica.webp', fit: 'cover', alt: 'Família reunida ao pôr do sol' },
+    short:
+      'Soluções em saúde para pessoas e famílias que buscam proteção, previsibilidade e acesso com segurança.',
+    bullets: ['Análise estratégica de perfil', 'Operadoras curadas', 'Acompanhamento próximo'],
+    waMessage:
+      'Olá! Gostaria de saber melhor sobre os planos de saúde Individual e Familiar da HOLD.',
+    image: '/images/hero/family-hero.webp',
+    imagePosition: 'center 30%',
+    ariaLabel: 'Conhecer planos Individual e Familiar',
   },
   {
     id: 'adesao',
     seq: '02',
     title: 'Coletivo por Adesão',
-    short: 'Alternativas estratégicas para profissionais vinculados a entidades de classe e categorias elegíveis.',
-    long: 'O plano coletivo por adesão é uma alternativa voltada a profissionais vinculados a entidades de classe, associações e categorias elegíveis. Essa modalidade pode oferecer condições estratégicas de contratação, mas exige análise criteriosa sobre elegibilidade, regras, cobertura, rede credenciada e cenário de longo prazo. A HOLD realiza uma avaliação personalizada para identificar as alternativas mais adequadas ao perfil e à necessidade de cada cliente.',
-    waMessage: 'Olá! Tenho interesse em plano de saúde Coletivo por Adesão.',
-    image: { src: '/personagem/Boneco_v1.png', fit: 'contain', alt: 'Especialista HOLD analisando indicadores' },
+    short:
+      'Alternativas estratégicas para profissionais vinculados a entidades de classe e categorias elegíveis.',
+    bullets: ['Entidades de classe', 'Elegibilidade auditada', 'Cenário de longo prazo'],
+    waMessage:
+      'Olá! Gostaria de saber melhor sobre os planos de saúde Coletivos por Adesão da HOLD.',
+    image: '/images/hero/persona_hero.webp',
+    imagePosition: 'center 25%',
+    ariaLabel: 'Conhecer plano Coletivo por Adesão',
   },
   {
     id: 'empresarial',
     seq: '03',
     title: 'Empresarial',
-    short: 'Estruturação de benefícios para MEIs, PMEs e grandes empresas, com soluções alinhadas ao porte, momento e estratégia de cada operação.',
-    long: 'A estruturação de benefícios em saúde vai além da contratação de um plano. Empresas de diferentes portes precisam equilibrar qualidade assistencial, previsibilidade financeira, retenção de talentos e sustentabilidade da operação. A HOLD atua na construção de soluções empresariais para MEIs, PMEs e grandes empresas, conectando cada operação às alternativas mais adequadas ao seu momento, perfil e estratégia.',
-    waMessage: 'Olá! Tenho interesse em plano de saúde Empresarial.',
-    image: { src: '/images/personas/empresa.webp', fit: 'cover', alt: 'Equipe em reunião em ambiente corporativo' },
+    short:
+      'Estruturação de benefícios para MEIs, PMEs e grandes empresas, com soluções alinhadas ao porte, momento e estratégia de cada operação.',
+    bullets: ['MEIs, PMEs e grandes empresas', 'Retenção de talentos', 'Sustentabilidade da operação'],
+    waMessage:
+      'Olá! Gostaria de saber melhor sobre os planos de saúde Empresariais da HOLD.',
+    image: '/images/hero/office-hero.webp',
+    imagePosition: 'center',
+    ariaLabel: 'Conhecer plano Empresarial',
   },
   {
     id: 'odonto',
     seq: '04',
     title: 'Odontológico',
-    short: 'Cobertura odontológica para pessoas e empresas com foco em cuidado, prevenção e bem-estar.',
-    long: 'O cuidado com a saúde também passa pela prevenção e pelo acompanhamento odontológico. A HOLD estrutura soluções odontológicas para pessoas, famílias e empresas, buscando equilíbrio entre cobertura, qualidade de atendimento, rede credenciada e custo-benefício. Nosso acompanhamento é realizado de forma próxima e estratégica, considerando o perfil e as necessidades de cada cliente.',
-    waMessage: 'Olá! Tenho interesse em plano de saúde Odontológico.',
-    image: { src: '/personagem/Boneco_v3.png', fit: 'contain', alt: 'Especialista HOLD em atendimento consultivo' },
+    short:
+      'Cobertura odontológica para pessoas e empresas com foco em cuidado, prevenção e bem-estar.',
+    bullets: ['Prevenção contínua', 'Rede credenciada ampla', 'Custo-benefício'],
+    waMessage:
+      'Olá! Gostaria de saber melhor sobre os planos de saúde direcionados à Odontologia da HOLD.',
+    image: '/images/hero/family-hero2.webp',
+    imagePosition: 'center 35%',
+    ariaLabel: 'Conhecer plano Odontológico',
   },
 ]
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
+const containerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.08 } },
+}
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 32 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE_OUT_EXPO } },
 }
 
-const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.06 } } }
+const headerVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: EASE_OUT_EXPO } },
+}
 
-function ExpandedPanel({ data }: { data: Modalidade }) {
-  const wa = formatWhatsAppLink(WHATSAPP, data.waMessage)
+function ModalidadeCard({
+  data,
+  onSelect,
+}: {
+  data: Modalidade
+  onSelect: (m: Modalidade) => void
+}) {
   return (
-    <div className="bg-[#0b1f3a] ring-1 ring-[#ae251c]/25 rounded-2xl overflow-hidden grid lg:grid-cols-[1.4fr_1fr]">
-      <div className="px-6 py-8 md:px-10 md:py-10">
-        <p className="text-[#7a9ab8] leading-relaxed text-base max-w-[58ch]">
-          {data.long}
-        </p>
-        <a
-          href={wa}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#25D366] hover:bg-[#1ebe5d] text-white text-sm font-semibold px-6 py-3 transition-colors"
-        >
-          <WhatsAppIcon size={16} />
-          Falar com especialista
-        </a>
-      </div>
-      <div
-        className="relative hidden lg:block min-h-[280px]"
-        style={{
-          background: data.image.fit === 'contain'
-            ? 'linear-gradient(135deg, #142f54 0%, #0d2240 100%)'
-            : undefined,
-        }}
+    <motion.div
+      variants={cardVariants}
+      whileHover={{ y: -6 }}
+      transition={{ duration: 0.4, ease: EASE_OUT_EXPO }}
+      className="h-full"
+    >
+      <button
+        type="button"
+        onClick={() => onSelect(data)}
+        aria-label={data.ariaLabel}
+        aria-haspopup="dialog"
+        className="group relative block w-full text-left overflow-hidden rounded-2xl h-full min-h-[420px] sm:min-h-[520px] transition-shadow duration-500 hover:shadow-[0_28px_70px_-22px_rgba(0,0,0,0.65)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ae251c] focus-visible:ring-offset-2 focus-visible:ring-offset-[#07162a]"
+        style={{ border: '1px solid rgba(255,255,255,0.06)' }}
       >
-        <Image
-          src={data.image.src}
-          alt={data.image.alt}
-          fill
-          sizes="(max-width: 1024px) 0px, 35vw"
-          className={data.image.fit === 'contain' ? 'object-contain object-bottom p-4' : 'object-cover'}
-        />
-        {data.image.fit === 'cover' && (
+        <div className="absolute inset-0 overflow-hidden">
+          <Image
+            src={data.image}
+            alt=""
+            fill
+            sizes="(max-width: 640px) 92vw, (max-width: 1024px) 50vw, 600px"
+            quality={92}
+            className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
+            style={{ objectPosition: data.imagePosition ?? 'center' }}
+          />
           <div
             aria-hidden
-            className="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-[#0b1f3a]"
+            className="absolute inset-0"
+            style={{
+              background:
+                'linear-gradient(180deg, rgba(7,22,42,0.10) 0%, rgba(7,22,42,0.45) 45%, rgba(7,22,42,0.95) 100%)',
+            }}
           />
-        )}
-      </div>
-    </div>
+        </div>
+
+        <span
+          aria-hidden
+          className="absolute top-0 left-0 right-0 h-[3px]"
+          style={{ background: RED }}
+        />
+
+        <span
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          style={{
+            background:
+              'radial-gradient(520px circle at 18% 22%, rgba(174,37,28,0.16), transparent 60%)',
+          }}
+        />
+
+        <div className="relative z-10 flex h-full flex-col justify-end p-5 sm:p-7 lg:p-8">
+          <h3
+            className="text-display text-white tracking-tight leading-[1.02] mb-3"
+            style={{
+              fontSize: 'clamp(1.5rem, 2.6vw, 2.2rem)',
+              letterSpacing: '-0.02em',
+              textShadow: '0 1px 16px rgba(0,0,0,0.5)',
+            }}
+          >
+            {data.title}
+          </h3>
+
+          <p
+            className="text-[12.5px] sm:text-[13px] leading-[1.5] max-w-[36ch] mb-4"
+            style={{
+              color: 'rgba(255,255,255,0.78)',
+              textShadow: '0 1px 12px rgba(0,0,0,0.5)',
+            }}
+          >
+            {data.short}
+          </p>
+
+          <div className="overflow-hidden mb-4 lg:transition-[max-height,opacity] lg:duration-500 lg:ease-out lg:opacity-0 lg:max-h-0 lg:group-hover:opacity-100 lg:group-hover:max-h-44">
+            <div className="flex flex-wrap gap-x-3 gap-y-1.5 pt-3 border-t border-white/15">
+              {data.bullets.map((b) => (
+                <span key={b} className="text-[11px] text-white/85 leading-tight pt-2">
+                  · {b}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <span className="inline-flex items-center gap-2.5 self-start text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white">
+            Conhecer
+            <span
+              aria-hidden
+              className="inline-flex h-7 w-7 items-center justify-center rounded-full transition-transform duration-300 group-hover:translate-x-1"
+              style={{ background: RED }}
+            >
+              <ArrowRight size={12} className="text-white" />
+            </span>
+          </span>
+        </div>
+      </button>
+    </motion.div>
   )
 }
 
 export default function SaudeModalidades() {
-  const [selected, setSelected] = useState<ModalidadeId | null>(null)
-
-  function toggle(id: ModalidadeId) {
-    setSelected((prev) => (prev === id ? null : id))
-  }
+  const [active, setActive] = useState<Modalidade | null>(null)
+  const activeHref = active ? formatWhatsAppLink(WHATSAPP, active.waMessage) : ''
 
   return (
     <section
@@ -127,126 +212,48 @@ export default function SaudeModalidades() {
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div
-          variants={stagger}
+          variants={headerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
-          className="max-w-3xl mb-14"
+          className="max-w-3xl mb-12 lg:mb-16"
         >
-          <motion.p
-            variants={fadeUp}
-            className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#7a9ab8]"
-          >
+          <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#7a9ab8]">
             MODALIDADES DE CONTRATAÇÃO
-          </motion.p>
-          <motion.h2
-            variants={fadeUp}
+          </p>
+          <h2
             className="mt-4 text-display text-white"
             style={{ fontSize: 'clamp(1.75rem, 3.4vw, 2.75rem)' }}
           >
             Soluções em saúde para diferentes perfis e formatos de contratação
-          </motion.h2>
-          <motion.p
-            variants={fadeUp}
-            className="mt-6 max-w-[60ch] text-[#7a9ab8] leading-relaxed"
-          >
+          </h2>
+          <p className="mt-6 max-w-[60ch] text-[#7a9ab8] leading-relaxed">
             A HOLD estrutura soluções em saúde de forma personalizada, considerando perfil,
             necessidade, momento e estratégia de cada cliente. Atuamos com diferentes
             modalidades de contratação para pessoas, famílias, profissionais e empresas.
-          </motion.p>
+          </p>
         </motion.div>
 
         <motion.div
-          variants={stagger}
+          className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5 items-stretch"
+          variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: '-80px' }}
-          role="list"
-          className="border-t border-white/10"
+          viewport={{ once: true, amount: 0.15 }}
         >
-          {MODALIDADES.map((m) => {
-            const isSelected = selected === m.id
-            const panelId = `saude-panel-${m.id}`
-            const buttonId = `saude-card-${m.id}`
-            return (
-              <motion.div key={m.id} variants={fadeUp} role="listitem" className="border-b border-white/10">
-                <button
-                  id={buttonId}
-                  onClick={() => toggle(m.id)}
-                  aria-expanded={isSelected ? 'true' : 'false'}
-                  aria-controls={panelId}
-                  className="group w-full text-left grid grid-cols-[auto_1fr_auto] gap-5 md:gap-8 items-center py-7 md:py-9 transition-colors hover:bg-white/[0.015]"
-                >
-                  <span
-                    className="tabular text-[#ae251c] font-semibold leading-none"
-                    style={{
-                      fontSize: 'clamp(1.75rem, 3.4vw, 2.75rem)',
-                      letterSpacing: '-0.02em',
-                    }}
-                  >
-                    {m.seq}
-                  </span>
-
-                  <div className="min-w-0">
-                    <p
-                      className="text-white font-semibold leading-snug transition-colors group-hover:text-[#e0e8f0]"
-                      style={{ fontSize: 'clamp(1.15rem, 1.8vw, 1.5rem)' }}
-                    >
-                      {m.title}
-                    </p>
-                    <p className="mt-2 text-sm md:text-[15px] text-[#7a9ab8] leading-relaxed max-w-[68ch]">
-                      {m.short}
-                    </p>
-                  </div>
-
-                  <span className="flex items-center gap-3 shrink-0">
-                    <span
-                      className={[
-                        'hidden md:inline text-xs uppercase tracking-[0.18em] font-semibold transition-colors',
-                        isSelected ? 'text-[#ae251c]' : 'text-[#7a9ab8] group-hover:text-[#e0e8f0]',
-                      ].join(' ')}
-                    >
-                      {isSelected ? 'Recolher' : 'Saber mais'}
-                    </span>
-                    <motion.span
-                      animate={{ rotate: isSelected ? 45 : 0 }}
-                      transition={{ duration: 0.3, ease: EASE_OUT_EXPO }}
-                      className={[
-                        'inline-flex items-center justify-center h-9 w-9 rounded-full ring-1 transition-colors',
-                        isSelected
-                          ? 'ring-[#ae251c]/50 text-[#ae251c] bg-[#ae251c]/10'
-                          : 'ring-white/15 text-[#7a9ab8] group-hover:ring-[#ae251c]/30 group-hover:text-[#e0e8f0]',
-                      ].join(' ')}
-                    >
-                      <Plus size={16} strokeWidth={1.8} />
-                    </motion.span>
-                  </span>
-                </button>
-
-                <AnimatePresence initial={false}>
-                  {isSelected && (
-                    <motion.div
-                      key="panel"
-                      id={panelId}
-                      role="region"
-                      aria-labelledby={buttonId}
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.4, ease: EASE_OUT_EXPO }}
-                      className="overflow-hidden"
-                    >
-                      <div className="pb-7">
-                        <ExpandedPanel data={m} />
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
-            )
-          })}
+          {MODALIDADES.map((m) => (
+            <ModalidadeCard key={m.id} data={m} onSelect={setActive} />
+          ))}
         </motion.div>
       </div>
+
+      <WhatsAppRedirectModal
+        open={active !== null}
+        onClose={() => setActive(null)}
+        href={activeHref}
+        label={active?.title ?? ''}
+        message={active?.waMessage ?? ''}
+      />
     </section>
   )
 }

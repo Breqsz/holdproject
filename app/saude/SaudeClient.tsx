@@ -60,15 +60,6 @@ function HeroSection() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 grid gap-12 lg:grid-cols-[1.1fr_1fr] items-center">
         <div>
-          <Reveal>
-            <div className="flex items-center gap-3">
-              <span className="inline-flex items-center rounded-full border border-[#ae251c]/30 bg-[#ae251c]/15 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#ae251c]">
-                Saúde · Hold Corretora
-              </span>
-              <div className="rule-accent h-px max-w-[120px] flex-1" />
-            </div>
-          </Reveal>
-
           <Reveal delay={0.08}>
             <h1
               className="mt-6 text-display text-white text-pretty"
@@ -188,62 +179,24 @@ function SobreSection() {
 
 function DiferenciaisSection() {
   return (
-    <section
-      id="saude-diferenciais"
-      className="section-pad bg-[#142f54]"
-      style={{ fontFamily: 'var(--font-outfit)' }}
-    >
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <Reveal>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#7a9ab8]">
-            DIFERENCIAIS
-          </p>
-        </Reveal>
-        <Reveal delay={0.08}>
-          <p
-            className="mt-4 text-display italic text-white max-w-3xl"
-            style={{ fontSize: 'clamp(1.5rem, 3vw, 2.25rem)' }}
-          >
-            O diferencial não está apenas na solução. Está na forma de conduzir cada decisão.
-          </p>
-        </Reveal>
-
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-80px' }}
-          variants={{
-            hidden: {},
-            visible: { transition: { staggerChildren: 0.08 } },
-          }}
-          className="mt-16 grid md:grid-cols-3 gap-x-10 gap-y-12"
-        >
+    <section id="saude-diferenciais" className="saude-dif">
+      <div className="saude-dif-wrap">
+        <p className="saude-dif-eyebrow">DIFERENCIAIS</p>
+        <p className="saude-dif-headline">
+          O diferencial não está apenas na solução. Está na forma de conduzir cada decisão.
+        </p>
+        <div className="saude-dif-grid">
           {DIFERENCIAIS.map((d, i) => {
             const Icon = d.icon
             return (
-              <motion.div
-                key={d.title}
-                variants={{
-                  hidden: { opacity: 0, y: 24 },
-                  visible: {
-                    opacity: 1,
-                    y: 0,
-                    transition: { duration: 0.7, ease: EASE_OUT_EXPO },
-                  },
-                }}
-                className={
-                  i === 0
-                    ? ''
-                    : 'md:border-l md:border-white/10 md:pl-8'
-                }
-              >
-                <Icon size={32} strokeWidth={1.6} className="text-[#ae251c]" />
-                <h3 className="mt-6 text-white font-semibold text-lg">{d.title}</h3>
-                <p className="mt-3 text-[#7a9ab8] leading-relaxed text-sm">{d.desc}</p>
-              </motion.div>
+              <div key={d.title} className="saude-dif-item" style={{ ['--i' as never]: i }}>
+                <Icon size={32} strokeWidth={1.6} className="saude-dif-icon" />
+                <h3 className="saude-dif-title">{d.title}</h3>
+                <p className="saude-dif-desc">{d.desc}</p>
+              </div>
             )
           })}
-        </motion.div>
+        </div>
       </div>
     </section>
   )

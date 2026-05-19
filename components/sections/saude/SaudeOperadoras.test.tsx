@@ -54,7 +54,7 @@ describe('SaudeOperadoras', () => {
     ).toBeInTheDocument()
   })
 
-  it('renders LogoLoop with all 8 operadoras', () => {
+  it('renders LogoLoop with all 7 operadoras', () => {
     render(<SaudeOperadoras />)
     const loop = screen.getByTestId('logo-loop')
     expect(loop).toBeInTheDocument()
@@ -68,7 +68,6 @@ describe('SaudeOperadoras', () => {
       'Porto Seguro',
       'Seguros Unimed',
       'SulAmérica',
-      'Unimed',
     ]
     for (const name of expected) {
       expect(screen.getByText(name)).toBeInTheDocument()
