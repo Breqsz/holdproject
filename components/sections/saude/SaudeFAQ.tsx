@@ -112,7 +112,7 @@ export default function SaudeFAQ() {
 
           <motion.div variants={fadeUp} className="mt-6 flex justify-center">
             <Image
-              src="/personagem/Boneco_v2.png"
+              src="/personagem/faq_saude.png"
               alt=""
               width={220}
               height={340}
