@@ -74,8 +74,8 @@ const MODALIDADES: Modalidade[] = [
     bullets: ['Prevenção contínua', 'Rede credenciada ampla', 'Custo-benefício'],
     waMessage:
       'Olá! Gostaria de saber melhor sobre os planos de saúde direcionados à Odontologia da HOLD.',
-    image: '/images/hero/family-hero2.webp',
-    imagePosition: 'center 35%',
+    image: '/images/personas/CONSULTA-DE-ODONTOLOGIA.jpg',
+    imagePosition: 'center',
     ariaLabel: 'Conhecer plano Odontológico',
   },
 ]
