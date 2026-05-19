@@ -40,9 +40,6 @@ export default function SaudeOperadoras() {
           >
             Trabalhamos com as principais seguradoras e operadoras do mercado
           </h2>
-          <p className="mt-4 max-w-[60ch] text-[#07162a]/60 leading-relaxed text-sm">
-            Disponibilidade varia conforme região, modalidade e perfil do beneficiário.
-          </p>
         </motion.div>
 
         <div className="relative">

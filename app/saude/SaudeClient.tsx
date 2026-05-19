@@ -170,7 +170,8 @@ function SobreSection() {
         <h2 className="saude-sobre-h2">O jeito HOLD de estruturar soluções em saúde</h2>
         <p className="saude-sobre-body">
           Mais do que intermediar soluções, atuamos de forma consultiva na construção de
-          estratégias em saúde, benefícios e planejamento.
+          estratégias em saúde, benefícios e planejamento, conectando cada cliente às
+          decisões mais adequadas ao seu momento, necessidade e visão de futuro.
         </p>
         <ol className="saude-sobre-values">
           {SOBRE_CHIPS.map((chip, i) => (
