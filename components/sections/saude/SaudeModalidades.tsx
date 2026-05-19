@@ -7,6 +7,7 @@ import { ArrowRight } from 'lucide-react'
 import { formatWhatsAppLink } from '@/lib/utils'
 import { useLocale } from '@/lib/i18n'
 import { WhatsAppRedirectModal } from '@/components/saude/WhatsAppRedirectModal'
+import { SaudeModalidadeDetailModal } from '@/components/saude/SaudeModalidadeDetailModal'
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number]
 const RED = '#ae251c'
@@ -24,6 +25,7 @@ type ModalidadeConfig = {
 type Modalidade = ModalidadeConfig & {
   title: string
   short: string
+  body: string
   bullets: string[]
   waMessage: string
   ariaLabel: string
@@ -181,17 +183,19 @@ function ModalidadeCard({
 export default function SaudeModalidades() {
   const { t } = useLocale()
   const [active, setActive] = useState<Modalidade | null>(null)
+  const [wa, setWa] = useState<Modalidade | null>(null)
 
   const modalidades: Modalidade[] = MODALIDADES_CONFIG.map((cfg) => ({
     ...cfg,
     title: t(`saudeV2.modalidade.${cfg.id}.title`),
     short: t(`saudeV2.modalidade.${cfg.id}.short`),
+    body: t(`saudeV2.modalidade.${cfg.id}.body`),
     bullets: t(`saudeV2.modalidade.${cfg.id}.bullets`).split('|'),
     waMessage: t(`saudeV2.modalidade.${cfg.id}.wa`),
     ariaLabel: t(`saudeV2.modalidade.${cfg.id}.aria`),
   }))
 
-  const activeHref = active ? formatWhatsAppLink(WHATSAPP, active.waMessage) : ''
+  const waHref = wa ? formatWhatsAppLink(WHATSAPP, wa.waMessage) : ''
 
   return (
     <section
@@ -242,12 +246,22 @@ export default function SaudeModalidades() {
         </motion.div>
       </div>
 
-      <WhatsAppRedirectModal
+      <SaudeModalidadeDetailModal
         open={active !== null}
+        data={active}
         onClose={() => setActive(null)}
-        href={activeHref}
-        label={active?.title ?? ''}
-        message={active?.waMessage ?? ''}
+        onConfirm={() => {
+          const m = active
+          setActive(null)
+          setWa(m)
+        }}
+      />
+      <WhatsAppRedirectModal
+        open={wa !== null}
+        onClose={() => setWa(null)}
+        href={waHref}
+        label={wa?.title ?? ''}
+        message={wa?.waMessage ?? ''}
       />
     </section>
   )
