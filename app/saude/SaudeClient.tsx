@@ -1,153 +1,20 @@
 'use client'
 
-import { useState } from 'react'
 import Image from 'next/image'
-import { AnimatePresence, motion } from 'framer-motion'
-import { Search, HandHeart, Layers, ArrowRight } from 'lucide-react'
+import { Search, HandHeart, Layers } from 'lucide-react'
 import { formatWhatsAppLink } from '@/lib/utils'
 import { useLocale } from '@/lib/i18n'
 import { Reveal } from '@/components/motion/Reveal'
 import { ServiceLeadForm } from '@/components/forms/ServiceLeadForm'
 import { WhatsAppIcon } from '@/components/icons/WhatsAppIcon'
-import RotatingText from '@/components/motion/RotatingText'
+import SaudeHero from '@/components/sections/saude/SaudeHero'
 import SaudeModalidades from '@/components/sections/saude/SaudeModalidades'
 import SaudeOperadoras from '@/components/sections/saude/SaudeOperadoras'
 import SaudeFAQ from '@/components/sections/saude/SaudeFAQ'
 
-const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number]
 const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? ''
 
 const DIFERENCIAIS_ICONS = [Search, HandHeart, Layers]
-
-const HERO_PHOTOS = [
-  {
-    src: '/images/Saude/empresarial.jpg',
-    altKey: 'saudeV2.hero.image.empresarial.alt',
-    objectPosition: 'center 30%',
-  },
-  {
-    src: '/images/Saude/pessoal.jpg',
-    altKey: 'saudeV2.hero.image.pessoal.alt',
-    objectPosition: 'center 50%',
-  },
-] as const
-
-function HeroSection() {
-  const { t } = useLocale()
-  const wa = formatWhatsAppLink(WHATSAPP, t('saudeV2.hero.wa.message'))
-  const rotating = t('saudeV2.hero.rotating').split('|')
-  const [rotationCount, setRotationCount] = useState(0)
-  const photoIndex = Math.floor(rotationCount / 3) % HERO_PHOTOS.length
-  const photo = HERO_PHOTOS[photoIndex]
-
-  return (
-    <section
-      className="relative overflow-hidden"
-      style={{
-        fontFamily: 'var(--font-outfit)',
-        background: '#0d2240',
-      }}
-    >
-      <div className="grid lg:grid-cols-2 lg:min-h-[720px]">
-        {/* Left: text panel */}
-        <div
-          className="relative flex items-center px-6 sm:px-10 lg:pl-20 xl:pl-24 lg:pr-12 pt-28 pb-16 lg:py-24"
-          style={{ background: 'linear-gradient(135deg, #0d2240 0%, #142f54 60%, #0f2548 100%)' }}
-        >
-          <div aria-hidden className="dot-grid pointer-events-none absolute inset-0 opacity-[0.05]" />
-          <div
-            aria-hidden
-            className="pointer-events-none absolute -left-16 top-12 h-72 w-72 rounded-full bg-[#1a4b8a] opacity-[.20] blur-[100px]"
-          />
-          <div
-            aria-hidden
-            className="pointer-events-none absolute -bottom-10 left-10 h-56 w-56 rounded-full bg-[#ae251c] opacity-[.14] blur-[90px]"
-          />
-
-          <div className="relative z-10 max-w-full sm:max-w-[600px]">
-            <Reveal delay={0.08}>
-              <h1
-                className="text-display text-white text-pretty"
-                style={{ fontSize: 'clamp(1.85rem, 4vw, 3.25rem)' }}
-              >
-                {t('saudeV2.hero.title.prefix')}
-                <RotatingText
-                  texts={rotating}
-                  mainClassName="mt-3 w-fit px-3 sm:px-4 md:px-5 bg-[#ae251c] text-white overflow-hidden py-1 sm:py-1.5 md:py-2 justify-center rounded-lg"
-                  staggerFrom="last"
-                  initial={{ y: '100%' }}
-                  animate={{ y: 0 }}
-                  exit={{ y: '-120%' }}
-                  staggerDuration={0.025}
-                  splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1 md:pb-1"
-                  transition={{ type: 'spring', damping: 30, stiffness: 400 }}
-                  rotationInterval={3200}
-                  onNext={() => setRotationCount((c) => c + 1)}
-                />
-              </h1>
-            </Reveal>
-
-            <Reveal delay={0.16}>
-              <p className="mt-6 max-w-[58ch] text-pretty text-lg leading-relaxed text-[#7a9ab8]">
-                {t('saudeV2.hero.subtitle')}
-              </p>
-            </Reveal>
-
-            <Reveal delay={0.24}>
-              <div className="mt-8 flex flex-wrap gap-3">
-                <a
-                  href={wa}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full bg-[#25D366] hover:bg-[#1ebe5d] px-6 py-3 text-sm font-semibold text-white transition-colors"
-                >
-                  <WhatsAppIcon size={16} />
-                  {t('saudeV2.hero.cta.wa')}
-                </a>
-                <a
-                  href="#saude-form"
-                  className="group inline-flex items-center gap-2 rounded-full bg-white/[0.08] ring-1 ring-white/15 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/[0.12]"
-                >
-                  {t('saudeV2.hero.cta.compare')}
-                  <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
-                </a>
-              </div>
-            </Reveal>
-          </div>
-        </div>
-
-        {/* Right: photo panel */}
-        <div className="relative h-[340px] sm:h-[420px] lg:h-auto lg:min-h-[720px] overflow-hidden bg-[#07162a]">
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.div
-              key={photo.src}
-              initial={{ opacity: 0, scale: 1.05 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 1.02 }}
-              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="absolute inset-0"
-            >
-              <Image
-                src={photo.src}
-                alt={t(photo.altKey)}
-                fill
-                priority={photoIndex === 0}
-                sizes="(max-width: 1023px) 100vw, 50vw"
-                className="object-cover"
-                style={{ objectPosition: photo.objectPosition }}
-              />
-            </motion.div>
-          </AnimatePresence>
-          {/* Subtle left edge fade so it blends into the text panel */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#0d2240]/55 to-transparent hidden lg:block"
-          />
-        </div>
-      </div>
-    </section>
-  )
-}
 
 function SobreSection() {
   const { t } = useLocale()
@@ -319,7 +186,7 @@ function CtaFinalSection() {
 export default function SaudeClient() {
   return (
     <>
-      <HeroSection />
+      <SaudeHero />
       <SobreSection />
       <SaudeModalidades />
       <DiferenciaisSection />

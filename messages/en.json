@@ -634,6 +634,9 @@
   "saudeV2.hero.image.alt": "HOLD health plan specialist",
   "saudeV2.hero.image.empresarial.alt": "Corporate health solutions — HOLD specialists in a business environment",
   "saudeV2.hero.image.pessoal.alt": "Individual and family health solutions — HOLD personal care",
+  "saudeV2.hero.eyebrow": "Health Plans",
+  "saudeV2.hero.chip.empresarial": "Corporate",
+  "saudeV2.hero.chip.pessoal": "Personal",
 
   "saudeV2.sobre.eyebrow": "THE HOLD WAY",
   "saudeV2.sobre.title": "The HOLD way of building health solutions",
