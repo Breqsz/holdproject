@@ -48,8 +48,8 @@ const MODALIDADES: Modalidade[] = [
     bullets: ['Entidades de classe', 'Elegibilidade auditada', 'Cenário de longo prazo'],
     waMessage:
       'Olá! Gostaria de saber melhor sobre os planos de saúde Coletivos por Adesão da HOLD.',
-    image: '/images/hero/persona_hero.webp',
-    imagePosition: 'center 25%',
+    image: '/images/personas/Planos-Coletivos-por-Adesao.webp',
+    imagePosition: 'center 35%',
     ariaLabel: 'Conhecer plano Coletivo por Adesão',
   },
   {
