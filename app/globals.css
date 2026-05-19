@@ -377,16 +377,18 @@
 }
 .saude-dif-headline {
   margin-top: 1rem;
-  font-weight: 300;
+  font-family: var(--font-gellix);
+  font-weight: 700;
   color: #fff;
   max-width: 18ch;
   font-size: clamp(1.5rem, 3vw, 2.25rem);
   line-height: 1.15;
+  letter-spacing: -0.025em;
   animation: saude-dif-focus 1100ms var(--ease-out-expo) 220ms backwards;
 }
 .saude-dif-headline-accent {
   color: #ae251c;
-  font-weight: 500;
+  font-weight: 700;
 }
 .saude-dif-list {
   margin-top: 2.25rem;

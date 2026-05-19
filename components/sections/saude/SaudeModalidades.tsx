@@ -212,7 +212,10 @@ export default function SaudeModalidades() {
           </p>
           <h2
             className="mt-4 text-display text-white"
-            style={{ fontSize: 'clamp(1.75rem, 3.4vw, 2.75rem)' }}
+            style={{
+              fontFamily: 'var(--font-gellix)',
+              fontSize: 'clamp(1.75rem, 3.4vw, 2.75rem)',
+            }}
           >
             {t('saudeV2.modalidades.title')}
           </h2>
