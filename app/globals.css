@@ -377,7 +377,6 @@
 }
 .saude-dif-headline {
   margin-top: 1rem;
-  font-style: italic;
   font-weight: 300;
   color: #fff;
   max-width: 18ch;
@@ -387,7 +386,6 @@
 }
 .saude-dif-headline-accent {
   color: #ae251c;
-  font-style: normal;
   font-weight: 500;
 }
 .saude-dif-list {

@@ -109,12 +109,12 @@ export function WhatsAppRedirectModal({
             </p>
             <h3
               id="wa-redirect-title"
-              className="mt-3 italic text-white"
+              className="mt-3 text-white"
               style={{ fontSize: 'clamp(1.4rem, 2.6vw, 1.75rem)', lineHeight: 1.18 }}
             >
               {t('saudeV2.wa.modal.title.prefix')}{' '}
               <span
-                className="not-italic font-semibold tabular-nums"
+                className="font-semibold tabular-nums"
                 style={{ color: '#ae251c' }}
               >
                 {count}s
@@ -126,10 +126,7 @@ export function WhatsAppRedirectModal({
               {t('saudeV2.wa.modal.body.suffix')}
             </p>
 
-            <p
-              className="mt-3 rounded-lg bg-white/[0.04] ring-1 ring-white/10 px-4 py-3 text-[13.5px] leading-relaxed text-white/85"
-              style={{ fontStyle: 'italic' }}
-            >
+            <p className="mt-3 rounded-lg bg-white/[0.04] ring-1 ring-white/10 px-4 py-3 text-[13.5px] leading-relaxed text-white/85">
               “{message}”
             </p>
 
