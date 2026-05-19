@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import LogoLoop, { type LogoItem } from '@/components/motion/LogoLoop'
+import { useLocale } from '@/lib/i18n'
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number]
 
@@ -16,6 +17,8 @@ const OPERADORAS: LogoItem[] = [
 ]
 
 export default function SaudeOperadoras() {
+  const { t } = useLocale()
+
   return (
     <section
       id="saude-operadoras"
@@ -31,13 +34,13 @@ export default function SaudeOperadoras() {
           className="max-w-3xl mb-12"
         >
           <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#07162a]/55">
-            PARCEIROS
+            {t('saudeV2.operadoras.eyebrow')}
           </p>
           <h2
             className="mt-4 text-display text-[#07162a]"
             style={{ fontSize: 'clamp(1.5rem, 3vw, 2.25rem)' }}
           >
-            Trabalhamos com as principais seguradoras e operadoras do mercado
+            {t('saudeV2.operadoras.title')}
           </h2>
         </motion.div>
 
@@ -51,7 +54,7 @@ export default function SaudeOperadoras() {
             scaleOnHover
             fadeOut
             fadeOutColor="#F5F5F5"
-            ariaLabel="Operadoras de saúde parceiras"
+            ariaLabel={t('saudeV2.operadoras.aria')}
           />
         </div>
       </div>

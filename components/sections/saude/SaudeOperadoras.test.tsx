@@ -1,6 +1,15 @@
 import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import SaudeOperadoras from './SaudeOperadoras'
+import pt from '@/messages/pt.json'
+
+vi.mock('@/lib/i18n', () => ({
+  useLocale: () => ({
+    locale: 'pt',
+    setLocale: vi.fn(),
+    t: (key: string) => (pt as Record<string, string>)[key] ?? key,
+  }),
+}))
 
 vi.mock('framer-motion', () => {
   const React = require('react')

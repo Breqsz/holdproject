@@ -130,7 +130,12 @@
       "PowerShell(Get-Item *)",
       "PowerShell(node \"E:\\\\Projetos\\\\hold\\\\.tmp-logos\\\\standardize.mjs\")",
       "PowerShell(node \"E:\\\\Projetos\\\\hold\\\\.tmp-logos\\\\upscale.mjs\")",
-      "PowerShell(npx vitest run components/sections/Parceiros.test.tsx components/sections/StatsBar.test.tsx components/sections/saude/SaudeOperadoras.test.tsx 2>&1 | Select-Object -Last 30)"
+      "PowerShell(npx vitest run components/sections/Parceiros.test.tsx components/sections/StatsBar.test.tsx components/sections/saude/SaudeOperadoras.test.tsx 2>&1 | Select-Object -Last 30)",
+      "Bash(pnpm next *)",
+      "Bash(kill %1)",
+      "Bash(findstr :3001)",
+      "Bash(taskkill /PID 28604 /F)",
+      "Bash(xargs grep -l \"t\\('saude\\\\|t\\(\\\\\"saude\")"
     ]
   }
 }

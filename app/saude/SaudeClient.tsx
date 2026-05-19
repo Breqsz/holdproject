@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Search, HandHeart, Layers, ArrowRight } from 'lucide-react'
 import { formatWhatsAppLink } from '@/lib/utils'
+import { useLocale } from '@/lib/i18n'
 import { Reveal } from '@/components/motion/Reveal'
 import { ServiceLeadForm } from '@/components/forms/ServiceLeadForm'
 import { WhatsAppIcon } from '@/components/icons/WhatsAppIcon'
@@ -15,38 +16,20 @@ import SaudeFAQ from '@/components/sections/saude/SaudeFAQ'
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number]
 const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? ''
 
-const HERO_WA = 'Olá! Quero falar com um especialista em planos de saúde.'
-
-const SOBRE_CHIPS = [
-  'Atendimento consultivo',
-  'Soluções personalizadas',
-  'Acompanhamento próximo',
-]
-
-const DIFERENCIAIS = [
-  {
-    icon: Search,
-    title: 'Análise estratégica',
-    desc: 'Avaliação técnica considerando perfil, utilização, cobertura e previsibilidade.',
-  },
-  {
-    icon: HandHeart,
-    title: 'Acompanhamento próximo',
-    desc: 'Suporte consultivo em todas as etapas da jornada.',
-  },
-  {
-    icon: Layers,
-    title: 'Estrutura multissoluções',
-    desc: 'Integração entre saúde, benefícios e planejamento.',
-  },
-]
+const DIFERENCIAIS_ICONS = [Search, HandHeart, Layers]
 
 function HeroSection() {
-  const wa = formatWhatsAppLink(WHATSAPP, HERO_WA)
+  const { t } = useLocale()
+  const wa = formatWhatsAppLink(WHATSAPP, t('saudeV2.hero.wa.message'))
+  const rotating = t('saudeV2.hero.rotating').split('|')
+
   return (
     <section
       className="relative overflow-hidden pt-32 pb-16 md:pt-40 md:pb-24"
-      style={{ background: 'linear-gradient(135deg, #0d2240 0%, #142f54 60%, #0f2548 100%)' }}
+      style={{
+        fontFamily: 'var(--font-outfit)',
+        background: 'linear-gradient(135deg, #0d2240 0%, #142f54 60%, #0f2548 100%)',
+      }}
     >
       <div aria-hidden className="dot-grid pointer-events-none absolute inset-0 opacity-[0.06]" />
       <div
@@ -65,18 +48,9 @@ function HeroSection() {
               className="mt-6 text-display text-white text-pretty"
               style={{ fontSize: 'clamp(1.85rem, 4vw, 3.25rem)' }}
             >
-              Soluções em saúde estruturadas com
+              {t('saudeV2.hero.title.prefix')}
               <RotatingText
-                texts={[
-                  'estratégia',
-                  'inteligência',
-                  'consistência',
-                  'excelência',
-                  'proximidade',
-                  'maturidade',
-                  'experiência',
-                  'transparência',
-                ]}
+                texts={rotating}
                 mainClassName="mt-3 w-fit px-3 sm:px-4 md:px-5 bg-[#ae251c] text-white overflow-hidden py-1 sm:py-1.5 md:py-2 justify-center rounded-lg"
                 staggerFrom="last"
                 initial={{ y: '100%' }}
@@ -92,8 +66,7 @@ function HeroSection() {
 
           <Reveal delay={0.16}>
             <p className="mt-6 max-w-[58ch] text-pretty text-lg leading-relaxed text-[#7a9ab8]">
-              A HOLD conecta pessoas, famílias e empresas às soluções em saúde mais adequadas
-              para cada perfil, necessidade e momento.
+              {t('saudeV2.hero.subtitle')}
             </p>
           </Reveal>
 
@@ -106,13 +79,13 @@ function HeroSection() {
                 className="inline-flex items-center gap-2 rounded-full bg-[#25D366] hover:bg-[#1ebe5d] px-6 py-3 text-sm font-semibold text-white transition-colors"
               >
                 <WhatsAppIcon size={16} />
-                Falar com especialista
+                {t('saudeV2.hero.cta.wa')}
               </a>
               <a
                 href="#saude-form"
                 className="group inline-flex items-center gap-2 rounded-full bg-white/[0.08] ring-1 ring-white/15 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/[0.12]"
               >
-                Comparar planos
+                {t('saudeV2.hero.cta.compare')}
                 <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
               </a>
             </div>
@@ -135,7 +108,7 @@ function HeroSection() {
             />
             <Image
               src="/personagem/Saude.png"
-              alt="Especialista HOLD em planos de saúde"
+              alt={t('saudeV2.hero.image.alt')}
               width={520}
               height={780}
               priority
@@ -150,6 +123,9 @@ function HeroSection() {
 }
 
 function SobreSection() {
+  const { t } = useLocale()
+  const chips = t('saudeV2.sobre.chips').split('|')
+
   return (
     <section
       id="saude-sobre"
@@ -157,15 +133,11 @@ function SobreSection() {
       style={{ fontFamily: 'var(--font-outfit)' }}
     >
       <div className="max-w-5xl mx-auto px-6 lg:px-8 saude-sobre-stage">
-        <p className="saude-sobre-eyebrow">O JEITO HOLD</p>
-        <h2 className="saude-sobre-h2">O jeito HOLD de estruturar soluções em saúde</h2>
-        <p className="saude-sobre-body">
-          Mais do que intermediar soluções, atuamos de forma consultiva na construção de
-          estratégias em saúde, benefícios e planejamento, conectando cada cliente às
-          decisões mais adequadas ao seu momento, necessidade e visão de futuro.
-        </p>
+        <p className="saude-sobre-eyebrow">{t('saudeV2.sobre.eyebrow')}</p>
+        <h2 className="saude-sobre-h2">{t('saudeV2.sobre.title')}</h2>
+        <p className="saude-sobre-body">{t('saudeV2.sobre.body')}</p>
         <ol className="saude-sobre-values">
-          {SOBRE_CHIPS.map((chip, i) => (
+          {chips.map((chip, i) => (
             <li key={chip} className="saude-sobre-value">
               <span className="saude-sobre-value-num">{String(i + 1).padStart(2, '0')}</span>
               <span className="saude-sobre-value-label">{chip}</span>
@@ -178,19 +150,26 @@ function SobreSection() {
 }
 
 function DiferenciaisSection() {
+  const { t } = useLocale()
+  const items = DIFERENCIAIS_ICONS.map((Icon, i) => ({
+    Icon,
+    title: t(`saudeV2.dif.item.${i + 1}.title`),
+    desc: t(`saudeV2.dif.item.${i + 1}.desc`),
+  }))
+
   return (
     <section id="saude-diferenciais" className="saude-dif">
       <div className="saude-dif-wrap">
         <div className="saude-dif-text">
-          <p className="saude-dif-eyebrow">DIFERENCIAIS</p>
+          <p className="saude-dif-eyebrow">{t('saudeV2.dif.eyebrow')}</p>
           <h2 className="saude-dif-headline">
-            O diferencial não está apenas na{' '}
-            <span className="saude-dif-headline-accent">solução</span>. Está na forma de
-            conduzir cada decisão.
+            {t('saudeV2.dif.headline.before')}
+            <span className="saude-dif-headline-accent">{t('saudeV2.dif.headline.accent')}</span>
+            {t('saudeV2.dif.headline.after')}
           </h2>
           <ul className="saude-dif-list">
-            {DIFERENCIAIS.map((d, i) => {
-              const Icon = d.icon
+            {items.map((d, i) => {
+              const Icon = d.Icon
               return (
                 <li key={d.title} className="saude-dif-item" style={{ ['--i' as never]: i }}>
                   <span className="saude-dif-chip" aria-hidden>
@@ -210,7 +189,7 @@ function DiferenciaisSection() {
           <span className="saude-dif-pane-floor" />
           <Image
             src="/personagem/saude-character.png"
-            alt="Especialista HOLD Saúde"
+            alt={t('saudeV2.dif.image.alt')}
             width={460}
             height={690}
             sizes="(max-width: 1023px) 0px, 40vw"
@@ -225,7 +204,9 @@ function DiferenciaisSection() {
 }
 
 function CtaFinalSection() {
-  const wa = formatWhatsAppLink(WHATSAPP, HERO_WA)
+  const { t } = useLocale()
+  const wa = formatWhatsAppLink(WHATSAPP, t('saudeV2.hero.wa.message'))
+
   return (
     <section
       id="saude-form"
@@ -245,22 +226,19 @@ function CtaFinalSection() {
       <div className="relative max-w-6xl mx-auto px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-start">
         <Reveal>
           <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#7a9ab8]">
-            FALE COM A HOLD
+            {t('saudeV2.cta.eyebrow')}
           </p>
           <h2
             className="mt-4 text-display text-white"
             style={{ fontSize: 'clamp(1.75rem, 3.6vw, 2.75rem)' }}
           >
-            Conte com a HOLD para estruturar sua solução em saúde com inteligência e segurança.
+            {t('saudeV2.cta.title')}
           </h2>
           <p className="mt-6 max-w-[58ch] text-pretty text-[#7a9ab8] leading-relaxed">
-            Nossa equipe está pronta para entender seu cenário e conectar você às alternativas
-            mais adequadas para sua realidade.
+            {t('saudeV2.cta.body')}
           </p>
           <div className="mt-8 rule-accent h-px w-24" />
-          <p className="mt-6 text-sm text-[#7a9ab8]">
-            Sem custo · sem compromisso · resposta em horário comercial.
-          </p>
+          <p className="mt-6 text-sm text-[#7a9ab8]">{t('saudeV2.cta.meta')}</p>
           <a
             href={wa}
             target="_blank"
@@ -268,7 +246,7 @@ function CtaFinalSection() {
             className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#25D366] hover:bg-[#1ebe5d] text-white text-sm font-semibold px-6 py-3 transition-colors"
           >
             <WhatsAppIcon size={16} />
-            Falar com especialista no WhatsApp
+            {t('saudeV2.cta.wa.button')}
           </a>
 
           <div className="mt-10 hidden md:flex items-end gap-6">
@@ -282,39 +260,28 @@ function CtaFinalSection() {
               style={{ filter: 'drop-shadow(0 18px 36px rgba(0,0,0,0.42))' }}
             />
             <ul className="flex flex-col gap-2.5 pb-3 flex-1 min-w-0">
-              <li className="flex items-start gap-2.5 text-[12.5px] leading-[1.5] text-white/72">
-                <span
-                  aria-hidden
-                  className="mt-[7px] block h-[5px] w-[5px] rounded-full shrink-0"
-                  style={{ background: '#ae251c' }}
-                />
-                <span>Análise técnica considerando perfil, utilização e cobertura.</span>
-              </li>
-              <li className="flex items-start gap-2.5 text-[12.5px] leading-[1.5] text-white/72">
-                <span
-                  aria-hidden
-                  className="mt-[7px] block h-[5px] w-[5px] rounded-full shrink-0"
-                  style={{ background: '#ae251c' }}
-                />
-                <span>Curadoria entre as principais operadoras do mercado.</span>
-              </li>
-              <li className="flex items-start gap-2.5 text-[12.5px] leading-[1.5] text-white/72">
-                <span
-                  aria-hidden
-                  className="mt-[7px] block h-[5px] w-[5px] rounded-full shrink-0"
-                  style={{ background: '#ae251c' }}
-                />
-                <span>Acompanhamento consultivo antes, durante e depois da contratação.</span>
-              </li>
+              {[1, 2, 3].map((n) => (
+                <li
+                  key={n}
+                  className="flex items-start gap-2.5 text-[12.5px] leading-[1.5] text-white/72"
+                >
+                  <span
+                    aria-hidden
+                    className="mt-[7px] block h-[5px] w-[5px] rounded-full shrink-0"
+                    style={{ background: '#ae251c' }}
+                  />
+                  <span>{t(`saudeV2.cta.bullet.${n}`)}</span>
+                </li>
+              ))}
             </ul>
           </div>
         </Reveal>
 
         <Reveal delay={0.12}>
           <ServiceLeadForm
-            service="Saúde"
-            introTitle="Falar com especialista"
-            introBody="Conta seu cenário — perfil, modalidade, momento. Voltamos com a alternativa mais adequada."
+            service={t('saudeV2.cta.form.service')}
+            introTitle={t('saudeV2.cta.form.introTitle')}
+            introBody={t('saudeV2.cta.form.introBody')}
           />
         </Reveal>
       </div>

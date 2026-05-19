@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import { formatWhatsAppLink } from '@/lib/utils'
+import { useLocale } from '@/lib/i18n'
 import { WhatsAppRedirectModal } from '@/components/saude/WhatsAppRedirectModal'
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number]
@@ -13,70 +14,45 @@ const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? ''
 
 type ModalidadeId = 'individual' | 'adesao' | 'empresarial' | 'odonto'
 
-type Modalidade = {
+type ModalidadeConfig = {
   id: ModalidadeId
   seq: string
+  image: string
+  imagePosition?: string
+}
+
+type Modalidade = ModalidadeConfig & {
   title: string
   short: string
   bullets: string[]
   waMessage: string
-  image: string
-  imagePosition?: string
   ariaLabel: string
 }
 
-const MODALIDADES: Modalidade[] = [
+const MODALIDADES_CONFIG: ModalidadeConfig[] = [
   {
     id: 'individual',
     seq: '01',
-    title: 'Individual e Familiar',
-    short:
-      'Soluções em saúde para pessoas e famílias que buscam proteção, previsibilidade e acesso com segurança.',
-    bullets: ['Análise estratégica de perfil', 'Operadoras curadas', 'Acompanhamento próximo'],
-    waMessage:
-      'Olá! Gostaria de saber melhor sobre os planos de saúde Individual e Familiar da HOLD.',
     image: '/images/hero/family-hero.webp',
     imagePosition: 'center 30%',
-    ariaLabel: 'Conhecer planos Individual e Familiar',
   },
   {
     id: 'adesao',
     seq: '02',
-    title: 'Coletivo por Adesão',
-    short:
-      'Alternativas estratégicas para profissionais vinculados a entidades de classe e categorias elegíveis.',
-    bullets: ['Entidades de classe', 'Elegibilidade auditada', 'Cenário de longo prazo'],
-    waMessage:
-      'Olá! Gostaria de saber melhor sobre os planos de saúde Coletivos por Adesão da HOLD.',
     image: '/images/personas/Planos-Coletivos-por-Adesao.webp',
-    imagePosition: 'center 35%',
-    ariaLabel: 'Conhecer plano Coletivo por Adesão',
+    imagePosition: '25% 35%',
   },
   {
     id: 'empresarial',
     seq: '03',
-    title: 'Empresarial',
-    short:
-      'Estruturação de benefícios para MEIs, PMEs e grandes empresas, com soluções alinhadas ao porte, momento e estratégia de cada operação.',
-    bullets: ['MEIs, PMEs e grandes empresas', 'Retenção de talentos', 'Sustentabilidade da operação'],
-    waMessage:
-      'Olá! Gostaria de saber melhor sobre os planos de saúde Empresariais da HOLD.',
     image: '/images/hero/office-hero.webp',
     imagePosition: 'center',
-    ariaLabel: 'Conhecer plano Empresarial',
   },
   {
     id: 'odonto',
     seq: '04',
-    title: 'Odontológico',
-    short:
-      'Cobertura odontológica para pessoas e empresas com foco em cuidado, prevenção e bem-estar.',
-    bullets: ['Prevenção contínua', 'Rede credenciada ampla', 'Custo-benefício'],
-    waMessage:
-      'Olá! Gostaria de saber melhor sobre os planos de saúde direcionados à Odontologia da HOLD.',
     image: '/images/personas/CONSULTA-DE-ODONTOLOGIA.jpg',
     imagePosition: 'center',
-    ariaLabel: 'Conhecer plano Odontológico',
   },
 ]
 
@@ -97,9 +73,11 @@ const headerVariants = {
 
 function ModalidadeCard({
   data,
+  ctaLabel,
   onSelect,
 }: {
   data: Modalidade
+  ctaLabel: string
   onSelect: (m: Modalidade) => void
 }) {
   return (
@@ -185,7 +163,7 @@ function ModalidadeCard({
           </div>
 
           <span className="inline-flex items-center gap-2.5 self-start text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white">
-            Conhecer
+            {ctaLabel}
             <span
               aria-hidden
               className="inline-flex h-7 w-7 items-center justify-center rounded-full transition-transform duration-300 group-hover:translate-x-1"
@@ -201,7 +179,18 @@ function ModalidadeCard({
 }
 
 export default function SaudeModalidades() {
+  const { t } = useLocale()
   const [active, setActive] = useState<Modalidade | null>(null)
+
+  const modalidades: Modalidade[] = MODALIDADES_CONFIG.map((cfg) => ({
+    ...cfg,
+    title: t(`saudeV2.modalidade.${cfg.id}.title`),
+    short: t(`saudeV2.modalidade.${cfg.id}.short`),
+    bullets: t(`saudeV2.modalidade.${cfg.id}.bullets`).split('|'),
+    waMessage: t(`saudeV2.modalidade.${cfg.id}.wa`),
+    ariaLabel: t(`saudeV2.modalidade.${cfg.id}.aria`),
+  }))
+
   const activeHref = active ? formatWhatsAppLink(WHATSAPP, active.waMessage) : ''
 
   return (
@@ -219,18 +208,16 @@ export default function SaudeModalidades() {
           className="max-w-3xl mb-12 lg:mb-16"
         >
           <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#7a9ab8]">
-            MODALIDADES DE CONTRATAÇÃO
+            {t('saudeV2.modalidades.eyebrow')}
           </p>
           <h2
             className="mt-4 text-display text-white"
             style={{ fontSize: 'clamp(1.75rem, 3.4vw, 2.75rem)' }}
           >
-            Soluções em saúde para diferentes perfis e formatos de contratação
+            {t('saudeV2.modalidades.title')}
           </h2>
           <p className="mt-6 max-w-[60ch] text-[#7a9ab8] leading-relaxed">
-            A HOLD estrutura soluções em saúde de forma personalizada, considerando perfil,
-            necessidade, momento e estratégia de cada cliente. Atuamos com diferentes
-            modalidades de contratação para pessoas, famílias, profissionais e empresas.
+            {t('saudeV2.modalidades.body')}
           </p>
         </motion.div>
 
@@ -241,8 +228,13 @@ export default function SaudeModalidades() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.15 }}
         >
-          {MODALIDADES.map((m) => (
-            <ModalidadeCard key={m.id} data={m} onSelect={setActive} />
+          {modalidades.map((m) => (
+            <ModalidadeCard
+              key={m.id}
+              data={m}
+              ctaLabel={t('saudeV2.modalidades.cta')}
+              onSelect={setActive}
+            />
           ))}
         </motion.div>
       </div>
