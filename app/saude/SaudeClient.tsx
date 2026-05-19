@@ -181,21 +181,43 @@ function DiferenciaisSection() {
   return (
     <section id="saude-diferenciais" className="saude-dif">
       <div className="saude-dif-wrap">
-        <p className="saude-dif-eyebrow">DIFERENCIAIS</p>
-        <p className="saude-dif-headline">
-          O diferencial não está apenas na solução. Está na forma de conduzir cada decisão.
-        </p>
-        <div className="saude-dif-grid">
-          {DIFERENCIAIS.map((d, i) => {
-            const Icon = d.icon
-            return (
-              <div key={d.title} className="saude-dif-item" style={{ ['--i' as never]: i }}>
-                <Icon size={32} strokeWidth={1.6} className="saude-dif-icon" />
-                <h3 className="saude-dif-title">{d.title}</h3>
-                <p className="saude-dif-desc">{d.desc}</p>
-              </div>
-            )
-          })}
+        <div className="saude-dif-text">
+          <p className="saude-dif-eyebrow">DIFERENCIAIS</p>
+          <h2 className="saude-dif-headline">
+            O diferencial não está apenas na{' '}
+            <span className="saude-dif-headline-accent">solução</span>. Está na forma de
+            conduzir cada decisão.
+          </h2>
+          <ul className="saude-dif-list">
+            {DIFERENCIAIS.map((d, i) => {
+              const Icon = d.icon
+              return (
+                <li key={d.title} className="saude-dif-item" style={{ ['--i' as never]: i }}>
+                  <span className="saude-dif-chip" aria-hidden>
+                    <Icon size={19} strokeWidth={1.7} />
+                  </span>
+                  <div>
+                    <h3 className="saude-dif-title">{d.title}</h3>
+                    <p className="saude-dif-desc">{d.desc}</p>
+                  </div>
+                </li>
+              )
+            })}
+          </ul>
+        </div>
+        <div className="saude-dif-pane" aria-hidden>
+          <span className="saude-dif-pane-glow" />
+          <span className="saude-dif-pane-floor" />
+          <Image
+            src="/personagem/saude-character.png"
+            alt="Especialista HOLD Saúde"
+            width={460}
+            height={690}
+            sizes="(max-width: 1023px) 0px, 40vw"
+            loading="lazy"
+            quality={92}
+            className="saude-dif-pane-figure"
+          />
         </div>
       </div>
     </section>
