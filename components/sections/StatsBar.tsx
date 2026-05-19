@@ -14,7 +14,6 @@ const PARTNER_LOGOS: LogoItem[] = [
   { src: '/images/logosEmpresasParceiras/MAPFRE.webp',        alt: 'MAPFRE' },
   { src: '/images/logosEmpresasParceiras/SulAmerica.webp',    alt: 'SulAmérica' },
   { src: '/images/logosEmpresasParceiras/TokioSeguadora.webp', alt: 'Tokio Marine' },
-  { src: '/images/logosEmpresasParceiras/Unimed.webp',        alt: 'Unimed' },
   { src: '/images/logosEmpresasParceiras/bradesco.webp',      alt: 'Bradesco Seguros' },
 ]
 

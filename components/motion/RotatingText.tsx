@@ -9,13 +9,16 @@ import {
   useState,
   type ComponentPropsWithoutRef,
 } from 'react'
-import { motion, AnimatePresence, type Transition, type TargetAndTransition } from 'framer-motion'
+import { motion, AnimatePresence, type Transition, type TargetAndTransition } from 'motion/react'
 
 type StaggerFrom = 'first' | 'last' | 'center' | 'random' | number
 type SplitBy = 'characters' | 'words' | 'lines' | string
 
 export interface RotatingTextProps
-  extends Omit<ComponentPropsWithoutRef<typeof motion.span>, 'transition' | 'initial' | 'animate' | 'exit' | 'children'> {
+  extends Omit<
+    ComponentPropsWithoutRef<typeof motion.span>,
+    'transition' | 'initial' | 'animate' | 'exit' | 'children'
+  > {
   texts: string[]
   transition?: Transition
   initial?: TargetAndTransition
@@ -33,11 +36,6 @@ export interface RotatingTextProps
   mainClassName?: string
   splitLevelClassName?: string
   elementLevelClassName?: string
-  /**
-   * Externally controlled index. When provided, `auto` is ignored and the
-   * component does NOT manage its own interval. The parent is the source of truth.
-   */
-  controlledIndex?: number
 }
 
 export interface RotatingTextHandle {
@@ -70,13 +68,10 @@ const RotatingText = forwardRef<RotatingTextHandle, RotatingTextProps>((props, r
     mainClassName,
     splitLevelClassName,
     elementLevelClassName,
-    controlledIndex,
     ...rest
   } = props
 
-  const [internalIndex, setInternalIndex] = useState(0)
-  const isControlled = typeof controlledIndex === 'number'
-  const currentTextIndex = isControlled ? (controlledIndex as number) : internalIndex
+  const [currentTextIndex, setCurrentTextIndex] = useState(0)
 
   const splitIntoCharacters = (text: string) => {
     if (typeof Intl !== 'undefined' && (Intl as { Segmenter?: typeof Intl.Segmenter }).Segmenter) {
@@ -107,6 +102,7 @@ const RotatingText = forwardRef<RotatingTextHandle, RotatingTextProps>((props, r
         needsSpace: i !== arr.length - 1,
       }))
     }
+
     return currentText.split(splitBy as string).map((part, i, arr) => ({
       characters: [part],
       needsSpace: i !== arr.length - 1,
@@ -133,47 +129,64 @@ const RotatingText = forwardRef<RotatingTextHandle, RotatingTextProps>((props, r
 
   const handleIndexChange = useCallback(
     (newIndex: number) => {
-      if (!isControlled) setInternalIndex(newIndex)
+      setCurrentTextIndex(newIndex)
       if (onNext) onNext(newIndex)
     },
-    [onNext, isControlled],
+    [onNext],
   )
 
   const next = useCallback(() => {
     const nextIndex =
       currentTextIndex === texts.length - 1 ? (loop ? 0 : currentTextIndex) : currentTextIndex + 1
-    if (nextIndex !== currentTextIndex) handleIndexChange(nextIndex)
+    if (nextIndex !== currentTextIndex) {
+      handleIndexChange(nextIndex)
+    }
   }, [currentTextIndex, texts.length, loop, handleIndexChange])
 
   const previous = useCallback(() => {
     const prevIndex =
       currentTextIndex === 0 ? (loop ? texts.length - 1 : currentTextIndex) : currentTextIndex - 1
-    if (prevIndex !== currentTextIndex) handleIndexChange(prevIndex)
+    if (prevIndex !== currentTextIndex) {
+      handleIndexChange(prevIndex)
+    }
   }, [currentTextIndex, texts.length, loop, handleIndexChange])
 
   const jumpTo = useCallback(
     (index: number) => {
       const validIndex = Math.max(0, Math.min(index, texts.length - 1))
-      if (validIndex !== currentTextIndex) handleIndexChange(validIndex)
+      if (validIndex !== currentTextIndex) {
+        handleIndexChange(validIndex)
+      }
     },
     [texts.length, currentTextIndex, handleIndexChange],
   )
 
   const reset = useCallback(() => {
-    if (currentTextIndex !== 0) handleIndexChange(0)
+    if (currentTextIndex !== 0) {
+      handleIndexChange(0)
+    }
   }, [currentTextIndex, handleIndexChange])
 
-  useImperativeHandle(ref, () => ({ next, previous, jumpTo, reset }), [next, previous, jumpTo, reset])
+  useImperativeHandle(
+    ref,
+    () => ({
+      next,
+      previous,
+      jumpTo,
+      reset,
+    }),
+    [next, previous, jumpTo, reset],
+  )
 
   useEffect(() => {
-    if (!auto || isControlled) return
+    if (!auto) return
     const intervalId = setInterval(next, rotationInterval)
     return () => clearInterval(intervalId)
-  }, [next, rotationInterval, auto, isControlled])
+  }, [next, rotationInterval, auto])
 
   return (
     <motion.span
-      className={cn('inline-flex flex-wrap whitespace-pre-wrap relative', mainClassName)}
+      className={cn('flex flex-wrap whitespace-pre-wrap relative', mainClassName)}
       {...rest}
       layout
       transition={transition}
@@ -183,7 +196,7 @@ const RotatingText = forwardRef<RotatingTextHandle, RotatingTextProps>((props, r
         <motion.span
           key={currentTextIndex}
           className={cn(
-            splitBy === 'lines' ? 'flex flex-col w-full' : 'inline-flex flex-wrap whitespace-pre-wrap relative',
+            splitBy === 'lines' ? 'flex flex-col w-full' : 'flex flex-wrap whitespace-pre-wrap relative',
           )}
           layout
           aria-hidden="true"

@@ -150,19 +150,7 @@ export default function Footer() {
               >
                 <IconLinkedin size={16} />
               </a>
-              <a
-                href={waHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="WhatsApp"
-                className="w-10 h-10 rounded-full bg-[#142f54] flex items-center justify-center text-[#7a9ab8] hover:text-[#25D366] hover:bg-[#1e4a7a] transition-colors"
-              >
-                <MessageCircle size={16} strokeWidth={1.7} />
-              </a>
             </div>
-            <p className="text-[#4a6a8a] text-xs leading-relaxed max-w-[18ch]">
-              {t('footer.legal')}
-            </p>
           </div>
 
           {/* Contato */}

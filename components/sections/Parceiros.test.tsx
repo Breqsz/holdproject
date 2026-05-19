@@ -45,9 +45,9 @@ describe('Parceiros', () => {
     expect(screen.getByRole('heading', { level: 2, name: /Operamos com administradoras/i })).toBeInTheDocument()
   })
 
-  it('renders all 7 partner logos as images', () => {
+  it('renders all 6 partner logos as images', () => {
     render(<Parceiros />)
-    const expected = ['HDI Seguros', 'MAG Seguros', 'MAPFRE', 'SulAmérica', 'Tokio Marine', 'Unimed', 'Bradesco Seguros']
+    const expected = ['HDI Seguros', 'MAG Seguros', 'MAPFRE', 'SulAmérica', 'Tokio Marine', 'Bradesco Seguros']
     for (const alt of expected) {
       expect(screen.getAllByAltText(alt).length).toBeGreaterThan(0)
     }

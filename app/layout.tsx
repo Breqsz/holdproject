@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Outfit, Cormorant_Garamond } from 'next/font/google'
+import { Outfit } from 'next/font/google'
 import localFont from 'next/font/local'
 import './globals.css'
 import { LocaleProvider } from '@/lib/i18n'
@@ -13,14 +13,6 @@ import ScrollUI from '@/components/layout/ScrollUI'
 const outfit = Outfit({
   subsets: ['latin'],
   variable: '--font-outfit',
-  display: 'swap',
-})
-
-const cormorant = Cormorant_Garamond({
-  subsets: ['latin'],
-  weight: ['500', '600', '700'],
-  style: ['normal', 'italic'],
-  variable: '--font-cormorant',
   display: 'swap',
 })
 
@@ -69,7 +61,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR" className={`${outfit.variable} ${gellix.variable} ${cormorant.variable}`}>
+    <html lang="pt-BR" className={`${outfit.variable} ${gellix.variable}`}>
       <body>
         <LocaleProvider>
           <AudienceProvider>
