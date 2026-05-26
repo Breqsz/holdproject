@@ -630,10 +630,9 @@
   "equipe.member.posvenda.bio": "Human follow-up before, during and after contracting — adjustments, claims and renewals.",
   "equipe.member.brand": "Hold Corretora",
 
-  "saudeV2.hero.title.prefix": "Health solutions built with",
-  "saudeV2.hero.rotating": "strategy|intelligence|consistency|excellence|proximity|maturity|experience|transparency",
+  "saudeV2.hero.title.prefix": "Health solutions built with strategy, analysis and consultative follow-up.",
   "saudeV2.hero.subtitle": "HOLD connects individuals, families and companies to the health solutions best suited to each profile, need and moment.",
-  "saudeV2.hero.cta.wa": "Talk to a specialist",
+  "saudeV2.hero.cta.wa": "Talk to an analyst",
   "saudeV2.hero.cta.wa.aria": "Talk on WhatsApp",
   "saudeV2.hero.assurance": "Service for families, MEI and businesses.",
   "saudeV2.hero.wa.message": "Hi! I'd like to talk to a HOLD health plan specialist.",
@@ -792,7 +791,7 @@
   "saudeV2.cta.bullet.2": "Consultative follow-up before, during and after contracting.",
   "saudeV2.cta.form.service": "Health",
   "saudeV2.cta.form.introTitle": "Talk to a specialist",
-  "saudeV2.cta.form.introBody": "Tell us about your scenario — profile, modality, moment. We'll come back with the most suitable alternative.",
+  "saudeV2.cta.form.introBody": "Tell us about your scenario, profile, modality, moment. We'll come back with the most suitable alternative.",
 
   "saudeV2.wa.modal.eyebrow": "Personalized service",
   "saudeV2.wa.modal.title.prefix": "You'll be redirected to WhatsApp in",
