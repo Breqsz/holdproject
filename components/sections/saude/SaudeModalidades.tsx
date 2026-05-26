@@ -94,7 +94,7 @@ function ModalidadeCard({
         onClick={() => onSelect(data)}
         aria-label={data.ariaLabel}
         aria-haspopup="dialog"
-        className="group relative block w-full text-left overflow-hidden rounded-2xl h-full min-h-[420px] sm:min-h-[520px] transition-shadow duration-500 hover:shadow-[0_28px_70px_-22px_rgba(0,0,0,0.65)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ae251c] focus-visible:ring-offset-2 focus-visible:ring-offset-[#07162a]"
+        className="group relative block w-full text-left overflow-hidden rounded-2xl h-full min-h-[340px] sm:min-h-[520px] transition-shadow duration-500 hover:shadow-[0_28px_70px_-22px_rgba(0,0,0,0.65)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ae251c] focus-visible:ring-offset-2 focus-visible:ring-offset-[#07162a]"
         style={{ border: '1px solid rgba(255,255,255,0.06)' }}
       >
         <div className="absolute inset-0 overflow-hidden">
@@ -155,9 +155,9 @@ function ModalidadeCard({
           </p>
 
           <div className="overflow-hidden mb-4 lg:transition-[max-height,opacity] lg:duration-500 lg:ease-out lg:opacity-0 lg:max-h-0 lg:group-hover:opacity-100 lg:group-hover:max-h-44">
-            <div className="flex flex-wrap gap-x-3 gap-y-1.5 pt-3 border-t border-white/15">
+            <div className="flex flex-col gap-1 pt-3 border-t border-white/15 lg:flex-row lg:flex-wrap lg:gap-x-3 lg:gap-y-1.5">
               {data.bullets.map((b) => (
-                <span key={b} className="text-[11px] text-white/85 leading-tight pt-2">
+                <span key={b} className="text-[11.5px] text-white/85 leading-snug pt-2 lg:pt-2 lg:text-[11px] lg:leading-tight">
                   · {b}
                 </span>
               ))}

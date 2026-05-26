@@ -644,10 +644,11 @@
   "saudeV2.hero.chip.empresarial": "Empresarial",
   "saudeV2.hero.chip.pessoal": "Pessoal",
 
-  "saudeV2.sobre.eyebrow": "O JEITO HOLD",
+  "saudeV2.sobre.eyebrow": "SOBRE NÓS",
   "saudeV2.sobre.title": "O jeito HOLD de estruturar soluções em saúde",
   "saudeV2.sobre.body": "Mais do que intermediar soluções, atuamos de forma consultiva na construção de estratégias em saúde, benefícios e planejamento, conectando cada cliente às decisões mais adequadas ao seu momento, necessidade e visão de futuro.",
-  "saudeV2.sobre.chips": "Atendimento consultivo|Soluções personalizadas|Acompanhamento próximo",
+  "saudeV2.sobre.chips": "Atendimento consultivo e personalizado|Análise das melhores operadoras do mercado|Acompanhamento na contratação e pós-venda|Soluções para cada perfil e necessidade",
+  "saudeV2.sobre.chipsBody": "Conversamos para entender perfil e prioridades antes de qualquer proposta.|Comparamos cobertura, rede e custo entre operadoras parceiras.|Do contrato à utilização, sempre por canal direto.|Indicação técnica desenhada para o seu contexto.",
 
   "saudeV2.modalidades.eyebrow": "MODALIDADES DE CONTRATAÇÃO",
   "saudeV2.modalidades.title": "Soluções em saúde para diferentes perfis e formatos de contratação",
@@ -685,18 +686,6 @@
   "saudeV2.modalidade.odonto.wa": "Olá! Gostaria de saber melhor sobre os planos de saúde direcionados à Odontologia da HOLD.",
   "saudeV2.modalidade.odonto.aria": "Conhecer plano Odontológico",
   "saudeV2.modalidade.odonto.body": "O cuidado com a saúde também passa pela prevenção e pelo acompanhamento odontológico. A HOLD estrutura soluções odontológicas para pessoas, famílias e empresas, buscando equilíbrio entre cobertura, qualidade de atendimento, rede credenciada e custo-benefício. Nosso acompanhamento é realizado de forma próxima e estratégica, considerando o perfil e as necessidades de cada cliente.",
-
-  "saudeV2.dif.eyebrow": "DIFERENCIAIS",
-  "saudeV2.dif.headline.before": "O diferencial não está apenas na ",
-  "saudeV2.dif.headline.accent": "solução",
-  "saudeV2.dif.headline.after": ". Está na forma de conduzir cada decisão.",
-  "saudeV2.dif.item.1.title": "Análise estratégica",
-  "saudeV2.dif.item.1.desc": "Avaliação técnica considerando perfil, utilização, cobertura e previsibilidade.",
-  "saudeV2.dif.item.2.title": "Acompanhamento próximo",
-  "saudeV2.dif.item.2.desc": "Suporte consultivo em todas as etapas da jornada.",
-  "saudeV2.dif.item.3.title": "Estrutura multissoluções",
-  "saudeV2.dif.item.3.desc": "Integração entre saúde, benefícios e planejamento.",
-  "saudeV2.dif.image.alt": "Especialista HOLD Saúde",
 
   "saudeV2.operadoras.eyebrow": "PARCEIROS",
   "saudeV2.operadoras.title": "Trabalhamos com as principais seguradoras e operadoras do mercado",

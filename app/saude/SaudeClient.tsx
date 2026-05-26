@@ -1,8 +1,10 @@
 'use client'
 
+import { useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Users, ClipboardList, RefreshCw, ShieldCheck, Search, HandHeart, Layers, ArrowRight } from 'lucide-react'
+import { Users, ClipboardList, RefreshCw, ShieldCheck, ArrowRight } from 'lucide-react'
+import { useInView } from 'framer-motion'
 import { useLocale } from '@/lib/i18n'
 import { Reveal } from '@/components/motion/Reveal'
 import { ServiceLeadForm } from '@/components/forms/ServiceLeadForm'
@@ -12,11 +14,13 @@ import SaudeOperadoras from '@/components/sections/saude/SaudeOperadoras'
 import SaudeFAQ from '@/components/sections/saude/SaudeFAQ'
 
 const SOBRE_ICONS = [Users, ClipboardList, RefreshCw, ShieldCheck]
-const DIFERENCIAIS_ICONS = [Search, HandHeart, Layers]
 
 function SobreSection() {
   const { t } = useLocale()
   const chips = t('saudeV2.sobre.chips').split('|')
+  const chipsBody = t('saudeV2.sobre.chipsBody').split('|')
+  const chipsRef = useRef<HTMLDivElement>(null)
+  const chipsInView = useInView(chipsRef, { once: true, amount: 0.35 })
 
   return (
     <section
@@ -29,10 +33,10 @@ function SobreSection() {
       }}
     >
       <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="grid lg:grid-cols-[1fr_260px] xl:grid-cols-[1fr_300px] items-end min-h-[80dvh]">
+        <div className="grid lg:grid-cols-[1fr_260px] xl:grid-cols-[1fr_300px] items-end min-h-0 lg:min-h-[80dvh]">
 
           {/* Left — text + icons */}
-          <div className="pt-20 pb-40 lg:pt-28 lg:pb-52 pr-0 lg:pr-16">
+          <div className="pt-14 pb-14 lg:pt-28 lg:pb-52 pr-0 lg:pr-16">
             <Reveal>
               <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-[#7a9ab8] mb-4">
                 {t('saudeV2.sobre.eyebrow')}
@@ -50,19 +54,24 @@ function SobreSection() {
 
             {/* 4 icon items */}
             <Reveal delay={0.14}>
-              <div className="mt-10 pt-8 border-t border-white/10 grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-6">
+
+              <div className="saude-sobre-chips" ref={chipsRef} data-inview={chipsInView ? 'true' : 'false'}>
                 {chips.map((chip, i) => {
                   const Icon = SOBRE_ICONS[i]
                   return (
-                    <div key={chip} className="flex flex-col gap-2.5">
-                      <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#ae251c]/15">
-                        <Icon size={17} className="text-[#ae251c]" strokeWidth={1.8} />
+                    <div key={chip} className="saude-sobre-chips-cell" style={{ ['--i' as never]: i }}>
+                      <span className="saude-sobre-chips-icon" aria-hidden>
+                        <Icon size={16} strokeWidth={1.7} className="saude-sobre-chips-glyph" />
                       </span>
-                      <p className="text-[13px] leading-[1.5] text-white/72 font-medium">{chip}</p>
+                      <div className="saude-sobre-chips-text">
+                        <h3 className="saude-sobre-chips-title">{chip}</h3>
+                        <p className="saude-sobre-chips-body">{chipsBody[i]}</p>
+                      </div>
                     </div>
                   )
                 })}
               </div>
+
             </Reveal>
           </div>
 
@@ -80,60 +89,6 @@ function SobreSection() {
             />
           </div>
 
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function DiferenciaisSection() {
-  const { t } = useLocale()
-  const items = DIFERENCIAIS_ICONS.map((Icon, i) => ({
-    Icon,
-    title: t(`saudeV2.dif.item.${i + 1}.title`),
-    desc: t(`saudeV2.dif.item.${i + 1}.desc`),
-  }))
-
-  return (
-    <section id="saude-diferenciais" className="saude-dif">
-      <div className="saude-dif-wrap">
-        <div className="saude-dif-text">
-          <p className="saude-dif-eyebrow">{t('saudeV2.dif.eyebrow')}</p>
-          <h2 className="saude-dif-headline">
-            {t('saudeV2.dif.headline.before')}
-            <span className="saude-dif-headline-accent">{t('saudeV2.dif.headline.accent')}</span>
-            {t('saudeV2.dif.headline.after')}
-          </h2>
-          <ul className="saude-dif-list">
-            {items.map((d, i) => {
-              const Icon = d.Icon
-              return (
-                <li key={d.title} className="saude-dif-item" style={{ ['--i' as never]: i }}>
-                  <span className="saude-dif-chip" aria-hidden>
-                    <Icon size={19} strokeWidth={1.7} />
-                  </span>
-                  <div>
-                    <h3 className="saude-dif-title">{d.title}</h3>
-                    <p className="saude-dif-desc">{d.desc}</p>
-                  </div>
-                </li>
-              )
-            })}
-          </ul>
-        </div>
-        <div className="saude-dif-pane" aria-hidden>
-          <span className="saude-dif-pane-glow" />
-          <span className="saude-dif-pane-floor" />
-          <Image
-            src="/personagem/Saude.png"
-            alt={t('saudeV2.dif.image.alt')}
-            width={520}
-            height={780}
-            sizes="(max-width: 1023px) 0px, 40vw"
-            loading="lazy"
-            quality={92}
-            className="saude-dif-pane-figure"
-          />
         </div>
       </div>
     </section>
@@ -159,7 +114,10 @@ function CtaFinalSection() {
         className="pointer-events-none absolute -left-24 bottom-0 h-[520px] w-[520px] rounded-full bg-[#1a4b8a] opacity-[.22] blur-[120px]"
       />
 
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-8 grid lg:grid-cols-[220px_minmax(0,1.2fr)_minmax(0,1.3fr)] gap-6 items-start">
+      <div
+        className="relative max-w-7xl mx-auto px-6 lg:px-8 grid lg:grid-cols-[220px_minmax(0,1.2fr)_minmax(0,1.3fr)] gap-8 lg:gap-6 items-start"
+        style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
+      >
         <div className="hidden lg:block self-start -ml-20 xl:-ml-32">
           <Image
             src="/personagem/formulario_saude.png"
@@ -177,17 +135,17 @@ function CtaFinalSection() {
             {t('saudeV2.cta.eyebrow')}
           </p>
           <h2
-            className="mt-4 text-display text-white"
+            className="mt-3 lg:mt-4 text-display text-white"
             style={{ fontSize: 'clamp(1.75rem, 3.6vw, 2.75rem)' }}
           >
             {t('saudeV2.cta.title')}
           </h2>
-          <p className="mt-6 max-w-[58ch] text-pretty text-[#7a9ab8] leading-relaxed">
+          <p className="mt-5 lg:mt-6 max-w-[58ch] text-pretty text-[#7a9ab8] leading-relaxed">
             {t('saudeV2.cta.body')}
           </p>
-          <div className="mt-8 rule-accent h-px w-24" />
+          <div className="mt-6 lg:mt-8 rule-accent h-px w-24" />
 
-          <div className="mt-8 flex flex-wrap items-center gap-3">
+          <div className="mt-6 lg:mt-8 flex flex-wrap items-center gap-3">
             <Link
               href="#saude-form-card"
               className="inline-flex items-center gap-2 rounded-full bg-[#ae251c] hover:bg-[#8f1f17] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 px-6 py-3 text-sm font-semibold text-white transition-colors"
@@ -197,7 +155,7 @@ function CtaFinalSection() {
             </Link>
           </div>
 
-          <ul className="mt-6 flex flex-col gap-2.5 max-w-[42ch]">
+          <ul className="mt-5 lg:mt-6 flex flex-col gap-2.5 max-w-[42ch]">
             {[1, 2].map((n) => (
               <li
                 key={n}
@@ -216,7 +174,7 @@ function CtaFinalSection() {
         </Reveal>
 
         <Reveal delay={0.12}>
-          <div id="saude-form-card">
+          <div id="saude-form-card" className="w-full">
             <ServiceLeadForm
               service={t('saudeV2.cta.form.service')}
               introTitle={t('saudeV2.cta.form.introTitle')}
@@ -236,7 +194,6 @@ export default function SaudeClient() {
       <SaudeHero />
       <SobreSection />
       <SaudeModalidades />
-      <DiferenciaisSection />
       <SaudeOperadoras />
       <SaudeFAQ />
       <CtaFinalSection />

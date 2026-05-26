@@ -51,12 +51,9 @@ describe('SaudeHero', () => {
     expect(primary.className).toMatch(/bg-\[#ae251c\]/)
   })
 
-  it('renders the green icon-only WhatsApp satellite button', () => {
+  it('does NOT render a green WhatsApp satellite button (only the floating one in the corner)', () => {
     render(<SaudeHero />)
-    const wa = screen.getByRole('link', { name: /Falar no WhatsApp/i })
-    expect(wa).toBeInTheDocument()
-    expect(wa.getAttribute('href') ?? '').toMatch(/wa\.me|whatsapp/i)
-    expect(wa.className).toMatch(/bg-\[#25D366\]/)
+    expect(screen.queryByRole('link', { name: /Falar no WhatsApp/i })).not.toBeInTheDocument()
   })
 
   it('renders the assurance microcopy below the CTAs', () => {

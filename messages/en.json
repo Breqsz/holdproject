@@ -644,10 +644,11 @@
   "saudeV2.hero.chip.empresarial": "Corporate",
   "saudeV2.hero.chip.pessoal": "Personal",
 
-  "saudeV2.sobre.eyebrow": "THE HOLD WAY",
+  "saudeV2.sobre.eyebrow": "ABOUT US",
   "saudeV2.sobre.title": "The HOLD way of building health solutions",
   "saudeV2.sobre.body": "More than intermediating plans, we work consultatively to design health, benefits and planning strategies — connecting each client to the decisions best suited to their moment, needs and long-term vision.",
-  "saudeV2.sobre.chips": "Consultative service|Tailored solutions|Close follow-up",
+  "saudeV2.sobre.chips": "Consultative and personalised service|Analysis of the best health operators|Follow-up throughout contracting and post-sale|Solutions for every profile and need",
+  "saudeV2.sobre.chipsBody": "We talk first to understand profile and priorities before any proposal.|We compare coverage, network and cost across partner operators.|From contract to use, always through a direct channel.|Technical recommendation designed for your specific context.",
 
   "saudeV2.modalidades.eyebrow": "CONTRACTING MODELS",
   "saudeV2.modalidades.title": "Health solutions for different profiles and contracting formats",
@@ -685,18 +686,6 @@
   "saudeV2.modalidade.odonto.wa": "Hi! I'd like to learn more about HOLD's Dental health plans.",
   "saudeV2.modalidade.odonto.aria": "Learn about the Dental plan",
   "saudeV2.modalidade.odonto.body": "Taking care of health also goes through prevention and dental follow-up. HOLD structures dental solutions for individuals, families and companies, seeking balance between coverage, service quality, accredited network and cost-benefit. Our follow-up is close and strategic, tailored to each client's profile and needs.",
-
-  "saudeV2.dif.eyebrow": "WHAT SETS US APART",
-  "saudeV2.dif.headline.before": "The difference isn't only in the ",
-  "saudeV2.dif.headline.accent": "solution",
-  "saudeV2.dif.headline.after": ". It's in how every decision is led.",
-  "saudeV2.dif.item.1.title": "Strategic analysis",
-  "saudeV2.dif.item.1.desc": "Technical assessment of profile, usage, coverage and predictability.",
-  "saudeV2.dif.item.2.title": "Close follow-up",
-  "saudeV2.dif.item.2.desc": "Consultative support across every stage of the journey.",
-  "saudeV2.dif.item.3.title": "Multi-solution structure",
-  "saudeV2.dif.item.3.desc": "Integration between health, benefits and planning.",
-  "saudeV2.dif.image.alt": "HOLD Health specialist",
 
   "saudeV2.operadoras.eyebrow": "PARTNERS",
   "saudeV2.operadoras.title": "We work with the leading insurers and health operators on the market",

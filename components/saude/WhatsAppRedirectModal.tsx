@@ -87,8 +87,11 @@ export function WhatsAppRedirectModal({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 8, scale: 0.98 }}
             transition={{ duration: 0.42, ease: EASE }}
-            className="relative w-full max-w-md rounded-2xl bg-[#0b1f3a] ring-1 ring-white/10 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.6)] p-6 sm:p-8"
-            style={{ fontFamily: 'var(--font-outfit)' }}
+            className="relative w-full max-w-md rounded-2xl bg-[#0b1f3a] ring-1 ring-white/10 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.6)] p-6 sm:p-8 max-h-[92dvh] overflow-y-auto"
+            style={{
+              fontFamily: 'var(--font-outfit)',
+              paddingBottom: 'max(env(safe-area-inset-bottom), 1.5rem)',
+            }}
           >
             <span
               aria-hidden

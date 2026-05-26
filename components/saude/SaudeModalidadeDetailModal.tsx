@@ -81,10 +81,10 @@ export function SaudeModalidadeDetailModal({ open, onClose, onConfirm, data }: P
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 8, scale: 0.98 }}
             transition={{ duration: 0.42, ease: EASE }}
-            className="relative w-full max-w-xl rounded-2xl bg-[#0b1f3a] ring-1 ring-white/10 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.6)] overflow-hidden max-h-[88vh] flex flex-col"
+            className="relative w-full max-w-xl rounded-2xl bg-[#0b1f3a] ring-1 ring-white/10 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.6)] overflow-hidden max-h-[92dvh] flex flex-col"
             style={{ fontFamily: 'var(--font-outfit)' }}
           >
-            <div className="relative h-[140px] sm:h-[180px] w-full overflow-hidden flex-shrink-0">
+            <div className="relative h-[120px] sm:h-[180px] w-full overflow-hidden flex-shrink-0">
               <Image
                 src={data.image}
                 alt=""
@@ -122,7 +122,10 @@ export function SaudeModalidadeDetailModal({ open, onClose, onConfirm, data }: P
               <X size={15} strokeWidth={1.8} />
             </button>
 
-            <div className="relative px-6 sm:px-8 py-6 sm:py-7 overflow-y-auto">
+            <div
+              className="relative px-6 sm:px-8 py-6 sm:py-7 overflow-y-auto"
+              style={{ paddingBottom: 'max(env(safe-area-inset-bottom), 1.5rem)' }}
+            >
               <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#7a9ab8]">
                 {t('saudeV2.modalidades.detail.eyebrow')} · {data.seq}
               </p>
