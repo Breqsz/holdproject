@@ -21,6 +21,13 @@ const baseSchema = z.object({
 
 type FormData = z.infer<typeof baseSchema>
 
+const AUDIENCE_REQUIRED_KEY = 'form.lead.audience.saude.err'
+
+const schemaWithAudience = baseSchema.refine((d) => d.audience !== undefined, {
+  message: AUDIENCE_REQUIRED_KEY,
+  path: ['audience'],
+})
+
 interface ServiceLeadFormProps {
   service: string
   introTitle?: string
@@ -41,12 +48,7 @@ export function ServiceLeadForm({
   const { t } = useLocale()
   const [loading, setLoading] = useState(false)
 
-  const schema = showAudienceField
-    ? baseSchema.refine((d) => d.audience !== undefined, {
-        message: t('form.lead.audience.saude.err'),
-        path: ['audience'],
-      })
-    : baseSchema
+  const schema = showAudienceField ? schemaWithAudience : baseSchema
 
   const {
     register,
@@ -138,7 +140,7 @@ export function ServiceLeadForm({
                     value={opt}
                     className="peer sr-only"
                   />
-                  <span className="block h-3 w-3 rounded-full border border-[#4a6a8a] peer-checked:border-[#ae251c] peer-checked:bg-[#ae251c]" />
+                  <span className="block h-3 w-3 rounded-full border border-[#4a6a8a] peer-checked:border-[#ae251c] peer-checked:bg-[#ae251c] peer-focus-visible:ring-2 peer-focus-visible:ring-white/60 peer-focus-visible:ring-offset-1 peer-focus-visible:ring-offset-[#07162a]" />
                   {t(`form.lead.audience.saude.${opt}`)}
                 </label>
               ))}
