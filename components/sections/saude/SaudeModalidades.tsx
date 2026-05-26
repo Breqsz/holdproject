@@ -7,6 +7,7 @@ import { ArrowRight } from 'lucide-react'
 import { formatWhatsAppLink } from '@/lib/utils'
 import { useLocale } from '@/lib/i18n'
 import { WhatsAppRedirectModal } from '@/components/saude/WhatsAppRedirectModal'
+import { SaudeModalidadeDetailModal } from '@/components/saude/SaudeModalidadeDetailModal'
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number]
 const RED = '#ae251c'
@@ -24,6 +25,7 @@ type ModalidadeConfig = {
 type Modalidade = ModalidadeConfig & {
   title: string
   short: string
+  body: string
   bullets: string[]
   waMessage: string
   ariaLabel: string
@@ -33,8 +35,8 @@ const MODALIDADES_CONFIG: ModalidadeConfig[] = [
   {
     id: 'individual',
     seq: '01',
-    image: '/images/hero/family-hero.webp',
-    imagePosition: 'center 30%',
+    image: '/images/Saude/familia-completa.webp',
+    imagePosition: 'center 35%',
   },
   {
     id: 'adesao',
@@ -45,8 +47,8 @@ const MODALIDADES_CONFIG: ModalidadeConfig[] = [
   {
     id: 'empresarial',
     seq: '03',
-    image: '/images/hero/office-hero.webp',
-    imagePosition: 'center',
+    image: '/images/Saude/empresarial-pme.webp',
+    imagePosition: 'center 25%',
   },
   {
     id: 'odonto',
@@ -92,7 +94,7 @@ function ModalidadeCard({
         onClick={() => onSelect(data)}
         aria-label={data.ariaLabel}
         aria-haspopup="dialog"
-        className="group relative block w-full text-left overflow-hidden rounded-2xl h-full min-h-[420px] sm:min-h-[520px] transition-shadow duration-500 hover:shadow-[0_28px_70px_-22px_rgba(0,0,0,0.65)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ae251c] focus-visible:ring-offset-2 focus-visible:ring-offset-[#07162a]"
+        className="group relative block w-full text-left overflow-hidden rounded-2xl h-full min-h-[340px] sm:min-h-[520px] transition-shadow duration-500 hover:shadow-[0_28px_70px_-22px_rgba(0,0,0,0.65)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ae251c] focus-visible:ring-offset-2 focus-visible:ring-offset-[#07162a]"
         style={{ border: '1px solid rgba(255,255,255,0.06)' }}
       >
         <div className="absolute inset-0 overflow-hidden">
@@ -153,9 +155,9 @@ function ModalidadeCard({
           </p>
 
           <div className="overflow-hidden mb-4 lg:transition-[max-height,opacity] lg:duration-500 lg:ease-out lg:opacity-0 lg:max-h-0 lg:group-hover:opacity-100 lg:group-hover:max-h-44">
-            <div className="flex flex-wrap gap-x-3 gap-y-1.5 pt-3 border-t border-white/15">
+            <div className="flex flex-col gap-1 pt-3 border-t border-white/15 lg:flex-row lg:flex-wrap lg:gap-x-3 lg:gap-y-1.5">
               {data.bullets.map((b) => (
-                <span key={b} className="text-[11px] text-white/85 leading-tight pt-2">
+                <span key={b} className="text-[11.5px] text-white/85 leading-snug pt-2 lg:pt-2 lg:text-[11px] lg:leading-tight">
                   · {b}
                 </span>
               ))}
@@ -181,17 +183,19 @@ function ModalidadeCard({
 export default function SaudeModalidades() {
   const { t } = useLocale()
   const [active, setActive] = useState<Modalidade | null>(null)
+  const [wa, setWa] = useState<Modalidade | null>(null)
 
   const modalidades: Modalidade[] = MODALIDADES_CONFIG.map((cfg) => ({
     ...cfg,
     title: t(`saudeV2.modalidade.${cfg.id}.title`),
     short: t(`saudeV2.modalidade.${cfg.id}.short`),
+    body: t(`saudeV2.modalidade.${cfg.id}.body`),
     bullets: t(`saudeV2.modalidade.${cfg.id}.bullets`).split('|'),
     waMessage: t(`saudeV2.modalidade.${cfg.id}.wa`),
     ariaLabel: t(`saudeV2.modalidade.${cfg.id}.aria`),
   }))
 
-  const activeHref = active ? formatWhatsAppLink(WHATSAPP, active.waMessage) : ''
+  const waHref = wa ? formatWhatsAppLink(WHATSAPP, wa.waMessage) : ''
 
   return (
     <section
@@ -212,7 +216,10 @@ export default function SaudeModalidades() {
           </p>
           <h2
             className="mt-4 text-display text-white"
-            style={{ fontSize: 'clamp(1.75rem, 3.4vw, 2.75rem)' }}
+            style={{
+              fontFamily: 'var(--font-gellix)',
+              fontSize: 'clamp(1.75rem, 3.4vw, 2.75rem)',
+            }}
           >
             {t('saudeV2.modalidades.title')}
           </h2>
@@ -239,12 +246,22 @@ export default function SaudeModalidades() {
         </motion.div>
       </div>
 
-      <WhatsAppRedirectModal
+      <SaudeModalidadeDetailModal
         open={active !== null}
+        data={active}
         onClose={() => setActive(null)}
-        href={activeHref}
-        label={active?.title ?? ''}
-        message={active?.waMessage ?? ''}
+        onConfirm={() => {
+          const m = active
+          setActive(null)
+          setWa(m)
+        }}
+      />
+      <WhatsAppRedirectModal
+        open={wa !== null}
+        onClose={() => setWa(null)}
+        href={waHref}
+        label={wa?.title ?? ''}
+        message={wa?.waMessage ?? ''}
       />
     </section>
   )

@@ -87,8 +87,11 @@ export function WhatsAppRedirectModal({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 8, scale: 0.98 }}
             transition={{ duration: 0.42, ease: EASE }}
-            className="relative w-full max-w-md rounded-2xl bg-[#0b1f3a] ring-1 ring-white/10 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.6)] p-6 sm:p-8"
-            style={{ fontFamily: 'var(--font-outfit)' }}
+            className="relative w-full max-w-md rounded-2xl bg-[#0b1f3a] ring-1 ring-white/10 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.6)] p-6 sm:p-8 max-h-[92dvh] overflow-y-auto"
+            style={{
+              fontFamily: 'var(--font-outfit)',
+              paddingBottom: 'max(env(safe-area-inset-bottom), 1.5rem)',
+            }}
           >
             <span
               aria-hidden
@@ -109,12 +112,12 @@ export function WhatsAppRedirectModal({
             </p>
             <h3
               id="wa-redirect-title"
-              className="mt-3 italic text-white"
+              className="mt-3 text-white"
               style={{ fontSize: 'clamp(1.4rem, 2.6vw, 1.75rem)', lineHeight: 1.18 }}
             >
               {t('saudeV2.wa.modal.title.prefix')}{' '}
               <span
-                className="not-italic font-semibold tabular-nums"
+                className="font-semibold tabular-nums"
                 style={{ color: '#ae251c' }}
               >
                 {count}s
@@ -126,10 +129,7 @@ export function WhatsAppRedirectModal({
               {t('saudeV2.wa.modal.body.suffix')}
             </p>
 
-            <p
-              className="mt-3 rounded-lg bg-white/[0.04] ring-1 ring-white/10 px-4 py-3 text-[13.5px] leading-relaxed text-white/85"
-              style={{ fontStyle: 'italic' }}
-            >
+            <p className="mt-3 rounded-lg bg-white/[0.04] ring-1 ring-white/10 px-4 py-3 text-[13.5px] leading-relaxed text-white/85">
               “{message}”
             </p>
 
