@@ -159,13 +159,13 @@ function CtaFinalSection() {
         className="pointer-events-none absolute -left-24 bottom-0 h-[520px] w-[520px] rounded-full bg-[#1a4b8a] opacity-[.22] blur-[120px]"
       />
 
-      <div className="relative max-w-6xl mx-auto px-6 lg:px-8 grid lg:grid-cols-[200px_1fr_1fr] gap-10 items-end">
-        <div className="hidden lg:block self-end">
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-8 grid lg:grid-cols-[220px_minmax(0,1.2fr)_minmax(0,1.3fr)] gap-6 items-start">
+        <div className="hidden lg:block self-start -ml-20 xl:-ml-32">
           <Image
             src="/personagem/formulario_saude.png"
             alt=""
-            width={220}
-            height={340}
+            width={320}
+            height={480}
             quality={95}
             loading="lazy"
             className="h-auto w-full"
