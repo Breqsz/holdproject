@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Users, ClipboardList, RefreshCw, ShieldCheck } from 'lucide-react'
 import { useLocale } from '@/lib/i18n'
 import { Reveal } from '@/components/motion/Reveal'
 import { ServiceLeadForm } from '@/components/forms/ServiceLeadForm'
@@ -11,9 +11,12 @@ import SaudeModalidades from '@/components/sections/saude/SaudeModalidades'
 import SaudeOperadoras from '@/components/sections/saude/SaudeOperadoras'
 import SaudeFAQ from '@/components/sections/saude/SaudeFAQ'
 
+const SOBRE_ICONS = [Users, ClipboardList, RefreshCw, ShieldCheck]
+
 function SobreSection() {
   const { t } = useLocale()
-  const pillarsAlt = t('saudeV2.sobre.chips').split('|').join(' · ')
+  const chips = t('saudeV2.sobre.chips').split('|')
+  const chipsBody = t('saudeV2.sobre.chipsBody').split('|')
 
   return (
     <section
@@ -25,82 +28,64 @@ function SobreSection() {
           'radial-gradient(ellipse 55% 75% at 80% 45%, rgba(30,72,160,0.55) 0%, rgba(14,38,100,0.28) 45%, transparent 70%), linear-gradient(180deg, #020b1a 0%, #051324 30%, #071a30 60%, #07162a 100%)',
       }}
     >
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="grid lg:grid-cols-[1fr_280px] xl:grid-cols-[1fr_320px] items-end min-h-0 lg:min-h-[78dvh]">
+      {/* Desktop — image-based section */}
+      <div className="hidden lg:block">
+        <Image
+          src="/images/Saude/e407ef09-6423-4eb3-ac26-c42a250fa2aa-sobrenos.png"
+          alt={t('saudeV2.sobre.title')}
+          width={1920}
+          height={1080}
+          quality={95}
+          priority={false}
+          sizes="100vw"
+          className="block h-auto w-full"
+        />
+      </div>
 
-          {/* Left — text + pillars strip */}
-          <div className="pt-14 pb-14 lg:pt-24 lg:pb-24 pr-0 lg:pr-12">
-            <Reveal>
-              <p className="text-[13px] font-semibold uppercase tracking-[0.26em] text-white mb-5">
-                {t('saudeV2.sobre.eyebrow')}
-              </p>
-              <h2
-                className="font-bold text-white leading-[1.05] text-pretty tracking-tight"
-                style={{ fontSize: 'clamp(2.3rem, 4.4vw, 3.4rem)' }}
-              >
-                {t('saudeV2.sobre.title')}
-              </h2>
-              <p className="mt-6 max-w-[60ch] text-[16.5px] leading-[1.65] text-[#8aabb8]">
-                {t('saudeV2.sobre.body')}
-              </p>
-            </Reveal>
+      {/* Mobile — text + icon chips (legacy layout, no bottom image) */}
+      <div className="lg:hidden relative max-w-7xl mx-auto px-6">
+        <div className="pt-14 pb-14">
+          <Reveal>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-[#7a9ab8] mb-4">
+              {t('saudeV2.sobre.eyebrow')}
+            </p>
+            <h2
+              className="font-bold text-white leading-[1.15] text-pretty"
+              style={{ fontSize: 'clamp(1.9rem, 3.4vw, 2.8rem)' }}
+            >
+              {t('saudeV2.sobre.title')}
+            </h2>
+            <p className="mt-5 max-w-[54ch] text-[15.5px] leading-[1.75] text-[#8aabb8]">
+              {t('saudeV2.sobre.body')}
+            </p>
+          </Reveal>
 
-            {/* 4 pillars — composed image with transparent background */}
-            <Reveal delay={0.14}>
-              <div
-                className="mt-10 overflow-hidden px-3 py-2"
-                style={{
-                  border: '1px solid rgba(255,255,255,0.06)',
-                  aspectRatio: '866 / 150',
-                }}
-              >
-                <Image
-                  src="/images/Saude/ChatGPT_Image_26_de_mai._de_2026__17_07_21-removebg-preview.png"
-                  alt={pillarsAlt}
-                  width={866}
-                  height={288}
-                  quality={95}
-                  loading="lazy"
-                  sizes="(min-width: 1024px) 60vw, 100vw"
-                  className="h-full w-full object-cover"
-                  style={{ objectPosition: 'center' }}
-                />
-              </div>
-            </Reveal>
-          </div>
-
-          {/* Right — doctor character, pinned to bottom of section */}
-          <div className="hidden lg:block self-end relative">
-            <div
-              aria-hidden
-              className="pointer-events-none absolute -inset-x-16 -top-24 bottom-0"
-              style={{
-                background:
-                  'radial-gradient(ellipse 55% 60% at 50% 40%, rgba(120,180,255,0.85) 0%, rgba(70,130,230,0.55) 18%, rgba(40,90,200,0.28) 38%, rgba(20,55,140,0.10) 60%, transparent 78%)',
-                filter: 'blur(14px)',
-              }}
-            />
-            <div
-              aria-hidden
-              className="pointer-events-none absolute left-1/2 -translate-x-1/2 top-12 h-64 w-64 rounded-full"
-              style={{
-                background:
-                  'radial-gradient(circle, rgba(180,220,255,0.55) 0%, rgba(110,170,240,0.25) 40%, transparent 70%)',
-                filter: 'blur(20px)',
-              }}
-            />
-            <Image
-              src="/personagem/Saude.png"
-              alt="Especialista HOLD Saúde"
-              width={320}
-              height={480}
-              quality={95}
-              loading="lazy"
-              className="relative h-auto w-full"
-              style={{ filter: 'drop-shadow(0 16px 40px rgba(0,0,0,0.55))' }}
-            />
-          </div>
-
+          <Reveal delay={0.14}>
+            <div className="mt-10 pt-9 border-t border-white/10 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
+              {chips.map((chip, i) => {
+                const Icon = SOBRE_ICONS[i]
+                return (
+                  <div key={chip} className="grid grid-cols-[28px_1fr] gap-x-[0.9rem] items-start">
+                    <span
+                      aria-hidden
+                      className="inline-flex items-center justify-center w-7 h-7 rounded-[7px] mt-px"
+                      style={{ background: 'rgba(174,37,28,0.14)' }}
+                    >
+                      <Icon size={16} strokeWidth={1.7} style={{ color: '#ae251c' }} />
+                    </span>
+                    <div className="flex flex-col gap-[0.35rem] min-w-0">
+                      <h3 className="font-semibold text-[15px] leading-[1.35] text-white tracking-tight max-w-[30ch] text-balance">
+                        {chip}
+                      </h3>
+                      <p className="text-[13px] leading-[1.65] text-white/[0.52] max-w-[42ch]">
+                        {chipsBody[i]}
+                      </p>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </Reveal>
         </div>
       </div>
     </section>
