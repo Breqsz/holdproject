@@ -1,10 +1,8 @@
 'use client'
 
-import { useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Users, ClipboardList, RefreshCw, ShieldCheck, ArrowRight } from 'lucide-react'
-import { useInView } from 'framer-motion'
+import { ArrowRight, Users, ClipboardList, RefreshCw, ShieldCheck } from 'lucide-react'
 import { useLocale } from '@/lib/i18n'
 import { Reveal } from '@/components/motion/Reveal'
 import { ServiceLeadForm } from '@/components/forms/ServiceLeadForm'
@@ -19,8 +17,6 @@ function SobreSection() {
   const { t } = useLocale()
   const chips = t('saudeV2.sobre.chips').split('|')
   const chipsBody = t('saudeV2.sobre.chipsBody').split('|')
-  const chipsRef = useRef<HTMLDivElement>(null)
-  const chipsInView = useInView(chipsRef, { once: true, amount: 0.35 })
 
   return (
     <section
@@ -29,66 +25,67 @@ function SobreSection() {
       style={{
         fontFamily: 'var(--font-outfit)',
         background:
-          'radial-gradient(ellipse 60% 80% at 78% 40%, rgba(30,72,160,0.55) 0%, rgba(14,38,100,0.28) 45%, transparent 70%), linear-gradient(180deg, #020b1a 0%, #051324 30%, #071a30 60%, #07162a 100%)',
+          'radial-gradient(ellipse 55% 75% at 80% 45%, rgba(30,72,160,0.55) 0%, rgba(14,38,100,0.28) 45%, transparent 70%), linear-gradient(180deg, #020b1a 0%, #051324 30%, #071a30 60%, #07162a 100%)',
       }}
     >
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="grid lg:grid-cols-[1fr_260px] xl:grid-cols-[1fr_300px] items-end min-h-0 lg:min-h-[80dvh]">
+      {/* Desktop — image-based section */}
+      <div className="hidden lg:block">
+        <Image
+          src="/images/Saude/e407ef09-6423-4eb3-ac26-c42a250fa2aa-sobrenos.png"
+          alt={t('saudeV2.sobre.title')}
+          width={1920}
+          height={1080}
+          quality={95}
+          priority={false}
+          sizes="100vw"
+          className="block h-auto w-full"
+        />
+      </div>
 
-          {/* Left — text + icons */}
-          <div className="pt-14 pb-14 lg:pt-28 lg:pb-52 pr-0 lg:pr-16">
-            <Reveal>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-[#7a9ab8] mb-4">
-                {t('saudeV2.sobre.eyebrow')}
-              </p>
-              <h2
-                className="font-bold text-white leading-[1.15] text-pretty"
-                style={{ fontSize: 'clamp(1.9rem, 3.4vw, 2.8rem)' }}
-              >
-                {t('saudeV2.sobre.title')}
-              </h2>
-              <p className="mt-5 max-w-[54ch] text-[15.5px] leading-[1.75] text-[#8aabb8]">
-                {t('saudeV2.sobre.body')}
-              </p>
-            </Reveal>
+      {/* Mobile — text + icon chips (legacy layout, no bottom image) */}
+      <div className="lg:hidden relative max-w-7xl mx-auto px-6">
+        <div className="pt-14 pb-14">
+          <Reveal>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-[#7a9ab8] mb-4">
+              {t('saudeV2.sobre.eyebrow')}
+            </p>
+            <h2
+              className="font-bold text-white leading-[1.15] text-pretty"
+              style={{ fontSize: 'clamp(1.9rem, 3.4vw, 2.8rem)' }}
+            >
+              {t('saudeV2.sobre.title')}
+            </h2>
+            <p className="mt-5 max-w-[54ch] text-[15.5px] leading-[1.75] text-[#8aabb8]">
+              {t('saudeV2.sobre.body')}
+            </p>
+          </Reveal>
 
-            {/* 4 icon items */}
-            <Reveal delay={0.14}>
-
-              <div className="saude-sobre-chips" ref={chipsRef} data-inview={chipsInView ? 'true' : 'false'}>
-                {chips.map((chip, i) => {
-                  const Icon = SOBRE_ICONS[i]
-                  return (
-                    <div key={chip} className="saude-sobre-chips-cell" style={{ ['--i' as never]: i }}>
-                      <span className="saude-sobre-chips-icon" aria-hidden>
-                        <Icon size={16} strokeWidth={1.7} className="saude-sobre-chips-glyph" />
-                      </span>
-                      <div className="saude-sobre-chips-text">
-                        <h3 className="saude-sobre-chips-title">{chip}</h3>
-                        <p className="saude-sobre-chips-body">{chipsBody[i]}</p>
-                      </div>
+          <Reveal delay={0.14}>
+            <div className="mt-10 pt-9 border-t border-white/10 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
+              {chips.map((chip, i) => {
+                const Icon = SOBRE_ICONS[i]
+                return (
+                  <div key={chip} className="grid grid-cols-[28px_1fr] gap-x-[0.9rem] items-start">
+                    <span
+                      aria-hidden
+                      className="inline-flex items-center justify-center w-7 h-7 rounded-[7px] mt-px"
+                      style={{ background: 'rgba(174,37,28,0.14)' }}
+                    >
+                      <Icon size={16} strokeWidth={1.7} style={{ color: '#ae251c' }} />
+                    </span>
+                    <div className="flex flex-col gap-[0.35rem] min-w-0">
+                      <h3 className="font-semibold text-[15px] leading-[1.35] text-white tracking-tight max-w-[30ch] text-balance">
+                        {chip}
+                      </h3>
+                      <p className="text-[13px] leading-[1.65] text-white/[0.52] max-w-[42ch]">
+                        {chipsBody[i]}
+                      </p>
                     </div>
-                  )
-                })}
-              </div>
-
-            </Reveal>
-          </div>
-
-          {/* Right — doctor character, pinned to bottom of section */}
-          <div className="hidden lg:block self-end">
-            <Image
-              src="/personagem/Saude.png"
-              alt="Especialista HOLD Saúde"
-              width={300}
-              height={450}
-              quality={95}
-              loading="lazy"
-              className="h-auto w-full"
-              style={{ filter: 'drop-shadow(0 16px 40px rgba(0,0,0,0.45))' }}
-            />
-          </div>
-
+                  </div>
+                )
+              })}
+            </div>
+          </Reveal>
         </div>
       </div>
     </section>

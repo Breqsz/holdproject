@@ -33,19 +33,19 @@ vi.mock('framer-motion', () => {
 })
 
 describe('SaudeHero', () => {
-  it('renders the hero h1 with the rotating headline prefix', () => {
+  it('renders the hero h1 with the full static headline', () => {
     render(<SaudeHero />)
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: /Soluções em saúde estruturadas com/i,
+        name: /Soluções em saúde estruturadas com estratégia, análise e acompanhamento consultivo\./i,
       })
     ).toBeInTheDocument()
   })
 
   it('renders the red primary CTA pointing to the form anchor', () => {
     render(<SaudeHero />)
-    const primary = screen.getByRole('link', { name: /Falar com especialista/i })
+    const primary = screen.getByRole('link', { name: /Falar com analista/i })
     expect(primary).toBeInTheDocument()
     expect(primary).toHaveAttribute('href', '#saude-form')
     expect(primary.className).toMatch(/bg-\[#ae251c\]/)

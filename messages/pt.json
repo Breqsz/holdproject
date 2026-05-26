@@ -630,10 +630,9 @@
   "equipe.member.posvenda.bio": "Acompanhamento humano antes, durante e depois da contratação — ajustes, sinistros e renovações.",
   "equipe.member.brand": "Hold Corretora",
 
-  "saudeV2.hero.title.prefix": "Soluções em saúde estruturadas com",
-  "saudeV2.hero.rotating": "estratégia|inteligência|consistência|excelência|proximidade|maturidade|experiência|transparência",
+  "saudeV2.hero.title.prefix": "Soluções em saúde estruturadas com estratégia, análise e acompanhamento consultivo.",
   "saudeV2.hero.subtitle": "A HOLD conecta pessoas, famílias e empresas às soluções em saúde mais adequadas para cada perfil, necessidade e momento.",
-  "saudeV2.hero.cta.wa": "Falar com especialista",
+  "saudeV2.hero.cta.wa": "Falar com analista",
   "saudeV2.hero.cta.wa.aria": "Falar no WhatsApp",
   "saudeV2.hero.assurance": "Atendimento para famílias, MEI e empresas.",
   "saudeV2.hero.wa.message": "Olá! Quero falar com um especialista em planos de saúde.",
@@ -792,7 +791,7 @@
   "saudeV2.cta.bullet.2": "Acompanhamento consultivo antes, durante e depois da contratação.",
   "saudeV2.cta.form.service": "Saúde",
   "saudeV2.cta.form.introTitle": "Falar com especialista",
-  "saudeV2.cta.form.introBody": "Conta seu cenário — perfil, modalidade, momento. Voltamos com a alternativa mais adequada.",
+  "saudeV2.cta.form.introBody": "Conta seu cenário, perfil, modalidade, momento. Voltamos com a alternativa mais adequada.",
 
   "saudeV2.wa.modal.eyebrow": "Atendimento personalizado",
   "saudeV2.wa.modal.title.prefix": "Você será redirecionado ao WhatsApp em",

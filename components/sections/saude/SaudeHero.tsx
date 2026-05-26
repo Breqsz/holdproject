@@ -1,13 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowRight, ShieldCheck } from 'lucide-react'
 import { useLocale } from '@/lib/i18n'
 import { Reveal } from '@/components/motion/Reveal'
-import RotatingText from '@/components/motion/RotatingText'
 
 type HeroPhoto = {
   src: string
@@ -36,9 +35,15 @@ const HERO_PHOTOS: readonly HeroPhoto[] = [
 
 export default function SaudeHero() {
   const { t } = useLocale()
-  const rotating = t('saudeV2.hero.rotating').split('|')
-  const [rotationCount, setRotationCount] = useState(0)
-  const photoIndex = Math.floor(rotationCount / 3) % HERO_PHOTOS.length
+  const [photoIndex, setPhotoIndex] = useState(0)
+
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      setPhotoIndex((i) => (i + 1) % HERO_PHOTOS.length)
+    }, 6400)
+    return () => window.clearInterval(id)
+  }, [])
+
   const photo = HERO_PHOTOS[photoIndex]
   const photoNum = String(photoIndex + 1).padStart(2, '0')
 
@@ -130,19 +135,6 @@ export default function SaudeHero() {
               style={{ fontSize: 'clamp(1.85rem, 4vw, 3.25rem)' }}
             >
               {t('saudeV2.hero.title.prefix')}
-              <RotatingText
-                texts={rotating}
-                mainClassName="mt-3 w-fit px-3 sm:px-4 md:px-5 bg-[#ae251c] text-white overflow-hidden py-1 sm:py-1.5 md:py-2 justify-center rounded-lg"
-                staggerFrom="last"
-                initial={{ y: '100%' }}
-                animate={{ y: 0 }}
-                exit={{ y: '-120%' }}
-                staggerDuration={0.025}
-                splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1 md:pb-1"
-                transition={{ type: 'spring', damping: 30, stiffness: 400 }}
-                rotationInterval={3200}
-                onNext={() => setRotationCount((c) => c + 1)}
-              />
             </h1>
           </Reveal>
 
