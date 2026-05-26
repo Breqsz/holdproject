@@ -35,8 +35,8 @@ const MODALIDADES_CONFIG: ModalidadeConfig[] = [
   {
     id: 'individual',
     seq: '01',
-    image: '/images/hero/family-hero.webp',
-    imagePosition: 'center 30%',
+    image: '/images/Saude/familia-completa.webp',
+    imagePosition: 'center 35%',
   },
   {
     id: 'adesao',
@@ -47,8 +47,8 @@ const MODALIDADES_CONFIG: ModalidadeConfig[] = [
   {
     id: 'empresarial',
     seq: '03',
-    image: '/images/hero/office-hero.webp',
-    imagePosition: 'center',
+    image: '/images/Saude/empresarial-pme.webp',
+    imagePosition: 'center 25%',
   },
   {
     id: 'odonto',
