@@ -18,6 +18,7 @@ const HERO_PHOTOS = [
     altKey: 'saudeV2.hero.image.empresarial.alt',
     chipKey: 'saudeV2.hero.chip.empresarial',
     objectPosition: '68% 8%',
+    mobileObjectPosition: 'center 30%',
     desktopScale: 1,
     desktopLeftOffset: '22%',
   },
@@ -26,6 +27,7 @@ const HERO_PHOTOS = [
     altKey: 'saudeV2.hero.image.pessoal.alt',
     chipKey: 'saudeV2.hero.chip.pessoal',
     objectPosition: '0% 40%',
+    mobileObjectPosition: 'center 35%',
     desktopScale: 1,
     desktopLeftOffset: '34%',
   },
@@ -70,7 +72,7 @@ export default function SaudeHero() {
               priority={photoIndex === 0}
               sizes="100vw"
               className="object-cover"
-              style={{ objectPosition: photo.objectPosition }}
+              style={{ objectPosition: photo.mobileObjectPosition }}
             />
           </motion.div>
         </AnimatePresence>
@@ -89,10 +91,6 @@ export default function SaudeHero() {
           className="pointer-events-none absolute inset-x-0 bottom-0 h-1/4"
           style={{ background: 'linear-gradient(to top, rgba(7,22,42,0.65), transparent)' }}
         />
-        <div className="absolute bottom-4 right-4 flex items-center gap-2 rounded-full border border-white/10 bg-[rgba(7,22,42,0.65)] px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#d8e0ec] backdrop-blur">
-          <span className="font-bold text-[#ae251c]" style={{ letterSpacing: 0 }}>{photoNum}</span>
-          {t(photo.chipKey)}
-        </div>
       </div>
 
       {/* ============ DESKTOP photo background ============ */}
