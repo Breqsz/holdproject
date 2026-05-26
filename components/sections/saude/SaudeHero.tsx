@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, ShieldCheck } from 'lucide-react'
 import { formatWhatsAppLink } from '@/lib/utils'
 import { useLocale } from '@/lib/i18n'
 import { Reveal } from '@/components/motion/Reveal'
@@ -17,28 +17,15 @@ const HERO_PHOTOS = [
     src: '/images/Saude/empresarial.jpg',
     altKey: 'saudeV2.hero.image.empresarial.alt',
     chipKey: 'saudeV2.hero.chip.empresarial',
-    objectPosition: '68% 8%',
-    mobileObjectPosition: 'center 30%',
-    desktopScale: 1,
-    desktopLeftOffset: '22%',
+    objectPosition: '60% 30%',
   },
   {
     src: '/images/Saude/pessoal.jpg',
     altKey: 'saudeV2.hero.image.pessoal.alt',
     chipKey: 'saudeV2.hero.chip.pessoal',
-    objectPosition: '0% 40%',
-    mobileObjectPosition: 'center 35%',
-    desktopScale: 1,
-    desktopLeftOffset: '34%',
+    objectPosition: '50% 35%',
   },
 ] as const
-
-// Diagonal slice tokens — desktop only. Keep in sync if you tweak angle/line.
-const DIAGONAL_ANGLE = 115
-const DIAGONAL_CUT = 42
-const DIAGONAL_SLICE_BG = `linear-gradient(${DIAGONAL_ANGLE}deg, #0d2240 0%, #142f54 30%, #0f2548 ${DIAGONAL_CUT - 0.1}%, transparent ${DIAGONAL_CUT + 0.1}%)`
-const DIAGONAL_LINE_BG = `linear-gradient(${DIAGONAL_ANGLE}deg, transparent ${DIAGONAL_CUT - 0.14}%, #ae251c ${DIAGONAL_CUT - 0.09}%, #ae251c ${DIAGONAL_CUT + 0.09}%, transparent ${DIAGONAL_CUT + 0.14}%)`
-const DIAGONAL_DARKEN = 'linear-gradient(180deg, rgba(7,22,42,0.10) 0%, rgba(7,22,42,0.50) 100%)'
 
 export default function SaudeHero() {
   const { t } = useLocale()
@@ -51,18 +38,18 @@ export default function SaudeHero() {
 
   return (
     <section
-      className="relative overflow-hidden"
-      style={{ fontFamily: 'var(--font-outfit)', background: '#0d2240' }}
+      className="relative min-h-[100dvh] overflow-hidden bg-[#07162a]"
+      style={{ fontFamily: 'var(--font-outfit)' }}
     >
-      {/* ============ MOBILE photo pane (top) ============ */}
-      <div className="lg:hidden relative h-[340px] sm:h-[420px] overflow-hidden bg-[#07162a]">
+      {/* Background photo (full-bleed, with crossfade rotation) */}
+      <div className="absolute inset-0 overflow-hidden">
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
-            key={`m-${photo.src}`}
-            initial={{ opacity: 0, scale: 1.05 }}
+            key={photo.src}
+            initial={{ opacity: 0, scale: 1.04 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 1.02 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
             className="absolute inset-0"
           >
             <Image
@@ -72,57 +59,21 @@ export default function SaudeHero() {
               priority={photoIndex === 0}
               sizes="100vw"
               className="object-cover"
-              style={{ objectPosition: photo.mobileObjectPosition }}
+              style={{ objectPosition: photo.objectPosition }}
             />
           </motion.div>
         </AnimatePresence>
+
+        {/* Cinematic readability gradient (left-heavy) */}
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0"
           style={{
             background:
-              'linear-gradient(135deg, rgba(13,34,64,0.45) 0%, rgba(20,47,84,0.12) 40%, rgba(7,22,42,0.40) 100%)',
-            mixBlendMode: 'multiply',
+              'linear-gradient(110deg, rgba(7,22,42,0.85) 0%, rgba(13,34,64,0.55) 45%, rgba(7,22,42,0.30) 100%)',
           }}
         />
-        <div aria-hidden className="pointer-events-none absolute inset-2 border border-white/[0.08]" />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-1/4"
-          style={{ background: 'linear-gradient(to top, rgba(7,22,42,0.65), transparent)' }}
-        />
-      </div>
 
-      {/* ============ DESKTOP photo background ============ */}
-      <div className="hidden lg:block absolute inset-0 overflow-hidden bg-[#07162a]">
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.div
-            key={`d-${photo.src}`}
-            initial={{ opacity: 0, scale: 1.05 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.02 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute inset-y-0 right-0"
-            style={{ left: photo.desktopLeftOffset }}
-          >
-            <Image
-              src={photo.src}
-              alt={t(photo.altKey)}
-              fill
-              priority={photoIndex === 0}
-              sizes="100vw"
-              className="object-cover"
-              style={{
-                objectPosition: photo.objectPosition,
-                transform: photo.desktopScale !== 1 ? `scale(${photo.desktopScale})` : undefined,
-                transformOrigin: 'center',
-              }}
-            />
-          </motion.div>
-        </AnimatePresence>
-        <div aria-hidden className="pointer-events-none absolute inset-0" style={{ background: DIAGONAL_DARKEN }} />
-        <div aria-hidden className="pointer-events-none absolute inset-0" style={{ background: DIAGONAL_SLICE_BG }} />
-        <div aria-hidden className="pointer-events-none absolute inset-0" style={{ background: DIAGONAL_LINE_BG }} />
         <div aria-hidden className="dot-grid pointer-events-none absolute inset-0 opacity-[0.05]" />
         <div
           aria-hidden
@@ -132,36 +83,22 @@ export default function SaudeHero() {
           aria-hidden
           className="pointer-events-none absolute -bottom-10 left-10 h-56 w-56 rounded-full bg-[#ae251c] opacity-[.14] blur-[90px]"
         />
-        <div
-          className="absolute top-6 right-8 z-10 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.28em] text-white"
-          style={{ textShadow: '0 1px 12px rgba(0,0,0,0.6)' }}
-        >
-          <span aria-hidden className="block h-px w-6 bg-white/60" />
-          <span className="font-extrabold text-[#ae251c]" style={{ letterSpacing: 0 }}>{photoNum}</span>
-          {t(photo.chipKey)}
-        </div>
       </div>
 
-      {/* ============ Text content (single source of truth for rotation) ============ */}
-      <div className="relative lg:min-h-[940px]">
-        {/* Mobile-only navy gradient background under text */}
-        <div
-          aria-hidden
-          className="lg:hidden absolute inset-0"
-          style={{ background: 'linear-gradient(135deg, #0d2240 0%, #142f54 60%, #0f2548 100%)' }}
-        />
-        <div aria-hidden className="lg:hidden dot-grid pointer-events-none absolute inset-0 opacity-[0.05]" />
-        <div
-          aria-hidden
-          className="lg:hidden pointer-events-none absolute -left-16 top-6 h-56 w-56 rounded-full bg-[#1a4b8a] opacity-[.20] blur-[100px]"
-        />
-        <div
-          aria-hidden
-          className="lg:hidden pointer-events-none absolute -bottom-10 left-10 h-40 w-40 rounded-full bg-[#ae251c] opacity-[.14] blur-[80px]"
-        />
+      {/* Top-right eyebrow chip (photo seq + label) */}
+      <div
+        className="absolute top-6 right-6 sm:top-8 sm:right-10 z-10 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.28em] text-white"
+        style={{ textShadow: '0 1px 12px rgba(0,0,0,0.6)' }}
+      >
+        <span aria-hidden className="hidden sm:block h-px w-6 bg-white/60" />
+        <span className="font-extrabold text-[#ae251c]" style={{ letterSpacing: 0 }}>{photoNum}</span>
+        {t(photo.chipKey)}
+      </div>
 
-        <div className="relative z-10 px-6 sm:px-10 lg:pl-16 xl:pl-24 lg:pr-8 pt-12 pb-16 lg:flex lg:items-center lg:py-24 lg:min-h-[940px]">
-          <div className="lg:max-w-[560px]">
+      {/* Text content overlay */}
+      <div className="relative z-10 flex min-h-[100dvh] items-center">
+        <div className="w-full px-6 sm:px-10 lg:pl-16 xl:pl-24 lg:pr-8 py-20 lg:py-24">
+          <div className="max-w-[640px]">
             <Reveal delay={0.08}>
               <h1
                 className="text-display text-white text-pretty"
@@ -186,7 +123,7 @@ export default function SaudeHero() {
 
             <Reveal delay={0.16}>
               <p
-                className="mt-6 max-w-[44ch] text-pretty text-lg leading-relaxed text-[#cbd5e1]"
+                className="mt-6 max-w-[48ch] text-pretty text-lg leading-relaxed text-[#cbd5e1]"
                 style={{ textShadow: '0 1px 12px rgba(0,0,0,0.35)' }}
               >
                 {t('saudeV2.hero.subtitle')}
@@ -194,24 +131,35 @@ export default function SaudeHero() {
             </Reveal>
 
             <Reveal delay={0.24}>
-              <div className="mt-8 flex flex-wrap gap-3">
+              <div className="mt-8 flex flex-wrap items-center gap-3">
+                <a
+                  href="#saude-form"
+                  className="inline-flex items-center gap-2 rounded-full bg-[#ae251c] hover:bg-[#8f1f17] px-6 py-3 text-sm font-semibold text-white transition-colors"
+                >
+                  {t('saudeV2.hero.cta.wa')}
+                  <ArrowRight size={16} />
+                </a>
                 <a
                   href={wa}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full bg-[#25D366] hover:bg-[#1ebe5d] px-6 py-3 text-sm font-semibold text-white transition-colors"
+                  aria-label={t('saudeV2.hero.cta.wa.aria')}
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[#25D366] hover:bg-[#1ebe5d] transition-colors"
                 >
-                  <WhatsAppIcon size={16} />
-                  {t('saudeV2.hero.cta.wa')}
-                </a>
-                <a
-                  href="#saude-form"
-                  className="group inline-flex items-center gap-2 rounded-full bg-white/[0.08] ring-1 ring-white/15 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/[0.12]"
-                >
-                  {t('saudeV2.hero.cta.compare')}
-                  <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
+                  <WhatsAppIcon size={18} />
+                  <span className="sr-only">{t('saudeV2.hero.cta.wa.aria')}</span>
                 </a>
               </div>
+            </Reveal>
+
+            <Reveal delay={0.32}>
+              <p
+                className="mt-6 inline-flex items-center gap-2 text-[12.5px] text-white/80"
+                style={{ textShadow: '0 1px 12px rgba(0,0,0,0.4)' }}
+              >
+                <ShieldCheck size={14} className="text-[#ae251c]" />
+                {t('saudeV2.hero.assurance')}
+              </p>
             </Reveal>
           </div>
         </div>
