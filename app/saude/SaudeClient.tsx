@@ -1,10 +1,8 @@
 'use client'
 
-import { useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Users, ClipboardList, RefreshCw, ShieldCheck, ArrowRight } from 'lucide-react'
-import { useInView } from 'framer-motion'
+import { ArrowRight } from 'lucide-react'
 import { useLocale } from '@/lib/i18n'
 import { Reveal } from '@/components/motion/Reveal'
 import { ServiceLeadForm } from '@/components/forms/ServiceLeadForm'
@@ -13,14 +11,9 @@ import SaudeModalidades from '@/components/sections/saude/SaudeModalidades'
 import SaudeOperadoras from '@/components/sections/saude/SaudeOperadoras'
 import SaudeFAQ from '@/components/sections/saude/SaudeFAQ'
 
-const SOBRE_ICONS = [Users, ClipboardList, RefreshCw, ShieldCheck]
-
 function SobreSection() {
   const { t } = useLocale()
-  const chips = t('saudeV2.sobre.chips').split('|')
-  const chipsBody = t('saudeV2.sobre.chipsBody').split('|')
-  const chipsRef = useRef<HTMLDivElement>(null)
-  const chipsInView = useInView(chipsRef, { once: true, amount: 0.35 })
+  const pillarsAlt = t('saudeV2.sobre.chips').split('|').join(' · ')
 
   return (
     <section
@@ -29,63 +22,82 @@ function SobreSection() {
       style={{
         fontFamily: 'var(--font-outfit)',
         background:
-          'radial-gradient(ellipse 60% 80% at 78% 40%, rgba(30,72,160,0.55) 0%, rgba(14,38,100,0.28) 45%, transparent 70%), linear-gradient(180deg, #020b1a 0%, #051324 30%, #071a30 60%, #07162a 100%)',
+          'radial-gradient(ellipse 55% 75% at 80% 45%, rgba(30,72,160,0.55) 0%, rgba(14,38,100,0.28) 45%, transparent 70%), linear-gradient(180deg, #020b1a 0%, #051324 30%, #071a30 60%, #07162a 100%)',
       }}
     >
       <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="grid lg:grid-cols-[1fr_260px] xl:grid-cols-[1fr_300px] items-end min-h-0 lg:min-h-[80dvh]">
+        <div className="grid lg:grid-cols-[1fr_280px] xl:grid-cols-[1fr_320px] items-end min-h-0 lg:min-h-[78dvh]">
 
-          {/* Left — text + icons */}
-          <div className="pt-14 pb-14 lg:pt-28 lg:pb-52 pr-0 lg:pr-16">
+          {/* Left — text + pillars strip */}
+          <div className="pt-14 pb-14 lg:pt-24 lg:pb-24 pr-0 lg:pr-12">
             <Reveal>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-[#7a9ab8] mb-4">
+              <p className="text-[13px] font-semibold uppercase tracking-[0.26em] text-white mb-5">
                 {t('saudeV2.sobre.eyebrow')}
               </p>
               <h2
-                className="font-bold text-white leading-[1.15] text-pretty"
-                style={{ fontSize: 'clamp(1.9rem, 3.4vw, 2.8rem)' }}
+                className="font-bold text-white leading-[1.05] text-pretty tracking-tight"
+                style={{ fontSize: 'clamp(2.3rem, 4.4vw, 3.4rem)' }}
               >
                 {t('saudeV2.sobre.title')}
               </h2>
-              <p className="mt-5 max-w-[54ch] text-[15.5px] leading-[1.75] text-[#8aabb8]">
+              <p className="mt-6 max-w-[60ch] text-[16.5px] leading-[1.65] text-[#8aabb8]">
                 {t('saudeV2.sobre.body')}
               </p>
             </Reveal>
 
-            {/* 4 icon items */}
+            {/* 4 pillars — composed image with transparent background */}
             <Reveal delay={0.14}>
-
-              <div className="saude-sobre-chips" ref={chipsRef} data-inview={chipsInView ? 'true' : 'false'}>
-                {chips.map((chip, i) => {
-                  const Icon = SOBRE_ICONS[i]
-                  return (
-                    <div key={chip} className="saude-sobre-chips-cell" style={{ ['--i' as never]: i }}>
-                      <span className="saude-sobre-chips-icon" aria-hidden>
-                        <Icon size={16} strokeWidth={1.7} className="saude-sobre-chips-glyph" />
-                      </span>
-                      <div className="saude-sobre-chips-text">
-                        <h3 className="saude-sobre-chips-title">{chip}</h3>
-                        <p className="saude-sobre-chips-body">{chipsBody[i]}</p>
-                      </div>
-                    </div>
-                  )
-                })}
+              <div
+                className="mt-10 overflow-hidden px-3 py-2"
+                style={{
+                  border: '1px solid rgba(255,255,255,0.06)',
+                  aspectRatio: '866 / 150',
+                }}
+              >
+                <Image
+                  src="/images/Saude/ChatGPT_Image_26_de_mai._de_2026__17_07_21-removebg-preview.png"
+                  alt={pillarsAlt}
+                  width={866}
+                  height={288}
+                  quality={95}
+                  loading="lazy"
+                  sizes="(min-width: 1024px) 60vw, 100vw"
+                  className="h-full w-full object-cover"
+                  style={{ objectPosition: 'center' }}
+                />
               </div>
-
             </Reveal>
           </div>
 
           {/* Right — doctor character, pinned to bottom of section */}
-          <div className="hidden lg:block self-end">
+          <div className="hidden lg:block self-end relative">
+            <div
+              aria-hidden
+              className="pointer-events-none absolute -inset-x-16 -top-24 bottom-0"
+              style={{
+                background:
+                  'radial-gradient(ellipse 55% 60% at 50% 40%, rgba(120,180,255,0.85) 0%, rgba(70,130,230,0.55) 18%, rgba(40,90,200,0.28) 38%, rgba(20,55,140,0.10) 60%, transparent 78%)',
+                filter: 'blur(14px)',
+              }}
+            />
+            <div
+              aria-hidden
+              className="pointer-events-none absolute left-1/2 -translate-x-1/2 top-12 h-64 w-64 rounded-full"
+              style={{
+                background:
+                  'radial-gradient(circle, rgba(180,220,255,0.55) 0%, rgba(110,170,240,0.25) 40%, transparent 70%)',
+                filter: 'blur(20px)',
+              }}
+            />
             <Image
               src="/personagem/Saude.png"
               alt="Especialista HOLD Saúde"
-              width={300}
-              height={450}
+              width={320}
+              height={480}
               quality={95}
               loading="lazy"
-              className="h-auto w-full"
-              style={{ filter: 'drop-shadow(0 16px 40px rgba(0,0,0,0.45))' }}
+              className="relative h-auto w-full"
+              style={{ filter: 'drop-shadow(0 16px 40px rgba(0,0,0,0.55))' }}
             />
           </div>
 
