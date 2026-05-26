@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import { Search, HandHeart, Layers, ArrowRight } from 'lucide-react'
 import { formatWhatsAppLink } from '@/lib/utils'
 import { useLocale } from '@/lib/i18n'
@@ -134,13 +135,13 @@ function CtaFinalSection() {
           <div className="mt-8 rule-accent h-px w-24" />
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <a
+            <Link
               href="#saude-form-card"
               className="inline-flex items-center gap-2 rounded-full bg-[#ae251c] hover:bg-[#8f1f17] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 px-6 py-3 text-sm font-semibold text-white transition-colors"
             >
               {t('saudeV2.cta.wa.button')}
               <ArrowRight size={16} />
-            </a>
+            </Link>
             <a
               href={wa}
               target="_blank"
