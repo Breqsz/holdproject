@@ -12,20 +12,20 @@ import { useLocale } from '@/lib/i18n'
 import { formatWhatsAppLink } from '@/lib/utils'
 import { WhatsAppIcon } from '@/components/icons/WhatsAppIcon'
 
-const schema = z.object({
+const baseSchema = z.object({
   name: z.string().min(2),
   whatsapp: z.string().min(10),
   message: z.string().optional(),
+  audience: z.enum(['pf', 'mei', 'empresa']).optional(),
 })
 
-type FormData = z.infer<typeof schema>
+type FormData = z.infer<typeof baseSchema>
 
 interface ServiceLeadFormProps {
-  /** Visible service label, e.g. "Seguros". Goes into the WhatsApp message. */
   service: string
-  /** Optional custom intro for the form */
   introTitle?: string
   introBody?: string
+  showAudienceField?: boolean
 }
 
 const inputClass =
@@ -35,10 +35,19 @@ export function ServiceLeadForm({
   service,
   introTitle,
   introBody,
+  showAudienceField = false,
 }: ServiceLeadFormProps) {
-  const { audience } = useAudience()
+  const { audience, setAudience } = useAudience()
   const { t } = useLocale()
   const [loading, setLoading] = useState(false)
+
+  const schema = showAudienceField
+    ? baseSchema.refine((d) => d.audience !== undefined, {
+        message: t('form.lead.audience.saude.err'),
+        path: ['audience'],
+      })
+    : baseSchema
+
   const {
     register,
     handleSubmit,
@@ -46,15 +55,28 @@ export function ServiceLeadForm({
     reset,
   } = useForm<FormData>({ resolver: zodResolver(schema) })
 
-  const audienceLabel = audience === 'pf' ? t('form.lead.audience.pf') : t('form.lead.audience.pj')
+  const audienceLabelGlobal = audience === 'pf' ? t('form.lead.audience.pf') : t('form.lead.audience.pj')
   const wa = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '55XXXXXXXXXXX'
 
   const finalIntroTitle = introTitle ?? t('form.lead.intro.title.default')
   const finalIntroBody = introBody ?? t('form.lead.intro.body.default')
 
+  function resolveAudienceLabel(data: FormData): string {
+    if (!showAudienceField) return audienceLabelGlobal
+    if (data.audience === 'pf') return t('form.lead.audience.saude.pf')
+    if (data.audience === 'mei') return t('form.lead.audience.saude.mei')
+    return t('form.lead.audience.saude.empresa')
+  }
+
   async function onSubmit(data: FormData) {
     setLoading(true)
     try {
+      const audienceLabel = resolveAudienceLabel(data)
+
+      if (showAudienceField) {
+        setAudience(data.audience === 'pf' ? 'pf' : 'pj')
+      }
+
       const params = {
         name: data.name,
         whatsapp: data.whatsapp,
@@ -99,6 +121,36 @@ export function ServiceLeadForm({
       </p>
 
       <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-4" noValidate>
+        {showAudienceField && (
+          <fieldset>
+            <legend className="text-[11px] font-medium uppercase tracking-wider text-[#7a9ab8] mb-2 block">
+              {t('form.lead.audience.saude.label')}
+            </legend>
+            <div className="grid grid-cols-3 gap-2">
+              {(['pf', 'mei', 'empresa'] as const).map((opt) => (
+                <label
+                  key={opt}
+                  className="relative flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-[#07162a] border border-[#142f54] px-3 py-3 text-sm text-white/90 transition-colors has-[:checked]:border-[#ae251c] has-[:checked]:bg-[#0d2240] hover:border-[#7a9ab8]/40"
+                >
+                  <input
+                    {...register('audience')}
+                    type="radio"
+                    value={opt}
+                    className="peer sr-only"
+                  />
+                  <span className="block h-3 w-3 rounded-full border border-[#4a6a8a] peer-checked:border-[#ae251c] peer-checked:bg-[#ae251c]" />
+                  {t(`form.lead.audience.saude.${opt}`)}
+                </label>
+              ))}
+            </div>
+            {errors.audience && (
+              <p className="text-[#ae251c] text-xs mt-1.5">
+                {t('form.lead.audience.saude.err')}
+              </p>
+            )}
+          </fieldset>
+        )}
+
         <div>
           <label className="text-[11px] font-medium uppercase tracking-wider text-[#7a9ab8] mb-1.5 block">
             {t('form.lead.label.name')}

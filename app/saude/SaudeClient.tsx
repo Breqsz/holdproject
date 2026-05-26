@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { Search, HandHeart, Layers } from 'lucide-react'
+import { Search, HandHeart, Layers, ArrowRight } from 'lucide-react'
 import { formatWhatsAppLink } from '@/lib/utils'
 import { useLocale } from '@/lib/i18n'
 import { Reveal } from '@/components/motion/Reveal'
@@ -132,16 +132,26 @@ function CtaFinalSection() {
             {t('saudeV2.cta.body')}
           </p>
           <div className="mt-8 rule-accent h-px w-24" />
-          <p className="mt-6 text-sm text-[#7a9ab8]">{t('saudeV2.cta.meta')}</p>
-          <a
-            href={wa}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#25D366] hover:bg-[#1ebe5d] text-white text-sm font-semibold px-6 py-3 transition-colors"
-          >
-            <WhatsAppIcon size={16} />
-            {t('saudeV2.cta.wa.button')}
-          </a>
+
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <a
+              href="#saude-form-card"
+              className="inline-flex items-center gap-2 rounded-full bg-[#ae251c] hover:bg-[#8f1f17] px-6 py-3 text-sm font-semibold text-white transition-colors"
+            >
+              {t('saudeV2.cta.wa.button')}
+              <ArrowRight size={16} />
+            </a>
+            <a
+              href={wa}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={t('saudeV2.cta.wa.aria')}
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[#25D366] hover:bg-[#1ebe5d] transition-colors"
+            >
+              <WhatsAppIcon size={18} />
+              <span className="sr-only">{t('saudeV2.cta.wa.aria')}</span>
+            </a>
+          </div>
 
           <div className="mt-10 hidden md:flex items-end gap-6">
             <Image
@@ -154,7 +164,7 @@ function CtaFinalSection() {
               style={{ filter: 'drop-shadow(0 18px 36px rgba(0,0,0,0.42))' }}
             />
             <ul className="flex flex-col gap-2.5 pb-3 flex-1 min-w-0">
-              {[1, 2, 3].map((n) => (
+              {[1, 2].map((n) => (
                 <li
                   key={n}
                   className="flex items-start gap-2.5 text-[12.5px] leading-[1.5] text-white/72"
@@ -172,11 +182,14 @@ function CtaFinalSection() {
         </Reveal>
 
         <Reveal delay={0.12}>
-          <ServiceLeadForm
-            service={t('saudeV2.cta.form.service')}
-            introTitle={t('saudeV2.cta.form.introTitle')}
-            introBody={t('saudeV2.cta.form.introBody')}
-          />
+          <div id="saude-form-card">
+            <ServiceLeadForm
+              service={t('saudeV2.cta.form.service')}
+              introTitle={t('saudeV2.cta.form.introTitle')}
+              introBody={t('saudeV2.cta.form.introBody')}
+              showAudienceField
+            />
+          </div>
         </Reveal>
       </div>
     </section>
