@@ -136,7 +136,7 @@ function CtaFinalSection() {
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <a
               href="#saude-form-card"
-              className="inline-flex items-center gap-2 rounded-full bg-[#ae251c] hover:bg-[#8f1f17] px-6 py-3 text-sm font-semibold text-white transition-colors"
+              className="inline-flex items-center gap-2 rounded-full bg-[#ae251c] hover:bg-[#8f1f17] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 px-6 py-3 text-sm font-semibold text-white transition-colors"
             >
               {t('saudeV2.cta.wa.button')}
               <ArrowRight size={16} />
@@ -146,10 +146,9 @@ function CtaFinalSection() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={t('saudeV2.cta.wa.aria')}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[#25D366] hover:bg-[#1ebe5d] transition-colors"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[#25D366] hover:bg-[#1ebe5d] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 transition-colors"
             >
               <WhatsAppIcon size={18} />
-              <span className="sr-only">{t('saudeV2.cta.wa.aria')}</span>
             </a>
           </div>
 

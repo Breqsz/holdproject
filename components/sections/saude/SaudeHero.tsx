@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowRight, ShieldCheck } from 'lucide-react'
 import { formatWhatsAppLink } from '@/lib/utils'
@@ -56,7 +57,7 @@ export default function SaudeHero() {
               src={photo.src}
               alt={t(photo.altKey)}
               fill
-              priority={photoIndex === 0}
+              priority
               sizes="100vw"
               className="object-cover"
               style={{ objectPosition: photo.objectPosition }}
@@ -132,22 +133,21 @@ export default function SaudeHero() {
 
             <Reveal delay={0.24}>
               <div className="mt-8 flex flex-wrap items-center gap-3">
-                <a
+                <Link
                   href="#saude-form"
-                  className="inline-flex items-center gap-2 rounded-full bg-[#ae251c] hover:bg-[#8f1f17] px-6 py-3 text-sm font-semibold text-white transition-colors"
+                  className="inline-flex items-center gap-2 rounded-full bg-[#ae251c] hover:bg-[#8f1f17] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 px-6 py-3 text-sm font-semibold text-white transition-colors"
                 >
                   {t('saudeV2.hero.cta.wa')}
                   <ArrowRight size={16} />
-                </a>
+                </Link>
                 <a
                   href={wa}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={t('saudeV2.hero.cta.wa.aria')}
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[#25D366] hover:bg-[#1ebe5d] transition-colors"
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[#25D366] hover:bg-[#1ebe5d] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 transition-colors"
                 >
                   <WhatsAppIcon size={18} />
-                  <span className="sr-only">{t('saudeV2.hero.cta.wa.aria')}</span>
                 </a>
               </div>
             </Reveal>
