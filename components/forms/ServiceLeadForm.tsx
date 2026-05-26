@@ -196,7 +196,7 @@ export function ServiceLeadForm({
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-[#25D366] hover:bg-[#1ebe5d] disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold rounded-full py-3.5 transition-colors flex items-center justify-center gap-2"
+          className="w-full bg-[#ae251c] hover:bg-[#8f1f17] disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold rounded-full py-3.5 transition-colors flex items-center justify-center gap-2"
         >
           {loading ? (
             <Loader2 size={18} className="animate-spin" />
