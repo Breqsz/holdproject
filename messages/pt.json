@@ -793,11 +793,11 @@
   "saudeV2.cta.form.introTitle": "Falar com especialista",
   "saudeV2.cta.form.introBody": "Conta seu cenário, perfil, modalidade, momento. Voltamos com a alternativa mais adequada.",
 
-  "saudeV2.wa.modal.eyebrow": "Atendimento personalizado",
-  "saudeV2.wa.modal.title.prefix": "Você será redirecionado ao WhatsApp em",
-  "saudeV2.wa.modal.body.prefix": "Conectando você a um especialista da HOLD sobre",
-  "saudeV2.wa.modal.body.suffix": ". Mensagem pré-preenchida:",
-  "saudeV2.wa.modal.go": "Ir agora",
-  "saudeV2.wa.modal.cancel": "Cancelar",
-  "saudeV2.wa.modal.close": "Fechar"
+  "shared.wa.modal.close": "Fechar",
+  "shared.wa.modal.eyebrow": "Redirecionando",
+  "shared.wa.modal.title.prefix": "Abrindo WhatsApp em",
+  "shared.wa.modal.body.prefix": "Estamos abrindo uma conversa sobre ",
+  "shared.wa.modal.body.suffix": " com nosso time.",
+  "shared.wa.modal.go": "Abrir agora",
+  "shared.wa.modal.cancel": "Cancelar"
 }

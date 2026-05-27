@@ -78,7 +78,7 @@ export function WhatsAppRedirectModal({
         >
           <button
             type="button"
-            aria-label={t('saudeV2.wa.modal.close')}
+            aria-label={t('shared.wa.modal.close')}
             onClick={onClose}
             className="absolute inset-0 bg-[#07162a]/82 backdrop-blur-sm"
           />
@@ -101,21 +101,21 @@ export function WhatsAppRedirectModal({
             <button
               type="button"
               onClick={onClose}
-              aria-label={t('saudeV2.wa.modal.close')}
+              aria-label={t('shared.wa.modal.close')}
               className="absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-full text-white/55 hover:text-white hover:bg-white/[0.08] transition-colors"
             >
               <X size={15} strokeWidth={1.8} />
             </button>
 
             <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#7a9ab8]">
-              {t('saudeV2.wa.modal.eyebrow')}
+              {t('shared.wa.modal.eyebrow')}
             </p>
             <h3
               id="wa-redirect-title"
               className="mt-3 text-white"
               style={{ fontSize: 'clamp(1.4rem, 2.6vw, 1.75rem)', lineHeight: 1.18 }}
             >
-              {t('saudeV2.wa.modal.title.prefix')}{' '}
+              {t('shared.wa.modal.title.prefix')}{' '}
               <span
                 className="font-semibold tabular-nums"
                 style={{ color: '#ae251c' }}
@@ -124,13 +124,13 @@ export function WhatsAppRedirectModal({
               </span>
             </h3>
             <p className="mt-4 text-sm leading-relaxed text-[#7a9ab8]">
-              {t('saudeV2.wa.modal.body.prefix')}{' '}
+              {t('shared.wa.modal.body.prefix')}{' '}
               <span className="text-white">{label}</span>
-              {t('saudeV2.wa.modal.body.suffix')}
+              {t('shared.wa.modal.body.suffix')}
             </p>
 
             <p className="mt-3 rounded-lg bg-white/[0.04] ring-1 ring-white/10 px-4 py-3 text-[13.5px] leading-relaxed text-white/85">
-              “{message}”
+              "{message}"
             </p>
 
             <a
@@ -140,14 +140,14 @@ export function WhatsAppRedirectModal({
               className="mt-6 inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-[#25D366] hover:bg-[#1ebe5d] px-6 py-3 text-sm font-semibold text-white transition-colors"
             >
               <WhatsAppIcon size={16} />
-              {t('saudeV2.wa.modal.go')}
+              {t('shared.wa.modal.go')}
             </a>
             <button
               type="button"
               onClick={onClose}
               className="mt-3 inline-flex w-full items-center justify-center px-6 py-2 text-[11px] uppercase tracking-[0.22em] text-white/50 hover:text-white/80 transition-colors"
             >
-              {t('saudeV2.wa.modal.cancel')}
+              {t('shared.wa.modal.cancel')}
             </button>
           </motion.div>
         </motion.div>

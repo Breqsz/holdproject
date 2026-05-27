@@ -6,7 +6,7 @@ import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import { formatWhatsAppLink } from '@/lib/utils'
 import { useLocale } from '@/lib/i18n'
-import { WhatsAppRedirectModal } from '@/components/saude/WhatsAppRedirectModal'
+import { WhatsAppRedirectModal } from '@/components/shared/WhatsAppRedirectModal'
 import { SaudeModalidadeDetailModal } from '@/components/saude/SaudeModalidadeDetailModal'
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number]

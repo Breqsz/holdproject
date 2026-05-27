@@ -793,11 +793,11 @@
   "saudeV2.cta.form.introTitle": "Talk to a specialist",
   "saudeV2.cta.form.introBody": "Tell us about your scenario, profile, modality, moment. We'll come back with the most suitable alternative.",
 
-  "saudeV2.wa.modal.eyebrow": "Personalized service",
-  "saudeV2.wa.modal.title.prefix": "You'll be redirected to WhatsApp in",
-  "saudeV2.wa.modal.body.prefix": "Connecting you with a HOLD specialist about",
-  "saudeV2.wa.modal.body.suffix": ". Pre-filled message:",
-  "saudeV2.wa.modal.go": "Go now",
-  "saudeV2.wa.modal.cancel": "Cancel",
-  "saudeV2.wa.modal.close": "Close"
+  "shared.wa.modal.close": "Close",
+  "shared.wa.modal.eyebrow": "Redirecting",
+  "shared.wa.modal.title.prefix": "Opening WhatsApp in",
+  "shared.wa.modal.body.prefix": "We're opening a conversation about ",
+  "shared.wa.modal.body.suffix": " with our team.",
+  "shared.wa.modal.go": "Open now",
+  "shared.wa.modal.cancel": "Cancel"
 }
