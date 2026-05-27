@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useLocale } from '@/lib/i18n'
 import LogoLoop, { type LogoItem } from '@/components/motion/LogoLoop'
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number]
@@ -16,6 +17,8 @@ const SEGURADORAS: LogoItem[] = [
 ]
 
 export default function SegurosSeguradoras() {
+  const { t } = useLocale()
+
   return (
     <section
       id="seguros-seguradoras"
@@ -31,13 +34,13 @@ export default function SegurosSeguradoras() {
           className="max-w-3xl mb-12"
         >
           <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#07162a]/55">
-            Seguradoras parceiras
+            {t('segurosV2.seguradoras.eyebrow')}
           </p>
           <h2
             className="mt-4 text-display text-[#07162a]"
             style={{ fontSize: 'clamp(1.5rem, 3vw, 2.25rem)' }}
           >
-            Comparativo entre as principais seguradoras do mercado.
+            {t('segurosV2.seguradoras.title')}
           </h2>
         </motion.div>
 
@@ -51,7 +54,7 @@ export default function SegurosSeguradoras() {
             scaleOnHover
             fadeOut
             fadeOutColor="#F5F5F5"
-            ariaLabel="Carrossel de seguradoras parceiras"
+            ariaLabel={t('segurosV2.seguradoras.aria')}
           />
         </div>
       </div>
