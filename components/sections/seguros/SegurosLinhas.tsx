@@ -1,69 +1,60 @@
 'use client'
 
+import { useState } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
+import { useLocale } from '@/lib/i18n'
 import { formatWhatsAppLink } from '@/lib/utils'
+import { SegurosLinhaDetailModal } from '@/components/seguros/SegurosLinhaDetailModal'
+import { WhatsAppRedirectModal } from '@/components/shared/WhatsAppRedirectModal'
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number]
 const RED = '#ae251c'
 const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? ''
 
-type Linha = {
-  id: string
+type LinhaId = 'vida' | 'auto' | 'residencial' | 'empresarial'
+
+type LinhaConfig = {
+  id: LinhaId
   seq: string
-  title: string
-  short: string
-  bullets: string[]
   image: string
   imagePosition?: string
-  waMessage: string
 }
 
-const LINHAS: Linha[] = [
+type Linha = LinhaConfig & {
+  title: string
+  short: string
+  body: string
+  bullets: string[]
+  waMessage: string
+  ariaLabel: string
+}
+
+const LINHAS_CONFIG: LinhaConfig[] = [
   {
     id: 'vida',
     seq: '01',
-    title: 'Vida',
-    short:
-      'Cobertura sob medida para quem precisa de proteção financeira em casos de morte, invalidez ou doenças graves.',
-    bullets: ['Doenças graves', 'Invalidez permanente', 'Renda familiar'],
     image: '/images/hero/family-hero.webp',
     imagePosition: 'center 30%',
-    waMessage: 'Olá! Quero entender as opções de Seguro de Vida.',
   },
   {
     id: 'auto',
     seq: '02',
-    title: 'Auto',
-    short:
-      'Comparativo de seguradoras, cobertura otimizada e franquia sob medida: leves, pesados e frota corporativa.',
-    bullets: ['Cobertura compreensiva', 'Frota corporativa', 'Assistência 24h'],
     image: '/images/hero/card-seguros.jpg',
     imagePosition: 'center',
-    waMessage: 'Olá! Quero cotar um Seguro Auto.',
   },
   {
     id: 'residencial',
     seq: '03',
-    title: 'Residencial',
-    short:
-      'Patrimônio físico protegido contra incêndio, roubo, danos elétricos e responsabilidade civil familiar.',
-    bullets: ['Incêndio e roubo', 'Danos elétricos', 'Responsabilidade civil'],
     image: '/images/hero/home.jpg',
     imagePosition: 'center 40%',
-    waMessage: 'Olá! Quero cotar um Seguro Residencial.',
   },
   {
     id: 'empresarial',
     seq: '04',
-    title: 'Empresarial',
-    short:
-      'Garantia operacional para PMEs e indústrias: patrimônio, lucros cessantes, RC e D&O.',
-    bullets: ['Lucros cessantes', 'RC e D&O', 'Patrimônio corporativo'],
     image: '/images/hero/office-hero.webp',
     imagePosition: 'center',
-    waMessage: 'Olá! Quero conhecer as opções de Seguro Empresarial.',
   },
 ]
 
@@ -82,8 +73,15 @@ const headerVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: EASE_OUT_EXPO } },
 }
 
-function LinhaCard({ data }: { data: Linha }) {
-  const href = formatWhatsAppLink(WHATSAPP, data.waMessage)
+function LinhaCard({
+  data,
+  ctaLabel,
+  onSelect,
+}: {
+  data: Linha
+  ctaLabel: string
+  onSelect: (l: Linha) => void
+}) {
   return (
     <motion.div
       variants={cardVariants}
@@ -91,12 +89,12 @@ function LinhaCard({ data }: { data: Linha }) {
       transition={{ duration: 0.4, ease: EASE_OUT_EXPO }}
       className="h-full"
     >
-      <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={`Falar no WhatsApp sobre Seguro ${data.title}`}
-        className="group relative block w-full text-left overflow-hidden rounded-2xl h-full min-h-[420px] sm:min-h-[520px] transition-shadow duration-500 hover:shadow-[0_28px_70px_-22px_rgba(0,0,0,0.65)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ae251c] focus-visible:ring-offset-2 focus-visible:ring-offset-[#07162a]"
+      <button
+        type="button"
+        onClick={() => onSelect(data)}
+        aria-label={data.ariaLabel}
+        aria-haspopup="dialog"
+        className="group relative block w-full text-left overflow-hidden rounded-2xl h-full min-h-[340px] sm:min-h-[520px] transition-shadow duration-500 hover:shadow-[0_28px_70px_-22px_rgba(0,0,0,0.65)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ae251c] focus-visible:ring-offset-2 focus-visible:ring-offset-[#07162a]"
         style={{ border: '1px solid rgba(255,255,255,0.06)' }}
       >
         <div className="absolute inset-0 overflow-hidden">
@@ -135,13 +133,6 @@ function LinhaCard({ data }: { data: Linha }) {
         />
 
         <div className="relative z-10 flex h-full flex-col justify-end p-5 sm:p-7 lg:p-8">
-          <span
-            aria-hidden
-            className="absolute top-5 right-5 text-[11px] font-extrabold tracking-[0.18em] text-white/80"
-          >
-            {data.seq}
-          </span>
-
           <h3
             className="text-display text-white tracking-tight leading-[1.02] mb-3"
             style={{
@@ -164,9 +155,12 @@ function LinhaCard({ data }: { data: Linha }) {
           </p>
 
           <div className="overflow-hidden mb-4 lg:transition-[max-height,opacity] lg:duration-500 lg:ease-out lg:opacity-0 lg:max-h-0 lg:group-hover:opacity-100 lg:group-hover:max-h-44">
-            <div className="flex flex-wrap gap-x-3 gap-y-1.5 pt-3 border-t border-white/15">
+            <div className="flex flex-col gap-1 pt-3 border-t border-white/15 lg:flex-row lg:flex-wrap lg:gap-x-3 lg:gap-y-1.5">
               {data.bullets.map((b) => (
-                <span key={b} className="text-[11px] text-white/85 leading-tight pt-2">
+                <span
+                  key={b}
+                  className="text-[11.5px] text-white/85 leading-snug pt-2 lg:pt-2 lg:text-[11px] lg:leading-tight"
+                >
                   · {b}
                 </span>
               ))}
@@ -174,7 +168,7 @@ function LinhaCard({ data }: { data: Linha }) {
           </div>
 
           <span className="inline-flex items-center gap-2.5 self-start text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white">
-            Falar no WhatsApp
+            {ctaLabel}
             <span
               aria-hidden
               className="inline-flex h-7 w-7 items-center justify-center rounded-full transition-transform duration-300 group-hover:translate-x-1"
@@ -184,12 +178,28 @@ function LinhaCard({ data }: { data: Linha }) {
             </span>
           </span>
         </div>
-      </a>
+      </button>
     </motion.div>
   )
 }
 
 export default function SegurosLinhas() {
+  const { t } = useLocale()
+  const [active, setActive] = useState<Linha | null>(null)
+  const [wa, setWa] = useState<Linha | null>(null)
+
+  const linhas: Linha[] = LINHAS_CONFIG.map((cfg) => ({
+    ...cfg,
+    title: t(`segurosV2.linha.${cfg.id}.title`),
+    short: t(`segurosV2.linha.${cfg.id}.short`),
+    body: t(`segurosV2.linha.${cfg.id}.body`),
+    bullets: t(`segurosV2.linha.${cfg.id}.bullets`).split('|'),
+    waMessage: t(`segurosV2.linha.${cfg.id}.wa`),
+    ariaLabel: t(`segurosV2.linha.${cfg.id}.aria`),
+  }))
+
+  const waHref = wa ? formatWhatsAppLink(WHATSAPP, wa.waMessage) : ''
+
   return (
     <section
       id="seguros-linhas"
@@ -205,7 +215,7 @@ export default function SegurosLinhas() {
           className="max-w-3xl mb-12 lg:mb-16"
         >
           <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#7a9ab8]">
-            Linhas de proteção
+            {t('segurosV2.linhas.eyebrow')}
           </p>
           <h2
             className="mt-4 text-display text-white"
@@ -214,11 +224,10 @@ export default function SegurosLinhas() {
               fontSize: 'clamp(1.75rem, 3.4vw, 2.75rem)',
             }}
           >
-            Quatro frentes para proteger pessoas, bens e operações.
+            {t('segurosV2.linhas.title')}
           </h2>
           <p className="mt-6 max-w-[60ch] text-[#7a9ab8] leading-relaxed">
-            Comparativo entre seguradoras de mercado, modelagem por perfil e
-            acompanhamento de sinistro fim-a-fim, do briefing à indenização.
+            {t('segurosV2.linhas.body')}
           </p>
         </motion.div>
 
@@ -229,11 +238,34 @@ export default function SegurosLinhas() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.15 }}
         >
-          {LINHAS.map((m) => (
-            <LinhaCard key={m.id} data={m} />
+          {linhas.map((l) => (
+            <LinhaCard
+              key={l.id}
+              data={l}
+              ctaLabel={t('segurosV2.linhas.cta')}
+              onSelect={setActive}
+            />
           ))}
         </motion.div>
       </div>
+
+      <SegurosLinhaDetailModal
+        open={active !== null}
+        data={active}
+        onClose={() => setActive(null)}
+        onConfirm={() => {
+          const l = active
+          setActive(null)
+          setWa(l)
+        }}
+      />
+      <WhatsAppRedirectModal
+        open={wa !== null}
+        onClose={() => setWa(null)}
+        href={waHref}
+        label={wa?.title ?? ''}
+        message={wa?.waMessage ?? ''}
+      />
     </section>
   )
 }
