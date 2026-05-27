@@ -29,7 +29,10 @@ function SobreSection() {
       }}
     >
       {/* Desktop — image-based section */}
-      <div className="hidden lg:block">
+      <div
+        className="hidden lg:flex w-full items-center justify-center"
+        style={{ height: 'min(100vh, calc(100vw * 9 / 16))' }}
+      >
         <Image
           src="/images/Saude/e407ef09-6423-4eb3-ac26-c42a250fa2aa-sobrenos.png"
           alt={t('saudeV2.sobre.title')}
@@ -38,7 +41,7 @@ function SobreSection() {
           quality={95}
           priority={false}
           sizes="100vw"
-          className="block h-auto w-full"
+          className="block h-full w-full object-contain"
         />
       </div>
 
