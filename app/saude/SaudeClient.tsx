@@ -12,6 +12,12 @@ import SaudeOperadoras from '@/components/sections/saude/SaudeOperadoras'
 import SaudeFAQ from '@/components/sections/saude/SaudeFAQ'
 
 const SOBRE_ICONS = [Users, ClipboardList, RefreshCw, ShieldCheck]
+const SOBRE_ICON_SRC = [
+  '/images/Saude/user.png',
+  '/images/Saude/clipboard.png',
+  '/images/Saude/handshake.png',
+  '/images/Saude/security.png',
+]
 
 function SobreSection() {
   const { t } = useLocale()
@@ -28,21 +34,77 @@ function SobreSection() {
           'radial-gradient(ellipse 55% 75% at 80% 45%, rgba(30,72,160,0.55) 0%, rgba(14,38,100,0.28) 45%, transparent 70%), linear-gradient(180deg, #020b1a 0%, #051324 30%, #071a30 60%, #07162a 100%)',
       }}
     >
-      {/* Desktop — image-based section */}
-      <div
-        className="hidden lg:flex w-full items-center justify-center"
-        style={{ height: 'min(100vh, calc(100vw * 9 / 16))' }}
-      >
+      {/* Desktop — coded layout over background image (doctor on the right) */}
+      <div className="hidden lg:block relative w-full overflow-hidden">
         <Image
-          src="/images/Saude/e407ef09-6423-4eb3-ac26-c42a250fa2aa-sobrenos.png"
-          alt={t('saudeV2.sobre.title')}
-          width={1920}
-          height={1080}
+          src="/images/Saude/saude-sobre-bg.jpg"
+          alt=""
+          fill
           quality={95}
           priority={false}
           sizes="100vw"
-          className="block h-full w-full object-contain"
+          className="object-cover"
+          style={{ objectPosition: 'center' }}
         />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(90deg, rgba(2,11,26,0.92) 0%, rgba(2,11,26,0.78) 34%, rgba(2,11,26,0.4) 58%, transparent 80%)',
+          }}
+        />
+
+        <div
+          className="relative z-10 max-w-7xl mx-auto px-10 xl:px-16 flex items-center"
+          style={{ minHeight: 'min(100vh, calc(100vw * 9 / 16))' }}
+        >
+          <div className="max-w-[58%] py-16">
+            <Reveal>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-[#7a9ab8] mb-4">
+                {t('saudeV2.sobre.eyebrow')}
+              </p>
+              <h2
+                className="font-bold text-white leading-[1.12] text-pretty"
+                style={{ fontSize: 'clamp(2rem, 3.2vw, 3rem)' }}
+              >
+                {t('saudeV2.sobre.title')}
+              </h2>
+              <p className="mt-6 max-w-[54ch] text-[17px] leading-[1.7] text-[#a9c0d4]">
+                {t('saudeV2.sobre.body')}
+              </p>
+            </Reveal>
+
+            <Reveal delay={0.12}>
+              <div className="mt-8 border-t border-white/12 pt-7 grid grid-cols-2 gap-x-10 gap-y-6">
+                {chips.map((chip, i) => (
+                  <div key={chip} className="flex items-start gap-3">
+                    <span
+                      aria-hidden
+                      className="block shrink-0 mt-px"
+                      style={{
+                        width: 26,
+                        height: 26,
+                        backgroundColor: '#ae251c',
+                        WebkitMaskImage: `url(${SOBRE_ICON_SRC[i]})`,
+                        maskImage: `url(${SOBRE_ICON_SRC[i]})`,
+                        WebkitMaskSize: 'contain',
+                        maskSize: 'contain',
+                        WebkitMaskRepeat: 'no-repeat',
+                        maskRepeat: 'no-repeat',
+                        WebkitMaskPosition: 'center',
+                        maskPosition: 'center',
+                      }}
+                    />
+                    <h3 className="text-[13.5px] font-semibold leading-[1.35] text-white tracking-tight max-w-[24ch] text-balance">
+                      {chip}
+                    </h3>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+          </div>
+        </div>
       </div>
 
       {/* Mobile — text + icon chips (legacy layout, no bottom image) */}
