@@ -53,7 +53,7 @@ export default function EstrategiaManifesto() {
         >
           {/* Image */}
           <Image
-            src="/images/hero/my-project-page-1_6.jpg"
+            src="/images/hero/upscale_this_image_2K_202605181051.jpeg"
             alt={t("manifesto.image.alt")}
             fill
             priority={false}
