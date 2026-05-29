@@ -40,8 +40,9 @@ function TopicIcon({ src, size = 26 }: { src: string; size?: number }) {
   )
 }
 
-const SOBRE_BG =
-  'radial-gradient(ellipse 62% 80% at 82% 44%, rgba(20,74,152,0.50) 0%, rgba(11,50,116,0.24) 44%, transparent 72%), linear-gradient(150deg, #0b244e 0%, #0a1e44 46%, #081a38 72%, #06142c 100%)'
+// Cor sólida da borda/fundo da imagem saude-sobre-bg.jpg (navy ~#04132f),
+// para que a sobra à esquerda case exatamente com a imagem, sem emenda visível.
+const SOBRE_BG = '#04132f'
 
 function SobreSection() {
   const { t } = useLocale()
@@ -56,7 +57,7 @@ function SobreSection() {
       {/* Desktop — full-viewport stage: text + 4 topics on the left, doctor baked into the full-bleed background */}
       <div className="hidden lg:block relative min-h-[100dvh]">
         {/* Full-bleed background scene (doctor included), anchored to the right edge */}
-        <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 bottom-[3vh] z-0">
           <Image
             src="/images/Saude/saude-sobre-bg.jpg"
             alt=""
