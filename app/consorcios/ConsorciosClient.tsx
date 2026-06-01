@@ -1,130 +1,154 @@
 'use client'
 
-import { useState } from 'react'
 import Image from 'next/image'
-import { motion, AnimatePresence } from 'framer-motion'
-import {
-  Home, Car, Truck, Sparkles, Building2, Church, TrendingUp, Zap,
-  ChevronRight, ArrowRight,
-} from 'lucide-react'
+import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
 import { useLocale } from '@/lib/i18n'
-import { useAudience } from '@/lib/audience'
-import { formatWhatsAppLink } from '@/lib/utils'
 import { Reveal } from '@/components/motion/Reveal'
-import { AudienceToggle } from '@/components/AudienceToggle'
-import { WhatsAppIcon } from '@/components/icons/WhatsAppIcon'
-import ConsorcioJornada from '@/components/sections/ConsorcioJornada'
+import { ServiceLeadForm } from '@/components/forms/ServiceLeadForm'
+import ConsorciosHero from '@/components/sections/consorcios/ConsorciosHero'
+import ConsorciosCategorias from '@/components/sections/consorcios/ConsorciosCategorias'
 
-const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number]
-const SPRING = { type: 'spring' as const, stiffness: 110, damping: 22 }
-const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? ''
-
-type CategoryId =
-  | 'imoveis' | 'veiculos' | 'pesados' | 'servicos'
-  | 'condominios' | 'igrejas' | 'alavancagem' | 'cotas'
-
-const CATEGORIES: { id: CategoryId; icon: React.ElementType }[] = [
-  { id: 'imoveis',     icon: Home       },
-  { id: 'veiculos',    icon: Car        },
-  { id: 'pesados',     icon: Truck      },
-  { id: 'servicos',    icon: Sparkles   },
-  { id: 'condominios', icon: Building2  },
-  { id: 'igrejas',     icon: Church     },
-  { id: 'alavancagem', icon: TrendingUp },
-  { id: 'cotas',       icon: Zap        },
+const SOBRE_ICON_SRC = [
+  '/images/Saude/user.png',
+  '/images/Saude/clipboard.png',
+  '/images/Saude/handshake.png',
+  '/images/Saude/security.png',
 ]
 
-function HeroSection() {
-  const { t } = useLocale()
-  const { audience } = useAudience()
-
-  const headline = audience === 'pj'
-    ? 'Mesa de consórcios para escritórios e empresas.'
-    : 'Consórcio com inteligência, confiança e estratégia.'
-
-  const sub = audience === 'pj'
-    ? 'Estrutura especializada para você ofertar consórcios aos seus clientes sem montar operação interna.'
-    : 'Da escolha à contemplação, conduzimos cada etapa com diagnóstico, estratégia e acompanhamento.'
-
-  const wa = formatWhatsAppLink(
-    WHATSAPP,
-    audience === 'pj'
-      ? 'Olá! Tenho interesse em conhecer a Mesa de Consórcios para escritórios.'
-      : 'Olá! Tenho interesse em consórcio. Pode me ajudar?',
+function TopicIcon({ src, size = 26 }: { src: string; size?: number }) {
+  return (
+    <span
+      aria-hidden
+      className="block shrink-0"
+      style={{
+        width: size,
+        height: size,
+        backgroundColor: '#ae251c',
+        WebkitMaskImage: `url(${src})`,
+        maskImage: `url(${src})`,
+        WebkitMaskSize: 'contain',
+        maskSize: 'contain',
+        WebkitMaskRepeat: 'no-repeat',
+        maskRepeat: 'no-repeat',
+        WebkitMaskPosition: 'center',
+        maskPosition: 'center',
+      }}
+    />
   )
+}
+
+// Cor sólida casada com o fundo de sobre-consorcio.jpg (navy ~#0c2045),
+// para que a sobra à esquerda do object-contain não tenha emenda visível.
+const SOBRE_BG = '#0c2045'
+
+function SobreSection() {
+  const { t } = useLocale()
+  const chips = t('consorciosV2.sobre.chips').split('|')
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-[#07162a] via-[#0a1c36] to-[#0b1f3a] pt-32 pb-16 md:pt-40 md:pb-24">
-      <div aria-hidden className="dot-grid pointer-events-none absolute inset-0 opacity-[0.06]" />
-      <div aria-hidden className="pointer-events-none absolute -right-20 -top-20 h-[480px] w-[480px] rounded-full bg-[#1a4b8a] opacity-[.18] blur-[110px]" />
-      <div aria-hidden className="pointer-events-none absolute -bottom-12 left-12 h-[280px] w-[280px] rounded-full bg-[#ae251c] opacity-[.10] blur-[90px]" />
+    <section
+      id="consorcios-sobre"
+      className="relative overflow-hidden"
+      style={{ fontFamily: 'var(--font-outfit)', background: SOBRE_BG }}
+    >
+      {/* Desktop — texto + 4 tópicos à esquerda, personagem embutido no fundo full-bleed */}
+      <div className="hidden lg:block relative min-h-[100dvh]">
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 bottom-0 z-0">
+          <Image
+            src="/consorcio/sobre-consorcio.jpg"
+            alt=""
+            fill
+            quality={90}
+            sizes="100vw"
+            className="object-contain object-bottom object-right"
+          />
+        </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 grid gap-12 lg:grid-cols-[1.1fr_1fr] items-center">
-        <div>
-          <Reveal>
-            <div className="flex items-center gap-3">
-              <span className="inline-flex items-center rounded-full border border-[#ae251c]/30 bg-[#ae251c]/15 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#ae251c]">
-                Consórcios · Hold Corretora
-              </span>
-              <div className="rule-accent h-px max-w-[120px] flex-1" />
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.08}>
-            <h1
-              className="mt-6 text-display text-white text-pretty"
-              style={{ fontSize: 'clamp(2.25rem, 5.4vw, 4rem)' }}
-            >
-              {headline}
-            </h1>
-          </Reveal>
-
-          <Reveal delay={0.16}>
-            <p className="mt-6 max-w-[56ch] text-pretty text-lg leading-relaxed text-[#7a9ab8]">
-              {sub}
-            </p>
-          </Reveal>
-
-          <Reveal delay={0.24}>
-            <div className="mt-8">
-              <AudienceToggle variant="dark" />
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.32}>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <a
-                href={wa}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 rounded-full bg-[#25D366] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#1ebe5d]"
+        <div className="relative z-10 mx-auto flex w-full max-w-7xl min-h-[100dvh] flex-col justify-center px-10 xl:px-16 py-20">
+          <div className="max-w-[640px] xl:max-w-[880px]">
+            <Reveal>
+              <p className="mb-5 text-[13px] font-semibold uppercase tracking-[0.26em] text-[#5a97d4]">
+                {t('consorciosV2.sobre.eyebrow')}
+              </p>
+              <h2
+                className="font-bold text-white leading-[1.08]"
+                style={{ fontSize: 'clamp(2.5rem, 4vw, 3.85rem)', maxWidth: '14em' }}
               >
-                <WhatsAppIcon size={16} />
-                Falar no WhatsApp
-              </a>
-              <a
-                href="#consorcio-form"
-                className="group inline-flex items-center gap-2 rounded-full bg-white/5 ring-1 ring-white/15 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10"
-              >
-                Simular cota
-                <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
-              </a>
+                {t('consorciosV2.sobre.title')}
+              </h2>
+              <p className="mt-6 text-[17px] xl:text-[18.5px] leading-[1.62] text-[#aec3d8]" style={{ maxWidth: '37em' }}>
+                {t('consorciosV2.sobre.body')}
+              </p>
+            </Reveal>
+          </div>
+
+          <Reveal delay={0.12}>
+            <div className="relative mt-12 py-7">
+              <div
+                aria-hidden
+                className="absolute inset-y-0 left-0 right-[26%] xl:right-[24%]"
+                style={{
+                  background:
+                    'radial-gradient(58% 150% at 50% 0%, rgba(42,96,168,0.30) 0%, rgba(10,28,60,0) 62%), linear-gradient(180deg, rgba(3,11,26,0.50) 0%, rgba(3,11,26,0.18) 100%)',
+                  borderTop: '1px solid rgba(255,255,255,0.10)',
+                }}
+              />
+              <div className="relative z-10 grid grid-cols-4 gap-0 pr-[26%] xl:pr-[24%]">
+                {chips.map((chip, i) => (
+                  <div key={chip} className="flex items-center gap-3.5 border-l border-white/15 pl-5 pr-3">
+                    <TopicIcon src={SOBRE_ICON_SRC[i]} size={30} />
+                    <h3 className="text-[13.5px] font-semibold leading-[1.32] text-[#e3ecf6] tracking-tight">
+                      {chip}
+                    </h3>
+                  </div>
+                ))}
+              </div>
             </div>
           </Reveal>
         </div>
+      </div>
 
-        {/* Hero image */}
-        <Reveal delay={0.2} className="hidden lg:block">
-          <div className="relative aspect-[4/5] rounded-2xl overflow-hidden ring-1 ring-white/10">
-            <Image
-              src="/images/hero/consorcios.webp"
-              alt="Consultor da Hold conduzindo planejamento patrimonial"
-              fill
-              priority
-              sizes="(max-width: 1024px) 0px, 50vw"
-              className="object-cover"
-            />
-            <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-[#07162a]/70 via-transparent to-transparent" />
+      {/* Mobile / tablet */}
+      <div className="lg:hidden relative mx-auto max-w-3xl px-6 pt-16 pb-16">
+        <Reveal>
+          <p className="mb-4 text-[12px] font-semibold uppercase tracking-[0.26em] text-[#5a97d4]">
+            {t('consorciosV2.sobre.eyebrow')}
+          </p>
+          <h2
+            className="font-bold text-white leading-[1.12] text-pretty"
+            style={{ fontSize: 'clamp(2.2rem, 7vw, 3rem)' }}
+          >
+            {t('consorciosV2.sobre.title')}
+          </h2>
+          <p className="mt-5 max-w-[54ch] text-[16.5px] leading-[1.7] text-[#aec3d8]">
+            {t('consorciosV2.sobre.body')}
+          </p>
+        </Reveal>
+
+        <Reveal delay={0.1}>
+          <Image
+            src="/consorcio/sobre-consorcio.jpg"
+            alt=""
+            width={2880}
+            height={1440}
+            quality={90}
+            sizes="92vw"
+            loading="eager"
+            className="mt-8 h-auto w-full"
+          />
+        </Reveal>
+
+        <Reveal delay={0.16}>
+          <div className="mt-8 grid grid-cols-2 gap-x-5 gap-y-7">
+            {chips.map((chip, i) => (
+              <div key={chip} className="flex items-center gap-3 border-l border-white/15 pl-4">
+                <TopicIcon src={SOBRE_ICON_SRC[i]} size={28} />
+                <h3 className="text-[13px] font-semibold leading-[1.3] text-[#e3ecf6] tracking-tight">
+                  {chip}
+                </h3>
+              </div>
+            ))}
           </div>
         </Reveal>
       </div>
@@ -132,223 +156,105 @@ function HeroSection() {
   )
 }
 
-function CategoryDetail({ id, index }: { id: CategoryId; index: number }) {
+function CtaFinalSection() {
   const { t } = useLocale()
-  const title     = t(`clients.${id}.title`)
-  const desc      = t(`clients.${id}.desc`)
-  const strategic = t(`clients.${id}.strategic`)
-  const apps      = t(`clients.${id}.apps`).split('|').filter(Boolean)
-
-  const wa = formatWhatsAppLink(
-    WHATSAPP,
-    `Olá! Tenho interesse em consórcio para ${title}.`,
-  )
-  const seq = String(index + 1).padStart(2, '0')
 
   return (
-    <motion.div
-      key={id}
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -8 }}
-      transition={{ duration: 0.45, ease: EASE_OUT_EXPO }}
-      className="rounded-2xl bg-[#0b1f3a] ring-1 ring-[#ae251c]/30 px-6 py-7 md:px-10 md:py-10"
+    <section
+      id="consorcios-form"
+      className="section-tight relative overflow-hidden"
+      style={{
+        fontFamily: 'var(--font-outfit)',
+        background:
+          'linear-gradient(115deg, #0b1f3a 0%, #08182d 55%, #07162a 100%)',
+      }}
     >
-      <div className="flex items-baseline gap-4">
-        <span className="tabular text-[#ae251c]/70 text-xs font-semibold tracking-[0.2em]">
-          {seq} / 08
-        </span>
-        <h3 className="text-display text-white" style={{ fontSize: 'clamp(1.35rem, 2.4vw, 1.75rem)' }}>
-          {title}
-        </h3>
-      </div>
-      <p className="mt-3 text-[#7a9ab8] leading-relaxed max-w-[60ch]">{desc}</p>
+      <div aria-hidden className="dot-grid pointer-events-none absolute inset-0 opacity-[0.05]" />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -left-24 bottom-0 h-[520px] w-[520px] rounded-full bg-[#1a4b8a] opacity-[.22] blur-[120px]"
+      />
 
-      <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
-        <div>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#ae251c] mb-3">
-            {t('clients.applications')}
+      <div
+        className="relative max-w-7xl mx-auto px-6 lg:px-8 grid lg:grid-cols-[280px_minmax(0,1.2fr)_minmax(0,1.3fr)] gap-8 lg:gap-6 items-start"
+        style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
+      >
+        <div className="hidden lg:block self-start -ml-20 xl:-ml-32">
+          <Image
+            src="/personagem/CONSORCIOS.png"
+            alt=""
+            width={320}
+            height={480}
+            quality={95}
+            loading="lazy"
+            className="h-auto w-full"
+            style={{ filter: 'drop-shadow(0 16px 40px rgba(0,0,0,0.45))' }}
+          />
+        </div>
+        <Reveal>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#7a9ab8]">
+            {t('consorciosV2.cta.eyebrow')}
           </p>
-          <ul className="space-y-2">
-            {apps.map((app) => (
-              <li key={app} className="flex items-start gap-2 text-sm text-[#e0e8f0]">
-                <ChevronRight size={14} className="mt-0.5 shrink-0 text-[#ae251c]" />
-                {app}
+          <h2
+            className="mt-3 lg:mt-4 text-display text-white"
+            style={{ fontSize: 'clamp(1.75rem, 3.6vw, 2.75rem)' }}
+          >
+            {t('consorciosV2.cta.title')}
+          </h2>
+          <p className="mt-5 lg:mt-6 max-w-[58ch] text-pretty text-[#7a9ab8] leading-relaxed">
+            {t('consorciosV2.cta.body')}
+          </p>
+          <div className="mt-6 lg:mt-8 rule-accent h-px w-24" />
+
+          <div className="mt-6 lg:mt-8 flex flex-wrap items-center gap-3">
+            <Link
+              href="#consorcios-form-card"
+              className="inline-flex items-center gap-2 rounded-full bg-[#ae251c] hover:bg-[#8f1f17] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 px-6 py-3 text-sm font-semibold text-white transition-colors"
+            >
+              {t('consorciosV2.cta.wa.button')}
+              <ArrowRight size={16} />
+            </Link>
+          </div>
+
+          <ul className="mt-5 lg:mt-6 flex flex-col gap-2.5 max-w-[42ch]">
+            {[1, 2].map((n) => (
+              <li
+                key={n}
+                className="flex items-start gap-2.5 text-[12.5px] leading-[1.5] text-white/72"
+              >
+                <span
+                  aria-hidden
+                  className="mt-[7px] block h-[5px] w-[5px] rounded-full shrink-0"
+                  style={{ background: '#ae251c' }}
+                />
+                <span>{t(`consorciosV2.cta.bullet.${n}`)}</span>
               </li>
             ))}
           </ul>
-        </div>
-        <div>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#7a9ab8] mb-3">
-            {t('clients.strategic')}
-          </p>
-          <p className="text-sm text-[#7a9ab8] leading-relaxed">{strategic}</p>
-        </div>
+        </Reveal>
+
+        <Reveal delay={0.12}>
+          <div id="consorcios-form-card" className="w-full">
+            <ServiceLeadForm
+              service={t('consorciosV2.cta.form.service')}
+              introTitle={t('consorciosV2.cta.form.introTitle')}
+              introBody={t('consorciosV2.cta.form.introBody')}
+              showAudienceField
+            />
+          </div>
+        </Reveal>
       </div>
-
-      <a
-        href={wa}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="mt-10 inline-flex items-center gap-2 rounded-full bg-[#25d366] hover:bg-[#1ebe5d] text-white font-semibold text-sm px-6 py-3 transition-colors"
-      >
-        <WhatsAppIcon size={16} />
-        {t('clients.cta.whatsapp')}
-      </a>
-    </motion.div>
-  )
-}
-
-function ParaVoceContent() {
-  const { t } = useLocale()
-  const [selected, setSelected] = useState<CategoryId>('imoveis')
-  const selectedIndex = CATEGORIES.findIndex((c) => c.id === selected)
-
-  return (
-    <motion.div
-      key="voce"
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -8 }}
-      transition={{ duration: 0.45, ease: EASE_OUT_EXPO }}
-    >
-      <div className="max-w-3xl mb-10">
-        <span className="inline-flex items-center gap-2 rounded-full bg-white/5 ring-1 ring-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-[#7a9ab8]">
-          {t('clients.eyebrow')}
-        </span>
-        <h2 className="mt-5 text-display text-white" style={{ fontSize: 'clamp(1.75rem, 3.4vw, 2.75rem)' }}>
-          {t('clients.title')}
-        </h2>
-      </div>
-
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        {CATEGORIES.map(({ id, icon: Icon }, i) => {
-          const isSelected = selected === id
-          return (
-            <motion.button
-              key={id}
-              onClick={() => setSelected(id)}
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.55, ease: EASE_OUT_EXPO, delay: i * 0.04 }}
-              whileTap={{ scale: 0.98 }}
-              className={[
-                'relative cursor-pointer rounded-xl px-3 py-4 text-center transition-colors duration-200',
-                isSelected
-                  ? 'bg-[#ae251c] text-white'
-                  : 'bg-[#142f54] text-[#7a9ab8] hover:bg-[#1e4a7a] hover:text-white',
-              ].join(' ')}
-            >
-              <Icon size={26} className="mx-auto mb-2" strokeWidth={1.6} />
-              <span className="text-xs font-semibold leading-snug">
-                {t(`clients.${id}.title`)}
-              </span>
-              {isSelected && (
-                <motion.span
-                  layoutId="consorcios-cat-pill"
-                  className="absolute inset-0 rounded-xl bg-[#ae251c] -z-10"
-                  transition={SPRING}
-                />
-              )}
-            </motion.button>
-          )
-        })}
-      </div>
-
-      <div className="mt-8">
-        <AnimatePresence mode="wait">
-          <CategoryDetail key={selected} id={selected} index={selectedIndex} />
-        </AnimatePresence>
-      </div>
-
-      {/* Jornada — moved from home ComoFunciona */}
-      <ConsorcioJornada />
-    </motion.div>
-  )
-}
-
-function ParaEmpresaContent() {
-  const { t } = useLocale()
-  const wa = formatWhatsAppLink(
-    WHATSAPP,
-    'Olá! Sou de um escritório/empresa e quero conhecer a Mesa de Consórcios.',
-  )
-
-  return (
-    <motion.div
-      key="empresa"
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -8 }}
-      transition={{ duration: 0.45, ease: EASE_OUT_EXPO }}
-    >
-      <div className="max-w-3xl mb-10">
-        <span className="inline-flex items-center rounded-full bg-[#ae251c]/20 text-[#ae251c] px-3 py-1 text-[10px] uppercase tracking-[0.2em] font-semibold">
-          {t('partners.eyebrow')}
-        </span>
-        <h2 className="mt-5 text-display text-white" style={{ fontSize: 'clamp(1.75rem, 3.4vw, 2.75rem)' }}>
-          {t('partners.title')}
-        </h2>
-      </div>
-
-      <div
-        className="rounded-2xl px-6 py-10 md:px-12 md:py-12 ring-1 ring-white/10"
-        style={{ background: 'linear-gradient(135deg, #0b1f3a 0%, #142f54 100%)' }}
-      >
-        <p className="text-[#7a9ab8] leading-relaxed max-w-2xl text-lg">
-          {t('partners.body')}
-        </p>
-
-        <div className="mt-10 flex items-center gap-4">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#ae251c]">
-            {t('partners.diff.title')}
-          </p>
-          <div className="rule-accent h-px flex-1 max-w-[100px]" />
-        </div>
-
-        <ul className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-4">
-          {[
-            'Estrutura especializada sem necessidade de equipe interna',
-            'Time com experiência em consórcios e atendimento consultivo',
-            'Operação autorizada e fiscalizada pelo Banco Central do Brasil',
-            'Modelo de parceria flexível, respeitando a cultura do seu negócio',
-          ].map((item, i) => (
-            <Reveal key={i} delay={i * 0.05} className="flex items-start gap-3 text-[#e0e8f0]">
-              <ChevronRight size={16} className="mt-0.5 shrink-0 text-[#ae251c]" />
-              <span className="text-sm leading-relaxed">{item}</span>
-            </Reveal>
-          ))}
-        </ul>
-
-        <a
-          href={wa}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-10 inline-flex items-center gap-2 rounded-full bg-[#ae251c] hover:bg-[#c42d22] text-white font-semibold text-sm px-6 py-3 transition-colors"
-        >
-          <WhatsAppIcon size={16} />
-          {t('partners.cta')}
-        </a>
-      </div>
-    </motion.div>
+    </section>
   )
 }
 
 export default function ConsorciosClient() {
-  const { audience } = useAudience()
-
   return (
     <>
-      <HeroSection />
-
-      <section className="section-pad bg-[#07162a]" id="consorcio-form" style={{ fontFamily: 'var(--font-outfit)' }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimatePresence mode="wait">
-            {audience === 'pf' ? <ParaVoceContent /> : <ParaEmpresaContent />}
-          </AnimatePresence>
-        </div>
-      </section>
+      <ConsorciosHero />
+      <SobreSection />
+      <ConsorciosCategorias />
+      <CtaFinalSection />
     </>
   )
 }
