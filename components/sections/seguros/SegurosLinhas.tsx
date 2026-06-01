@@ -41,8 +41,8 @@ const LINHAS_CONFIG: LinhaConfig[] = [
   {
     id: 'auto',
     seq: '02',
-    image: '/images/hero/home.jpg',
-    imagePosition: 'center 40%',
+    image: '/images/hero/seguros-auto.webp',
+    imagePosition: 'center top',
   },
   {
     id: 'residencial',
@@ -54,7 +54,7 @@ const LINHAS_CONFIG: LinhaConfig[] = [
     id: 'empresarial',
     seq: '04',
     image: '/images/hero/seguros-empresarial.webp',
-    imagePosition: 'center 30%',
+    imagePosition: 'center 35%',
   },
 ]
 
