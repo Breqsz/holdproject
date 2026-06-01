@@ -8,7 +8,6 @@ import { Reveal } from '@/components/motion/Reveal'
 import { ServiceLeadForm } from '@/components/forms/ServiceLeadForm'
 import SegurosHero from '@/components/sections/seguros/SegurosHero'
 import SegurosLinhas from '@/components/sections/seguros/SegurosLinhas'
-import SegurosSeguradoras from '@/components/sections/seguros/SegurosSeguradoras'
 import SegurosFAQ from '@/components/sections/seguros/SegurosFAQ'
 
 const SOBRE_ICON_SRC = [
@@ -259,7 +258,6 @@ export default function SegurosClient() {
       <SegurosHero />
       <SobreSection />
       <SegurosLinhas />
-      <SegurosSeguradoras />
       <SegurosFAQ />
       <CtaFinalSection />
     </>
