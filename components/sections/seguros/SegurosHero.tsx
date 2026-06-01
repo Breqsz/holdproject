@@ -21,8 +21,8 @@ const HERO_PHOTOS: readonly HeroPhoto[] = [
     src: '/images/hero/seguros.webp',
     altKey: 'segurosV2.hero.image.pessoal.alt',
     chipKey: 'segurosV2.hero.chip.pessoal',
-    objectPosition: '50% 30%',
-    objectPositionMobile: '50% 35%',
+    objectPosition: '50% 42%',
+    objectPositionMobile: '50% 45%',
   },
   {
     src: '/images/hero/office-hero.webp',
