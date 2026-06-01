@@ -41,20 +41,20 @@ const LINHAS_CONFIG: LinhaConfig[] = [
   {
     id: 'auto',
     seq: '02',
-    image: '/images/hero/card-seguros.jpg',
-    imagePosition: 'center',
-  },
-  {
-    id: 'residencial',
-    seq: '03',
     image: '/images/hero/home.jpg',
     imagePosition: 'center 40%',
   },
   {
+    id: 'residencial',
+    seq: '03',
+    image: '/images/hero/card-seguros.jpg',
+    imagePosition: 'center',
+  },
+  {
     id: 'empresarial',
     seq: '04',
-    image: '/images/hero/office-hero.webp',
-    imagePosition: 'center',
+    image: '/images/hero/seguros-empresarial.webp',
+    imagePosition: 'center 30%',
   },
 ]
 
