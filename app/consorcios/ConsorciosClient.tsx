@@ -38,9 +38,10 @@ function TopicIcon({ src, size = 26 }: { src: string; size?: number }) {
   )
 }
 
-// Cor sólida casada com o fundo de sobre-consorcio.jpg (navy ~#0c2045),
-// para que a sobra à esquerda do object-contain não tenha emenda visível.
-const SOBRE_BG = '#0c2045'
+// Cor sólida casada com a BORDA real de sobre-consorcio.jpg (navy escuro ~#000d2d,
+// amostrado dos pixels da imagem), para que a sobra à esquerda/topo do object-contain
+// não tenha emenda visível com o fundo da section.
+const SOBRE_BG = '#000d2d'
 
 function SobreSection() {
   const { t } = useLocale()
@@ -65,7 +66,7 @@ function SobreSection() {
           />
         </div>
 
-        <div className="relative z-10 mx-auto flex w-full max-w-7xl min-h-[100dvh] flex-col justify-center px-10 xl:px-16 py-20">
+        <div className="relative z-10 flex w-full max-w-7xl min-h-[100dvh] flex-col justify-start pl-5 pr-10 xl:pl-8 xl:pr-16 pt-[14vh] pb-20">
           <div className="max-w-[640px] xl:max-w-[880px]">
             <Reveal>
               <p className="mb-5 text-[13px] font-semibold uppercase tracking-[0.26em] text-[#5a97d4]">

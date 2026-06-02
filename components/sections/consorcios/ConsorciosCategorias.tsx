@@ -19,15 +19,15 @@ type CategoriaId =
   | 'imoveis' | 'veiculos' | 'pesados' | 'servicos'
   | 'condominios' | 'igrejas' | 'alavancagem' | 'cotas'
 
-const CATEGORIAS: { id: CategoriaId; icon: React.ElementType }[] = [
-  { id: 'imoveis',     icon: Home       },
-  { id: 'veiculos',    icon: Car        },
-  { id: 'pesados',     icon: Truck      },
-  { id: 'servicos',    icon: Sparkles   },
-  { id: 'condominios', icon: Building2  },
-  { id: 'igrejas',     icon: Church     },
-  { id: 'alavancagem', icon: TrendingUp },
-  { id: 'cotas',       icon: Zap        },
+const CATEGORIAS: { id: CategoriaId; icon: React.ElementType; image: string; imagePosition?: string }[] = [
+  { id: 'imoveis',     icon: Home,       image: '/consorcio/cards/imoveis.jpg'     },
+  { id: 'veiculos',    icon: Car,        image: '/consorcio/cards/veiculos.jpg'    },
+  { id: 'pesados',     icon: Truck,      image: '/consorcio/cards/pesados.jpg'     },
+  { id: 'servicos',    icon: Sparkles,   image: '/consorcio/cards/servicos.jpg'    },
+  { id: 'condominios', icon: Building2,  image: '/consorcio/cards/condominios.jpg' },
+  { id: 'igrejas',     icon: Church,     image: '/consorcio/cards/igrejas.jpg'     },
+  { id: 'alavancagem', icon: TrendingUp, image: '/consorcio/cards/alavancagem.jpg' },
+  { id: 'cotas',       icon: Zap,        image: '/consorcio/cards/cotas.jpg'       },
 ]
 
 const containerVariants = {
@@ -48,6 +48,8 @@ export default function ConsorciosCategorias() {
   const categorias: LinhaCardData[] = CATEGORIAS.map((cfg, i) => ({
     seq: String(i + 1).padStart(2, '0'),
     icon: cfg.icon,
+    image: cfg.image,
+    imagePosition: cfg.imagePosition,
     title: t(`consorciosV2.linha.${cfg.id}.title`),
     short: t(`consorciosV2.linha.${cfg.id}.short`),
     body: t(`consorciosV2.linha.${cfg.id}.body`),
