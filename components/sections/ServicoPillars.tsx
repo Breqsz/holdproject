@@ -127,7 +127,7 @@ export default function ServicoPillars() {
                   <h3 className="text-lg font-bold text-white">
                     {t('services.insurance.title')}
                   </h3>
-                  <SoonBadge label={t('services.insurance.soon').split('—')[0].trim()} tone="light" />
+                  <SoonBadge label={t('services.insurance.soon').split(':')[0].trim()} tone="light" />
                 </div>
                 <p className="text-white/75 text-sm leading-relaxed">
                   {t('services.insurance.desc')}
@@ -150,7 +150,7 @@ export default function ServicoPillars() {
                   <h3 className="text-lg font-bold text-[#07162a]">
                     {t('services.health.title')}
                   </h3>
-                  <SoonBadge label={t('services.health.soon').split('—')[0].trim()} tone="dark" />
+                  <SoonBadge label={t('services.health.soon').split(':')[0].trim()} tone="dark" />
                 </div>
                 <p className="text-[#142f54] text-sm leading-relaxed">
                   {t('services.health.desc')}
@@ -173,7 +173,7 @@ export default function ServicoPillars() {
                   <h3 className="text-lg font-bold text-white">
                     {t('services.invest.title')}
                   </h3>
-                  <SoonBadge label={t('services.invest.soon').split('—')[0].trim()} tone="gold" />
+                  <SoonBadge label={t('services.invest.soon').split(':')[0].trim()} tone="gold" />
                 </div>
                 <p className="text-white/65 text-sm leading-relaxed">
                   {t('services.invest.desc')}

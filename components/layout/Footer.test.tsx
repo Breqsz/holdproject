@@ -8,16 +8,19 @@ vi.mock('@/lib/i18n', () => ({
     setLocale: vi.fn(),
     t: (key: string) => {
       const map: Record<string, string> = {
-        'footer.tagline':   'Consultoria estratégica para seu patrimônio.',
-        'footer.legal':     'Fiscalizado pelo Banco Central do Brasil.',
-        'footer.rights':    'Todos os direitos reservados.',
-        'footer.lojacorr':  'Membro Lojacorr — Maior rede de corretoras do Brasil',
-        'nav.home':         'Home',
-        'nav.about':        'Sobre Nós',
-        'nav.clients':      'Para Clientes',
-        'nav.partners':     'Para Escritórios',
-        'nav.faq':          'FAQ',
-        'nav.contact':      'Contato',
+        'cardnav.solutions':           'Soluções',
+        'cardnav.hold':                'A Hold',
+        'cardnav.link.saude':          'Planos de Saúde',
+        'cardnav.link.seguros':        'Seguros',
+        'cardnav.link.consorcios':     'Consórcios',
+        'cardnav.link.investimentos':  'Investimentos',
+        'cardnav.link.sobre':          'Sobre Nós',
+        'cardnav.link.faq':            'Perguntas Frequentes',
+        'cardnav.link.contato':        'Fale Conosco',
+        'nav.contact':                 'Contato',
+        'footer.social.title':         'Redes Sociais',
+        'footer.rights':               'Todos os direitos reservados.',
+        'wa.label.alt':                'WhatsApp',
       }
       return map[key] ?? key
     },
@@ -29,52 +32,56 @@ describe('Footer', () => {
     render(<Footer />)
   })
 
-  it('renders the HOLD wordmark', () => {
-    expect(screen.getByText('HOLD')).toBeInTheDocument()
-    expect(screen.getByText('Corretora')).toBeInTheDocument()
-  })
-
-  it('renders the tagline and legal text from i18n', () => {
-    expect(screen.getByText('Consultoria estratégica para seu patrimônio.')).toBeInTheDocument()
-    expect(screen.getByText('Fiscalizado pelo Banco Central do Brasil.')).toBeInTheDocument()
-  })
-
-  it('renders all 6 navigation links with correct hrefs', () => {
+  it('renders the Soluções column linking to the real service pages', () => {
     const expected = [
-      ['Home', '#home'],
-      ['Sobre Nós', '#sobre-nos'],
-      ['Para Clientes', '#para-clientes'],
-      ['Para Escritórios', '#para-escritorios'],
-      ['FAQ', '#faq'],
-      ['Contato', '#contato'],
+      ['Planos de Saúde', /^\/saude\/?$/],
+      ['Seguros', /^\/seguros\/?$/],
+      ['Consórcios', /^\/consorcios\/?$/],
+      ['Investimentos', /^\/investimentos\/?$/],
     ] as const
     expected.forEach(([label, href]) => {
       const link = screen.getByRole('link', { name: label })
-      expect(link).toHaveAttribute('href', href)
+      expect(link.getAttribute('href')).toMatch(href)
     })
+  })
+
+  it('renders the A Hold column with institutional links', () => {
+    const expected = [
+      ['Sobre Nós', /^\/#sobre-nos$/],
+      ['Perguntas Frequentes', /^\/#faq$/],
+      ['Fale Conosco', /^\/#contato$/],
+    ] as const
+    expected.forEach(([label, href]) => {
+      const link = screen.getByRole('link', { name: label })
+      expect(link.getAttribute('href')).toMatch(href)
+    })
+  })
+
+  it('renders the column headings from i18n', () => {
+    expect(screen.getByText('Soluções')).toBeInTheDocument()
+    expect(screen.getByText('A Hold')).toBeInTheDocument()
+    expect(screen.getByText('Contato')).toBeInTheDocument()
+    expect(screen.getByText('Redes Sociais')).toBeInTheDocument()
   })
 
   it('renders three social icon links with aria-labels', () => {
     expect(screen.getByRole('link', { name: 'Instagram' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Facebook' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'LinkedIn' })).toBeInTheDocument()
+  })
+
+  it('renders the WhatsApp contact link and location', () => {
     expect(screen.getByRole('link', { name: 'WhatsApp' })).toBeInTheDocument()
+    expect(screen.getAllByText(/Uberlândia, MG/).length).toBeGreaterThanOrEqual(1)
+  })
+
+  it('renders the Lojacorr partnership seal', () => {
+    const seal = screen.getByAltText('Lojacorr') as HTMLImageElement
+    expect(seal.src).toContain('Lojacorr')
   })
 
   it('renders the current year in the rights line', () => {
     const year = new Date().getFullYear().toString()
     expect(screen.getByText(new RegExp(year))).toBeInTheDocument()
-  })
-
-  it('renders the location/domain meta', () => {
-    expect(screen.getByText(/Uberlândia, MG/)).toBeInTheDocument()
-  })
-
-  it('renders the Lojacorr membership block with logo image', () => {
-    expect(screen.getByText('Filiada')).toBeInTheDocument()
-    const logo = screen.getByAltText('Lojacorr') as HTMLImageElement
-    expect(logo.src).toContain('/images/LojaCorr.svg')
-    expect(
-      screen.getByText('Membro Lojacorr — Maior rede de corretoras do Brasil'),
-    ).toBeInTheDocument()
   })
 })

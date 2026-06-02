@@ -19,7 +19,7 @@ export const googleReviews: GoogleReview[] = [
   {
     name: 'Tatiane Mendes Borges Dias',
     rating: 5,
-    text: 'Sou cliente da Hold há alguns anos e sempre renovo meus seguros com eles. O atendimento é excelente — ágil, atencioso e com total transparência em todas as etapas. A equipe está sempre disponível para tirar dúvidas e encontrar as melhores soluções.',
+    text: 'Sou cliente da Hold há alguns anos e sempre renovo meus seguros com eles. O atendimento é excelente: ágil, atencioso e com total transparência em todas as etapas. A equipe está sempre disponível para tirar dúvidas e encontrar as melhores soluções.',
   },
   {
     name: 'Igor Tavares',
@@ -29,7 +29,7 @@ export const googleReviews: GoogleReview[] = [
   {
     name: 'Eduardo Shuiti Aoyagui Oda',
     rating: 5,
-    text: 'Sou cliente a muitos anos da Hold tanto nos planos de consórcio como em seguros. O que posso dizer é que é uma ótima experiência — renovações sempre feitas com dias de antecedência em relação às cotações, sempre buscando a melhor cobertura.',
+    text: 'Sou cliente a muitos anos da Hold tanto nos planos de consórcio como em seguros. O que posso dizer é que é uma ótima experiência: renovações sempre feitas com dias de antecedência em relação às cotações, sempre buscando a melhor cobertura.',
   },
   {
     name: 'Flavia Guimarães',

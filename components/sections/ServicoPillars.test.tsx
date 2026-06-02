@@ -35,13 +35,13 @@ const TRANSLATIONS: Record<string, string> = {
   'services.consortium.cta':   'Conhecer soluções',
   'services.insurance.title':  'Seguros',
   'services.insurance.desc':   'Proteção e segurança para você.',
-  'services.insurance.soon':   'Em breve — conteúdo a confirmar',
+  'services.insurance.soon':   'Em breve: conteúdo a confirmar',
   'services.health.title':     'Saúde',
   'services.health.desc':      'Planos personalizados.',
-  'services.health.soon':      'Em breve — conteúdo a confirmar',
+  'services.health.soon':      'Em breve: conteúdo a confirmar',
   'services.invest.title':     'Investimentos',
   'services.invest.desc':      'Crescimento e gestão patrimonial.',
-  'services.invest.soon':      'Em breve — conteúdo a confirmar',
+  'services.invest.soon':      'Em breve: conteúdo a confirmar',
 }
 
 vi.mock('@/lib/i18n', () => ({
@@ -92,7 +92,7 @@ describe('ServicoPillars', () => {
     })
 
     it('renders "Em breve" badge for Seguros', () => {
-      // soon label is the part before "—"
+      // soon label is the part before ":"
       const badges = screen.getAllByText('Em breve')
       expect(badges.length).toBeGreaterThanOrEqual(1)
     })

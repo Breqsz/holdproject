@@ -187,9 +187,10 @@ function CtaFinalSection() {
           <Image
             src="/personagem/formulario_seguros.png"
             alt=""
-            width={320}
-            height={480}
-            quality={95}
+            width={1024}
+            height={1024}
+            quality={100}
+            sizes="(min-width: 1280px) 360px, 288px"
             loading="lazy"
             className="h-auto w-full"
             style={{ filter: 'drop-shadow(0 16px 40px rgba(0,0,0,0.45))' }}

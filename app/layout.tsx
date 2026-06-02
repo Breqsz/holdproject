@@ -50,7 +50,7 @@ export const metadata: Metadata = {
   keywords: ['consórcio', 'consultoria', 'seguros', 'saúde', 'investimentos', 'Uberlândia', 'Hold Corretora'],
   openGraph: {
     title: 'Hold Corretora',
-    description: 'Estratégia, planejamento e acompanhamento — consórcios, seguros, saúde e investimentos.',
+    description: 'Estratégia, planejamento e acompanhamento: consórcios, seguros, saúde e investimentos.',
     url: 'https://holdcorretora.com',
     siteName: 'Hold Corretora',
     locale: 'pt_BR',

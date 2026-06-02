@@ -135,7 +135,24 @@
       "Bash(kill %1)",
       "Bash(findstr :3001)",
       "Bash(taskkill /PID 28604 /F)",
-      "Bash(xargs grep -l \"t\\('saude\\\\|t\\(\\\\\"saude\")"
+      "Bash(xargs grep -l \"t\\('saude\\\\|t\\(\\\\\"saude\")",
+      "Bash(echo \"---EXIT $?---\")",
+      "Bash(taskkill //F //IM chrome.exe //FI \"WINDOWTITLE eq *\")",
+      "Bash(pkill -f \"chrome-shot-seg\")",
+      "Bash(file .cand/*.jpg)",
+      "Bash(xargs grep -l \"segurosV2\\\\|saudeV2\")",
+      "Bash(pkill -f \"chrome-shot-seg2\")",
+      "Bash(taskkill //F //IM chrome.exe)",
+      "Bash(echo \"exit: $?\")",
+      "Bash(pkill -f \"chrome-shot-seg3\")",
+      "Bash(grep -iE \"\\\\.\\(jpg|jpeg|webp|png\\)$\")",
+      "Bash(pkill -f \"chrome-shot-seg4\")",
+      "PowerShell(try { $v = Invoke-RestMethod -Uri \"http://127.0.0.1:9222/json/version\" -TimeoutSec 3; $v.Browser } catch { \"NO_DEBUG_CHROME\" })",
+      "Bash(awk '{print $5, $9}')",
+      "Bash(file *.jpg)",
+      "Bash(\"/c/Program Files/Google/Chrome/Application/chrome.exe\" --headless=new --remote-debugging-port=9222 --disable-gpu --hide-scrollbars --window-size=1440,900 \"about:blank\")",
+      "Bash(echo \"=== exit: $? ===\")",
+      "Bash(grep -vE \"\\\\{/\\\\*|^\\\\s*//|^\\\\s*\\\\*|\\\\* \")"
     ]
   }
 }

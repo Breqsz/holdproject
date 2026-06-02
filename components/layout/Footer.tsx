@@ -1,8 +1,9 @@
 'use client'
 
 import { useRef } from 'react'
+import Link from 'next/link'
 import { motion, useInView } from 'framer-motion'
-import { MessageCircle, MapPin, Phone } from 'lucide-react'
+import { MessageCircle, MapPin, Globe } from 'lucide-react'
 import { useLocale } from '@/lib/i18n'
 import { HoldLogo } from '@/components/icons/HoldLogo'
 
@@ -32,13 +33,18 @@ function IconFacebook({ size = 16 }: { size?: number }) {
   )
 }
 
-const navLinks = [
-  { key: 'nav.home', href: '#home' },
-  { key: 'nav.about', href: '#sobre-nos' },
-  { key: 'nav.clients', href: '#para-clientes' },
-  { key: 'nav.partners', href: '#para-escritorios' },
-  { key: 'nav.faq', href: '#faq' },
-  { key: 'nav.contact', href: '#contato' },
+// Mirrors the CardNav structure of the new multi-page site
+const solutionsLinks = [
+  { key: 'cardnav.link.saude',         href: '/saude/' },
+  { key: 'cardnav.link.seguros',       href: '/seguros/' },
+  { key: 'cardnav.link.consorcios',    href: '/consorcios/' },
+  { key: 'cardnav.link.investimentos', href: '/investimentos/' },
+]
+
+const holdLinks = [
+  { key: 'cardnav.link.sobre',   href: '/#sobre-nos' },
+  { key: 'cardnav.link.faq',     href: '/#faq' },
+  { key: 'cardnav.link.contato', href: '/#contato' },
 ]
 
 export default function Footer() {
@@ -49,15 +55,19 @@ export default function Footer() {
   const heroRef = useRef<HTMLDivElement>(null)
   const heroInView = useInView(heroRef, { once: true, amount: 0.3 })
 
+  const linkCls =
+    'text-[#7a9ab8] hover:text-white text-[0.9rem] transition-colors duration-200'
+  const headingCls =
+    'text-[11px] font-semibold uppercase tracking-[0.22em] text-[#ae251c] mb-5'
+
   return (
     <footer className="bg-[#020c30]" style={{ fontFamily: 'var(--font-outfit)' }}>
-      {/* Top hairline — editorial navy tint */}
+      {/* Top hairline: editorial navy tint */}
       <div className="rule-accent h-px max-w-7xl mx-auto" />
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
 
-        {/* Main footer hero — HOLD CORRETORA × LOJACORR — Cinematic seal stamp */}
-
+        {/* Main footer hero: HOLD CORRETORA + LOJACORR seal */}
         <div ref={heroRef} className="mb-14 flex flex-col items-center text-center gap-6">
           <div className="flex items-center gap-14 sm:gap-20 flex-wrap justify-center">
             <motion.span
@@ -91,38 +101,73 @@ export default function Footer() {
               />
             </motion.div>
           </div>
-
         </div>
 
+        {/* 4-column grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-8">
 
-        {/* 3-column grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 sm:gap-6">
-
-          {/* Navegação */}
+          {/* Soluções */}
           <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
-            <h4 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#ae251c] mb-5">
-              {t('footer.nav.title')}
-            </h4>
+            <h4 className={headingCls}>{t('cardnav.solutions')}</h4>
             <ul className="space-y-2.5">
-              {navLinks.map((link) => (
+              {solutionsLinks.map((link) => (
                 <li key={link.key}>
-                  <a
-                    href={link.href}
-                    className="text-[#7a9ab8] hover:text-white text-[0.9rem] transition-colors duration-200"
-                  >
+                  <Link href={link.href} className={linkCls}>
                     {t(link.key)}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
 
+          {/* A Hold */}
+          <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
+            <h4 className={headingCls}>{t('cardnav.hold')}</h4>
+            <ul className="space-y-2.5">
+              {holdLinks.map((link) => (
+                <li key={link.key}>
+                  <Link href={link.href} className={linkCls}>
+                    {t(link.key)}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contato */}
+          <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
+            <h4 className={headingCls}>{t('nav.contact')}</h4>
+            <ul className="space-y-3">
+              <li className="flex items-start gap-2.5">
+                <MapPin size={14} className="text-[#e0e8f0]/70 shrink-0 mt-0.5" strokeWidth={1.7} />
+                <span className="text-[#7a9ab8] text-[0.9rem] leading-relaxed">
+                  Uberlândia, MG
+                </span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <MessageCircle size={14} className="text-[#e0e8f0]/70 shrink-0 mt-0.5" strokeWidth={1.7} />
+                <a
+                  href={waHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={linkCls}
+                >
+                  {t('wa.label.alt')}
+                </a>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <Globe size={14} className="text-[#e0e8f0]/70 shrink-0 mt-0.5" strokeWidth={1.7} />
+                <span className="text-[#7a9ab8] text-sm">
+                  holdcorretora.com
+                </span>
+              </li>
+            </ul>
+          </div>
+
           {/* Redes Sociais */}
           <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
-            <h4 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#ae251c] mb-5">
-              {t('footer.social.title')}
-            </h4>
-            <div className="flex gap-2.5 mb-7">
+            <h4 className={headingCls}>{t('footer.social.title')}</h4>
+            <div className="flex gap-2.5">
               <a
                 href="https://www.instagram.com/hold.corretora"
                 target="_blank"
@@ -152,42 +197,10 @@ export default function Footer() {
               </a>
             </div>
           </div>
-
-          {/* Contato */}
-          <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
-            <h4 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#ae251c] mb-5">
-              {t('nav.contact')}
-            </h4>
-            <ul className="space-y-3">
-              <li className="flex items-start gap-2.5">
-                <MapPin size={14} className="text-[#e0e8f0]/70 shrink-0 mt-0.5" strokeWidth={1.7} />
-                <span className="text-[#7a9ab8] text-[0.9rem] leading-relaxed">
-                  Uberlândia, MG
-                </span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <MessageCircle size={14} className="text-[#e0e8f0]/70 shrink-0 mt-0.5" strokeWidth={1.7} />
-                <a
-                  href={waHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[#7a9ab8] hover:text-white text-[0.9rem] transition-colors duration-200"
-                >
-                  WhatsApp
-                </a>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <Phone size={14} className="text-[#e0e8f0]/70 shrink-0 mt-0.5" strokeWidth={1.7} />
-                <span className="text-[#7a9ab8] text-sm">
-                  holdcorretora.com
-                </span>
-              </li>
-            </ul>
-          </div>
         </div>
 
-        {/* Bottom row — hairline rule + meta */}
-        <div className="mt-8 pt-6 border-t border-[#142f54]/40 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+        {/* Bottom row: hairline rule + meta */}
+        <div className="mt-12 pt-6 border-t border-[#142f54]/40 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
           <p className="text-[#4a6a8a] text-xs">
             © {new Date().getFullYear()} Hold Corretora. {t('footer.rights')}
           </p>

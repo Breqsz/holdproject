@@ -36,7 +36,7 @@ vi.mock('@/lib/i18n', () => ({
         'process.step4.title':        'Acompanhamento completo',
         'process.step4.desc':         'Step 4 desc',
         'comoFunciona.diff.title':    'O que você ganha com a Hold',
-        'comoFunciona.gain.1':        'Sem juros — só taxa de administração',
+        'comoFunciona.gain.1':        'Sem juros, só taxa de administração',
         'comoFunciona.gain.2':        'Atendimento consultivo e personalizado',
         'comoFunciona.gain.3':        'Estratégia de contemplação sob medida',
         'comoFunciona.gain.4':        'Acompanhamento contínuo em todas as etapas',

@@ -92,7 +92,7 @@ export default function InvestimentosPilares() {
         >
           {pilares.map((p) => (
             <LinhaCard
-              key={p.title}
+              key={p.seq}
               data={p}
               ctaLabel={t('investimentosV2.linhas.cta')}
               accent={ACCENT}

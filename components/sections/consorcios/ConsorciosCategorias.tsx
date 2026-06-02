@@ -102,7 +102,7 @@ export default function ConsorciosCategorias() {
         >
           {categorias.map((c) => (
             <LinhaCard
-              key={c.title}
+              key={c.seq}
               data={c}
               ctaLabel={t('consorciosV2.linhas.cta')}
               accent={ACCENT}
