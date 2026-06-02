@@ -81,10 +81,11 @@ export function SaudeModalidadeDetailModal({ open, onClose, onConfirm, data }: P
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 8, scale: 0.98 }}
             transition={{ duration: 0.42, ease: EASE }}
-            className="relative w-full max-w-xl rounded-2xl bg-[#0b1f3a] ring-1 ring-white/10 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.6)] overflow-hidden max-h-[92dvh] flex flex-col"
-            style={{ fontFamily: 'var(--font-outfit)' }}
+            className="relative w-full max-w-xl rounded-2xl ring-1 ring-white/10 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.6)] overflow-hidden max-h-[92dvh] flex flex-col"
+            style={{ fontFamily: 'var(--font-outfit)', background: '#000d2d' }}
           >
-            <div className="relative h-[120px] sm:h-[180px] w-full overflow-hidden flex-shrink-0">
+            {/* Foto full-bleed de fundo */}
+            <div aria-hidden className="absolute inset-0 z-0">
               <Image
                 src={data.image}
                 alt=""
@@ -94,20 +95,12 @@ export function SaudeModalidadeDetailModal({ open, onClose, onConfirm, data }: P
                 className="object-cover"
                 style={{ objectPosition: data.imagePosition ?? 'center' }}
               />
+              {/* Gradiente: foto nítida no topo, escurece pra base (legibilidade) */}
               <div
-                aria-hidden
                 className="absolute inset-0"
                 style={{
                   background:
-                    'linear-gradient(180deg, rgba(7,22,42,0) 0%, rgba(11,31,58,0.95) 100%)',
-                }}
-              />
-              <span
-                aria-hidden
-                className="absolute left-0 right-0 bottom-0 h-px"
-                style={{
-                  background:
-                    'linear-gradient(to right, transparent, #ae251c 30%, #ae251c 70%, transparent)',
+                    'linear-gradient(180deg, rgba(0,13,45,0.04) 0%, rgba(0,13,45,0.10) 26%, rgba(0,13,45,0.45) 52%, rgba(0,13,45,0.82) 100%)',
                 }}
               />
             </div>
@@ -117,69 +110,83 @@ export function SaudeModalidadeDetailModal({ open, onClose, onConfirm, data }: P
               type="button"
               onClick={onClose}
               aria-label={t('saudeV2.modalidades.detail.close')}
-              className="absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-full bg-black/35 text-white/80 hover:text-white hover:bg-black/50 transition-colors"
+              className="absolute right-3 top-3 z-20 inline-flex h-8 w-8 items-center justify-center rounded-full bg-black/40 text-white/80 hover:text-white hover:bg-black/60 transition-colors backdrop-blur-sm"
             >
               <X size={15} strokeWidth={1.8} />
             </button>
 
+            {/* Área de respiro da foto */}
+            <div aria-hidden className="relative z-10 h-[150px] sm:h-[190px] flex-shrink min-h-[84px]" />
+
+            {/* Painel de vidro fosco com o conteúdo */}
             <div
-              className="relative px-6 sm:px-8 py-6 sm:py-7 overflow-y-auto"
-              style={{ paddingBottom: 'max(env(safe-area-inset-bottom), 1.5rem)' }}
+              className="relative z-10 m-3 sm:m-3.5 flex min-h-0 flex-col overflow-hidden rounded-2xl border border-white/15 shadow-[0_18px_50px_-16px_rgba(0,0,0,0.7)]"
+              style={{
+                background: 'rgba(11,31,58,0.55)',
+                backdropFilter: 'blur(16px)',
+                WebkitBackdropFilter: 'blur(16px)',
+              }}
             >
-              <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#7a9ab8]">
-                {t('saudeV2.modalidades.detail.eyebrow')} · {data.seq}
-              </p>
-              <h3
-                id="modalidade-detail-title"
-                className="mt-2 text-white"
-                style={{
-                  fontFamily: 'var(--font-gellix)',
-                  fontSize: 'clamp(1.4rem, 2.6vw, 1.75rem)',
-                  lineHeight: 1.15,
-                  letterSpacing: '-0.01em',
-                }}
+              <div
+                className="overflow-y-auto px-5 sm:px-7 py-5 sm:py-6"
+                style={{ paddingBottom: 'max(env(safe-area-inset-bottom), 1.25rem)' }}
               >
-                {data.title}
-              </h3>
+                <h3
+                  id="modalidade-detail-title"
+                  className="text-white"
+                  style={{
+                    fontFamily: 'var(--font-gellix)',
+                    fontSize: 'clamp(1.4rem, 2.6vw, 1.75rem)',
+                    lineHeight: 1.12,
+                    letterSpacing: '-0.01em',
+                  }}
+                >
+                  {data.title}
+                </h3>
 
-              <p className="mt-4 pl-3 border-l-2 border-[#ae251c]/60 text-[14.5px] leading-relaxed text-white/85">
-                {data.short}
-              </p>
+                <p className="mt-3 pl-3 border-l-2 border-[#ae251c]/80 text-[14px] leading-relaxed text-white/90">
+                  {data.short}
+                </p>
 
-              <p className="mt-4 text-[14.5px] leading-relaxed text-white/72">
-                {data.body}
-              </p>
+                <p className="mt-3.5 text-[13.5px] leading-relaxed text-white/72">
+                  {data.body}
+                </p>
 
-              {data.bullets.length > 0 && (
-                <div className="mt-5">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#7a9ab8] mb-2">
-                    {t('saudeV2.modalidades.detail.bulletsLabel')}
-                  </p>
-                  <div className="flex flex-wrap gap-x-3 gap-y-1.5">
-                    {data.bullets.map((b) => (
-                      <span key={b} className="text-[11.5px] text-white/80 leading-tight">
-                        · {b}
-                      </span>
-                    ))}
+                {data.bullets.length > 0 && (
+                  <div className="mt-4 pt-4 border-t border-white/12">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#aec3d8] mb-2.5">
+                      {t('saudeV2.modalidades.detail.bulletsLabel')}
+                    </p>
+                    <div className="flex flex-col gap-1.5">
+                      {data.bullets.map((b) => (
+                        <span
+                          key={b}
+                          className="flex items-start gap-2 text-[12.5px] leading-snug text-white/82"
+                        >
+                          <span aria-hidden className="mt-0.5 font-bold text-[#ae251c]">·</span>
+                          {b}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
 
-              <button
-                type="button"
-                onClick={onConfirm}
-                className="mt-6 inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-[#25D366] hover:bg-[#1ebe5d] px-6 py-3 text-sm font-semibold text-white transition-colors"
-              >
-                <WhatsAppIcon size={16} />
-                {t('saudeV2.modalidades.detail.cta')}
-              </button>
-              <button
-                type="button"
-                onClick={onClose}
-                className="mt-3 inline-flex w-full items-center justify-center px-6 py-2 text-[11px] uppercase tracking-[0.22em] text-white/50 hover:text-white/80 transition-colors"
-              >
-                {t('saudeV2.modalidades.detail.close')}
-              </button>
+                <button
+                  type="button"
+                  onClick={onConfirm}
+                  className="mt-5 inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-[#25D366] hover:bg-[#1ebe5d] px-6 py-3 text-sm font-semibold text-white transition-colors"
+                >
+                  <WhatsAppIcon size={16} />
+                  {t('saudeV2.modalidades.detail.cta')}
+                </button>
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="mt-2.5 inline-flex w-full items-center justify-center px-6 py-1.5 text-[11px] uppercase tracking-[0.22em] text-white/50 hover:text-white/80 transition-colors"
+                >
+                  {t('saudeV2.modalidades.detail.close')}
+                </button>
+              </div>
             </div>
           </motion.div>
         </motion.div>
