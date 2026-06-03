@@ -24,14 +24,21 @@ export function LinhaCard({
   ctaLabel,
   accent = '#ae251c',
   onSelect,
+  tall = false,
+  sizes = '(max-width: 640px) 92vw, (max-width: 1024px) 50vw, 360px',
 }: {
   data: LinhaCardData
   ctaLabel: string
   accent?: string
   onSelect: (l: LinhaCardData) => void
+  /** Card mais alto (estilo home), opt-in — não afeta os cards já existentes em outras frentes */
+  tall?: boolean
+  /** `sizes` do next/image. Default casa o layout 4-col; passe o sizes 2-col em grids maiores. */
+  sizes?: string
 }) {
   const Icon = data.icon
   const hasPhoto = Boolean(data.image)
+  const minH = tall ? 'min-h-[420px] sm:min-h-[520px]' : 'min-h-[300px] sm:min-h-[380px]'
 
   return (
     <motion.div
@@ -45,7 +52,7 @@ export function LinhaCard({
         onClick={() => onSelect(data)}
         aria-label={data.ariaLabel}
         aria-haspopup="dialog"
-        className="group relative block w-full text-left overflow-hidden rounded-2xl h-full min-h-[300px] sm:min-h-[380px] transition-shadow duration-500 hover:shadow-[0_28px_70px_-22px_rgba(0,0,0,0.65)] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#07162a]"
+        className={`group relative block w-full text-left overflow-hidden rounded-2xl h-full ${minH} transition-shadow duration-500 hover:shadow-[0_28px_70px_-22px_rgba(0,0,0,0.65)] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#07162a]`}
         style={{ border: '1px solid rgba(255,255,255,0.06)' }}
       >
         <div className="absolute inset-0 overflow-hidden">
@@ -54,7 +61,7 @@ export function LinhaCard({
               src={data.image as string}
               alt=""
               fill
-              sizes="(max-width: 640px) 92vw, (max-width: 1024px) 50vw, 360px"
+              sizes={sizes}
               quality={92}
               className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
               style={{ objectPosition: data.imagePosition ?? 'center' }}

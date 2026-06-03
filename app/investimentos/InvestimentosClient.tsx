@@ -38,8 +38,9 @@ function TopicIcon({ src, size = 26 }: { src: string; size?: number }) {
   )
 }
 
-// Cor sólida casada com o fundo de sobre-investimento.jpg (navy ~#081c42),
-// para que a sobra à esquerda do object-contain não tenha emenda visível.
+// Cor sólida casada com o fundo de sobre-investimento.jpg (navy ~#081c42).
+// A imagem é 2:1 com o personagem à direita; com object-cover ancorado à direita
+// ela preenche a tela inteira sem faixas vazias e só o navy livre da esquerda é cortado.
 const SOBRE_BG = '#081c42'
 
 function SobreSection() {
@@ -61,7 +62,7 @@ function SobreSection() {
             fill
             quality={90}
             sizes="100vw"
-            className="object-contain object-bottom object-right"
+            className="object-cover object-right object-bottom"
           />
         </div>
 

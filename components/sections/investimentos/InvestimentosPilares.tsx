@@ -15,11 +15,11 @@ const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? ''
 
 type PilarId = 'rendaFixa' | 'rendaVariavel' | 'previdencia' | 'visaoIntegrada'
 
-const PILARES: { id: PilarId; icon: React.ElementType }[] = [
-  { id: 'rendaFixa',      icon: LineChart },
-  { id: 'rendaVariavel',  icon: Coins     },
-  { id: 'previdencia',    icon: ShieldHalf },
-  { id: 'visaoIntegrada', icon: Network   },
+const PILARES: { id: PilarId; icon: React.ElementType; image: string; imagePosition: string }[] = [
+  { id: 'rendaFixa',      icon: LineChart,  image: '/investimento/pilares/renda-fixa.jpg',      imagePosition: 'center 42%' },
+  { id: 'rendaVariavel',  icon: Coins,      image: '/investimento/pilares/renda-variavel.jpg',  imagePosition: 'center'     },
+  { id: 'previdencia',    icon: ShieldHalf, image: '/investimento/pilares/previdencia.jpg',      imagePosition: 'center 12%' },
+  { id: 'visaoIntegrada', icon: Network,    image: '/investimento/pilares/visao-integrada.jpg',  imagePosition: 'center 32%' },
 ]
 
 const containerVariants = {
@@ -40,6 +40,8 @@ export default function InvestimentosPilares() {
   const pilares: LinhaCardData[] = PILARES.map((cfg, i) => ({
     seq: String(i + 1).padStart(2, '0'),
     icon: cfg.icon,
+    image: cfg.image,
+    imagePosition: cfg.imagePosition,
     title: t(`investimentosV2.linha.${cfg.id}.title`),
     short: t(`investimentosV2.linha.${cfg.id}.short`),
     body: t(`investimentosV2.linha.${cfg.id}.body`),
@@ -84,7 +86,7 @@ export default function InvestimentosPilares() {
         </motion.div>
 
         <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 items-stretch"
+          className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5 items-stretch"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -97,6 +99,8 @@ export default function InvestimentosPilares() {
               ctaLabel={t('investimentosV2.linhas.cta')}
               accent={ACCENT}
               onSelect={setActive}
+              tall
+              sizes="(max-width: 640px) 92vw, (max-width: 1024px) 50vw, 640px"
             />
           ))}
         </motion.div>
