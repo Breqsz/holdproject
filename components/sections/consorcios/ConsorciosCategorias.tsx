@@ -88,9 +88,6 @@ export default function ConsorciosCategorias() {
           >
             {t('consorciosV2.linhas.title')}
           </h2>
-          <p className="mt-6 max-w-[60ch] text-[#7a9ab8] leading-relaxed">
-            {t('consorciosV2.linhas.body')}
-          </p>
         </motion.div>
 
         <motion.div
