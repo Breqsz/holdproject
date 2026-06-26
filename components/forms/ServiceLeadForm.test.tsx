@@ -132,3 +132,37 @@ describe('ServiceLeadForm', () => {
     })
   })
 })
+
+describe('ServiceLeadForm audienceOptions', () => {
+  beforeEach(() => {
+    window.localStorage.clear()
+    window.localStorage.setItem('hold:locale', 'pt')
+    vi.spyOn(window, 'open').mockImplementation(() => null)
+  })
+
+  it('renderiza PF, MEI e Empresa por padrão quando showAudienceField', () => {
+    render(
+      <LocaleProvider>
+        <AudienceProvider>
+          <ServiceLeadForm service="Teste" showAudienceField />
+        </AudienceProvider>
+      </LocaleProvider>
+    )
+    expect(screen.getByText('Pessoa física')).toBeInTheDocument()
+    expect(screen.getByText('MEI')).toBeInTheDocument()
+    expect(screen.getByText('Empresa')).toBeInTheDocument()
+  })
+
+  it('omite MEI quando audienceOptions = [pf, empresa]', () => {
+    render(
+      <LocaleProvider>
+        <AudienceProvider>
+          <ServiceLeadForm service="Teste" showAudienceField audienceOptions={['pf', 'empresa']} />
+        </AudienceProvider>
+      </LocaleProvider>
+    )
+    expect(screen.getByText('Pessoa física')).toBeInTheDocument()
+    expect(screen.getByText('Empresa')).toBeInTheDocument()
+    expect(screen.queryByText('MEI')).not.toBeInTheDocument()
+  })
+})

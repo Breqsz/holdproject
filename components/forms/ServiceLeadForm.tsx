@@ -33,6 +33,8 @@ interface ServiceLeadFormProps {
   introTitle?: string
   introBody?: string
   showAudienceField?: boolean
+  /** Opções de audiência renderizadas. Default mantém PF/MEI/Empresa (não regride outras frentes). Opt-in. */
+  audienceOptions?: Array<'pf' | 'mei' | 'empresa'>
 }
 
 const inputClass =
@@ -43,6 +45,7 @@ export function ServiceLeadForm({
   introTitle,
   introBody,
   showAudienceField = false,
+  audienceOptions = ['pf', 'mei', 'empresa'],
 }: ServiceLeadFormProps) {
   const { audience, setAudience } = useAudience()
   const { t } = useLocale()
@@ -128,8 +131,8 @@ export function ServiceLeadForm({
             <legend className="text-[11px] font-medium uppercase tracking-wider text-[#7a9ab8] mb-2 block">
               {t('form.lead.audience.saude.label')}
             </legend>
-            <div className="grid grid-cols-3 gap-2">
-              {(['pf', 'mei', 'empresa'] as const).map((opt) => (
+            <div className={`grid gap-2 ${audienceOptions.length === 2 ? 'grid-cols-2' : 'grid-cols-3'}`}>
+              {audienceOptions.map((opt) => (
                 <label
                   key={opt}
                   className="relative flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-[#07162a] border border-[#142f54] px-3 py-3 text-sm text-white/90 transition-colors has-[:checked]:border-[#ae251c] has-[:checked]:bg-[#0d2240] hover:border-[#7a9ab8]/40"

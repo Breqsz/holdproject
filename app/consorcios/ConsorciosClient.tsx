@@ -236,6 +236,7 @@ function CtaFinalSection() {
               introTitle={t('consorciosV2.cta.form.introTitle')}
               introBody={t('consorciosV2.cta.form.introBody')}
               showAudienceField
+              audienceOptions={['pf', 'empresa']}
             />
           </div>
         </Reveal>
