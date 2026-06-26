@@ -218,19 +218,14 @@ function CtaFinalSection() {
           </div>
 
           <ul className="mt-5 lg:mt-6 flex flex-col gap-2.5 max-w-[42ch]">
-            {[1, 2].map((n) => (
-              <li
-                key={n}
-                className="flex items-start gap-2.5 text-[12.5px] leading-[1.5] text-white/72"
-              >
-                <span
-                  aria-hidden
-                  className="mt-[7px] block h-[5px] w-[5px] rounded-full shrink-0"
-                  style={{ background: '#ae251c' }}
-                />
-                <span>{t(`consorciosV2.cta.bullet.${n}`)}</span>
-              </li>
-            ))}
+            <li className="flex items-start gap-2.5 text-[12.5px] leading-[1.5] text-white/72">
+              <span
+                aria-hidden
+                className="mt-[7px] block h-[5px] w-[5px] rounded-full shrink-0"
+                style={{ background: '#ae251c' }}
+              />
+              <span>{t('consorciosV2.cta.bullet.1')}</span>
+            </li>
           </ul>
         </Reveal>
 
