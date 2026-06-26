@@ -88,14 +88,14 @@ function SobreSection() {
             <div className="relative mt-12 py-7">
               <div
                 aria-hidden
-                className="absolute inset-y-0 left-0 right-[26%] xl:right-[24%]"
+                className="absolute inset-y-0 left-0 right-[38%] xl:right-[34%]"
                 style={{
                   background:
                     'radial-gradient(58% 150% at 50% 0%, rgba(42,96,168,0.30) 0%, rgba(10,28,60,0) 62%), linear-gradient(180deg, rgba(3,11,26,0.50) 0%, rgba(3,11,26,0.18) 100%)',
                   borderTop: '1px solid rgba(255,255,255,0.10)',
                 }}
               />
-              <div className="relative z-10 grid grid-cols-4 gap-0 pr-[26%] xl:pr-[24%]">
+              <div className="relative z-10 grid grid-cols-4 gap-0 pr-[38%] xl:pr-[34%]">
                 {chips.map((chip, i) => (
                   <div key={chip} className="flex items-center gap-3.5 border-l border-white/15 pl-5 pr-3">
                     <TopicIcon src={SOBRE_ICON_SRC[i]} size={30} />
