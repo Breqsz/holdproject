@@ -7,6 +7,7 @@ import { useLocale } from '@/lib/i18n'
 import { Reveal } from '@/components/motion/Reveal'
 import { ServiceLeadForm } from '@/components/forms/ServiceLeadForm'
 import ConsorciosHero from '@/components/sections/consorcios/ConsorciosHero'
+import ConsorciosBeneficios from '@/components/sections/consorcios/ConsorciosBeneficios'
 import ConsorciosCategorias from '@/components/sections/consorcios/ConsorciosCategorias'
 
 const SOBRE_ICON_SRC = [
@@ -62,7 +63,7 @@ function SobreSection() {
             fill
             quality={90}
             sizes="100vw"
-            className="object-contain object-bottom object-right"
+            className="object-cover object-bottom object-right"
           />
         </div>
 
@@ -249,6 +250,7 @@ export default function ConsorciosClient() {
   return (
     <>
       <ConsorciosHero />
+      <ConsorciosBeneficios />
       <SobreSection />
       <ConsorciosCategorias />
       <CtaFinalSection />
