@@ -98,11 +98,25 @@ export default function ConsorciosHero() {
           </div>
 
           <Reveal delay={0.08}>
-            <h1
-              className="text-display text-white text-pretty"
-              style={{ fontSize: 'clamp(1.85rem, 4vw, 3.25rem)' }}
-            >
-              {t('consorciosV2.hero.title.prefix')}
+            <h1 className="text-display text-white text-pretty leading-[1.04]">
+              <span
+                className="block font-bold uppercase tracking-tight"
+                style={{ fontSize: 'clamp(2.5rem, 5.5vw, 4rem)' }}
+              >
+                {t('consorciosV2.hero.title.line1')}
+              </span>
+              <span
+                className="block font-semibold uppercase tracking-tight text-white/95"
+                style={{ fontSize: 'clamp(1.35rem, 2.8vw, 2.1rem)' }}
+              >
+                {t('consorciosV2.hero.title.line2')}
+              </span>
+              <span
+                className="block mt-1.5 text-[#d2a866]"
+                style={{ fontFamily: 'var(--font-script)', fontSize: 'clamp(1.75rem, 3.6vw, 2.8rem)' }}
+              >
+                {t('consorciosV2.hero.title.line3')}
+              </span>
             </h1>
           </Reveal>
 

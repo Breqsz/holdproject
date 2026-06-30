@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, ShieldCheck } from 'lucide-react'
 import { useLocale } from '@/lib/i18n'
 import { Reveal } from '@/components/motion/Reveal'
 import { ServiceLeadForm } from '@/components/forms/ServiceLeadForm'
@@ -67,6 +67,16 @@ function SobreSection() {
           />
         </div>
 
+        {/* Scrim horizontal — assenta texto/chips em navy à esquerda e mantém o avatar nítido à direita */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 z-[1]"
+          style={{
+            background:
+              'linear-gradient(90deg, #0a2039 0%, rgba(10,32,57,0.92) 26%, rgba(10,32,57,0.5) 46%, rgba(10,32,57,0.12) 62%, rgba(10,32,57,0) 74%)',
+          }}
+        />
+
         <div className="relative z-10 flex w-full max-w-7xl min-h-[100dvh] flex-col justify-start pl-5 pr-10 xl:pl-8 xl:pr-16 pt-[14vh] pb-20">
           <div className="max-w-[640px] xl:max-w-[880px]">
             <Reveal>
@@ -82,6 +92,10 @@ function SobreSection() {
               <p className="mt-6 text-[17px] xl:text-[18.5px] leading-[1.62] text-[#aec3d8]" style={{ maxWidth: '37em' }}>
                 {t('consorciosV2.sobre.body')}
               </p>
+              <p className="mt-5 inline-flex items-center gap-2 text-[14px] xl:text-[15px] font-medium text-[#5a97d4]">
+                <ShieldCheck size={15} aria-hidden />
+                {t('consorciosV2.sobre.bc')}
+              </p>
             </Reveal>
           </div>
 
@@ -89,14 +103,14 @@ function SobreSection() {
             <div className="relative mt-12 py-7">
               <div
                 aria-hidden
-                className="absolute inset-y-0 left-0 right-[38%] xl:right-[34%]"
+                className="absolute inset-y-0 left-0 w-[560px]"
                 style={{
                   background:
                     'radial-gradient(58% 150% at 50% 0%, rgba(42,96,168,0.30) 0%, rgba(10,28,60,0) 62%), linear-gradient(180deg, rgba(3,11,26,0.50) 0%, rgba(3,11,26,0.18) 100%)',
                   borderTop: '1px solid rgba(255,255,255,0.10)',
                 }}
               />
-              <div className="relative z-10 grid grid-cols-4 gap-0 pr-[38%] xl:pr-[34%]">
+              <div className="relative z-10 grid grid-cols-2 gap-x-0 gap-y-7 max-w-[520px]">
                 {chips.map((chip, i) => (
                   <div key={chip} className="flex items-center gap-3.5 border-l border-white/15 pl-5 pr-3">
                     <TopicIcon src={SOBRE_ICON_SRC[i]} size={30} />
@@ -125,6 +139,10 @@ function SobreSection() {
           </h2>
           <p className="mt-5 max-w-[54ch] text-[16.5px] leading-[1.7] text-[#aec3d8]">
             {t('consorciosV2.sobre.body')}
+          </p>
+          <p className="mt-4 inline-flex items-center gap-2 text-[13.5px] font-medium text-[#5a97d4]">
+            <ShieldCheck size={14} aria-hidden />
+            {t('consorciosV2.sobre.bc')}
           </p>
         </Reveal>
 
