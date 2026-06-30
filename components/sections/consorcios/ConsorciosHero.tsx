@@ -9,8 +9,8 @@ import { useLocale } from '@/lib/i18n'
 import { Reveal } from '@/components/motion/Reveal'
 
 const HERO_PHOTOS = [
-  { src: '/images/hero/consorcios.webp', objectPosition: '50% 40%', objectPositionMobile: '50% 40%' },
-  { src: '/images/hero/card-consorcios.jpg', objectPosition: '50% 45%', objectPositionMobile: '50% 45%' },
+  { src: '/images/hero/consorcios-chaves.webp', objectPosition: '65% 45%', objectPositionMobile: '70% 45%' },
+  { src: '/images/hero/consorcios-produtos.webp', objectPosition: '50% 52%', objectPositionMobile: '50% 55%' },
 ] as const
 
 export default function ConsorciosHero() {
