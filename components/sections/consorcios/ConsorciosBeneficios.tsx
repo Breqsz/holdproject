@@ -63,13 +63,13 @@ export default function ConsorciosBeneficios() {
       <div className="relative max-w-7xl mx-auto px-6 lg:px-10 py-12 lg:py-16">
         <div className="grid items-center gap-10 lg:gap-12 lg:grid-cols-[minmax(0,1.5fr)_auto_minmax(0,0.85fr)]">
           {/* Benefícios */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-x-5 gap-y-9 lg:gap-x-0">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-y-0 lg:gap-x-0">
             {items.map(({ title, desc, Icon }, i) => (
               <Reveal key={title} delay={0.06 * i}>
-                <div className="flex flex-col items-center text-center gap-3 lg:px-4 lg:border-l lg:border-[#d2a866]/15 lg:first:border-l-0">
-                  <Icon size={30} strokeWidth={1.5} style={{ color: GOLD }} aria-hidden />
+                <div className="flex flex-row items-center gap-4 text-left border-b border-white/8 py-5 first:pt-0 last:border-b-0 last:pb-0 lg:flex-col lg:items-center lg:text-center lg:gap-3 lg:py-0 lg:border-b-0 lg:px-4 lg:border-l lg:border-[#d2a866]/15 lg:first:border-l-0">
+                  <Icon size={30} strokeWidth={1.5} style={{ color: GOLD }} aria-hidden className="shrink-0" />
                   <div>
-                    <h3 className="text-[12.5px] font-bold uppercase tracking-[0.1em] text-white leading-tight">
+                    <h3 className="text-[13px] font-bold uppercase tracking-[0.1em] text-white leading-tight">
                       {title}
                     </h3>
                     <p className="mt-1.5 text-[12.5px] leading-[1.45] text-[#aebfd2]">{desc}</p>
