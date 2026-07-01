@@ -140,19 +140,6 @@ function SobreSection() {
           </p>
         </Reveal>
 
-        <Reveal delay={0.1}>
-          <Image
-            src="/consorcio/sobre-consorcio.jpg"
-            alt=""
-            width={2880}
-            height={1440}
-            quality={90}
-            sizes="92vw"
-            loading="eager"
-            className="mt-8 h-auto w-full"
-          />
-        </Reveal>
-
         <Reveal delay={0.16}>
           <div className="mt-8 flex flex-col">
             {chips.map((chip, i) => (
@@ -193,15 +180,15 @@ function CtaFinalSection() {
         className="relative max-w-7xl mx-auto px-6 lg:px-8 grid lg:grid-cols-[280px_minmax(0,1.2fr)_minmax(0,1.3fr)] gap-y-10 gap-x-8 lg:gap-6 items-start"
         style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
       >
-        <div className="hidden lg:block self-start -ml-20 xl:-ml-32">
+        <div className="hidden lg:block self-start mt-8 -ml-6 xl:-ml-10">
           <Image
-            src="/personagem/CONSORCIOS.png"
+            src="/personagem/Boneco_v3.png"
             alt=""
-            width={320}
-            height={480}
+            width={420}
+            height={1199}
             quality={95}
             loading="lazy"
-            className="h-auto w-full"
+            className="h-[480px] w-auto max-w-none"
             style={{ filter: 'drop-shadow(0 16px 40px rgba(0,0,0,0.45))' }}
           />
         </div>
