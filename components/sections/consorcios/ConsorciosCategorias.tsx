@@ -91,7 +91,7 @@ export default function ConsorciosCategorias() {
         </motion.div>
 
         <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 items-stretch"
+          className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5 items-stretch"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -104,6 +104,8 @@ export default function ConsorciosCategorias() {
               ctaLabel={t('consorciosV2.linhas.cta')}
               accent={ACCENT}
               onSelect={setActive}
+              dense
+              sizes="(max-width: 640px) 46vw, (max-width: 1024px) 50vw, 300px"
             />
           ))}
         </motion.div>
