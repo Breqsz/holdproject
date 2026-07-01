@@ -25,6 +25,7 @@ export function LinhaCard({
   accent = '#ae251c',
   onSelect,
   tall = false,
+  dense = false,
   sizes = '(max-width: 640px) 92vw, (max-width: 1024px) 50vw, 360px',
 }: {
   data: LinhaCardData
@@ -33,12 +34,18 @@ export function LinhaCard({
   onSelect: (l: LinhaCardData) => void
   /** Card mais alto (estilo home), opt-in — não afeta os cards já existentes em outras frentes */
   tall?: boolean
+  /** Card compacto no mobile (grade 2-col), opt-in — mobile menor + bullets ocultos; lg inalterado */
+  dense?: boolean
   /** `sizes` do next/image. Default casa o layout 4-col; passe o sizes 2-col em grids maiores. */
   sizes?: string
 }) {
   const Icon = data.icon
   const hasPhoto = Boolean(data.image)
-  const minH = tall ? 'min-h-[420px] sm:min-h-[520px]' : 'min-h-[300px] sm:min-h-[380px]'
+  const minH = dense
+    ? 'min-h-[240px] lg:min-h-[380px]'
+    : tall
+      ? 'min-h-[420px] sm:min-h-[520px]'
+      : 'min-h-[300px] sm:min-h-[380px]'
 
   return (
     <motion.div
@@ -142,7 +149,10 @@ export function LinhaCard({
             {data.short}
           </p>
 
-          <div className="overflow-hidden mb-4 lg:transition-[max-height,opacity] lg:duration-500 lg:ease-out lg:opacity-0 lg:max-h-0 lg:group-hover:opacity-100 lg:group-hover:max-h-44">
+          <div
+            data-testid="linha-bullets"
+            className={`${dense ? 'hidden lg:block ' : ''}overflow-hidden mb-4 lg:transition-[max-height,opacity] lg:duration-500 lg:ease-out lg:opacity-0 lg:max-h-0 lg:group-hover:opacity-100 lg:group-hover:max-h-44`}
+          >
             <div className="flex flex-col gap-1 pt-3 border-t border-white/15 lg:flex-row lg:flex-wrap lg:gap-x-3 lg:gap-y-1.5">
               {data.bullets.map((b) => (
                 <span

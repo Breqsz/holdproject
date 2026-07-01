@@ -77,3 +77,36 @@ describe('LinhaCard — photo treatment', () => {
     expect(screen.getByTestId('dummy-icon')).toBeInTheDocument()
   })
 })
+
+describe('LinhaCard — dense (opt-in, mobile compacto)', () => {
+  it('default: min-h padrão e bullets visíveis (outras frentes inalteradas)', () => {
+    render(
+      <LinhaCard data={{ ...baseData, image: '/x.jpg' }} ctaLabel="Conhecer" onSelect={() => {}} />
+    )
+    const button = screen.getByRole('button', { name: 'Abrir Renda fixa' })
+    expect(button.className).toContain('min-h-[300px]')
+    expect(button.className).not.toContain('min-h-[240px]')
+    expect(screen.getByTestId('linha-bullets').className).not.toContain('hidden lg:block')
+  })
+
+  it('dense: min-h compacto no mobile e bullets ocultos no mobile', () => {
+    render(
+      <LinhaCard data={{ ...baseData, image: '/x.jpg' }} ctaLabel="Conhecer" onSelect={() => {}} dense />
+    )
+    const button = screen.getByRole('button', { name: 'Abrir Renda fixa' })
+    expect(button.className).toContain('min-h-[240px]')
+    expect(button.className).toContain('lg:min-h-[380px]')
+    const bullets = screen.getByTestId('linha-bullets')
+    expect(bullets.className).toContain('hidden')
+    expect(bullets.className).toContain('lg:block')
+  })
+
+  it('dense ainda dispara onSelect ao clicar', () => {
+    const onSelect = vi.fn()
+    render(
+      <LinhaCard data={{ ...baseData, image: '/x.jpg' }} ctaLabel="Conhecer" onSelect={onSelect} dense />
+    )
+    fireEvent.click(screen.getByRole('button', { name: 'Abrir Renda fixa' }))
+    expect(onSelect).toHaveBeenCalledTimes(1)
+  })
+})
