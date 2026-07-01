@@ -97,8 +97,9 @@ describe('LinhaCard — dense (opt-in, mobile compacto)', () => {
     expect(button.className).toContain('min-h-[240px]')
     expect(button.className).toContain('lg:min-h-[380px]')
     const bullets = screen.getByTestId('linha-bullets')
-    expect(bullets.className).toContain('hidden')
-    expect(bullets.className).toContain('lg:block')
+    // classe utilitária `hidden` (não o substring de `overflow-hidden`)
+    expect(bullets.className.split(' ')).toContain('hidden')
+    expect(bullets.className.split(' ')).toContain('lg:block')
   })
 
   it('dense ainda dispara onSelect ao clicar', () => {
