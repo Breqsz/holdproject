@@ -160,11 +160,11 @@ function SobreSection() {
         </Reveal>
 
         <Reveal delay={0.16}>
-          <div className="mt-8 grid grid-cols-2 gap-x-5 gap-y-7">
+          <div className="mt-8 flex flex-col">
             {chips.map((chip, i) => (
-              <div key={chip} className="flex items-center gap-3 border-l border-white/15 pl-4">
+              <div key={chip} className="flex items-center gap-3.5 border-b border-white/8 py-4 first:pt-0 last:border-b-0 last:pb-0">
                 <TopicIcon src={SOBRE_ICON_SRC[i]} size={28} />
-                <h3 className="text-[13px] font-semibold leading-[1.3] text-[#e3ecf6] tracking-tight">
+                <h3 className="text-[14px] font-semibold leading-[1.3] text-[#e3ecf6] tracking-tight">
                   {chip}
                 </h3>
               </div>
