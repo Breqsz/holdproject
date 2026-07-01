@@ -196,7 +196,7 @@ function CtaFinalSection() {
       />
 
       <div
-        className="relative max-w-7xl mx-auto px-6 lg:px-8 grid lg:grid-cols-[280px_minmax(0,1.2fr)_minmax(0,1.3fr)] gap-8 lg:gap-6 items-start"
+        className="relative max-w-7xl mx-auto px-6 lg:px-8 grid lg:grid-cols-[280px_minmax(0,1.2fr)_minmax(0,1.3fr)] gap-y-10 gap-x-8 lg:gap-6 items-start"
         style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
       >
         <div className="hidden lg:block self-start -ml-20 xl:-ml-32">
