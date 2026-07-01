@@ -54,42 +54,44 @@ function SobreSection() {
       className="relative overflow-hidden"
       style={{ fontFamily: 'var(--font-outfit)', background: SOBRE_BG }}
     >
-      {/* Desktop — texto + 4 tópicos à esquerda, personagem embutido no fundo full-bleed */}
-      <div className="hidden lg:block relative min-h-[100dvh]">
-        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 bottom-0 z-0">
+      {/* Desktop — imagem full-bleed com o carro à direita; texto + dizeres à esquerda
+          sobre uma máscara fade-to-navy. A máscara é proporcional (%), então escala com a
+          tela: no notebook o navy cobre o nariz do carro em vez de deixar o texto em cima dele. */}
+      <div className="hidden lg:block relative min-h-[48vw]">
+        <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
           <Image
             src="/consorcio/sobre-consorcio.jpg"
             alt=""
             fill
             quality={90}
             sizes="100vw"
-            className="object-cover object-bottom object-right"
+            className="object-cover object-right-bottom"
           />
         </div>
 
-        {/* Scrim horizontal — assenta texto/chips em navy à esquerda e mantém o avatar nítido à direita */}
+        {/* Máscara: metade esquerda vira navy sólido (zona do texto); o carro emerge à direita.
+            Opaco até ~42% garante os dizeres legíveis em qualquer crop/largura. */}
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 z-[1]"
           style={{
-            background:
-              'linear-gradient(90deg, #0a2039 0%, rgba(10,32,57,0.92) 26%, rgba(10,32,57,0.5) 46%, rgba(10,32,57,0.12) 62%, rgba(10,32,57,0) 74%)',
+            background: `linear-gradient(90deg, ${SOBRE_BG} 0%, ${SOBRE_BG} 40%, rgba(0,13,45,0.62) 53%, rgba(0,13,45,0.30) 65%, rgba(0,13,45,0.10) 75%, rgba(0,13,45,0) 86%)`,
           }}
         />
 
-        <div className="relative z-10 flex w-full max-w-7xl min-h-[100dvh] flex-col justify-start pl-5 pr-10 xl:pl-8 xl:pr-16 pt-[14vh] pb-20">
-          <div className="max-w-[640px] xl:max-w-[880px]">
+        <div className="relative z-10 flex w-full max-w-7xl min-h-[48vw] flex-col justify-center pl-10 xl:pl-16 pr-10 pb-16">
+          <div className="max-w-[500px]">
             <Reveal>
               <p className="mb-5 text-[13px] font-semibold uppercase tracking-[0.26em] text-[#5a97d4]">
                 {t('consorciosV2.sobre.eyebrow')}
               </p>
               <h2
                 className="font-bold text-white leading-[1.08]"
-                style={{ fontSize: 'clamp(2.5rem, 4vw, 3.85rem)', maxWidth: '14em' }}
+                style={{ fontSize: 'clamp(2.25rem, 3.4vw, 3.5rem)', maxWidth: '14em' }}
               >
                 {t('consorciosV2.sobre.title')}
               </h2>
-              <p className="mt-6 text-[17px] xl:text-[18.5px] leading-[1.62] text-[#aec3d8]" style={{ maxWidth: '37em' }}>
+              <p className="mt-6 text-[17px] xl:text-[18px] leading-[1.62] text-[#aec3d8]">
                 {t('consorciosV2.sobre.body')}
               </p>
               <p className="mt-5 inline-flex items-center gap-2 text-[14px] xl:text-[15px] font-medium text-[#5a97d4]">
@@ -97,31 +99,23 @@ function SobreSection() {
                 {t('consorciosV2.sobre.bc')}
               </p>
             </Reveal>
-          </div>
 
-          <Reveal delay={0.12}>
-            <div className="relative mt-12 py-7">
-              <div
-                aria-hidden
-                className="absolute inset-y-0 left-0 w-[560px]"
-                style={{
-                  background:
-                    'radial-gradient(58% 150% at 50% 0%, rgba(42,96,168,0.30) 0%, rgba(10,28,60,0) 62%), linear-gradient(180deg, rgba(3,11,26,0.50) 0%, rgba(3,11,26,0.18) 100%)',
-                  borderTop: '1px solid rgba(255,255,255,0.10)',
-                }}
-              />
-              <div className="relative z-10 grid grid-cols-2 gap-x-0 gap-y-7 max-w-[520px]">
+            <Reveal delay={0.12}>
+              <div className="mt-10 flex flex-col max-w-[440px]">
                 {chips.map((chip, i) => (
-                  <div key={chip} className="flex items-center gap-3.5 border-l border-white/15 pl-5 pr-3">
+                  <div
+                    key={chip}
+                    className="flex items-center gap-4 border-b border-white/10 py-4 first:pt-0 last:border-b-0 last:pb-0"
+                  >
                     <TopicIcon src={SOBRE_ICON_SRC[i]} size={30} />
-                    <h3 className="text-[13.5px] font-semibold leading-[1.32] text-[#e3ecf6] tracking-tight">
+                    <h3 className="text-[15px] font-semibold leading-[1.32] text-[#e3ecf6] tracking-tight">
                       {chip}
                     </h3>
                   </div>
                 ))}
               </div>
-            </div>
-          </Reveal>
+            </Reveal>
+          </div>
         </div>
       </div>
 
