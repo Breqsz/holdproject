@@ -38,7 +38,7 @@ const TRANSLATIONS: Record<string, string> = {
   'clients.title':          'Consórcio para cada objetivo, cada fase da sua vida.',
   'clients.toggle.you':     'Para Você',
   'clients.toggle.company': 'Para sua Empresa',
-  'clients.cta.whatsapp':   'Falar com especialista',
+  'clients.cta.whatsapp':   'Fale com um especialista',
   'clients.applications':   'Aplicações',
   'clients.strategic':      'Visão estratégica',
 
@@ -185,13 +185,13 @@ describe('ParaClientes', () => {
   describe('Para Você — detail panel WhatsApp CTA', () => {
     it('renders a WhatsApp CTA link with correct href', () => {
       render(<ParaClientes />)
-      const link = screen.getByRole('link', { name: /Falar com especialista/i })
+      const link = screen.getByRole('link', { name: /Fale com um especialista/i })
       expect(link).toHaveAttribute('href', expect.stringContaining('wa.me'))
     })
 
     it('WhatsApp link contains the category name in the message', () => {
       render(<ParaClientes />)
-      const link = screen.getByRole('link', { name: /Falar com especialista/i })
+      const link = screen.getByRole('link', { name: /Fale com um especialista/i })
       const href = link.getAttribute('href') ?? ''
       expect(decodeURIComponent(href)).toContain('Imóveis')
     })

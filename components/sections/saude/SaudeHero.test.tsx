@@ -43,11 +43,11 @@ describe('SaudeHero', () => {
     ).toBeInTheDocument()
   })
 
-  it('renders the red primary CTA pointing to the form anchor', () => {
+  it('renders the red primary CTA linking to WhatsApp', () => {
     render(<SaudeHero />)
-    const primary = screen.getByRole('link', { name: /Falar com analista/i })
+    const primary = screen.getByRole('link', { name: /Fale com um especialista/i })
     expect(primary).toBeInTheDocument()
-    expect(primary).toHaveAttribute('href', '#saude-form')
+    expect(primary.getAttribute('href') ?? '').toContain('wa.me')
     expect(primary.className).toMatch(/bg-\[#ae251c\]/)
   })
 

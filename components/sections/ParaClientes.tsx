@@ -11,7 +11,6 @@ import {
   Church,
   TrendingUp,
   Zap,
-  MessageCircle,
   ChevronRight,
   Users,
   BarChart3,
@@ -20,6 +19,7 @@ import {
 } from 'lucide-react'
 import { useLocale } from '@/lib/i18n'
 import { formatWhatsAppLink } from '@/lib/utils'
+import { WhatsAppCTA } from '@/components/shared/WhatsAppCTA'
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number]
 const SPRING = { type: 'spring' as const, stiffness: 110, damping: 22 }
@@ -123,15 +123,11 @@ function CategoryDetail({ id, index }: { id: CategoryId; index: number }) {
       </div>
 
       {/* CTA */}
-      <a
+      <WhatsAppCTA
         href={whatsappLink}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="mt-10 inline-flex items-center gap-2 rounded-full bg-[#25d366] hover:bg-[#1ebe5d] text-white font-semibold text-sm px-6 py-3 transition-colors duration-200"
-      >
-        <MessageCircle size={16} />
-        {t('clients.cta.whatsapp')}
-      </a>
+        label={t('clients.cta.whatsapp')}
+        className="mt-10"
+      />
     </motion.div>
   )
 }

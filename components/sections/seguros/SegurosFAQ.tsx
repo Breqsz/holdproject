@@ -17,11 +17,15 @@ type FAQConfig = {
 
 const FAQ_CONFIG: FAQConfig[] = [
   { id: 1, blocks: ['p'] },
-  { id: 2, blocks: ['p', 'h4', 'ul'] },
+  { id: 2, blocks: ['p'] },
   { id: 3, blocks: ['p'] },
   { id: 4, blocks: ['p'] },
   { id: 5, blocks: ['p'] },
   { id: 6, blocks: ['p'] },
+  { id: 7, blocks: ['p'] },
+  { id: 8, blocks: ['p'] },
+  { id: 9, blocks: ['p'] },
+  { id: 10, blocks: ['p'] },
 ]
 
 const fadeUp = {

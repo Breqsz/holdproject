@@ -20,6 +20,7 @@ vi.mock('@/lib/i18n', () => ({
         'nav.contact':                 'Contato',
         'footer.social.title':         'Redes Sociais',
         'footer.rights':               'Todos os direitos reservados.',
+        'footer.address':              'Av. Princesa Isabel nº 1006, Bairro Tabajaras, Uberlândia/MG - CEP 38400-192',
         'wa.label.alt':                'WhatsApp',
       }
       return map[key] ?? key
@@ -72,7 +73,13 @@ describe('Footer', () => {
 
   it('renders the WhatsApp contact link and location', () => {
     expect(screen.getByRole('link', { name: 'WhatsApp' })).toBeInTheDocument()
-    expect(screen.getAllByText(/Uberlândia, MG/).length).toBeGreaterThanOrEqual(1)
+    expect(screen.getAllByText(/Uberlândia/).length).toBeGreaterThanOrEqual(1)
+  })
+
+  it('renders the full street address in the Contato column', () => {
+    expect(
+      screen.getByText(/Av\. Princesa Isabel nº 1006.*Tabajaras.*CEP 38400-192/),
+    ).toBeInTheDocument()
   })
 
   it('renders the Lojacorr partnership seal', () => {

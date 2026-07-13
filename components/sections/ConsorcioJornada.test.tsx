@@ -45,7 +45,7 @@ vi.mock('@/lib/i18n', () => ({
         'comoFunciona.gain.7':        'Adequação ao seu objetivo, momento e perfil',
         'comoFunciona.gain.8':        'Suporte pós-venda contínuo',
         'comoFunciona.badge':         'Operação regulamentada pelo Banco Central do Brasil',
-        'comoFunciona.cta':           'Falar com um especialista',
+        'comoFunciona.cta':           'Fale com um especialista',
         'comoFunciona.wa':            'Olá! Quero conversar com um especialista da Hold.',
       }
       return map[key] ?? key
@@ -81,7 +81,7 @@ describe('ConsorcioJornada', () => {
 
   it('renders the WhatsApp CTA pointing to wa.me', () => {
     render(<ConsorcioJornada />)
-    const cta = screen.getByRole('link', { name: /Falar com um especialista/ })
+    const cta = screen.getByRole('link', { name: /Fale com um especialista/ })
     expect(cta).toBeInTheDocument()
     expect(cta.getAttribute('href') ?? '').toMatch(/^https?:\/\//)
   })

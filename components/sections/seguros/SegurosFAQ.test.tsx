@@ -54,19 +54,19 @@ describe('SegurosFAQ', () => {
     ).toBeInTheDocument()
   })
 
-  it('renders all 6 question buttons', () => {
+  it('renders all 10 question buttons', () => {
     render(<SegurosFAQ />)
     const buttons = screen.getAllByRole('button')
-    expect(buttons.length).toBeGreaterThanOrEqual(6)
-    expect(screen.getByText(/Como vocês escolhem a melhor seguradora para o meu perfil/i)).toBeInTheDocument()
-    expect(screen.getByText(/O que é franquia e como ela afeta o valor do seguro/i)).toBeInTheDocument()
-    expect(screen.getByText(/Vocês atendem PJ \(empresarial\)/i)).toBeInTheDocument()
+    expect(buttons.length).toBeGreaterThanOrEqual(10)
+    expect(screen.getByText(/Por que contratar um seguro por meio de uma corretora/i)).toBeInTheDocument()
+    expect(screen.getByText(/O que é franquia\?/i)).toBeInTheDocument()
+    expect(screen.getByText(/Como escolher a cobertura ideal/i)).toBeInTheDocument()
   })
 
   it('starts with all items collapsed (aria-expanded=false)', () => {
     render(<SegurosFAQ />)
     const firstQ = screen.getByRole('button', {
-      name: /Como vocês escolhem a melhor seguradora para o meu perfil/i,
+      name: /Por que contratar um seguro por meio de uma corretora/i,
     })
     expect(firstQ).toHaveAttribute('aria-expanded', 'false')
   })
@@ -74,48 +74,36 @@ describe('SegurosFAQ', () => {
   it('expands an item on click', () => {
     render(<SegurosFAQ />)
     fireEvent.click(
-      screen.getByRole('button', { name: /Como vocês escolhem a melhor seguradora para o meu perfil/i })
+      screen.getByRole('button', { name: /Por que contratar um seguro por meio de uma corretora/i })
     )
     expect(
-      screen.getByRole('button', { name: /Como vocês escolhem a melhor seguradora para o meu perfil/i })
+      screen.getByRole('button', { name: /Por que contratar um seguro por meio de uma corretora/i })
     ).toHaveAttribute('aria-expanded', 'true')
   })
 
   it('collapses an open item on second click', () => {
     render(<SegurosFAQ />)
     fireEvent.click(
-      screen.getByRole('button', { name: /Em caso de sinistro, vocês acompanham o processo/i })
+      screen.getByRole('button', { name: /O que devo fazer em caso de sinistro/i })
     )
     expect(
-      screen.getByRole('button', { name: /Em caso de sinistro, vocês acompanham o processo/i })
+      screen.getByRole('button', { name: /O que devo fazer em caso de sinistro/i })
     ).toHaveAttribute('aria-expanded', 'true')
     fireEvent.click(
-      screen.getByRole('button', { name: /Em caso de sinistro, vocês acompanham o processo/i })
+      screen.getByRole('button', { name: /O que devo fazer em caso de sinistro/i })
     )
     expect(
-      screen.getByRole('button', { name: /Em caso de sinistro, vocês acompanham o processo/i })
+      screen.getByRole('button', { name: /O que devo fazer em caso de sinistro/i })
     ).toHaveAttribute('aria-expanded', 'false')
-  })
-
-  it('renders sub-heading and bullet items inside Q2 (franquia) when expanded', () => {
-    render(<SegurosFAQ />)
-    const q2 = screen.getByRole('button', {
-      name: /O que é franquia e como ela afeta o valor do seguro/i,
-    })
-    fireEvent.click(q2)
-    expect(screen.getByText(/Tipos comuns:/i)).toBeInTheDocument()
-    expect(screen.getByText(/Franquia obrigatória \(auto\)/i)).toBeInTheDocument()
-    expect(screen.getByText(/Franquia facultativa \(mais barata, menos cobertura\)/i)).toBeInTheDocument()
-    expect(screen.getByText(/Sem franquia em coberturas adicionais/i)).toBeInTheDocument()
   })
 
   it('renders answer text for Q1 when expanded', () => {
     render(<SegurosFAQ />)
     fireEvent.click(
       screen.getByRole('button', {
-        name: /Como vocês escolhem a melhor seguradora para o meu perfil/i,
+        name: /Por que contratar um seguro por meio de uma corretora/i,
       })
     )
-    expect(screen.getByText(/Fazemos um diagnóstico do seu perfil/i)).toBeInTheDocument()
+    expect(screen.getByText(/A corretora atua na defesa dos seus interesses/i)).toBeInTheDocument()
   })
 })

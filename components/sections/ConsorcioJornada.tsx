@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { Check, ShieldCheck, ArrowRight } from 'lucide-react'
+import { Check, ShieldCheck } from 'lucide-react'
 import { useLocale } from '@/lib/i18n'
 import { formatWhatsAppLink } from '@/lib/utils'
+import { WhatsAppCTA } from '@/components/shared/WhatsAppCTA'
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number]
 const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? ''
@@ -177,17 +178,7 @@ export default function ConsorcioJornada() {
         viewport={{ once: true }}
         className="mt-8 flex justify-center"
       >
-        <a
-          href={wa}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group inline-flex items-center gap-3 bg-[#ae251c] hover:bg-[#921e16] text-white px-8 py-3.5 rounded-full font-semibold transition-colors duration-200"
-        >
-          {t('comoFunciona.cta')}
-          <span className="w-8 h-8 rounded-full bg-black/20 flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:translate-x-0.5">
-            <ArrowRight size={16} />
-          </span>
-        </a>
+        <WhatsAppCTA href={wa} label={t('comoFunciona.cta')} className="px-8 py-3.5" />
       </motion.div>
     </div>
   )

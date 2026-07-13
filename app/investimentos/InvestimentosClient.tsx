@@ -1,13 +1,15 @@
 'use client'
 
 import Image from 'next/image'
-import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
 import { useLocale } from '@/lib/i18n'
+import { formatWhatsAppLink } from '@/lib/utils'
 import { Reveal } from '@/components/motion/Reveal'
+import { WhatsAppCTA } from '@/components/shared/WhatsAppCTA'
 import { ServiceLeadForm } from '@/components/forms/ServiceLeadForm'
 import InvestimentosHero from '@/components/sections/investimentos/InvestimentosHero'
-import InvestimentosPilares from '@/components/sections/investimentos/InvestimentosPilares'
+import InvestimentosMetodologia from '@/components/sections/investimentos/InvestimentosMetodologia'
+import InvestimentosSolucoes from '@/components/sections/investimentos/InvestimentosSolucoes'
+import InvestimentosParaQuem from '@/components/sections/investimentos/InvestimentosParaQuem'
 
 const SOBRE_ICON_SRC = [
   '/images/Saude/user.png',
@@ -208,13 +210,13 @@ function CtaFinalSection() {
           <div className="mt-6 lg:mt-8 rule-accent h-px w-24" />
 
           <div className="mt-6 lg:mt-8 flex flex-wrap items-center gap-3">
-            <Link
-              href="#investimentos-form-card"
-              className="inline-flex items-center gap-2 rounded-full bg-[#ae251c] hover:bg-[#8f1f17] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 px-6 py-3 text-sm font-semibold text-white transition-colors"
-            >
-              {t('investimentosV2.cta.wa.button')}
-              <ArrowRight size={16} />
-            </Link>
+            <WhatsAppCTA
+              href={formatWhatsAppLink(
+                process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '',
+                t('investimentosV2.hero.wa.message'),
+              )}
+              label={t('investimentosV2.cta.wa.button')}
+            />
           </div>
 
           <ul className="mt-5 lg:mt-6 flex flex-col gap-2.5 max-w-[42ch]">
@@ -253,7 +255,9 @@ export default function InvestimentosClient() {
     <>
       <InvestimentosHero />
       <SobreSection />
-      <InvestimentosPilares />
+      <InvestimentosMetodologia />
+      <InvestimentosSolucoes />
+      <InvestimentosParaQuem />
       <CtaFinalSection />
     </>
   )

@@ -90,28 +90,30 @@ describe('SegurosClient', () => {
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: /proteção que acompanha|protection that follows/i,
+        name: /proteção completa para você|complete protection for you/i,
       })
     ).toBeInTheDocument()
   })
 
-  it('renders all 4 protection lines', () => {
+  it('renders all 4 protection groups', () => {
     renderClient()
-    ;[/vida|life/i, /auto/i, /residencial|home/i, /empresarial|commercial/i].forEach((re) => {
+    ;[
+      /proteção pessoal|personal protection/i,
+      /patrimônio|assets/i,
+      /empresas e responsabilidades|business & liability/i,
+      /operações e grandes riscos|operations & large risks/i,
+    ].forEach((re) => {
       expect(screen.getAllByText(re).length).toBeGreaterThan(0)
     })
   })
 
-  it('renders the hero CTA "Pedir cotação"', () => {
+  it('renders the primary CTA "Fale com um especialista" linking to WhatsApp', () => {
     renderClient()
-    // Hero has href="#seguros-form"; CTA section has "#seguros-form-card" — both are valid CTAs
-    const links = screen.getAllByRole('link', { name: /pedir cotação|request a quote/i })
+    const links = screen.getAllByRole('link', { name: /fale com um especialista|talk to a specialist/i })
     expect(links.length).toBeGreaterThan(0)
-    // At least one link should point to the seguros form
-    const heroLink = links.find(
-      (a) => a.getAttribute('href') === '#seguros-form' || a.getAttribute('href') === '#seguros-form-card'
-    )
-    expect(heroLink).toBeDefined()
+    // The specialist CTA now opens WhatsApp directly (wa.me), not the form anchor
+    const waLink = links.find((a) => (a.getAttribute('href') ?? '').includes('wa.me'))
+    expect(waLink).toBeDefined()
   })
 
   it('renders the lead form with the name field', () => {

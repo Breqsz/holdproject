@@ -13,50 +13,62 @@ const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number]
 const RED = '#ae251c'
 const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? ''
 
-type LinhaId = 'vida' | 'auto' | 'residencial' | 'empresarial'
+type GrupoId = 'protecao-pessoal' | 'patrimonio' | 'empresas' | 'operacoes'
 
-type LinhaConfig = {
-  id: LinhaId
+type GrupoConfig = {
+  id: GrupoId
   seq: string
   image: string
   imagePosition?: string
 }
 
-type Linha = LinhaConfig & {
+export type Cobertura = { name: string; desc: string }
+
+type Grupo = GrupoConfig & {
   title: string
   short: string
-  body: string
-  bullets: string[]
+  coberturas: Cobertura[]
   waMessage: string
   ariaLabel: string
 }
 
-const LINHAS_CONFIG: LinhaConfig[] = [
+const GRUPOS_CONFIG: GrupoConfig[] = [
   {
-    id: 'vida',
+    id: 'protecao-pessoal',
     seq: '01',
     image: '/images/hero/family-hero.webp',
     imagePosition: 'center 30%',
   },
   {
-    id: 'auto',
+    id: 'patrimonio',
     seq: '02',
-    image: '/images/hero/seguros-auto.webp',
-    imagePosition: 'center top',
-  },
-  {
-    id: 'residencial',
-    seq: '03',
     image: '/images/hero/card-seguros.jpg',
     imagePosition: 'center',
   },
   {
-    id: 'empresarial',
-    seq: '04',
+    id: 'empresas',
+    seq: '03',
     image: '/images/hero/seguros-empresarial.webp',
     imagePosition: 'center 35%',
   },
+  {
+    // TODO: asset definitivo de "Operações e Grandes Riscos" (frotas/indústria). Placeholder por ora.
+    id: 'operacoes',
+    seq: '04',
+    image: '/images/hero/seguros-auto.webp',
+    imagePosition: 'center top',
+  },
 ]
+
+function parseCoberturas(raw: string): Cobertura[] {
+  return raw
+    .split('|')
+    .map((pair) => {
+      const [name, desc] = pair.split('::')
+      return { name: (name ?? '').trim(), desc: (desc ?? '').trim() }
+    })
+    .filter((c) => c.name.length > 0)
+}
 
 const containerVariants = {
   hidden: {},
@@ -73,15 +85,17 @@ const headerVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: EASE_OUT_EXPO } },
 }
 
-function LinhaCard({
+function GrupoCard({
   data,
   ctaLabel,
   onSelect,
 }: {
-  data: Linha
+  data: Grupo
   ctaLabel: string
-  onSelect: (l: Linha) => void
+  onSelect: (g: Grupo) => void
 }) {
+  const coberturaNames = data.coberturas.map((c) => c.name)
+
   return (
     <motion.div
       variants={cardVariants}
@@ -156,12 +170,12 @@ function LinhaCard({
 
           <div className="overflow-hidden mb-4 lg:transition-[max-height,opacity] lg:duration-500 lg:ease-out lg:opacity-0 lg:max-h-0 lg:group-hover:opacity-100 lg:group-hover:max-h-44">
             <div className="flex flex-col gap-1 pt-3 border-t border-white/15 lg:flex-row lg:flex-wrap lg:gap-x-3 lg:gap-y-1.5">
-              {data.bullets.map((b) => (
+              {coberturaNames.map((name) => (
                 <span
-                  key={b}
+                  key={name}
                   className="text-[11.5px] text-white/85 leading-snug pt-2 lg:pt-2 lg:text-[11px] lg:leading-tight"
                 >
-                  · {b}
+                  · {name}
                 </span>
               ))}
             </div>
@@ -185,17 +199,16 @@ function LinhaCard({
 
 export default function SegurosLinhas() {
   const { t } = useLocale()
-  const [active, setActive] = useState<Linha | null>(null)
-  const [wa, setWa] = useState<Linha | null>(null)
+  const [active, setActive] = useState<Grupo | null>(null)
+  const [wa, setWa] = useState<Grupo | null>(null)
 
-  const linhas: Linha[] = LINHAS_CONFIG.map((cfg) => ({
+  const grupos: Grupo[] = GRUPOS_CONFIG.map((cfg) => ({
     ...cfg,
-    title: t(`segurosV2.linha.${cfg.id}.title`),
-    short: t(`segurosV2.linha.${cfg.id}.short`),
-    body: t(`segurosV2.linha.${cfg.id}.body`),
-    bullets: t(`segurosV2.linha.${cfg.id}.bullets`).split('|'),
-    waMessage: t(`segurosV2.linha.${cfg.id}.wa`),
-    ariaLabel: t(`segurosV2.linha.${cfg.id}.aria`),
+    title: t(`segurosV2.grupo.${cfg.id}.title`),
+    short: t(`segurosV2.grupo.${cfg.id}.short`),
+    coberturas: parseCoberturas(t(`segurosV2.grupo.${cfg.id}.coberturas`)),
+    waMessage: t(`segurosV2.grupo.${cfg.id}.wa`),
+    ariaLabel: t(`segurosV2.grupo.${cfg.id}.aria`),
   }))
 
   const waHref = wa ? formatWhatsAppLink(WHATSAPP, wa.waMessage) : ''
@@ -238,10 +251,10 @@ export default function SegurosLinhas() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.15 }}
         >
-          {linhas.map((l) => (
-            <LinhaCard
-              key={l.id}
-              data={l}
+          {grupos.map((g) => (
+            <GrupoCard
+              key={g.id}
+              data={g}
               ctaLabel={t('segurosV2.linhas.cta')}
               onSelect={setActive}
             />
@@ -254,9 +267,9 @@ export default function SegurosLinhas() {
         data={active}
         onClose={() => setActive(null)}
         onConfirm={() => {
-          const l = active
+          const g = active
           setActive(null)
-          setWa(l)
+          setWa(g)
         }}
       />
       <WhatsAppRedirectModal

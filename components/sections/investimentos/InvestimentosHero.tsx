@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ArrowRight, ShieldCheck } from 'lucide-react'
+import { ShieldCheck } from 'lucide-react'
 import { useLocale } from '@/lib/i18n'
+import { formatWhatsAppLink } from '@/lib/utils'
 import { Reveal } from '@/components/motion/Reveal'
+import { WhatsAppCTA } from '@/components/shared/WhatsAppCTA'
 
 const HERO_PHOTOS = [
   { src: '/images/hero/investimentos.webp', objectPosition: '50% 35%', objectPositionMobile: '50% 40%' },
@@ -120,13 +121,13 @@ export default function InvestimentosHero() {
 
           <Reveal delay={0.24}>
             <div className="mt-6 md:mt-8 flex flex-wrap items-center gap-3">
-              <Link
-                href="#investimentos-form"
-                className="inline-flex items-center gap-2 rounded-full bg-[#ae251c] hover:bg-[#8f1f17] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 px-6 py-3 text-sm font-semibold text-white transition-colors"
-              >
-                {t('investimentosV2.hero.cta.wa')}
-                <ArrowRight size={16} />
-              </Link>
+              <WhatsAppCTA
+                href={formatWhatsAppLink(
+                  process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '',
+                  t('investimentosV2.hero.wa.message'),
+                )}
+                label={t('investimentosV2.hero.cta.wa')}
+              />
             </div>
           </Reveal>
 

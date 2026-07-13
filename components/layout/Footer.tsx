@@ -141,7 +141,7 @@ export default function Footer() {
               <li className="flex items-start gap-2.5">
                 <MapPin size={14} className="text-[#e0e8f0]/70 shrink-0 mt-0.5" strokeWidth={1.7} />
                 <span className="text-[#7a9ab8] text-[0.9rem] leading-relaxed">
-                  Uberlândia, MG
+                  {t('footer.address')}
                 </span>
               </li>
               <li className="flex items-start gap-2.5">

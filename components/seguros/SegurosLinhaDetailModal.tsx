@@ -8,14 +8,15 @@ import { X } from 'lucide-react'
 import { WhatsAppIcon } from '@/components/icons/WhatsAppIcon'
 import { useLocale } from '@/lib/i18n'
 
+type Cobertura = { name: string; desc: string }
+
 type DetailData = {
   seq: string
   image: string
   imagePosition?: string
   title: string
   short: string
-  body: string
-  bullets: string[]
+  coberturas: Cobertura[]
 }
 
 type Props = {
@@ -148,24 +149,24 @@ export function SegurosLinhaDetailModal({ open, onClose, onConfirm, data }: Prop
                   {data.short}
                 </p>
 
-                <p className="mt-3.5 text-[13.5px] leading-relaxed text-white/72">
-                  {data.body}
-                </p>
-
-                {data.bullets.length > 0 && (
+                {data.coberturas.length > 0 && (
                   <div className="mt-4 pt-4 border-t border-white/12">
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#aec3d8] mb-2.5">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#aec3d8] mb-3">
                       {t('segurosV2.linhas.detail.bulletsLabel')}
                     </p>
-                    <div className="flex flex-col gap-1.5">
-                      {data.bullets.map((b) => (
-                        <span
-                          key={b}
-                          className="flex items-start gap-2 text-[12.5px] leading-snug text-white/82"
-                        >
-                          <span aria-hidden className="mt-0.5 font-bold text-[#ae251c]">·</span>
-                          {b}
-                        </span>
+                    <div className="flex flex-col gap-3">
+                      {data.coberturas.map((c) => (
+                        <div key={c.name}>
+                          <p className="flex items-start gap-2 text-[13px] font-semibold leading-snug text-white/92">
+                            <span aria-hidden className="mt-0.5 font-bold text-[#ae251c]">·</span>
+                            {c.name}
+                          </p>
+                          {c.desc && (
+                            <p className="mt-0.5 pl-3.5 text-[12px] leading-snug text-white/62">
+                              {c.desc}
+                            </p>
+                          )}
+                        </div>
                       ))}
                     </div>
                   </div>

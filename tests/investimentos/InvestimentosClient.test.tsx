@@ -79,27 +79,41 @@ describe('InvestimentosClient', () => {
     window.localStorage.clear()
   })
 
-  it('renders the H1 about patrimônio', () => {
+  it('renders the H1 about crédito empresarial', () => {
     renderClient()
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: /patrimônio é sistema|wealth is a system/i,
+        name: /crédito inteligente|smart credit/i,
       })
     ).toBeInTheDocument()
   })
 
-  it('renders all 4 pillar cards (each opens a dialog)', () => {
-    const { container } = renderClient()
-    const cards = container.querySelectorAll('button[aria-haspopup="dialog"]')
-    expect(cards.length).toBe(4)
+  it('renders the 5-step methodology and the solution cards', () => {
+    renderClient()
+    expect(
+      screen.getByText(/Entendemos o momento financeiro da empresa|We understand the company's financial moment/i)
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText(/Acompanhamos toda a operação|We follow the entire operation/i)
+    ).toBeInTheDocument()
+    expect(screen.getByText(/Antecipação de Recebíveis|Receivables Advance/i)).toBeInTheDocument()
+    expect(screen.getByText(/Crédito Empresarial|Corporate Credit/i)).toBeInTheDocument()
+    expect(screen.getByText(/Estruturação Financeira|Financial Structuring/i)).toBeInTheDocument()
   })
 
-  it('renders the hero CTA pointing to the form', () => {
+  it('renders the "Para quem é" checklist', () => {
     renderClient()
-    const links = screen.getAllByRole('link', { name: /agendar diagnóstico|schedule a diagnosis/i })
-    const heroLink = links.find((a) => a.getAttribute('href') === '#investimentos-form')
-    expect(heroLink).toBeDefined()
+    expect(screen.getByText(/Antecipar recebíveis|Advancing receivables/i)).toBeInTheDocument()
+    expect(screen.getByText(/Reestruturar passivos|Restructuring liabilities/i)).toBeInTheDocument()
+  })
+
+  it('renders the primary CTA linking to WhatsApp', () => {
+    renderClient()
+    const links = screen.getAllByRole('link', { name: /fale com um especialista|talk to a specialist/i })
+    expect(links.length).toBeGreaterThan(0)
+    const waLink = links.find((a) => (a.getAttribute('href') ?? '').includes('wa.me'))
+    expect(waLink).toBeDefined()
   })
 
   it('renders the lead form with the name field', () => {
@@ -111,7 +125,7 @@ describe('InvestimentosClient', () => {
     renderClient()
     expect(
       screen.getAllByRole('heading', {
-        name: /o jeito hold de cuidar|the hold way of caring/i,
+        name: /estruturar soluções financeiras|structuring financial solutions/i,
       }).length
     ).toBeGreaterThan(0)
   })
