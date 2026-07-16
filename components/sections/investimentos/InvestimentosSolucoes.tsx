@@ -1,11 +1,18 @@
 'use client'
 
+import { useCallback, useRef, useState } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { Wallet, Zap, Landmark, ShieldCheck, ReceiptText, PieChart, Handshake } from 'lucide-react'
+import { Wallet, Zap, Landmark, ShieldCheck, ReceiptText, PieChart, Target, ArrowRight } from 'lucide-react'
+import { HoldLogo } from '@/components/icons/HoldLogo'
+import { LinhaDetailModal, type LinhaDetailData } from '@/components/shared/LinhaDetailModal'
+import { WhatsAppRedirectModal } from '@/components/shared/WhatsAppRedirectModal'
+import { formatWhatsAppLink } from '@/lib/utils'
 import { useLocale } from '@/lib/i18n'
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number]
+const ACCENT = '#ae251c'
+const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? ''
 
 const SOLUCOES = [
   { id: 'capitalGiro', icon: Wallet, img: '/images/solucoes/capitalGiro.webp' },
@@ -15,6 +22,11 @@ const SOLUCOES = [
   { id: 'cobranca', icon: ReceiptText, img: '/images/solucoes/cobranca.webp' },
   { id: 'estruturacao', icon: PieChart, img: '/images/solucoes/estruturacao.webp' },
 ] as const
+
+type SolItem = LinhaDetailData & { id: string; ariaLabel: string }
+
+// Barra de credenciais (design idêntico ao TrustBar da home) que fecha a seção.
+const CRED = [Landmark, ShieldCheck, Zap, Target] as const
 
 const headerVariants = {
   hidden: { opacity: 0, y: 24 },
@@ -28,12 +40,41 @@ const cardVariants = {
 
 export default function InvestimentosSolucoes() {
   const { t } = useLocale()
+  const [active, setActive] = useState<SolItem | null>(null)
+  const [wa, setWa] = useState<SolItem | null>(null)
+
+  // Carrossel da barra de credenciais no mobile (mesmo comportamento do TrustBar).
+  const credScrollRef = useRef<HTMLDivElement>(null)
+  const [credDot, setCredDot] = useState(0)
+  const handleCredScroll = useCallback(() => {
+    const el = credScrollRef.current
+    if (!el) return
+    const first = el.firstElementChild as HTMLElement | null
+    if (!first) return
+    const stride = first.offsetWidth + 16 // gap-4
+    setCredDot(Math.min(Math.round(el.scrollLeft / stride), CRED.length - 1))
+  }, [])
+
+  const solData: SolItem[] = SOLUCOES.map((s, i) => ({
+    id: s.id,
+    seq: String(i + 1).padStart(2, '0'),
+    icon: s.icon,
+    image: s.img,
+    title: t(`investimentosV2.solucoes.${s.id}.title`),
+    short: t(`investimentosV2.solucoes.${s.id}.desc`),
+    body: t(`investimentosV2.solucoes.${s.id}.body`),
+    bullets: [],
+    ariaLabel: `${t('investimentosV2.solucoes.cta')}: ${t(`investimentosV2.solucoes.${s.id}.title`)}`,
+  }))
+
+  const waMessage = wa ? t(`investimentosV2.solucoes.${wa.id}.wa`) : ''
+  const waHref = wa ? formatWhatsAppLink(WHATSAPP, waMessage) : ''
 
   return (
     <section
       id="investimentos-solucoes"
       className="section-pad bg-[#07162a]"
-      style={{ fontFamily: 'var(--font-outfit)' }}
+      style={{ fontFamily: 'var(--font-outfit)', paddingBottom: 0 }}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div
@@ -51,7 +92,7 @@ export default function InvestimentosSolucoes() {
           </h2>
         </motion.div>
 
-        {/* Mosaico de peso variável: o 1º card é o destaque (2x2 no desktop) — quebra a grade uniforme */}
+        {/* Mosaico de peso variável: o 1º card é o destaque (2x2 no desktop). Cada card abre o modal de detalhe. */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -59,72 +100,158 @@ export default function InvestimentosSolucoes() {
           viewport={{ once: true, amount: 0.15 }}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
         >
-          {SOLUCOES.map(({ id, icon: Icon, img }, i) => (
-            <motion.article
-              key={id}
-              variants={cardVariants}
-              className={`group relative flex flex-col justify-end overflow-hidden rounded-2xl ring-1 ring-inset ring-white/[0.08] transition-shadow duration-300 hover:shadow-[0_28px_70px_-22px_rgba(0,0,0,0.65)] min-h-[248px] ${
-                i === 0 ? 'lg:col-span-2 lg:row-span-2 min-h-[300px] lg:min-h-0' : ''
+          {solData.map((d, i) => {
+            const Icon = d.icon!
+            return (
+              <motion.button
+                key={d.id}
+                type="button"
+                onClick={() => setActive(d)}
+                aria-label={d.ariaLabel}
+                aria-haspopup="dialog"
+                variants={cardVariants}
+                style={{ border: '1px solid rgba(255,255,255,0.08)' }}
+                className={`group relative flex h-full w-full flex-col justify-end overflow-hidden rounded-2xl text-left transition-shadow duration-300 hover:shadow-[0_28px_70px_-22px_rgba(0,0,0,0.65)] focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#07162a] min-h-[248px] ${
+                  i === 0 ? 'lg:col-span-2 lg:row-span-2 min-h-[300px] lg:min-h-0' : ''
+                }`}
+              >
+                <Image
+                  src={d.image!}
+                  alt=""
+                  fill
+                  sizes={i === 0 ? '(max-width:1024px) 100vw, 66vw' : '(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw'}
+                  className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.05]"
+                />
+                <span aria-hidden className="absolute inset-x-0 top-0 h-[3px] bg-[#ae251c]" />
+
+                <div
+                  className="relative p-6 lg:p-7"
+                  style={{ textShadow: '0 1px 10px rgba(0,0,0,0.6), 0 1px 3px rgba(0,0,0,0.55)' }}
+                >
+                  <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-[#ae251c]/90 ring-1 ring-white/10">
+                    <Icon size={22} className="text-white" strokeWidth={1.7} />
+                  </span>
+                  <h3
+                    className={`mt-4 text-white font-semibold tracking-tight ${
+                      i === 0 ? 'text-[19px] lg:text-[24px]' : 'text-[17px]'
+                    }`}
+                  >
+                    {d.title}
+                  </h3>
+                  <p
+                    className={`mt-2 leading-relaxed text-[#cbd5e1] ${
+                      i === 0 ? 'text-[13.5px] lg:text-[15px] lg:max-w-[46ch]' : 'text-[13.5px]'
+                    }`}
+                  >
+                    {d.short}
+                  </p>
+                  <span className="mt-4 inline-flex items-center gap-2 text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white">
+                    {t('investimentosV2.solucoes.cta')}
+                    <span
+                      aria-hidden
+                      className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-[#ae251c] transition-transform duration-300 group-hover:translate-x-0.5"
+                    >
+                      <ArrowRight size={11} className="text-white" />
+                    </span>
+                  </span>
+                </div>
+              </motion.button>
+            )
+          })}
+        </motion.div>
+
+      </div>
+
+      {/* Barra de credenciais — full-bleed ponta a ponta, quadrada, idêntica ao TrustBar da home */}
+      <motion.div
+        variants={headerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-40px' }}
+        className="mt-10 lg:mt-12 bg-[#040d1a] border-y border-white/[0.08]"
+      >
+        {/* Desktop */}
+        <div className="hidden md:flex mx-auto max-w-[1280px] px-6 lg:px-10 xl:px-14 py-6 lg:py-7 items-center">
+          {CRED.map((Icon, i) => (
+            <div
+              key={i}
+              className={`flex flex-1 items-center gap-3 ${
+                i < CRED.length - 1 ? 'border-r border-white/[0.08] pr-6 mr-6' : ''
               }`}
             >
-              <Image
-                src={img}
-                alt=""
-                fill
-                sizes={i === 0 ? '(max-width:1024px) 100vw, 66vw' : '(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw'}
-                className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.05]"
-              />
-              <span aria-hidden className="absolute inset-x-0 top-0 h-[3px] bg-[#ae251c]" />
-
-              <div
-                className="relative p-6 lg:p-7"
-                style={{ textShadow: '0 1px 10px rgba(0,0,0,0.6), 0 1px 3px rgba(0,0,0,0.55)' }}
-              >
-                <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-[#ae251c]/90 ring-1 ring-white/10">
-                  <Icon size={22} className="text-white" strokeWidth={1.7} />
-                </span>
-                <h3
-                  className={`mt-4 text-white font-semibold tracking-tight ${
-                    i === 0 ? 'text-[19px] lg:text-[24px]' : 'text-[17px]'
-                  }`}
-                >
-                  {t(`investimentosV2.solucoes.${id}.title`)}
-                </h3>
-                <p
-                  className={`mt-2 leading-relaxed text-[#cbd5e1] ${
-                    i === 0 ? 'text-[13.5px] lg:text-[15px] lg:max-w-[46ch]' : 'text-[13.5px]'
-                  }`}
-                >
-                  {t(`investimentosV2.solucoes.${id}.desc`)}
-                </p>
-              </div>
-            </motion.article>
-          ))}
-        </motion.div>
-
-        {/* Parceiros Estratégicos — faixa larga que fecha o mosaico */}
-        <motion.div
-          variants={headerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-60px' }}
-          className="mt-4 rounded-2xl border border-white/[0.08] bg-gradient-to-br from-white/[0.05] to-transparent p-8 lg:p-10"
-        >
-          <div className="flex items-start gap-4 max-w-3xl">
-            <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#ae251c]/[0.12]">
-              <Handshake size={22} className="text-[#e2604f]" strokeWidth={1.7} />
-            </span>
-            <div>
-              <h3 className="text-white font-semibold text-[19px] tracking-tight">
-                {t('investimentosV2.parceiros.title')}
-              </h3>
-              <p className="mt-2.5 text-[14.5px] leading-relaxed text-[#8fa6bd]">
-                {t('investimentosV2.parceiros.body')}
-              </p>
+              <Icon size={17} className="shrink-0 text-[#ae251c]" strokeWidth={1.6} />
+              <span className="text-[11.5px] leading-[1.38] text-white/50 font-light">
+                {t(`investimentosV2.parceiros.cred.${i + 1}`)}
+              </span>
             </div>
+          ))}
+          <div className="shrink-0 ml-6 pl-6 border-l border-white/[0.08]">
+            <HoldLogo className="h-[22px] w-auto" variant="dark" />
           </div>
-        </motion.div>
-      </div>
+        </div>
+
+        {/* Mobile — carrossel horizontal com dots (igual ao TrustBar) */}
+        <div className="md:hidden relative">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-[#040d1a] to-transparent z-10"
+          />
+          <div
+            ref={credScrollRef}
+            onScroll={handleCredScroll}
+            aria-label={t('investimentosV2.parceiros.title')}
+            className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth px-6 py-5 gap-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {CRED.map((Icon, i) => (
+              <div
+                key={i}
+                className="flex-shrink-0 w-[72vw] snap-start flex items-center gap-3 bg-white/[0.03] border border-white/[0.06] rounded-xl px-4 py-3"
+              >
+                <Icon size={18} className="shrink-0 text-[#ae251c]" strokeWidth={1.6} />
+                <span className="text-[12px] leading-[1.45] text-white/55 font-light">
+                  {t(`investimentosV2.parceiros.cred.${i + 1}`)}
+                </span>
+              </div>
+            ))}
+          </div>
+          <div aria-hidden className="flex justify-center gap-1.5 pb-3">
+            {CRED.map((_, i) => (
+              <div
+                key={i}
+                className={[
+                  'h-[3px] rounded-full transition-all duration-300',
+                  i === credDot ? 'w-6 bg-[#ae251c]' : 'w-3 bg-white/20',
+                ].join(' ')}
+              />
+            ))}
+          </div>
+        </div>
+      </motion.div>
+
+      <LinhaDetailModal
+        open={active !== null}
+        data={active}
+        accent={ACCENT}
+        labels={{
+          eyebrow: t('investimentosV2.solucoes.detail.eyebrow'),
+          bulletsLabel: t('investimentosV2.solucoes.detail.bulletsLabel'),
+          cta: t('investimentosV2.solucoes.detail.cta'),
+          close: t('investimentosV2.solucoes.detail.close'),
+        }}
+        onClose={() => setActive(null)}
+        onConfirm={() => {
+          const s = active
+          setActive(null)
+          setWa(s)
+        }}
+      />
+      <WhatsAppRedirectModal
+        open={wa !== null}
+        onClose={() => setWa(null)}
+        href={waHref}
+        label={wa?.title ?? ''}
+        message={waMessage}
+      />
     </section>
   )
 }
