@@ -130,9 +130,9 @@ export default function HomeHero() {
                 <TextType
                   text={t('hero.title.line3')}
                   as="span"
-                  typingSpeed={52}
-                  variableSpeed={{ min: 28, max: 88 }}
-                  initialDelay={900}
+                  typingSpeed={30}
+                  variableSpeed={{ min: 16, max: 42 }}
+                  initialDelay={450}
                   loop={false}
                   showCursor={!isTypingDone}
                   cursorCharacter="|"
