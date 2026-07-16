@@ -1,31 +1,21 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import Image from 'next/image'
-import { AnimatePresence, motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { ShieldCheck } from 'lucide-react'
 import { useLocale } from '@/lib/i18n'
 import { formatWhatsAppLink } from '@/lib/utils'
 import { Reveal } from '@/components/motion/Reveal'
 import { WhatsAppCTA } from '@/components/shared/WhatsAppCTA'
 
-const HERO_PHOTOS = [
-  { src: '/images/hero/investimentos.webp', objectPosition: '50% 35%', objectPositionMobile: '50% 40%' },
-  { src: '/images/hero/card-financeiras.jpg', objectPosition: '50% 45%', objectPositionMobile: '50% 45%' },
-] as const
+const HERO_IMAGE = {
+  src: '/images/hero/investimentos.webp',
+  objectPosition: '52% 42%',
+  objectPositionMobile: '58% 45%',
+} as const
 
 export default function InvestimentosHero() {
   const { t } = useLocale()
-  const [photoIndex, setPhotoIndex] = useState(0)
-
-  useEffect(() => {
-    const id = window.setInterval(() => {
-      setPhotoIndex((i) => (i + 1) % HERO_PHOTOS.length)
-    }, 6400)
-    return () => window.clearInterval(id)
-  }, [])
-
-  const photo = HERO_PHOTOS[photoIndex]
 
   return (
     <section
@@ -36,31 +26,27 @@ export default function InvestimentosHero() {
       }}
     >
       <div className="relative h-[58vh] min-h-[420px] w-full overflow-hidden md:absolute md:inset-0 md:h-auto md:min-h-0">
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.div
-            key={photo.src}
-            initial={{ opacity: 0, scale: 1.04 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.02 }}
-            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute inset-0"
-          >
-            <Image
-              src={photo.src}
-              alt={t('investimentosV2.hero.image.alt')}
-              fill
-              priority
-              quality={100}
-              sizes="100vw"
-              className="saude-hero-photo object-cover"
-              style={{
-                ['--obj-mob' as never]: photo.objectPositionMobile,
-                ['--obj-dsk' as never]: photo.objectPosition,
-                filter: 'brightness(0.82) contrast(1.05)',
-              }}
-            />
-          </motion.div>
-        </AnimatePresence>
+        <motion.div
+          initial={{ opacity: 0, scale: 1.04 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          className="absolute inset-0"
+        >
+          <Image
+            src={HERO_IMAGE.src}
+            alt={t('investimentosV2.hero.image.alt')}
+            fill
+            priority
+            quality={100}
+            sizes="100vw"
+            className="saude-hero-photo object-cover"
+            style={{
+              ['--obj-mob' as never]: HERO_IMAGE.objectPositionMobile,
+              ['--obj-dsk' as never]: HERO_IMAGE.objectPosition,
+              filter: 'brightness(0.82) contrast(1.05)',
+            }}
+          />
+        </motion.div>
 
         <div
           aria-hidden

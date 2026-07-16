@@ -40,56 +40,52 @@ export default function InvestimentosSolucoes() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
-          className="max-w-3xl mb-12 lg:mb-16"
+          className="max-w-3xl mb-10 lg:mb-14"
         >
           <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#7a9ab8]">
             {t('investimentosV2.solucoes.eyebrow')}
           </p>
-          <h2
-            className="mt-4 text-display text-white"
-            style={{ fontFamily: 'var(--font-gellix)', fontSize: 'clamp(1.75rem, 3.4vw, 2.75rem)' }}
-          >
+          <h2 className="mt-4 text-white text-[clamp(1.75rem,3.4vw,2.75rem)] font-semibold tracking-[-0.02em] leading-[1.05]">
             {t('investimentosV2.solucoes.title')}
           </h2>
         </motion.div>
 
+        {/* Mosaico de peso variável: o 1º card é o destaque (2x2 no desktop) — quebra a grade uniforme */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.15 }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
         >
-          {SOLUCOES.map(({ id, icon: Icon }) => (
+          {SOLUCOES.map(({ id, icon: Icon }, i) => (
             <motion.div
               key={id}
               variants={cardVariants}
-              className="group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6 lg:p-7 transition-colors duration-300 hover:border-[#ae251c]/40 hover:bg-white/[0.05]"
+              className={`group relative flex flex-col justify-between rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6 lg:p-7 overflow-hidden transition-all duration-300 hover:bg-white/[0.05] hover:border-[#ae251c]/40 hover:shadow-[0_24px_60px_-32px_rgba(0,0,0,0.6)] ${i === 0 ? 'lg:col-span-2 lg:row-span-2' : ''}`}
             >
-              <span
-                aria-hidden
-                className="absolute left-0 top-6 h-8 w-[3px] rounded-r bg-[#ae251c] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-              />
               <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-[#ae251c]/[0.12]">
                 <Icon size={22} className="text-[#e2604f]" strokeWidth={1.7} />
               </span>
-              <h3 className="mt-4 text-white font-semibold text-[17px] tracking-tight">
-                {t(`investimentosV2.solucoes.${id}.title`)}
-              </h3>
-              <p className="mt-2 text-[13.5px] leading-relaxed text-[#8fa6bd]">
-                {t(`investimentosV2.solucoes.${id}.desc`)}
-              </p>
+              <div className="mt-5">
+                <h3 className={`text-white font-semibold tracking-tight ${i === 0 ? 'text-[17px] lg:text-[22px]' : 'text-[17px]'}`}>
+                  {t(`investimentosV2.solucoes.${id}.title`)}
+                </h3>
+                <p className={`mt-2 leading-relaxed text-[#8fa6bd] ${i === 0 ? 'text-[13.5px] lg:text-[15px] lg:max-w-[46ch]' : 'text-[13.5px]'}`}>
+                  {t(`investimentosV2.solucoes.${id}.desc`)}
+                </p>
+              </div>
             </motion.div>
           ))}
         </motion.div>
 
-        {/* Parceiros Estratégicos */}
+        {/* Parceiros Estratégicos — faixa larga que fecha o mosaico */}
         <motion.div
           variants={headerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-60px' }}
-          className="mt-12 lg:mt-16 rounded-2xl border border-white/[0.08] bg-gradient-to-br from-white/[0.05] to-transparent p-8 lg:p-10"
+          className="mt-4 rounded-2xl border border-white/[0.08] bg-gradient-to-br from-white/[0.05] to-transparent p-8 lg:p-10"
         >
           <div className="flex items-start gap-4 max-w-3xl">
             <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#ae251c]/[0.12]">
