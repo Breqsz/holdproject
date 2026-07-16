@@ -52,11 +52,10 @@ const GRUPOS_CONFIG: GrupoConfig[] = [
     imagePosition: 'center 35%',
   },
   {
-    // TODO: asset definitivo de "Operações e Grandes Riscos" (frotas/indústria). Placeholder por ora.
     id: 'operacoes',
     seq: '04',
-    image: '/images/hero/seguros-auto.webp',
-    imagePosition: 'center top',
+    image: '/images/hero/seguros-operacoes.webp',
+    imagePosition: 'center',
   },
 ]
 
