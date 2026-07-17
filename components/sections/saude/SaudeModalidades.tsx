@@ -145,7 +145,7 @@ function ModalidadeCard({
           </h3>
 
           <p
-            className="text-[12.5px] sm:text-[13px] leading-[1.5] max-w-[36ch] mb-4"
+            className="text-[13px] sm:text-[13px] leading-[1.5] max-w-[36ch] mb-4"
             style={{
               color: 'rgba(255,255,255,0.78)',
               textShadow: '0 1px 12px rgba(0,0,0,0.5)',
@@ -157,14 +157,14 @@ function ModalidadeCard({
           <div className="overflow-hidden mb-4 lg:transition-[max-height,opacity] lg:duration-500 lg:ease-out lg:opacity-0 lg:max-h-0 lg:group-hover:opacity-100 lg:group-hover:max-h-44">
             <div className="flex flex-col gap-1 pt-3 border-t border-white/15 lg:flex-row lg:flex-wrap lg:gap-x-3 lg:gap-y-1.5">
               {data.bullets.map((b) => (
-                <span key={b} className="text-[11.5px] text-white/85 leading-snug pt-2 lg:pt-2 lg:text-[11px] lg:leading-tight">
+                <span key={b} className="text-[12.5px] sm:text-[11.5px] text-white/85 leading-snug pt-2 lg:pt-2 lg:text-[11px] lg:leading-tight">
                   · {b}
                 </span>
               ))}
             </div>
           </div>
 
-          <span className="inline-flex items-center gap-2.5 self-start text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white">
+          <span className="inline-flex items-center gap-2.5 self-start text-[12px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white">
             {ctaLabel}
             <span
               aria-hidden
@@ -211,7 +211,7 @@ export default function SaudeModalidades() {
           viewport={{ once: true, margin: '-80px' }}
           className="max-w-3xl mb-12 lg:mb-16"
         >
-          <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#7a9ab8]">
+          <p className="text-[12px] sm:text-[10px] font-semibold uppercase tracking-[0.22em] text-[#7a9ab8]">
             {t('saudeV2.modalidades.eyebrow')}
           </p>
           <h2
@@ -223,7 +223,7 @@ export default function SaudeModalidades() {
           >
             {t('saudeV2.modalidades.title')}
           </h2>
-          <p className="mt-6 max-w-[60ch] text-[#7a9ab8] leading-relaxed">
+          <p className="mt-6 max-w-[60ch] text-[#9db3c9] md:text-[#7a9ab8] leading-relaxed">
             {t('saudeV2.modalidades.body')}
           </p>
         </motion.div>
