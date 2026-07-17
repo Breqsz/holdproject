@@ -158,7 +158,7 @@ function GrupoCard({
           </h3>
 
           <p
-            className="text-[12.5px] sm:text-[13px] leading-[1.5] max-w-[36ch] mb-4"
+            className="text-[13px] sm:text-[13px] leading-[1.5] max-w-[36ch] mb-4"
             style={{
               color: 'rgba(255,255,255,0.78)',
               textShadow: '0 1px 12px rgba(0,0,0,0.5)',
@@ -172,7 +172,7 @@ function GrupoCard({
               {coberturaNames.map((name) => (
                 <span
                   key={name}
-                  className="text-[11.5px] text-white/85 leading-snug pt-2 lg:pt-2 lg:text-[11px] lg:leading-tight"
+                  className="text-[12.5px] lg:text-[11.5px] text-white/85 leading-snug pt-2 lg:pt-2 lg:text-[11px] lg:leading-tight"
                 >
                   · {name}
                 </span>
@@ -180,7 +180,7 @@ function GrupoCard({
             </div>
           </div>
 
-          <span className="inline-flex items-center gap-2.5 self-start text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white">
+          <span className="inline-flex items-center gap-2.5 self-start text-[12px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white">
             {ctaLabel}
             <span
               aria-hidden
@@ -226,7 +226,7 @@ export default function SegurosLinhas() {
           viewport={{ once: true, margin: '-80px' }}
           className="max-w-3xl mb-12 lg:mb-16"
         >
-          <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#7a9ab8]">
+          <p className="text-[12px] sm:text-[10px] font-semibold uppercase tracking-[0.22em] text-[#7a9ab8]">
             {t('segurosV2.linhas.eyebrow')}
           </p>
           <h2
@@ -238,7 +238,7 @@ export default function SegurosLinhas() {
           >
             {t('segurosV2.linhas.title')}
           </h2>
-          <p className="mt-6 max-w-[60ch] text-[#7a9ab8] leading-relaxed">
+          <p className="mt-6 max-w-[60ch] text-[#9db3c9] md:text-[#7a9ab8] leading-relaxed">
             {t('segurosV2.linhas.body')}
           </p>
         </motion.div>
