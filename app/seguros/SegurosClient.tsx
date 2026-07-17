@@ -148,7 +148,7 @@ function SobreSection() {
             {chips.map((chip, i) => (
               <div key={chip} className="flex items-center gap-3 border-l border-white/15 pl-4">
                 <TopicIcon src={SOBRE_ICON_SRC[i]} size={28} />
-                <h3 className="text-[13px] font-semibold leading-[1.3] text-[#e3ecf6] tracking-tight">
+                <h3 className="text-[13.5px] font-semibold leading-[1.3] text-[#e3ecf6] tracking-tight">
                   {chip}
                 </h3>
               </div>
@@ -197,7 +197,7 @@ function CtaFinalSection() {
           />
         </div>
         <Reveal>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#7a9ab8]">
+          <p className="text-[12px] md:text-[10px] font-semibold uppercase tracking-[0.22em] text-[#7a9ab8]">
             {t('segurosV2.cta.eyebrow')}
           </p>
           <h2
@@ -225,7 +225,7 @@ function CtaFinalSection() {
             {[1, 2].map((n) => (
               <li
                 key={n}
-                className="flex items-start gap-2.5 text-[12.5px] leading-[1.5] text-white/72"
+                className="flex items-start gap-2.5 text-[13px] md:text-[12.5px] leading-[1.5] text-white/72"
               >
                 <span
                   aria-hidden
