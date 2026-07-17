@@ -44,10 +44,19 @@ vi.mock('@/lib/i18n', () => ({
 
 const mockScrollPrev = vi.fn()
 const mockScrollNext = vi.fn()
+const mockScrollTo = vi.fn()
 vi.mock('embla-carousel-react', () => ({
   default: () => {
     const ref = (node: HTMLElement | null) => void node
-    const api = { scrollPrev: mockScrollPrev, scrollNext: mockScrollNext }
+    const api = {
+      scrollPrev: mockScrollPrev,
+      scrollNext: mockScrollNext,
+      scrollTo: mockScrollTo,
+      selectedScrollSnap: () => 0,
+      scrollSnapList: () => [0, 1, 2],
+      on: vi.fn(),
+      off: vi.fn(),
+    }
     return [ref, api]
   },
 }))

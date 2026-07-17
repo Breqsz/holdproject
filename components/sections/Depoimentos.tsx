@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Star, ArrowLeft, ArrowRight } from 'lucide-react'
@@ -21,9 +21,31 @@ const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.1 } } 
 export default function Depoimentos() {
   const { t } = useLocale()
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: 'start' })
+  const [selectedIndex, setSelectedIndex] = useState(0)
+  const [scrollSnaps, setScrollSnaps] = useState<number[]>([])
 
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi])
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi])
+  const scrollTo = useCallback((index: number) => emblaApi?.scrollTo(index), [emblaApi])
+
+  useEffect(() => {
+    if (!emblaApi) return
+
+    const onSelect = () => setSelectedIndex(emblaApi.selectedScrollSnap())
+    const onReInit = () => {
+      setScrollSnaps(emblaApi.scrollSnapList())
+      setSelectedIndex(emblaApi.selectedScrollSnap())
+    }
+
+    onReInit()
+    emblaApi.on('select', onSelect)
+    emblaApi.on('reInit', onReInit)
+
+    return () => {
+      emblaApi.off('select', onSelect)
+      emblaApi.off('reInit', onReInit)
+    }
+  }, [emblaApi])
 
   return (
     <section
@@ -146,7 +168,7 @@ export default function Depoimentos() {
                     <div>
                       <div className="rule-accent h-px w-10 mb-4 opacity-60" />
                       <p className="text-[#07162a] font-semibold text-sm">{item.name}</p>
-                      <p className="text-[#07162a]/50 text-xs mt-0.5 inline-flex items-center gap-1.5">
+                      <p className="text-[#07162a]/50 text-[12.5px] mt-0.5 inline-flex items-center gap-1.5">
                         <GoogleGIcon size={12} />
                         {t('testimonials.role')}
                       </p>
@@ -155,6 +177,22 @@ export default function Depoimentos() {
                 </div>
               ))}
             </div>
+          </div>
+
+          {/* Dots — indicador de posição, só no mobile (1 card/view) */}
+          <div className="mt-6 flex justify-center gap-1.5 sm:hidden">
+            {scrollSnaps.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                aria-label={`Ir ao depoimento ${i + 1}`}
+                onClick={() => scrollTo(i)}
+                className={[
+                  'h-1.5 rounded-full transition-all',
+                  i === selectedIndex ? 'w-5 bg-[#07162a]' : 'w-1.5 bg-[#07162a]/25',
+                ].join(' ')}
+              />
+            ))}
           </div>
         </motion.div>
       </div>
