@@ -120,7 +120,7 @@ export function ServiceLeadForm({
               {audienceOptions.map((opt) => (
                 <label
                   key={opt}
-                  className="relative flex min-h-[44px] cursor-pointer items-center justify-center gap-2 rounded-lg bg-[#07162a] border border-[#142f54] px-2 sm:px-3 py-3 text-sm leading-tight text-white/90 transition-colors has-[:checked]:border-[#ae251c] has-[:checked]:bg-[#0d2240] hover:border-[#7a9ab8]/40"
+                  className="relative flex min-h-[44px] cursor-pointer items-center justify-center gap-2 rounded-lg bg-[#07162a] border border-[#142f54] px-2 sm:px-3 py-3 text-sm leading-tight sm:leading-5 text-white/90 transition-colors has-[:checked]:border-[#ae251c] has-[:checked]:bg-[#0d2240] hover:border-[#7a9ab8]/40"
                 >
                   <input
                     {...register('audience')}
