@@ -31,7 +31,7 @@ export default function ComoFunciona() {
           grid-template-columns: 1fr;
           gap: 2.25rem;
         }
-        @media (min-width: 900px) {
+        @media (min-width: 1024px) {
           .como-funciona-v2 .v2-inner {
             grid-template-columns: 1.4fr 1fr;
             grid-template-areas:
@@ -55,7 +55,7 @@ export default function ComoFunciona() {
           display: block;
           filter: drop-shadow(0 20px 40px rgba(7, 22, 42, 0.16));
         }
-        @media (min-width: 900px) {
+        @media (min-width: 1024px) {
           .como-funciona-v2 .v2-portrait {
             max-width: 24rem;
             margin-right: 0;
@@ -75,16 +75,10 @@ export default function ComoFunciona() {
         }
         .como-funciona-v2 .v2-prose {
           position: relative;
-          min-height: 16em;
-        }
-        @media (min-width: 640px) {
-          .como-funciona-v2 .v2-prose {
-            min-height: 13em;
-          }
+          display: grid;
         }
         .como-funciona-v2 .v2-pillar-body {
-          position: absolute;
-          inset: 0;
+          grid-area: 1 / 1;
           font-size: clamp(1.1rem, 1.45vw, 1.25rem);
           line-height: 1.55;
           color: rgba(7, 22, 42, 0.82);
@@ -117,10 +111,10 @@ export default function ComoFunciona() {
         .como-funciona-v2 .v2-chip {
           cursor: pointer;
           user-select: none;
-          font-size: 0.72rem;
+          font-size: 0.8rem;
           letter-spacing: 0.06em;
           text-transform: uppercase;
-          padding: 0.6rem 0.9rem;
+          padding: 0.7rem 1rem;
           color: #07162a;
           border: 1px solid rgba(7, 22, 42, 0.22);
           background: transparent;
@@ -128,9 +122,9 @@ export default function ComoFunciona() {
         }
         @media (min-width: 640px) {
           .como-funciona-v2 .v2-chip {
-            font-size: 0.78rem;
+            font-size: 0.85rem;
             letter-spacing: 0.08em;
-            padding: 0.7rem 1.15rem;
+            padding: 0.75rem 1.2rem;
           }
         }
         .como-funciona-v2:has(#v2-r-1:checked) .v2-chip:nth-of-type(1),
