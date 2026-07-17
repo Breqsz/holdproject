@@ -145,7 +145,7 @@ export function WhatsAppRedirectModal({
             <button
               type="button"
               onClick={onClose}
-              className="mt-3 inline-flex w-full min-h-[44px] items-center justify-center px-6 py-2 text-[12px] sm:text-[11px] uppercase tracking-[0.22em] text-white/70 sm:text-white/50 hover:text-white/80 transition-colors"
+              className="mt-3 inline-flex w-full min-h-[44px] sm:min-h-0 items-center justify-center px-6 py-2 text-[12px] sm:text-[11px] uppercase tracking-[0.22em] text-white/70 sm:text-white/50 hover:text-white/80 transition-colors"
             >
               {t('shared.wa.modal.cancel')}
             </button>
