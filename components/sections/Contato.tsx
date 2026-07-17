@@ -196,7 +196,7 @@ export default function Contato() {
                 <button
                   type="button"
                   onClick={handleBack}
-                  className={`min-h-[44px] inline-flex items-center gap-1.5 text-sm font-medium transition-all duration-200 ${
+                  className={`min-h-[44px] md:min-h-0 inline-flex items-center gap-1.5 text-sm font-medium transition-all duration-200 ${
                     step === 1 ? 'invisible pointer-events-none' : 'text-[#7a9ab8] hover:text-white'
                   }`}
                 >
@@ -207,7 +207,7 @@ export default function Contato() {
                 <button
                   type="button"
                   onClick={handleNext}
-                  className="px-7 min-h-[44px] inline-flex items-center justify-center gap-2 bg-[#ae251c] hover:bg-[#921e16] text-white font-semibold rounded-full py-2.5 text-sm transition-colors duration-200"
+                  className="px-7 min-h-[44px] md:min-h-0 inline-flex items-center justify-center gap-2 bg-[#ae251c] hover:bg-[#921e16] text-white font-semibold rounded-full py-2.5 text-sm transition-colors duration-200"
                 >
                   {step < 3 ? t('contact.wizard.next') : isClient ? t('contact.wizard.send') : t('partners.cta')}
                   {step < 3 && <ChevronRight size={16} />}

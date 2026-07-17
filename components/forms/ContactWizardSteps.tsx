@@ -342,7 +342,7 @@ export function DoneState({
         {t('contact.wizard.done.open_wa')}
       </a>
       <div className="mt-5">
-        <button type="button" onClick={onReset} className="min-h-[44px] inline-flex items-center justify-center text-[#4a6a8a] hover:text-[#7a9ab8] text-xs transition-colors">
+        <button type="button" onClick={onReset} className="min-h-[44px] md:min-h-0 inline-flex items-center justify-center text-[#4a6a8a] hover:text-[#7a9ab8] text-xs transition-colors">
           {t('contact.wizard.done.reset')}
         </button>
       </div>
