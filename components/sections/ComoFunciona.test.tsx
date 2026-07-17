@@ -38,7 +38,7 @@ describe('ComoFunciona — prose in normal flow (no absolute overlap)', () => {
     ).toBeInTheDocument()
   })
 
-  it('active pillar (default: intelligence) is visually shown via opacity 1, others opacity 0', () => {
+  it('all three pillar bodies are mounted (crossfade targets present)', () => {
     const { container } = renderWithLocale(<ComoFunciona />)
     const active = container.querySelector('.v2-pb-1') as HTMLElement
     const inactive1 = container.querySelector('.v2-pb-2') as HTMLElement

@@ -122,9 +122,9 @@ export default function ComoFunciona() {
         }
         @media (min-width: 640px) {
           .como-funciona-v2 .v2-chip {
-            font-size: 0.85rem;
+            font-size: 0.78rem;
             letter-spacing: 0.08em;
-            padding: 0.75rem 1.2rem;
+            padding: 0.7rem 1.15rem;
           }
         }
         .como-funciona-v2:has(#v2-r-1:checked) .v2-chip:nth-of-type(1),
