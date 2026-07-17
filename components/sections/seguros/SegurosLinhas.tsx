@@ -172,7 +172,7 @@ function GrupoCard({
               {coberturaNames.map((name) => (
                 <span
                   key={name}
-                  className="text-[12.5px] lg:text-[11.5px] text-white/85 leading-snug pt-2 lg:pt-2 lg:text-[11px] lg:leading-tight"
+                  className="text-[12.5px] text-white/85 leading-snug pt-2 lg:pt-2 lg:text-[11px] lg:leading-tight"
                 >
                   · {name}
                 </span>
