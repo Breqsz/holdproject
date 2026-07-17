@@ -79,6 +79,12 @@ export default function EstrategiaManifesto() {
             style={{ border: "1px solid rgba(255,255,255,0.06)" }}
           />
 
+          {/* scrim inferior — legibilidade no crop retrato mobile */}
+          <div
+            aria-hidden
+            className="md:hidden absolute inset-0 bg-gradient-to-t from-[#07162a]/85 via-[#07162a]/25 to-transparent"
+          />
+
           {/* Overlay text — free-flowing, no card */}
           <div className="absolute inset-0 flex items-center">
             <motion.div
@@ -122,7 +128,7 @@ export default function EstrategiaManifesto() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.75, delay: 0.7, ease: EASE }}
-                className="mt-8 text-[13.5px] sm:text-[14.5px] leading-[1.65] max-w-[56ch]"
+                className="mt-8 text-[14.5px] sm:text-[14.5px] leading-[1.65] max-w-[56ch]"
                 style={{
                   color: "#c8d2e0",
                   fontWeight: 400,
@@ -225,7 +231,7 @@ export default function EstrategiaManifesto() {
                 animate={inView ? { opacity: 1 } : {}}
                 transition={{
                   duration: 0.55,
-                  delay: 1.4 + i * 0.08,
+                  delay: 0.6 + i * 0.08,
                   ease: "easeOut",
                 }}
                 className={[

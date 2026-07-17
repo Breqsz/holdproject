@@ -95,7 +95,7 @@ export default function FAQ() {
                   aria-expanded={isOpen ? 'true' : 'false'}
                   className="w-full flex items-center justify-between gap-4 py-5 text-left group"
                 >
-                  <span className="text-[#07162a] font-medium text-sm md:text-base leading-snug group-hover:text-[#ae251c] transition-colors">
+                  <span className="text-[#07162a] font-medium text-[15px] md:text-base leading-snug group-hover:text-[#ae251c] transition-colors">
                     {item.q}
                   </span>
                   <motion.span

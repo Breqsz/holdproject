@@ -1,56 +1,57 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect, beforeAll } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import ComoFunciona from './ComoFunciona'
+import { LocaleProvider } from '@/lib/i18n'
 
-vi.mock('framer-motion', () => {
-  const React = require('react')
-  const motion = new Proxy(
-    {},
-    {
-      get: (_t, tag: string) =>
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        ({ children, ...rest }: any) => {
-          const { initial, animate, whileInView, viewport, transition, exit, whileHover, whileTap, variants, style, ...d } = rest
-          void initial; void animate; void whileInView; void viewport; void transition
-          void exit; void whileHover; void whileTap; void variants
-          return React.createElement(tag, { ...d, style }, children)
-        },
-    },
-  )
-  const make = () => ({ get: () => 0, set: () => {}, onChange: () => () => {} })
-  return {
-    motion,
-    AnimatePresence: ({ children }: { children: React.ReactNode }) => children,
-    useScroll: () => ({ scrollYProgress: make() }),
-    useTransform: () => make(),
+function renderWithLocale(ui: React.ReactElement) {
+  return render(<LocaleProvider>{ui}</LocaleProvider>)
+}
+
+beforeAll(() => {
+  // jsdom's default navigator.language ('en-US') would otherwise flip
+  // LocaleProvider to English on mount; pin to 'pt' for deterministic assertions.
+  try {
+    window.localStorage.setItem('hold:locale', 'pt')
+  } catch {
+    /* ignore */
   }
 })
 
-vi.mock('@/lib/i18n', () => ({
-  useLocale: () => ({
-    locale: 'pt',
-    setLocale: vi.fn(),
-    t: (key: string) => {
-      const map: Record<string, string> = {
-        'comoFunciona.title':         'O jeito HOLD de ser',
-        'comoFunciona.subtitle':      'Mais do que intermediar soluções, estruturamos decisões.',
-        'comoFunciona.body':          'Na Hold, cada cliente recebe uma estratégia personalizada.',
-      }
-      return map[key] ?? key
-    },
-  }),
-}))
-
-describe('ComoFunciona (home manifesto header)', () => {
-  it('renders the section with id="como-funciona"', () => {
-    render(<ComoFunciona />)
-    expect(document.querySelector('#como-funciona')).not.toBeNull()
+describe('ComoFunciona — prose in normal flow (no absolute overlap)', () => {
+  it('renders all three pillar chips (Inteligência, Transparência, Acompanhamento)', () => {
+    renderWithLocale(<ComoFunciona />)
+    expect(screen.getByText('Inteligência')).toBeInTheDocument()
+    expect(screen.getByText('Transparência')).toBeInTheDocument()
+    expect(screen.getByText('Acompanhamento')).toBeInTheDocument()
   })
 
-  it('renders title, subtitle and body', () => {
-    render(<ComoFunciona />)
-    expect(screen.getByRole('heading', { level: 2, name: /O jeito HOLD de ser/i })).toBeInTheDocument()
-    expect(screen.getByText(/Mais do que intermediar soluções/)).toBeInTheDocument()
-    expect(screen.getByText(/cada cliente recebe uma estratégia/)).toBeInTheDocument()
+  it('renders all three pillar bodies simultaneously in the document (grid-stack crossfade, not conditional render)', () => {
+    renderWithLocale(<ComoFunciona />)
+    expect(
+      screen.getByText(/Cada plano nasce de um diagnóstico real/i),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText(/Contrato lido em conjunto, taxas explicadas/i),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText(/A conversa não termina na contratação/i),
+    ).toBeInTheDocument()
+  })
+
+  it('all three pillar bodies are mounted (crossfade targets present)', () => {
+    const { container } = renderWithLocale(<ComoFunciona />)
+    const active = container.querySelector('.v2-pb-1') as HTMLElement
+    const inactive1 = container.querySelector('.v2-pb-2') as HTMLElement
+    const inactive2 = container.querySelector('.v2-pb-3') as HTMLElement
+    expect(active).toBeInTheDocument()
+    expect(inactive1).toBeInTheDocument()
+    expect(inactive2).toBeInTheDocument()
+  })
+
+  it('prose container no longer relies on a fixed min-height (normal-flow grid-stack)', () => {
+    const { container } = renderWithLocale(<ComoFunciona />)
+    const styleTag = container.querySelector('style')
+    expect(styleTag?.textContent ?? '').not.toMatch(/min-height/)
+    expect(styleTag?.textContent ?? '').toMatch(/\.v2-prose\s*{[^}]*display:\s*grid/)
   })
 })

@@ -65,7 +65,7 @@ export default function Footer() {
       {/* Top hairline: editorial navy tint */}
       <div className="rule-accent h-px max-w-7xl mx-auto" />
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20">
 
         {/* Main footer hero: HOLD CORRETORA + LOJACORR seal */}
         <div ref={heroRef} className="mb-14 flex flex-col items-center text-center gap-6">
@@ -104,10 +104,10 @@ export default function Footer() {
         </div>
 
         {/* 4-column grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-8">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-8">
 
           {/* Soluções */}
-          <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
+          <div className="flex flex-col items-start sm:items-start text-left sm:text-left">
             <h4 className={headingCls}>{t('cardnav.solutions')}</h4>
             <ul className="space-y-2.5">
               {solutionsLinks.map((link) => (
@@ -121,7 +121,7 @@ export default function Footer() {
           </div>
 
           {/* A Hold */}
-          <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
+          <div className="flex flex-col items-start sm:items-start text-left sm:text-left">
             <h4 className={headingCls}>{t('cardnav.hold')}</h4>
             <ul className="space-y-2.5">
               {holdLinks.map((link) => (
@@ -135,7 +135,7 @@ export default function Footer() {
           </div>
 
           {/* Contato */}
-          <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
+          <div className="flex flex-col items-start sm:items-start text-left sm:text-left">
             <h4 className={headingCls}>{t('nav.contact')}</h4>
             <ul className="space-y-3">
               <li className="flex items-start gap-2.5">
@@ -165,7 +165,7 @@ export default function Footer() {
           </div>
 
           {/* Redes Sociais */}
-          <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
+          <div className="flex flex-col items-start sm:items-start text-left sm:text-left">
             <h4 className={headingCls}>{t('footer.social.title')}</h4>
             <div className="flex gap-2.5">
               <a
@@ -200,7 +200,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom row: hairline rule + meta */}
-        <div className="mt-12 pt-6 border-t border-[#142f54]/40 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+        <div className="mt-12 pt-6 pb-24 sm:pb-0 border-t border-[#142f54]/40 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
           <p className="text-[#4a6a8a] text-xs">
             © {new Date().getFullYear()} Hold Corretora. {t('footer.rights')}
           </p>

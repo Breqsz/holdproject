@@ -78,11 +78,11 @@ function StatItem({ icon, value, label, hint, onClick, divider = true, isActive 
 
         <div className="min-w-0 flex-1">
           <div className="text-[1.2rem] sm:text-[1.4rem] font-extrabold leading-none tracking-tight text-[#07162a]">{value}</div>
-          <div className="mt-0.5 text-[10.5px] sm:text-[11px] leading-snug text-[#07162a]/55">{label}</div>
+          <div className="mt-0.5 text-[12px] sm:text-[11px] leading-snug text-[#07162a]/55">{label}</div>
         </div>
 
         {isActive && (
-          <ChevronDown size={13} className="shrink-0 text-[#ae251c]" />
+          <ChevronDown className="shrink-0 text-[#ae251c] w-[18px] h-[18px] md:w-[13px] md:h-[13px]" />
         )}
 
         {isClickable && hint && !isActive && (

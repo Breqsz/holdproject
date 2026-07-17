@@ -44,10 +44,19 @@ vi.mock('@/lib/i18n', () => ({
 
 const mockScrollPrev = vi.fn()
 const mockScrollNext = vi.fn()
+const mockScrollTo = vi.fn()
 vi.mock('embla-carousel-react', () => ({
   default: () => {
     const ref = (node: HTMLElement | null) => void node
-    const api = { scrollPrev: mockScrollPrev, scrollNext: mockScrollNext }
+    const api = {
+      scrollPrev: mockScrollPrev,
+      scrollNext: mockScrollNext,
+      scrollTo: mockScrollTo,
+      selectedScrollSnap: () => 0,
+      scrollSnapList: () => [0, 1, 2],
+      on: vi.fn(),
+      off: vi.fn(),
+    }
     return [ref, api]
   },
 }))
@@ -98,5 +107,26 @@ describe('Depoimentos (real Google reviews)', () => {
     const user = userEvent.setup()
     await user.click(screen.getByRole('button', { name: /próximo depoimento/i }))
     expect(mockScrollNext).toHaveBeenCalledOnce()
+  })
+
+  it('renders 3 mobile dots', () => {
+    const dots = screen.getAllByRole('button', { name: /Ir ao depoimento/i })
+    expect(dots).toHaveLength(3)
+  })
+
+  it('first dot is active by default', () => {
+    const dots = screen.getAllByRole('button', { name: /Ir ao depoimento/i })
+    expect(dots[0].className).toContain('w-5')
+    expect(dots[0].className).toContain('bg-[#07162a]')
+    expect(dots[1].className).toContain('w-1.5')
+  })
+
+  it('calls scrollTo with the clicked dot index', async () => {
+    const user = userEvent.setup()
+    const dots = screen.getAllByRole('button', { name: /Ir ao depoimento/i })
+    await user.click(dots[1])
+    expect(mockScrollTo).toHaveBeenCalledWith(1)
+    await user.click(dots[2])
+    expect(mockScrollTo).toHaveBeenCalledWith(2)
   })
 })

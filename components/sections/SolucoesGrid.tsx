@@ -49,7 +49,7 @@ function SectorCard({ service, brand, exploreLabel }: { service: Service; brand:
       <Link
         href={href}
         aria-label={ariaLabel}
-        className="group relative block overflow-hidden rounded-2xl h-full min-h-[420px] sm:min-h-[520px] transition-shadow duration-500 hover:shadow-[0_28px_70px_-22px_rgba(0,0,0,0.55)]"
+        className="group relative block overflow-hidden rounded-2xl h-full min-h-[330px] sm:min-h-[520px] transition-shadow duration-500 hover:shadow-[0_28px_70px_-22px_rgba(0,0,0,0.55)]"
         style={{ border: '1px solid rgba(255,255,255,0.06)' }}
       >
         {/* Full-bleed image */}
@@ -124,14 +124,14 @@ function SectorCard({ service, brand, exploreLabel }: { service: Service; brand:
           >
             <div className="flex flex-wrap gap-x-3 gap-y-1.5 pt-3 border-t border-white/15">
               {bullets.map((b) => (
-                <span key={b} className="text-[11px] text-white/85 leading-tight pt-2">
+                <span key={b} className="text-[12.5px] sm:text-[11px] text-white/85 leading-tight pt-2">
                   · {b}
                 </span>
               ))}
             </div>
           </div>
 
-          <span className="inline-flex items-center gap-2.5 self-start text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white">
+          <span className="inline-flex items-center gap-2.5 self-start text-[12px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white">
             {exploreLabel}
             <span
               aria-hidden
