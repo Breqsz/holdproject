@@ -33,7 +33,7 @@ export default function SaudeOperadoras() {
           transition={{ duration: 0.85, ease: EASE_OUT_EXPO }}
           className="max-w-3xl mb-12"
         >
-          <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#07162a]/55">
+          <p className="text-[12px] sm:text-[10px] font-semibold uppercase tracking-[0.22em] text-[#07162a]/55">
             {t('saudeV2.operadoras.eyebrow')}
           </p>
           <h2
