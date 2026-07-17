@@ -111,7 +111,7 @@ export function SegurosLinhaDetailModal({ open, onClose, onConfirm, data }: Prop
               type="button"
               onClick={onClose}
               aria-label={t('segurosV2.linhas.detail.close')}
-              className="absolute right-3 top-3 z-20 inline-flex h-8 w-8 items-center justify-center rounded-full bg-black/40 text-white/80 hover:text-white hover:bg-black/60 transition-colors backdrop-blur-sm"
+              className="absolute right-3 top-3 z-20 inline-flex h-11 w-11 sm:h-8 sm:w-8 items-center justify-center rounded-full bg-black/40 text-white/80 hover:text-white hover:bg-black/60 transition-colors backdrop-blur-sm"
             >
               <X size={15} strokeWidth={1.8} />
             </button>
@@ -162,7 +162,7 @@ export function SegurosLinhaDetailModal({ open, onClose, onConfirm, data }: Prop
                             {c.name}
                           </p>
                           {c.desc && (
-                            <p className="mt-0.5 pl-3.5 text-[12px] leading-snug text-white/62">
+                            <p className="mt-0.5 pl-3.5 text-[13px] sm:text-[12px] leading-snug text-white/75 sm:text-white/62">
                               {c.desc}
                             </p>
                           )}
@@ -183,7 +183,7 @@ export function SegurosLinhaDetailModal({ open, onClose, onConfirm, data }: Prop
                 <button
                   type="button"
                   onClick={onClose}
-                  className="mt-2.5 inline-flex w-full items-center justify-center px-6 py-1.5 text-[11px] uppercase tracking-[0.22em] text-white/50 hover:text-white/80 transition-colors"
+                  className="mt-2.5 inline-flex w-full min-h-[44px] items-center justify-center px-6 py-1.5 text-[12px] sm:text-[11px] uppercase tracking-[0.22em] text-white/70 sm:text-white/50 hover:text-white/80 transition-colors"
                 >
                   {t('segurosV2.linhas.detail.close')}
                 </button>
