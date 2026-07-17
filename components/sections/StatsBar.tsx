@@ -82,7 +82,7 @@ function StatItem({ icon, value, label, hint, onClick, divider = true, isActive 
         </div>
 
         {isActive && (
-          <ChevronDown size={18} className="shrink-0 text-[#ae251c]" />
+          <ChevronDown className="shrink-0 text-[#ae251c] w-[18px] h-[18px] md:w-[13px] md:h-[13px]" />
         )}
 
         {isClickable && hint && !isActive && (

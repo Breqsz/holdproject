@@ -168,7 +168,7 @@ export default function Depoimentos() {
                     <div>
                       <div className="rule-accent h-px w-10 mb-4 opacity-60" />
                       <p className="text-[#07162a] font-semibold text-sm">{item.name}</p>
-                      <p className="text-[#07162a]/50 text-[12.5px] mt-0.5 inline-flex items-center gap-1.5">
+                      <p className="text-[#07162a]/50 text-[12.5px] sm:text-xs mt-0.5 inline-flex items-center gap-1.5">
                         <GoogleGIcon size={12} />
                         {t('testimonials.role')}
                       </p>

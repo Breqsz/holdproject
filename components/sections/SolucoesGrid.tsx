@@ -124,14 +124,14 @@ function SectorCard({ service, brand, exploreLabel }: { service: Service; brand:
           >
             <div className="flex flex-wrap gap-x-3 gap-y-1.5 pt-3 border-t border-white/15">
               {bullets.map((b) => (
-                <span key={b} className="text-[12.5px] sm:text-[13px] text-white/85 leading-tight pt-2">
+                <span key={b} className="text-[12.5px] sm:text-[11px] text-white/85 leading-tight pt-2">
                   · {b}
                 </span>
               ))}
             </div>
           </div>
 
-          <span className="inline-flex items-center gap-2.5 self-start text-[12px] font-semibold uppercase tracking-[0.22em] text-white">
+          <span className="inline-flex items-center gap-2.5 self-start text-[12px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white">
             {exploreLabel}
             <span
               aria-hidden
