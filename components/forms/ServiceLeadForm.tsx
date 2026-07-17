@@ -37,7 +37,7 @@ interface ServiceLeadFormProps {
 }
 
 const inputClass =
-  'w-full bg-[#07162a] border border-[#142f54] focus:border-[#7a9ab8] focus:ring-1 focus:ring-[#7a9ab8]/30 text-white placeholder-[#4a6a8a] rounded-lg px-4 py-3 outline-none transition-all duration-200'
+  'w-full bg-[#07162a] border border-[#142f54] focus:border-[#7a9ab8] focus:ring-1 focus:ring-[#7a9ab8]/30 text-white placeholder-[#4a6a8a] rounded-lg px-4 py-3 outline-none transition-all duration-200 text-base min-h-[44px]'
 
 export function ServiceLeadForm({
   service,
@@ -113,14 +113,14 @@ export function ServiceLeadForm({
       <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-4" noValidate>
         {showAudienceField && (
           <fieldset>
-            <legend className="text-[11px] font-medium uppercase tracking-wider text-[#7a9ab8] mb-2 block">
+            <legend className="text-[12px] md:text-[11px] font-medium uppercase tracking-wider text-[#7a9ab8] mb-2 block">
               {t('form.lead.audience.saude.label')}
             </legend>
-            <div className={`grid gap-2 ${audienceOptions.length === 2 ? 'grid-cols-2' : 'grid-cols-3'}`}>
+            <div className={`grid gap-1.5 sm:gap-2 ${audienceOptions.length === 2 ? 'grid-cols-2' : 'grid-cols-3'}`}>
               {audienceOptions.map((opt) => (
                 <label
                   key={opt}
-                  className="relative flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-[#07162a] border border-[#142f54] px-3 py-3 text-sm text-white/90 transition-colors has-[:checked]:border-[#ae251c] has-[:checked]:bg-[#0d2240] hover:border-[#7a9ab8]/40"
+                  className="relative flex min-h-[44px] cursor-pointer items-center justify-center gap-2 rounded-lg bg-[#07162a] border border-[#142f54] px-2 sm:px-3 py-3 text-sm leading-tight text-white/90 transition-colors has-[:checked]:border-[#ae251c] has-[:checked]:bg-[#0d2240] hover:border-[#7a9ab8]/40"
                 >
                   <input
                     {...register('audience')}
@@ -128,7 +128,7 @@ export function ServiceLeadForm({
                     value={opt}
                     className="peer sr-only"
                   />
-                  <span className="block h-3 w-3 rounded-full border border-[#4a6a8a] peer-checked:border-[#ae251c] peer-checked:bg-[#ae251c] peer-focus-visible:ring-2 peer-focus-visible:ring-white/60 peer-focus-visible:ring-offset-1 peer-focus-visible:ring-offset-[#07162a]" />
+                  <span className="block h-3 w-3 shrink-0 rounded-full border border-[#4a6a8a] peer-checked:border-[#ae251c] peer-checked:bg-[#ae251c] peer-focus-visible:ring-2 peer-focus-visible:ring-white/60 peer-focus-visible:ring-offset-1 peer-focus-visible:ring-offset-[#07162a]" />
                   {t(`form.lead.audience.saude.${opt}`)}
                 </label>
               ))}
@@ -142,7 +142,7 @@ export function ServiceLeadForm({
         )}
 
         <div>
-          <label className="text-[11px] font-medium uppercase tracking-wider text-[#7a9ab8] mb-1.5 block">
+          <label className="text-[12px] md:text-[11px] font-medium uppercase tracking-wider text-[#7a9ab8] mb-1.5 block">
             {t('form.lead.label.name')}
           </label>
           <input
@@ -156,7 +156,7 @@ export function ServiceLeadForm({
         </div>
 
         <div>
-          <label className="text-[11px] font-medium uppercase tracking-wider text-[#7a9ab8] mb-1.5 block">
+          <label className="text-[12px] md:text-[11px] font-medium uppercase tracking-wider text-[#7a9ab8] mb-1.5 block">
             {t('form.lead.label.whatsapp')}
           </label>
           <input
@@ -170,8 +170,8 @@ export function ServiceLeadForm({
         </div>
 
         <div>
-          <label className="text-[11px] font-medium uppercase tracking-wider text-[#7a9ab8] mb-1.5 block">
-            {t('form.lead.label.message')} <span className="opacity-60 normal-case tracking-normal text-[10px]">{t('form.lead.label.message.optional')}</span>
+          <label className="text-[12px] md:text-[11px] font-medium uppercase tracking-wider text-[#7a9ab8] mb-1.5 block">
+            {t('form.lead.label.message')} <span className="opacity-60 normal-case tracking-normal text-[11px] md:text-[10px]">{t('form.lead.label.message.optional')}</span>
           </label>
           <textarea
             {...register('message')}
