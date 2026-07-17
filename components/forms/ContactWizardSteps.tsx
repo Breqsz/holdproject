@@ -67,7 +67,7 @@ export function buildContactWaMessage(d: FormState): string {
 // ── Primitives ─────────────────────────────────────────────────────────────────
 
 export const inputCls =
-  'w-full bg-[#07162a] border border-[#142f54] focus:border-[#7a9ab8] focus:ring-1 focus:ring-[#7a9ab8]/30 text-white placeholder-[#4a6a8a] rounded-lg px-4 py-3 outline-none transition-all duration-200 text-sm'
+  'w-full bg-[#07162a] border border-[#142f54] focus:border-[#7a9ab8] focus:ring-1 focus:ring-[#7a9ab8]/30 text-white placeholder-[#4a6a8a] rounded-lg px-4 py-3 outline-none transition-all duration-200 min-h-[44px] text-base md:text-sm'
 
 export function Label({ children }: { children: React.ReactNode }) {
   return (
@@ -185,7 +185,7 @@ export function StepInteresse({
               key={svc.id}
               type="button"
               onClick={() => upd('service', svc.id)}
-              className={`rounded-lg border py-2.5 px-3 text-sm font-medium transition-all duration-200 ${
+              className={`min-h-[44px] md:min-h-0 flex items-center justify-center text-center rounded-lg border py-2.5 px-3 text-sm font-medium transition-all duration-200 ${
                 d.service === svc.id
                   ? 'border-[#ae251c] bg-[#ae251c]/10 text-white ring-1 ring-[#ae251c]/30'
                   : 'border-[#142f54] text-[#7a9ab8] hover:border-[#1e4a7a] hover:text-white'
@@ -342,7 +342,7 @@ export function DoneState({
         {t('contact.wizard.done.open_wa')}
       </a>
       <div className="mt-5">
-        <button type="button" onClick={onReset} className="text-[#4a6a8a] hover:text-[#7a9ab8] text-xs transition-colors">
+        <button type="button" onClick={onReset} className="min-h-[44px] inline-flex items-center justify-center text-[#4a6a8a] hover:text-[#7a9ab8] text-xs transition-colors">
           {t('contact.wizard.done.reset')}
         </button>
       </div>
