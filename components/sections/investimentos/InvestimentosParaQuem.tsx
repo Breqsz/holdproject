@@ -79,7 +79,7 @@ export default function InvestimentosParaQuem() {
         >
           <div className="flex items-center gap-3.5">
             <span aria-hidden className="h-px w-[34px] flex-none bg-[#ae251c]" />
-            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#7a9ab8]">
+            <p className="text-[12px] sm:text-[10px] font-semibold uppercase tracking-[0.22em] text-[#7a9ab8]">
               {t('investimentosV2.paraQuem.eyebrow')}
             </p>
           </div>
