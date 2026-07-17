@@ -102,7 +102,7 @@ export function WhatsAppRedirectModal({
               type="button"
               onClick={onClose}
               aria-label={t('shared.wa.modal.close')}
-              className="absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-full text-white/55 hover:text-white hover:bg-white/[0.08] transition-colors"
+              className="absolute right-3 top-3 inline-flex h-11 w-11 sm:h-8 sm:w-8 items-center justify-center rounded-full text-white/55 hover:text-white hover:bg-white/[0.08] transition-colors"
             >
               <X size={15} strokeWidth={1.8} />
             </button>
@@ -145,7 +145,7 @@ export function WhatsAppRedirectModal({
             <button
               type="button"
               onClick={onClose}
-              className="mt-3 inline-flex w-full items-center justify-center px-6 py-2 text-[11px] uppercase tracking-[0.22em] text-white/50 hover:text-white/80 transition-colors"
+              className="mt-3 inline-flex w-full min-h-[44px] items-center justify-center px-6 py-2 text-[12px] sm:text-[11px] uppercase tracking-[0.22em] text-white/70 sm:text-white/50 hover:text-white/80 transition-colors"
             >
               {t('shared.wa.modal.cancel')}
             </button>
