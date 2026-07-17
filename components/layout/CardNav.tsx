@@ -171,7 +171,7 @@ export default function CardNav() {
 
           {/* Mobile hamburger */}
           <button
-            className="md:hidden ml-auto p-2 bg-transparent border-0 cursor-pointer"
+            className="md:hidden ml-auto grid place-items-center h-11 w-11 -mr-2 bg-transparent border-0 cursor-pointer"
             onClick={() => setMenuOpen(v => !v)}
             aria-label={menuOpen ? t('navbar.menu.close') : t('navbar.menu.open')}
             aria-expanded={menuOpen}
@@ -239,7 +239,7 @@ export default function CardNav() {
                     <button
                       key={l}
                       onClick={() => setLocale(l)}
-                      className={`${LANG_BTN_CLS} text-[10.5px] ${locale === l ? 'bg-white/10 text-white' : 'text-white/30'}`}
+                      className={`${LANG_BTN_CLS} px-4 min-h-[44px] inline-flex items-center text-[12px] ${locale === l ? 'bg-white/10 text-white' : 'text-white/30'}`}
                     >
                       {l.toUpperCase()}
                     </button>
