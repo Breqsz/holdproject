@@ -56,8 +56,7 @@ export default function EstrategiaBand() {
             initial={{ opacity: 0, y: 10 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.05, ease: EASE }}
-            className="text-[12px] md:text-[13px] font-semibold uppercase text-[#7a9ab8] whitespace-nowrap"
-            style={{ letterSpacing: '0.28em' }}
+            className="text-[12px] md:text-[13px] font-semibold uppercase text-[#7a9ab8] whitespace-normal md:whitespace-nowrap tracking-[0.18em] md:tracking-[0.28em]"
           >
             {t('band.eyebrow')}
           </motion.span>
