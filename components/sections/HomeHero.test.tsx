@@ -80,6 +80,39 @@ describe('HomeHero', () => {
     expect(link.getAttribute('href')).toMatch(/wa\.me/)
   })
 
+  it('renders the WhatsApp CTA immediately on mount, without waiting for the typing animation', () => {
+    render(<HomeHero />)
+    // No fake timers advanced here — TextType's onTypingComplete never fires,
+    // so isTypingDone stays false. The CTA must still be in the document with
+    // its href intact, proving mobile visibility does not depend on typing.
+    const cta = screen.getByRole('link', { name: /especialista/i })
+    expect(cta).toBeInTheDocument()
+    expect(cta).toHaveAttribute('href', expect.stringContaining('wa.me'))
+  })
+
+  it('forces full opacity on mobile (max-md:!opacity-100) on subtitle and CTA row, independent of typing state', () => {
+    render(<HomeHero />)
+    const subtitle = screen.getByText('Soluções em saúde, seguros, consórcios e finanças integradas.')
+    expect(subtitle.className).toContain('max-md:!opacity-100')
+    expect(subtitle.className).toContain('max-md:!transition-none')
+
+    const cta = screen.getByRole('link', { name: /especialista/i })
+    const ctaRow = cta.parentElement
+    expect(ctaRow?.className).toContain('max-md:!opacity-100')
+    expect(ctaRow?.className).toContain('max-md:!transition-none')
+  })
+
+  it('gives the CTA pills a 44px+ mobile tap target (h-12) while preserving h-10 on desktop', () => {
+    render(<HomeHero />)
+    const waLink = screen.getByRole('link', { name: /especialista/i })
+    expect(waLink.className).toContain('h-12')
+    expect(waLink.className).toContain('md:h-10')
+
+    const solutionsLink = screen.getByRole('link', { name: /Conheça nossas soluções/i })
+    expect(solutionsLink.className).toContain('h-12')
+    expect(solutionsLink.className).toContain('md:h-10')
+  })
+
   it('renders secondary CTA linking to #solucoes', () => {
     render(<HomeHero />)
     const link = screen.getByRole('link', { name: /Conheça nossas soluções/i })

@@ -45,7 +45,7 @@ function WaCTA({ href, label }: { href: string; label: string }) {
       onMouseMove={handleMove}
       onMouseLeave={() => { x.set(0); y.set(0) }}
       style={{ x: sx, y: sy }}
-      className="group inline-flex items-center gap-2 rounded-full bg-[#ae251c] pl-4 pr-2 h-10 text-sm font-bold text-white shadow-[0_4px_14px_rgba(174,37,28,0.18)] transition-colors duration-300 hover:bg-[#921e16]"
+      className="group inline-flex items-center gap-2 rounded-full bg-[#ae251c] pl-4 pr-2 h-12 md:h-10 text-sm font-bold text-white shadow-[0_4px_14px_rgba(174,37,28,0.18)] transition-colors duration-300 hover:bg-[#921e16]"
     >
       <WaIcon />
       {label}
@@ -144,7 +144,7 @@ export default function HomeHero() {
 
             {/* Subtitle */}
             <p
-              className="mt-6 max-w-[48ch] text-pretty text-[1rem] leading-[1.8] text-[#142f54] transition-opacity duration-1000 ease-in-out"
+              className="mt-6 max-w-[48ch] text-pretty text-[1.05rem] md:text-[1rem] leading-[1.7] md:leading-[1.8] text-[#142f54] transition-opacity duration-1000 ease-in-out max-md:!opacity-100 max-md:!transition-none"
               style={{ opacity: isTypingDone ? 1 : 0 }}
             >
               {t('hero.subtitle')}
@@ -152,13 +152,13 @@ export default function HomeHero() {
 
             {/* CTAs */}
             <div
-              className="mt-8 flex flex-wrap items-center gap-3 transition-opacity duration-1000 ease-in-out delay-300"
+              className="mt-8 flex flex-wrap items-center gap-3 transition-opacity duration-1000 ease-in-out delay-300 max-md:!opacity-100 max-md:!transition-none"
               style={{ opacity: isTypingDone ? 1 : 0 }}
             >
               <WaCTA href={wa} label={t('hero.cta.specialist')} />
               <Link
                 href="#solucoes"
-                className="inline-flex h-10 items-center gap-2 rounded-full border border-[#07162a]/15 bg-[#07162a]/[0.04] px-5 text-sm font-semibold text-[#07162a]/55 transition-colors duration-300 hover:border-[#07162a]/30 hover:text-[#07162a]/80"
+                className="inline-flex h-12 md:h-10 items-center gap-2 rounded-full border border-[#07162a]/15 bg-[#07162a]/[0.04] px-5 text-sm font-semibold text-[#07162a]/55 transition-colors duration-300 hover:border-[#07162a]/30 hover:text-[#07162a]/80"
               >
                 {t('hero.cta.solutions')}
                 <ArrowRight size={14} />
