@@ -3,12 +3,11 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronLeft, ChevronRight, Loader2 } from 'lucide-react'
-import emailjs from '@emailjs/browser'
-import { toast } from 'sonner'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useLocale } from '@/lib/i18n'
+import { formatWhatsAppLink } from '@/lib/utils'
 import {
-  EASE, INIT, SERVICES,
+  EASE, INIT,
   type FormState,
   StepperNav,
   StepPerfil,
@@ -16,6 +15,7 @@ import {
   StepEscritorio,
   StepDados,
   DoneState,
+  buildContactWaMessage,
 } from '@/components/forms/ContactWizardSteps'
 
 const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? ''
@@ -24,7 +24,6 @@ export default function Contato() {
   const { t } = useLocale()
   const [step, setStep]       = useState(1)
   const [done, setDone]       = useState(false)
-  const [loading, setLoading] = useState(false)
   const [data, setData]       = useState<FormState>(INIT)
   const [errors, setErrors]   = useState<Record<string, string>>({})
   const [dir, setDir]         = useState(1)
@@ -71,27 +70,13 @@ export default function Contato() {
     return Object.keys(e).length === 0
   }
 
-  async function handleNext() {
+  function handleNext() {
     if (!validate(step)) return
     if (step < 3) { setDir(1); setStep((s) => s + 1); return }
-    setLoading(true)
-    try {
-      const serviceLabel = SERVICES.find((s) => s.id === data.service)?.label ?? data.service
-      const params = isClient
-        ? { type: 'Cliente', name: data.name, whatsapp: data.whatsapp, service: serviceLabel, segment: data.segment, credit: data.credit, term: data.term }
-        : { type: 'Parceiro', name: data.name, phone: data.phone, email: data.email, company: data.company, broker: data.broker, advisors: data.advisors }
-      const sid = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID
-      const tid = isClient
-        ? process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID_CLIENT
-        : process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID_PARTNER
-      const pk = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
-      if (sid && tid && pk) await emailjs.send(sid, tid, params as Record<string, unknown>, pk)
-      setDone(true)
-    } catch {
-      toast.error(t('contact.error'))
-    } finally {
-      setLoading(false)
-    }
+    // Final step: hand the lead off to WhatsApp (pre-filled), then show the
+    // confirmation. DoneState keeps a fallback button for blocked pop-ups.
+    window.open(formatWhatsAppLink(WHATSAPP, buildContactWaMessage(data)), '_blank')
+    setDone(true)
   }
 
   function handleBack()  { setDir(-1); setStep((s) => s - 1) }
@@ -222,12 +207,10 @@ export default function Contato() {
                 <button
                   type="button"
                   onClick={handleNext}
-                  disabled={loading}
-                  className="inline-flex items-center gap-2 bg-[#ae251c] hover:bg-[#921e16] disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold rounded-full px-7 py-2.5 text-sm transition-colors duration-200"
+                  className="inline-flex items-center gap-2 bg-[#ae251c] hover:bg-[#921e16] text-white font-semibold rounded-full px-7 py-2.5 text-sm transition-colors duration-200"
                 >
-                  {loading && <Loader2 size={15} className="animate-spin" />}
                   {step < 3 ? t('contact.wizard.next') : isClient ? t('contact.wizard.send') : t('partners.cta')}
-                  {step < 3 && !loading && <ChevronRight size={16} />}
+                  {step < 3 && <ChevronRight size={16} />}
                 </button>
               </div>
             </>

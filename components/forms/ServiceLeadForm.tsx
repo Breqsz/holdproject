@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { Loader2 } from 'lucide-react'
-import emailjs from '@emailjs/browser'
 import { toast } from 'sonner'
 import { useAudience } from '@/lib/audience'
 import { useLocale } from '@/lib/i18n'
@@ -82,20 +81,6 @@ export function ServiceLeadForm({
         setAudience(data.audience === 'pf' ? 'pf' : 'pj')
       }
 
-      const params = {
-        name: data.name,
-        whatsapp: data.whatsapp,
-        message: data.message ?? '',
-        service,
-        audience: audienceLabel,
-      }
-
-      const sid = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID
-      const tid = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID_CLIENT
-      const pk  = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
-      if (sid && tid && pk) {
-        await emailjs.send(sid, tid, params, pk)
-      }
       toast.success(t('form.lead.toast.success'))
 
       const message = [

@@ -5,10 +5,6 @@ import { AudienceProvider } from '@/lib/audience'
 import { LocaleProvider } from '@/lib/i18n'
 import { ServiceLeadForm } from './ServiceLeadForm'
 
-vi.mock('@emailjs/browser', () => ({
-  default: { send: vi.fn().mockResolvedValue({ status: 200, text: 'OK' }) },
-}))
-
 vi.mock('sonner', () => ({
   toast: { success: vi.fn(), error: vi.fn() },
 }))
@@ -18,9 +14,6 @@ vi.mock('@/lib/utils', () => ({
   formatWhatsAppLink: (number: string, msg: string) =>
     `https://wa.me/${number}?text=${encodeURIComponent(msg)}`,
 }))
-
-import emailjs from '@emailjs/browser'
-const mockedSend = (emailjs as { send: ReturnType<typeof vi.fn> }).send
 
 function renderForm() {
   return render(
@@ -36,7 +29,6 @@ describe('ServiceLeadForm', () => {
   beforeEach(() => {
     window.localStorage.clear()
     window.localStorage.setItem('hold:locale', 'pt')
-    mockedSend.mockClear()
     vi.spyOn(window, 'open').mockImplementation(() => null)
     ;(window.open as ReturnType<typeof vi.fn>).mockClear?.()
   })

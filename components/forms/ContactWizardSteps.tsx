@@ -49,6 +49,21 @@ export const SEGMENTS = [
   { value: 'Outros',         key: 'contact.segment.outros' },
 ]
 
+// ── WhatsApp message ───────────────────────────────────────────────────────────
+// Builds the lead message sent to the Hold business. Stays in PT — it is received
+// by the Brazilian corretora. Shared by the wizard submit (Contato) and the
+// DoneState fallback button, so the two never drift apart.
+export function buildContactWaMessage(d: FormState): string {
+  const serviceLabel = SERVICES.find((s) => s.id === d.service)?.label ?? d.service
+  if (d.type === 'client') {
+    return d.service === 'consorcio'
+      ? `Olá! Sou ${d.name} e tenho interesse em consórcio de ${d.segment} com crédito de R$ ${d.credit} em ${d.term}. Pode me ajudar?`
+      : `Olá! Sou ${d.name} e tenho interesse em ${serviceLabel} pela Hold Corretora. Pode me ajudar?`
+  }
+  const advisors = d.advisors ? ` (${d.advisors} assessores)` : ''
+  return `Olá! Sou ${d.name}, do escritório ${d.broker}${advisors}. Tenho interesse em parceria com a Hold Corretora para integrar consórcio ao nosso portfólio.`
+}
+
 // ── Primitives ─────────────────────────────────────────────────────────────────
 
 export const inputCls =
@@ -300,16 +315,8 @@ export function DoneState({
   d: FormState; onReset: () => void; waNumber: string
 }) {
   const { t } = useLocale()
-  const serviceLabel = SERVICES.find((s) => s.id === d.service)?.label ?? d.service
   const firstName = d.name.split(' ')[0]
-  // WA messages stay in PT — they are received by the Brazilian business
-  const waMsg =
-    d.type === 'client'
-      ? d.service === 'consorcio'
-        ? `Olá! Sou ${d.name} e tenho interesse em consórcio de ${d.segment} com crédito de R$ ${d.credit} em ${d.term}. Pode me ajudar?`
-        : `Olá! Sou ${d.name} e tenho interesse em ${serviceLabel} pela Hold Corretora. Pode me ajudar?`
-      : `Olá! Sou ${d.name} de ${d.broker}. Tenho interesse em parceria com a Hold Corretora para integrar consórcio ao nosso portfólio.`
-  const wa = formatWhatsAppLink(waNumber, waMsg)
+  const wa = formatWhatsAppLink(waNumber, buildContactWaMessage(d))
 
   return (
     <motion.div
