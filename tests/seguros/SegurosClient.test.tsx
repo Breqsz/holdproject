@@ -59,10 +59,6 @@ vi.mock('@/components/motion/LogoLoop', () => ({
   default: () => <div data-testid="logo-loop" />,
 }))
 
-vi.mock('@/components/seguros/SegurosLinhaDetailModal', () => ({
-  SegurosLinhaDetailModal: () => null,
-}))
-
 vi.mock('@/components/shared/WhatsAppRedirectModal', () => ({
   WhatsAppRedirectModal: () => null,
 }))

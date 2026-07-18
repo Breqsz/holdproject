@@ -6,7 +6,7 @@ import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import { useLocale } from '@/lib/i18n'
 import { formatWhatsAppLink } from '@/lib/utils'
-import { SegurosLinhaDetailModal } from '@/components/seguros/SegurosLinhaDetailModal'
+import { DetailModal, type DetailData } from '@/components/shared/DetailModal'
 import { WhatsAppRedirectModal } from '@/components/shared/WhatsAppRedirectModal'
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number]
@@ -210,6 +210,19 @@ export default function SegurosLinhas() {
     ariaLabel: t(`segurosV2.grupo.${cfg.id}.aria`),
   }))
 
+  // GrupoCard segue usando `coberturas` (nomes no hover do card). O modal de
+  // detalhe consome `items`, então a conversão acontece aqui na fronteira.
+  const activeDetail: DetailData | null = active
+    ? {
+        eyebrow: t('segurosV2.linhas.detail.eyebrow'),
+        title: active.title,
+        short: active.short,
+        items: active.coberturas,
+        image: active.image,
+        imagePosition: active.imagePosition,
+      }
+    : null
+
   const waHref = wa ? formatWhatsAppLink(WHATSAPP, wa.waMessage) : ''
 
   return (
@@ -261,14 +274,19 @@ export default function SegurosLinhas() {
         </motion.div>
       </div>
 
-      <SegurosLinhaDetailModal
+      <DetailModal
         open={active !== null}
-        data={active}
+        data={activeDetail}
         onClose={() => setActive(null)}
         onConfirm={() => {
           const g = active
           setActive(null)
           setWa(g)
+        }}
+        labels={{
+          itemsLabel: t('segurosV2.linhas.detail.bulletsLabel'),
+          cta: t('segurosV2.linhas.detail.cta'),
+          close: t('segurosV2.linhas.detail.close'),
         }}
       />
       <WhatsAppRedirectModal
