@@ -3,13 +3,26 @@
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
-import type { LinhaDetailData } from '@/components/shared/LinhaDetailModal'
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number]
 
 const cardVariants = {
   hidden: { opacity: 0, y: 32 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE_OUT_EXPO } },
+}
+
+// Rehomed from the now-deleted `LinhaDetailModal.tsx` (Task 6): this is the
+// shape LinhaCard's consumers build and pass in; the DetailModal boundary
+// derives its own `DetailData` from it (see e.g. ConsorciosCategorias.tsx).
+type LinhaDetailData = {
+  seq: string
+  title: string
+  short: string
+  body: string
+  bullets: string[]
+  image?: string
+  imagePosition?: string
+  icon?: React.ElementType
 }
 
 export type LinhaCardData = LinhaDetailData & { ariaLabel: string }

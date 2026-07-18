@@ -7,7 +7,7 @@ import { ArrowRight } from 'lucide-react'
 import { formatWhatsAppLink } from '@/lib/utils'
 import { useLocale } from '@/lib/i18n'
 import { WhatsAppRedirectModal } from '@/components/shared/WhatsAppRedirectModal'
-import { SaudeModalidadeDetailModal } from '@/components/saude/SaudeModalidadeDetailModal'
+import { DetailModal, type DetailData } from '@/components/shared/DetailModal'
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number]
 const RED = '#ae251c'
@@ -195,6 +195,20 @@ export default function SaudeModalidades() {
     ariaLabel: t(`saudeV2.modalidade.${cfg.id}.aria`),
   }))
 
+  // ModalidadeCard segue usando `bullets` (preview no hover do card). O modal de
+  // detalhe consome `items`, então a conversão acontece aqui na fronteira.
+  const activeDetail: DetailData | null = active
+    ? {
+        eyebrow: t('saudeV2.modalidades.detail.eyebrow'),
+        title: active.title,
+        short: active.short,
+        body: active.body,
+        items: active.bullets.map((name) => ({ name })),
+        image: active.image,
+        imagePosition: active.imagePosition,
+      }
+    : null
+
   const waHref = wa ? formatWhatsAppLink(WHATSAPP, wa.waMessage) : ''
 
   return (
@@ -246,14 +260,19 @@ export default function SaudeModalidades() {
         </motion.div>
       </div>
 
-      <SaudeModalidadeDetailModal
+      <DetailModal
         open={active !== null}
-        data={active}
+        data={activeDetail}
         onClose={() => setActive(null)}
         onConfirm={() => {
           const m = active
           setActive(null)
           setWa(m)
+        }}
+        labels={{
+          itemsLabel: t('saudeV2.modalidades.detail.bulletsLabel'),
+          cta: t('saudeV2.modalidades.detail.cta'),
+          close: t('saudeV2.modalidades.detail.close'),
         }}
       />
       <WhatsAppRedirectModal

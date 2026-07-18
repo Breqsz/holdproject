@@ -53,10 +53,6 @@ vi.mock('@/components/forms/ServiceLeadForm', () => ({
   ),
 }))
 
-vi.mock('@/components/shared/LinhaDetailModal', () => ({
-  LinhaDetailModal: () => null,
-}))
-
 vi.mock('@/components/shared/WhatsAppRedirectModal', () => ({
   WhatsAppRedirectModal: () => null,
 }))
