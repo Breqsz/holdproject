@@ -43,7 +43,7 @@ export function DetailModal({ open, onClose, onConfirm, data, labels }: DetailMo
     <Dialog.Root open={isOpen} onOpenChange={(next) => { if (!next) onClose() }}>
       <AnimatePresence>
         {isOpen && data && (
-          <Dialog.Portal forceMount>
+          <Dialog.Portal key="detail-modal" forceMount>
             <Dialog.Overlay asChild forceMount>
               <motion.div
                 className="fixed inset-0 z-[100] bg-[#07162a]/82 backdrop-blur-sm"
@@ -166,7 +166,7 @@ export function DetailModal({ open, onClose, onConfirm, data, labels }: DetailMo
                         onClick={onConfirm}
                         className="inline-flex min-h-[44px] w-full items-center justify-center gap-2.5 rounded-full bg-[#25D366] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#1ebe5d] md:w-auto"
                       >
-                        <WhatsAppIcon size={16} aria-hidden="true" />
+                        <WhatsAppIcon size={16} />
                         {labels.cta}
                       </button>
                     </div>

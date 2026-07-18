@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { DetailModal, type DetailData } from './DetailModal'
 
@@ -129,6 +129,24 @@ describe('DetailModal', () => {
     const img = dialog.querySelector('img')
     expect(img).not.toBeNull()
     expect(img!.getAttribute('alt')).toBe('')
+  })
+
+  it('removes the dialog from the DOM once the exit transition completes after closing', async () => {
+    const { rerender } = render(
+      <DetailModal open data={DATA} labels={LABELS} onClose={vi.fn()} onConfirm={vi.fn()} />,
+    )
+    expect(screen.getByRole('dialog')).toBeTruthy()
+
+    rerender(
+      <DetailModal open={false} data={DATA} labels={LABELS} onClose={vi.fn()} onConfirm={vi.fn()} />,
+    )
+
+    await waitFor(
+      () => {
+        expect(screen.queryByRole('dialog')).toBeNull()
+      },
+      { timeout: 2000 },
+    )
   })
 
   it('falls back to the icon when there is no image', () => {

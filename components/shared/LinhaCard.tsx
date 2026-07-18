@@ -14,7 +14,7 @@ const cardVariants = {
 // Rehomed from the now-deleted `LinhaDetailModal.tsx` (Task 6): this is the
 // shape LinhaCard's consumers build and pass in; the DetailModal boundary
 // derives its own `DetailData` from it (see e.g. ConsorciosCategorias.tsx).
-export type LinhaDetailData = {
+type LinhaDetailData = {
   seq: string
   title: string
   short: string
