@@ -54,15 +54,29 @@ export function DetailModal({ open, onClose, onConfirm, data, labels }: DetailMo
               />
             </Dialog.Overlay>
 
-            <Dialog.Content asChild forceMount>
-              <motion.div
-                className="fixed left-1/2 top-1/2 z-[101] w-[calc(100%-2rem)] max-w-[880px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl ring-1 ring-white/10 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.6)]"
-                style={{ fontFamily: 'var(--font-outfit)', background: '#000d2d' }}
-                initial={{ opacity: 0, y: 14, scale: 0.97 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 8, scale: 0.98 }}
-                transition={{ duration: 0.42, ease: EASE }}
-              >
+            {/*
+              Centragem por flex, NUNCA por -translate-x-1/2 no painel.
+              O framer escreve `transform` inline para animar y/scale, e isso
+              sobrescreve as classes de translate do Tailwind, jogando o painel
+              para o canto. Mesmo padrao do WhatsAppRedirectModal.
+              O wrapper e pointer-events-none para o clique fora continuar
+              chegando no Dialog.Overlay, que e quem fecha.
+            */}
+            <div className="pointer-events-none fixed inset-0 z-[101] flex items-center justify-center p-4">
+              {/*
+                O painel PRECISA de `relative`. O Dialog.Close usa `absolute` e,
+                sem contexto de posicionamento aqui, ele resolve contra o wrapper
+                `fixed inset-0` e vai parar no canto da viewport.
+              */}
+              <Dialog.Content asChild forceMount>
+                <motion.div
+                  className="pointer-events-auto relative w-full max-w-[880px] overflow-hidden rounded-2xl ring-1 ring-white/10 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.6)]"
+                  style={{ fontFamily: 'var(--font-outfit)', background: '#000d2d' }}
+                  initial={{ opacity: 0, y: 14, scale: 0.97 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 8, scale: 0.98 }}
+                  transition={{ duration: 0.42, ease: EASE }}
+                >
                 <Dialog.Close
                   aria-label={labels.close}
                   className="absolute right-3 top-3 z-20 inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/40 text-white/80 backdrop-blur-sm transition-colors hover:bg-black/60 hover:text-white"
@@ -76,12 +90,21 @@ export function DetailModal({ open, onClose, onConfirm, data, labels }: DetailMo
                     aria-hidden
                     className="relative h-[132px] w-full flex-shrink-0 md:h-auto md:w-[340px]"
                   >
+                    {/*
+                      `sizes` NAO pode ser 340px, mesmo a coluna medindo 340px.
+                      Com object-cover numa coluna alta e estreita, a foto
+                      landscape e escalada pela ALTURA: uma 16:9 cobrindo ~810px
+                      de altura precisa de ~1440px de largura antes do corte.
+                      Declarar 340px fazia o browser baixar uma variante de 340px
+                      e amplia-la ~3x, que era a causa do borrao. No mobile a
+                      faixa e larga e baixa, entao 100vw esta correto.
+                    */}
                     {data.image ? (
                       <Image
                         src={data.image}
                         alt=""
                         fill
-                        sizes="(max-width: 768px) 100vw, 340px"
+                        sizes="(max-width: 768px) 100vw, 1200px"
                         quality={92}
                         className="object-cover"
                         style={{ objectPosition: data.imagePosition ?? 'center' }}
@@ -172,8 +195,9 @@ export function DetailModal({ open, onClose, onConfirm, data, labels }: DetailMo
                     </div>
                   </div>
                 </div>
-              </motion.div>
-            </Dialog.Content>
+                </motion.div>
+              </Dialog.Content>
+            </div>
           </Dialog.Portal>
         )}
       </AnimatePresence>

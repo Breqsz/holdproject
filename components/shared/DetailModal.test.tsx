@@ -164,4 +164,53 @@ describe('DetailModal', () => {
     expect(dialog.querySelector('img')).toBeNull()
     expect(screen.getByTestId('fallback-icon')).toBeTruthy()
   })
+
+  // Regressao: o painel ja foi centrado com `left-1/2 top-1/2 -translate-x-1/2
+  // -translate-y-1/2`. Como o framer escreve `transform` inline para animar
+  // y/scale, aquelas classes eram sobrescritas e o modal abria no canto.
+  // jsdom nao calcula layout, entao o guarda e estrutural.
+  it('centers via a flex wrapper, never via a transform on the animated panel', () => {
+    render(<DetailModal open data={DATA} labels={LABELS} onClose={vi.fn()} onConfirm={vi.fn()} />)
+    const panel = screen.getByRole('dialog')
+
+    expect(panel.className).not.toMatch(/-translate-[xy]-/)
+
+    const wrapper = panel.parentElement
+    expect(wrapper).not.toBeNull()
+    expect(wrapper!.className).toContain('flex')
+    expect(wrapper!.className).toContain('items-center')
+    expect(wrapper!.className).toContain('justify-center')
+  })
+
+  // Regressao: o painel perdeu `relative` ao virar filho do wrapper de flex, e
+  // o Dialog.Close (que e `absolute`) passou a resolver contra o wrapper
+  // `fixed inset-0`, aparecendo no canto da viewport em vez de no painel.
+  it('anchors the close button to the panel, not the viewport', () => {
+    render(<DetailModal open data={DATA} labels={LABELS} onClose={vi.fn()} onConfirm={vi.fn()} />)
+    const panel = screen.getByRole('dialog')
+    const close = screen.getByRole('button', { name: LABELS.close })
+
+    expect(panel.contains(close)).toBe(true)
+    expect(close.className).toContain('absolute')
+    expect(panel.className).toContain('relative')
+  })
+
+  // Regressao: `sizes` dizia 340px (a largura da coluna), mas object-cover numa
+  // coluna alta escala a foto pela ALTURA, exigindo largura de origem bem maior.
+  // Com 340px o browser baixava uma variante pequena e ampliava, borrando tudo.
+  it('requests a source wide enough for the tall cover crop', () => {
+    render(
+      <DetailModal
+        open
+        data={{ ...DATA, image: '/images/x.webp' }}
+        labels={LABELS}
+        onClose={vi.fn()}
+        onConfirm={vi.fn()}
+      />,
+    )
+    const img = screen.getByRole('dialog').querySelector('img')!
+    const sizes = img.getAttribute('sizes') ?? ''
+    const desktopWidth = Number(sizes.match(/(\d+)px\s*$/)?.[1] ?? 0)
+    expect(desktopWidth).toBeGreaterThanOrEqual(1000)
+  })
 })
