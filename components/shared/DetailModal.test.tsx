@@ -111,4 +111,39 @@ describe('DetailModal', () => {
     await user.click(screen.getByRole('button', { name: 'Fechar' }))
     expect(onClose).toHaveBeenCalled()
   })
+
+  it('renders the photo when image is provided, decorative', () => {
+    render(
+      <DetailModal
+        open
+        data={{ ...DATA, image: '/images/x.webp' }}
+        labels={LABELS}
+        onClose={vi.fn()}
+        onConfirm={vi.fn()}
+      />,
+    )
+    // Dialog.Portal mounts to document.body, a sibling of RTL's container div,
+    // so we scope the query to the dialog root rather than `container`
+    // (same pattern the glyph-guard test above uses).
+    const dialog = screen.getByRole('dialog')
+    const img = dialog.querySelector('img')
+    expect(img).not.toBeNull()
+    expect(img!.getAttribute('alt')).toBe('')
+  })
+
+  it('falls back to the icon when there is no image', () => {
+    const Icon = () => <svg data-testid="fallback-icon" />
+    render(
+      <DetailModal
+        open
+        data={{ ...DATA, icon: Icon }}
+        labels={LABELS}
+        onClose={vi.fn()}
+        onConfirm={vi.fn()}
+      />,
+    )
+    const dialog = screen.getByRole('dialog')
+    expect(dialog.querySelector('img')).toBeNull()
+    expect(screen.getByTestId('fallback-icon')).toBeTruthy()
+  })
 })
