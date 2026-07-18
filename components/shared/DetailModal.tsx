@@ -66,7 +66,7 @@ export function DetailModal({ open, onClose, onConfirm, data, labels }: DetailMo
                   aria-label={labels.close}
                   className="absolute right-3 top-3 z-20 inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/40 text-white/80 backdrop-blur-sm transition-colors hover:bg-black/60 hover:text-white"
                 >
-                  <X size={16} strokeWidth={1.8} />
+                  <X size={16} strokeWidth={1.8} aria-hidden="true" />
                 </Dialog.Close>
 
                 <div className="relative z-10 flex flex-col px-6 py-6 md:px-8 md:py-8">
@@ -124,7 +124,7 @@ export function DetailModal({ open, onClose, onConfirm, data, labels }: DetailMo
                     onClick={onConfirm}
                     className="mt-6 inline-flex min-h-[44px] w-full items-center justify-center gap-2.5 rounded-full bg-[#25D366] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#1ebe5d]"
                   >
-                    <WhatsAppIcon size={16} />
+                    <WhatsAppIcon size={16} aria-hidden="true" />
                     {labels.cta}
                   </button>
                 </div>

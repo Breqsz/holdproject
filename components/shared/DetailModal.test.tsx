@@ -56,6 +56,11 @@ describe('DetailModal', () => {
     expect(screen.getByText('Total ou parcial.')).toBeTruthy()
   })
 
+  it('renders the items label when items are present', () => {
+    render(<DetailModal open data={DATA} labels={LABELS} onClose={vi.fn()} onConfirm={vi.fn()} />)
+    expect(screen.getByText('Coberturas')).toBeTruthy()
+  })
+
   it('omits the items block entirely when there are no items', () => {
     render(
       <DetailModal
@@ -69,11 +74,26 @@ describe('DetailModal', () => {
     expect(screen.queryByText('Coberturas')).toBeNull()
   })
 
-  it('never renders an em dash as a list marker', () => {
-    const { container } = render(
-      <DetailModal open data={DATA} labels={LABELS} onClose={vi.fn()} onConfirm={vi.fn()} />,
-    )
-    expect(container.textContent).not.toContain('—')
+  it('replaces marker glyphs with a hairline rule and weight contrast', () => {
+    render(<DetailModal open data={DATA} labels={LABELS} onClose={vi.fn()} onConfirm={vi.fn()} />)
+
+    // No banned marker glyphs anywhere in the rendered output. Dialog content is
+    // portaled to document.body, so assert against the dialog rather than the
+    // render container.
+    const dialog = screen.getByRole('dialog')
+    expect(dialog.textContent).not.toContain('—')
+    expect(dialog.textContent).not.toContain('·')
+
+    // Structural replacement: each item is a hairline-separated <li>.
+    const items = dialog.querySelectorAll('li')
+    expect(items.length).toBe(DATA.items.length)
+    items.forEach((item) => {
+      expect(item.classList.contains('border-t')).toBe(true)
+      expect(item.className).toContain('border-white/[0.09]')
+    })
+
+    // Structural replacement: the item name carries the weight contrast.
+    expect(screen.getByText('Morte natural').classList.contains('font-semibold')).toBe(true)
   })
 
   it('calls onConfirm when the CTA is pressed', async () => {
