@@ -8,7 +8,7 @@ import {
 import { useLocale } from '@/lib/i18n'
 import { formatWhatsAppLink } from '@/lib/utils'
 import { LinhaCard, type LinhaCardData } from '@/components/shared/LinhaCard'
-import { LinhaDetailModal } from '@/components/shared/LinhaDetailModal'
+import { DetailModal, type DetailData } from '@/components/shared/DetailModal'
 import { WhatsAppRedirectModal } from '@/components/shared/WhatsAppRedirectModal'
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number]
@@ -56,6 +56,21 @@ export default function ConsorciosCategorias() {
     bullets: t(`consorciosV2.linha.${cfg.id}.bullets`).split('|'),
     ariaLabel: t(`consorciosV2.linha.${cfg.id}.aria`),
   }))
+
+  // LinhaCard segue usando `bullets` (preview no hover do card). O modal de
+  // detalhe consome `items`, então a conversão acontece aqui na fronteira.
+  const activeDetail: DetailData | null = active
+    ? {
+        eyebrow: t('consorciosV2.linhas.detail.eyebrow'),
+        title: active.title,
+        short: active.short,
+        body: active.body,
+        items: active.bullets.map((name) => ({ name })),
+        image: active.image,
+        imagePosition: active.imagePosition,
+        icon: active.icon,
+      }
+    : null
 
   const activeWaMessage = wa
     ? t(`consorciosV2.linha.${CATEGORIAS[Number(wa.seq) - 1].id}.wa`)
@@ -111,13 +126,11 @@ export default function ConsorciosCategorias() {
         </motion.div>
       </div>
 
-      <LinhaDetailModal
+      <DetailModal
         open={active !== null}
-        data={active}
-        accent={ACCENT}
+        data={activeDetail}
         labels={{
-          eyebrow: t('consorciosV2.linhas.detail.eyebrow'),
-          bulletsLabel: t('consorciosV2.linhas.detail.bulletsLabel'),
+          itemsLabel: t('consorciosV2.linhas.detail.bulletsLabel'),
           cta: t('consorciosV2.linhas.detail.cta'),
           close: t('consorciosV2.linhas.detail.close'),
         }}

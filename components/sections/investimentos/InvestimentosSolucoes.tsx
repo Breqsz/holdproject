@@ -5,13 +5,12 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Wallet, Zap, Landmark, ShieldCheck, ReceiptText, PieChart, Target, ArrowRight } from 'lucide-react'
 import { HoldLogo } from '@/components/icons/HoldLogo'
-import { LinhaDetailModal, type LinhaDetailData } from '@/components/shared/LinhaDetailModal'
+import { DetailModal, type DetailData } from '@/components/shared/DetailModal'
 import { WhatsAppRedirectModal } from '@/components/shared/WhatsAppRedirectModal'
 import { formatWhatsAppLink } from '@/lib/utils'
 import { useLocale } from '@/lib/i18n'
 
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number]
-const ACCENT = '#ae251c'
 const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? ''
 
 const SOLUCOES = [
@@ -23,7 +22,7 @@ const SOLUCOES = [
   { id: 'estruturacao', icon: PieChart, img: '/images/solucoes/estruturacao.webp' },
 ] as const
 
-type SolItem = LinhaDetailData & { id: string; ariaLabel: string }
+type SolItem = DetailData & { id: string; ariaLabel: string }
 
 // Barra de credenciais (design idêntico ao TrustBar da home) que fecha a seção.
 const CRED = [Landmark, ShieldCheck, Zap, Target] as const
@@ -57,13 +56,13 @@ export default function InvestimentosSolucoes() {
 
   const solData: SolItem[] = SOLUCOES.map((s, i) => ({
     id: s.id,
-    seq: String(i + 1).padStart(2, '0'),
+    eyebrow: t('investimentosV2.solucoes.detail.eyebrow'),
     icon: s.icon,
     image: s.img,
     title: t(`investimentosV2.solucoes.${s.id}.title`),
     short: t(`investimentosV2.solucoes.${s.id}.desc`),
     body: t(`investimentosV2.solucoes.${s.id}.body`),
-    bullets: [],
+    items: [],
     ariaLabel: `${t('investimentosV2.solucoes.cta')}: ${t(`investimentosV2.solucoes.${s.id}.title`)}`,
   }))
 
@@ -228,13 +227,11 @@ export default function InvestimentosSolucoes() {
         </div>
       </motion.div>
 
-      <LinhaDetailModal
+      <DetailModal
         open={active !== null}
         data={active}
-        accent={ACCENT}
         labels={{
-          eyebrow: t('investimentosV2.solucoes.detail.eyebrow'),
-          bulletsLabel: t('investimentosV2.solucoes.detail.bulletsLabel'),
+          itemsLabel: t('investimentosV2.solucoes.detail.bulletsLabel'),
           cta: t('investimentosV2.solucoes.detail.cta'),
           close: t('investimentosV2.solucoes.detail.close'),
         }}
