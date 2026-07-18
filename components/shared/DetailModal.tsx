@@ -2,6 +2,8 @@
 
 import * as Dialog from '@radix-ui/react-dialog'
 import { motion, AnimatePresence } from 'framer-motion'
+import { X } from 'lucide-react'
+import { WhatsAppIcon } from '@/components/icons/WhatsAppIcon'
 
 export type DetailItem = {
   name: string
@@ -60,18 +62,72 @@ export function DetailModal({ open, onClose, onConfirm, data, labels }: DetailMo
                 exit={{ opacity: 0, y: 8, scale: 0.98 }}
                 transition={{ duration: 0.42, ease: EASE }}
               >
-                <Dialog.Title
-                  className="text-white"
-                  style={{
-                    fontFamily: 'var(--font-gellix)',
-                    fontSize: 'clamp(1.45rem, 2.6vw, 1.8rem)',
-                    lineHeight: 1.12,
-                    letterSpacing: '-0.01em',
-                  }}
+                <Dialog.Close
+                  aria-label={labels.close}
+                  className="absolute right-3 top-3 z-20 inline-flex h-11 w-11 items-center justify-center rounded-full bg-black/40 text-white/80 backdrop-blur-sm transition-colors hover:bg-black/60 hover:text-white"
                 >
-                  {data.title}
-                </Dialog.Title>
-                <Dialog.Description className="sr-only">{data.short}</Dialog.Description>
+                  <X size={16} strokeWidth={1.8} />
+                </Dialog.Close>
+
+                <div className="relative z-10 flex flex-col px-6 py-6 md:px-8 md:py-8">
+                  <p className="text-[12px] font-semibold uppercase tracking-[0.24em] text-[#7a9ab8]">
+                    {data.eyebrow}
+                  </p>
+
+                  <Dialog.Title
+                    className="mt-2 text-white"
+                    style={{
+                      fontFamily: 'var(--font-gellix)',
+                      fontSize: 'clamp(1.45rem, 2.6vw, 1.8rem)',
+                      lineHeight: 1.12,
+                      letterSpacing: '-0.01em',
+                    }}
+                  >
+                    {data.title}
+                  </Dialog.Title>
+
+                  <Dialog.Description className="mt-3 text-[13.5px] leading-relaxed text-white/85">
+                    {data.short}
+                  </Dialog.Description>
+
+                  {data.body && (
+                    <p className="mt-3 text-[13px] leading-relaxed text-white/70">{data.body}</p>
+                  )}
+
+                  {data.items.length > 0 && (
+                    <div className="mt-5 border-t border-white/12 pt-4">
+                      <p className="mb-1 text-[12px] font-semibold uppercase tracking-[0.22em] text-[#aec3d8]">
+                        {labels.itemsLabel}
+                      </p>
+                      <ul className="flex flex-col">
+                        {data.items.map((item) => (
+                          <li
+                            key={item.name}
+                            className="border-t border-white/[0.09] py-2.5 first:border-t-0"
+                          >
+                            <p className="text-[13px] font-semibold leading-snug text-white/95">
+                              {item.name}
+                            </p>
+                            {item.desc && (
+                              <p className="mt-0.5 text-[13px] leading-snug text-white/60">
+                                {item.desc}
+                              </p>
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  <button
+                    type="button"
+                    onClick={onConfirm}
+                    className="mt-6 inline-flex min-h-[44px] w-full items-center justify-center gap-2.5 rounded-full bg-[#25D366] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#1ebe5d]"
+                  >
+                    <WhatsAppIcon size={16} />
+                    {labels.cta}
+                  </button>
+                </div>
               </motion.div>
             </Dialog.Content>
           </Dialog.Portal>
