@@ -114,7 +114,7 @@ describe('SaudeModalidades', () => {
     fireEvent.click(card)
     expect(screen.getByText(/O cuidado com a saúde também passa pela prevenção/i))
       .toBeInTheDocument()
-    fireEvent.keyDown(window, { key: 'Escape' })
+    fireEvent.keyDown(document, { key: 'Escape' })
     expect(
       screen.queryByText(/O cuidado com a saúde também passa pela prevenção/i)
     ).not.toBeInTheDocument()
