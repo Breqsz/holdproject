@@ -84,7 +84,7 @@ export default function InvestimentosSolucoes() {
           viewport={{ once: true, margin: '-80px' }}
           className="max-w-3xl mb-10 lg:mb-14"
         >
-          <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#7a9ab8]">
+          <p className="text-[12px] sm:text-[10px] font-semibold uppercase tracking-[0.22em] text-[#7a9ab8]">
             {t('investimentosV2.solucoes.eyebrow')}
           </p>
           <h2 className="mt-4 text-white text-[clamp(1.75rem,3.4vw,2.75rem)] font-semibold tracking-[-0.02em] leading-[1.05]">
@@ -145,7 +145,7 @@ export default function InvestimentosSolucoes() {
                   >
                     {d.short}
                   </p>
-                  <span className="mt-4 inline-flex items-center gap-2 text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white">
+                  <span className="mt-4 inline-flex items-center gap-2 text-[12px] sm:text-[10.5px] font-semibold uppercase tracking-[0.22em] text-white">
                     {t('investimentosV2.solucoes.cta')}
                     <span
                       aria-hidden
@@ -208,7 +208,7 @@ export default function InvestimentosSolucoes() {
                 className="flex-shrink-0 w-[72vw] snap-start flex items-center gap-3 bg-white/[0.03] border border-white/[0.06] rounded-xl px-4 py-3"
               >
                 <Icon size={18} className="shrink-0 text-[#ae251c]" strokeWidth={1.6} />
-                <span className="text-[12px] leading-[1.45] text-white/55 font-light">
+                <span className="text-[12px] leading-[1.45] text-white/70 sm:text-white/55 font-light">
                   {t(`investimentosV2.parceiros.cred.${i + 1}`)}
                 </span>
               </div>

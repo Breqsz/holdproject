@@ -82,7 +82,7 @@ export default function InvestimentosHero() {
 
       <div className="relative z-10 flex w-full px-6 pt-5 pb-14 md:absolute md:inset-0 md:min-h-[100dvh] md:items-center md:px-10 md:pt-20 md:pb-20 lg:pl-16 xl:pl-24 lg:pr-8 lg:py-24">
         <div className="w-full max-w-[640px]">
-          <div className="md:hidden mb-4 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.24em] text-white/75">
+          <div className="md:hidden mb-4 flex items-center gap-2 text-[12px] font-bold uppercase tracking-[0.24em] text-white/90">
             <span aria-hidden className="block h-px w-5 bg-white/50" />
             {t('investimentosV2.hero.eyebrow')}
           </div>

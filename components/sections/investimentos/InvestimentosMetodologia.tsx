@@ -59,7 +59,7 @@ export default function InvestimentosMetodologia() {
         <div className="max-w-3xl">
           <div className="flex items-center gap-3.5">
             <span aria-hidden className="h-px w-[34px] flex-none bg-[#ae251c]" />
-            <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#7a9ab8]">
+            <span className="text-[12px] sm:text-[11px] font-semibold uppercase tracking-[0.14em] text-[#7a9ab8]">
               {t('investimentosV2.metodologia.eyebrow')}
             </span>
           </div>
