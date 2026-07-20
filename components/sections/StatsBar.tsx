@@ -110,7 +110,7 @@ function PanelHeader({ eyebrow, title }: { eyebrow: string; title: string }) {
       <h3
         className="text-[#07162a] tracking-tight leading-tight"
         style={{
-          fontFamily: 'var(--font-gellix)',
+          fontFamily: 'var(--font-outfit)',
           fontSize: 'clamp(1.05rem, 1.4vw, 1.25rem)',
           fontWeight: 600,
           letterSpacing: '-0.018em',
@@ -135,7 +135,7 @@ function HistoryPanel() {
           <h3
             className="text-[#07162a] tracking-tight leading-tight"
             style={{
-              fontFamily: 'var(--font-gellix)',
+              fontFamily: 'var(--font-outfit)',
               fontSize: 'clamp(1.15rem, 1.5vw, 1.35rem)',
               fontWeight: 600,
               letterSpacing: '-0.018em',
@@ -195,7 +195,7 @@ function HistoryPanel() {
               <span
                 className="text-[#07162a] tabular-nums"
                 style={{
-                  fontFamily: 'var(--font-gellix)',
+                  fontFamily: 'var(--font-outfit)',
                   fontWeight: 700,
                   fontSize: '17px',
                   letterSpacing: '-0.018em',
@@ -258,7 +258,7 @@ function FrentesPanel() {
               <span
                 className="text-[#07162a]"
                 style={{
-                  fontFamily: 'var(--font-gellix)',
+                  fontFamily: 'var(--font-outfit)',
                   fontWeight: 600,
                   fontSize: '13px',
                   letterSpacing: '-0.012em',

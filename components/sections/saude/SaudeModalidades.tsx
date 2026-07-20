@@ -231,7 +231,7 @@ export default function SaudeModalidades() {
           <h2
             className="mt-4 text-display text-white"
             style={{
-              fontFamily: 'var(--font-gellix)',
+              fontFamily: 'var(--font-outfit)',
               fontSize: 'clamp(1.75rem, 3.4vw, 2.75rem)',
             }}
           >

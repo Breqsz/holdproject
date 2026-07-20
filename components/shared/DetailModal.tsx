@@ -136,7 +136,7 @@ export function DetailModal({ open, onClose, onConfirm, data, labels }: DetailMo
                       <Dialog.Title
                         className="mt-2 text-white"
                         style={{
-                          fontFamily: 'var(--font-gellix)',
+                          fontFamily: 'var(--font-outfit)',
                           fontSize: 'clamp(1.45rem, 2.6vw, 1.8rem)',
                           lineHeight: 1.12,
                           letterSpacing: '-0.01em',

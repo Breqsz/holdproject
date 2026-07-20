@@ -91,7 +91,7 @@ export default function ConsorciosBeneficios() {
             <div className="text-center">
               <p
                 className="text-[15px] lg:text-[13px] 2xl:text-[17px] font-bold uppercase tracking-[0.14em] leading-[1.22]"
-                style={{ fontFamily: 'var(--font-gellix)', color: GOLD }}
+                style={{ fontFamily: 'var(--font-outfit)', color: GOLD }}
               >
                 {t('consorciosV2.beneficios.slogan.title')}
               </p>

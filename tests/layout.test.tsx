@@ -3,9 +3,7 @@ import { describe, it, expect, vi } from 'vitest'
 // next/font/* must be mocked because Vitest can't run the font loader.
 vi.mock('next/font/google', () => ({
   Outfit: () => ({ variable: 'mock-outfit-var' }),
-}))
-vi.mock('next/font/local', () => ({
-  default: () => ({ variable: 'mock-gellix-var' }),
+  Satisfy: () => ({ variable: 'mock-script-var' }),
 }))
 
 import RootLayout, { metadata } from '@/app/layout'
