@@ -11,7 +11,6 @@ const config: Config = {
     extend: {
       fontFamily: {
         sans: ['var(--font-outfit)', 'system-ui', 'sans-serif'],
-        gellix: ['var(--font-gellix)', 'system-ui', 'sans-serif'],
       },
       colors: {
         navy: {

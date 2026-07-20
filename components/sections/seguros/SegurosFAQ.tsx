@@ -39,7 +39,7 @@ function renderBlock(type: BlockType, value: string, i: number) {
   switch (type) {
     case 'p':
       return (
-        <p key={i} className="mt-3 text-[#07162a]/72 md:text-[#07162a]/60 text-sm leading-relaxed">
+        <p key={i} className="mt-3 text-[#07162a]/85 text-sm leading-relaxed">
           {value}
         </p>
       )
@@ -55,7 +55,7 @@ function renderBlock(type: BlockType, value: string, i: number) {
           {value.split('|').map((it, j) => (
             <li
               key={j}
-              className="flex items-start gap-2 text-[#07162a]/72 md:text-[#07162a]/60 text-sm leading-relaxed"
+              className="flex items-start gap-2 text-[#07162a]/85 text-sm leading-relaxed"
             >
               <span className="mt-2 h-1 w-1 rounded-full bg-[#ae251c] shrink-0" />
               <span>{it}</span>

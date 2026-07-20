@@ -13,6 +13,9 @@ import { useLocale } from '@/lib/i18n'
 const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as [number, number, number, number]
 const RED = '#ae251c'
 
+/** Mobile: quantos ramos mostrar antes de colapsar no contador "+N" (desktop revela todos no hover) */
+const MOBILE_BULLET_CAP = 6
+
 type Service = {
   href: string
   Icon: React.ComponentType<{ size?: number; className?: string; style?: React.CSSProperties }>
@@ -36,8 +39,9 @@ const cardVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE_OUT_EXPO } },
 }
 
-function SectorCard({ service, brand, exploreLabel }: { service: Service; brand: string; exploreLabel: string }) {
+function SectorCard({ service, brand, exploreLabel, moreLabel }: { service: Service; brand: string; exploreLabel: string; moreLabel: string }) {
   const { href, title, desc, bullets, color, image, imagePosition, ariaLabel } = service
+  const extra = bullets.length - MOBILE_BULLET_CAP
 
   return (
     <motion.div
@@ -123,11 +127,21 @@ function SectorCard({ service, brand, exploreLabel }: { service: Service; brand:
             className="overflow-hidden mb-4 lg:transition-[max-height,opacity] lg:duration-500 lg:ease-out lg:opacity-0 lg:max-h-0 lg:group-hover:opacity-100 lg:group-hover:max-h-44"
           >
             <div className="flex flex-wrap gap-x-3 gap-y-1.5 pt-3 border-t border-white/15">
-              {bullets.map((b) => (
-                <span key={b} className="text-[12.5px] sm:text-[11px] text-white/85 leading-tight pt-2">
+              {bullets.map((b, i) => (
+                <span
+                  key={b}
+                  className={`text-[12.5px] sm:text-[11px] text-white/85 leading-tight pt-2${
+                    i >= MOBILE_BULLET_CAP ? ' hidden lg:inline' : ''
+                  }`}
+                >
                   · {b}
                 </span>
               ))}
+              {extra > 0 && (
+                <span className="lg:hidden text-[12.5px] sm:text-[11px] font-semibold text-white/60 leading-tight pt-2">
+                  +{extra} {moreLabel}
+                </span>
+              )}
             </div>
           </div>
 
@@ -234,7 +248,7 @@ export default function SolucoesGrid() {
           viewport={{ once: true, amount: 0.15 }}
         >
           {SERVICES.map((s) => (
-            <SectorCard key={s.href} service={s} brand={t('solucoes.card.brand')} exploreLabel={t('solucoes.explore')} />
+            <SectorCard key={s.href} service={s} brand={t('solucoes.card.brand')} exploreLabel={t('solucoes.explore')} moreLabel={t('solucoes.card.more')} />
           ))}
         </motion.div>
       </div>
