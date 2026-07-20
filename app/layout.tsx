@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import { Outfit, Satisfy } from 'next/font/google'
-import localFont from 'next/font/local'
 import './globals.css'
 import { LocaleProvider } from '@/lib/i18n'
 import { AudienceProvider } from '@/lib/audience'
@@ -21,29 +20,6 @@ const satisfy = Satisfy({
   subsets: ['latin'],
   weight: '400',
   variable: '--font-script',
-  display: 'swap',
-})
-
-const gellix = localFont({
-  src: [
-    { path: '../public/fonts/Gellix-TRIAL-Thin.otf',           weight: '100', style: 'normal' },
-    { path: '../public/fonts/Gellix-TRIAL-ThinItalic.otf',     weight: '100', style: 'italic' },
-    { path: '../public/fonts/Gellix-TRIAL-Light.otf',          weight: '300', style: 'normal' },
-    { path: '../public/fonts/Gellix-TRIAL-LightItalic.otf',    weight: '300', style: 'italic' },
-    { path: '../public/fonts/Gellix-TRIAL-Regular.otf',        weight: '400', style: 'normal' },
-    { path: '../public/fonts/Gellix-TRIAL-RegularItalic.otf',  weight: '400', style: 'italic' },
-    { path: '../public/fonts/Gellix-TRIAL-Medium.otf',         weight: '500', style: 'normal' },
-    { path: '../public/fonts/Gellix-TRIAL-MediumItalic.otf',   weight: '500', style: 'italic' },
-    { path: '../public/fonts/Gellix-TRIAL-SemiBold.otf',       weight: '600', style: 'normal' },
-    { path: '../public/fonts/Gellix-TRIAL-SemiBoldItalic.otf', weight: '600', style: 'italic' },
-    { path: '../public/fonts/Gellix-TRIAL-Bold.otf',           weight: '700', style: 'normal' },
-    { path: '../public/fonts/Gellix-TRIAL-BoldItalic.otf',     weight: '700', style: 'italic' },
-    { path: '../public/fonts/Gellix-TRIAL-ExtraBold.otf',      weight: '800', style: 'normal' },
-    { path: '../public/fonts/Gellix-TRIAL-ExtraBoldItalic.otf',weight: '800', style: 'italic' },
-    { path: '../public/fonts/Gellix-TRIAL-Black.otf',          weight: '900', style: 'normal' },
-    { path: '../public/fonts/Gellix-TRIAL-BlackItalic.otf',    weight: '900', style: 'italic' },
-  ],
-  variable: '--font-gellix',
   display: 'swap',
 })
 
@@ -69,7 +45,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR" className={`${outfit.variable} ${gellix.variable} ${satisfy.variable}`}>
+    <html lang="pt-BR" className={`${outfit.variable} ${satisfy.variable}`}>
       <body>
         <LocaleProvider>
           <AudienceProvider>

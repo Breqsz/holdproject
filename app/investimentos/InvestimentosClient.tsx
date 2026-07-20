@@ -136,9 +136,15 @@ function SobreSection() {
             width={2880}
             height={1440}
             quality={90}
-            sizes="92vw"
+            sizes="100vw"
             loading="eager"
-            className="mt-8 h-auto w-full"
+            className="mt-8 h-auto w-[calc(100%+3rem)] max-w-none -mx-6"
+            style={{
+              WebkitMaskImage:
+                'linear-gradient(to bottom, transparent 0%, #000 14%, #000 88%, transparent 100%)',
+              maskImage:
+                'linear-gradient(to bottom, transparent 0%, #000 14%, #000 88%, transparent 100%)',
+            }}
           />
         </Reveal>
 

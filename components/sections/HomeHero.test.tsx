@@ -119,10 +119,10 @@ describe('HomeHero', () => {
     expect(link).toHaveAttribute('href', '#solucoes')
   })
 
-  it('renders the family hero photo', () => {
+  it('renders the hero background photo', () => {
     render(<HomeHero />)
     const imgs = Array.from(document.querySelectorAll('img'))
-    expect(imgs.some(img => img.getAttribute('src')?.includes('home%20image%205'))).toBe(true)
+    expect(imgs.some(img => img.getAttribute('src')?.includes('HOME_IMAGE_8'))).toBe(true)
   })
 
   it('does not render AudienceToggle', () => {
@@ -131,16 +131,16 @@ describe('HomeHero', () => {
     expect(screen.queryByRole('button', { name: /Para sua empresa/i })).toBeNull()
   })
 
-  it('renders the mobile gradient overlay div', () => {
+  it('renders the mobile hero band fade div', () => {
     render(<HomeHero />)
-    const overlay = document.querySelector('[data-testid="mobile-overlay"]')
-    expect(overlay).toBeTruthy()
+    const fade = document.querySelector('[data-testid="mobile-band-fade"]')
+    expect(fade).toBeTruthy()
   })
 
-  it('overlay has gradient-to-right classes', () => {
+  it('band fade dissolves the image into the white text section (mobile only, to-white)', () => {
     render(<HomeHero />)
-    const overlay = document.querySelector('[data-testid="mobile-overlay"]')
-    expect(overlay?.className).toContain('from-white')
-    expect(overlay?.className).toContain('to-transparent')
+    const fade = document.querySelector('[data-testid="mobile-band-fade"]')
+    expect(fade?.className).toContain('to-white')
+    expect(fade?.className).toContain('md:hidden')
   })
 })

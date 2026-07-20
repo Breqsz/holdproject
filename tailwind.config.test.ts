@@ -2,10 +2,9 @@ import config from './tailwind.config'
 import { describe, it, expect } from 'vitest'
 
 describe('tailwind.config', () => {
-  it('includes gellix font family', () => {
+  it('does not expose the (unlicensed) gellix font family', () => {
     const fonts = (config.theme?.extend?.fontFamily ?? {}) as Record<string, string[]>
-    expect(fonts.gellix).toBeDefined()
-    expect(fonts.gellix[0]).toBe('var(--font-gellix)')
+    expect(fonts.gellix).toBeUndefined()
   })
 
   it('includes outfit (sans) font family', () => {

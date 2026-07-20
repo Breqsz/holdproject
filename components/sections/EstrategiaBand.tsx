@@ -94,7 +94,7 @@ export default function EstrategiaBand() {
             transition={{ duration: 0.85, delay: 0.35, ease: EASE }}
             className="text-white text-balance"
             style={{
-              fontFamily: 'var(--font-gellix)',
+              fontFamily: 'var(--font-outfit)',
               fontWeight: 500,
               fontSize: 'clamp(1.25rem, 2.2vw, 1.875rem)',
               lineHeight: 1.2,

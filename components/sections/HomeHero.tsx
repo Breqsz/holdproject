@@ -64,27 +64,30 @@ export default function HomeHero() {
   return (
     <section
       id="home"
-      className="relative min-h-[100dvh] overflow-hidden bg-white"
+      className="relative flex flex-col overflow-hidden bg-white md:block md:min-h-[100dvh]"
     >
-      {/* Background image */}
-      <Image
-        src="/images/hero/HOME_IMAGE_8.jpg"
-        alt={t('hero.photo.alt')}
-        fill
-        priority
-        quality={100}
-        sizes="100vw"
-        className="object-cover object-center md:object-[100%_0%]"
-        style={{ zIndex: 0, filter: 'brightness(0.86) contrast(1.04)' }}
-      />
-
-      {/* Mobile gradient overlay — garante legibilidade do texto */}
+      {/* Background image — mobile: banda nítida no topo; desktop: full-bleed atrás do texto */}
       <div
-        data-testid="mobile-overlay"
-        aria-hidden
-        className="md:hidden absolute inset-0 bg-gradient-to-b from-white via-white/95 to-white/55"
-        style={{ zIndex: 1 }}
-      />
+        className="relative h-[44vh] min-h-[300px] w-full overflow-hidden md:absolute md:inset-0 md:h-auto md:min-h-0"
+        style={{ zIndex: 0 }}
+      >
+        <Image
+          src="/images/hero/HOME_IMAGE_8.jpg"
+          alt={t('hero.photo.alt')}
+          fill
+          priority
+          quality={100}
+          sizes="100vw"
+          className="object-cover object-[68%_45%] md:object-[100%_0%]"
+          style={{ filter: 'brightness(0.86) contrast(1.04)' }}
+        />
+        {/* Mobile: a banda dissolve no branco da seção de texto abaixo */}
+        <div
+          data-testid="mobile-band-fade"
+          aria-hidden
+          className="md:hidden absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-white"
+        />
+      </div>
 
       {/* Dot grid */}
       <div
@@ -93,12 +96,9 @@ export default function HomeHero() {
         style={{ zIndex: 2, backgroundImage: 'radial-gradient(circle,rgba(7,22,42,.06) 1px,transparent 1px)', backgroundSize: '24px 24px' }}
       />
 
-      {/* Content */}
-      <div className="relative flex min-h-[100dvh] items-center" style={{ zIndex: 10 }}>
-        <div
-          className="w-full px-6 sm:px-10 lg:pl-20 xl:pl-24"
-          style={{ paddingTop: 'clamp(80px,10vh,120px)', paddingBottom: 'clamp(40px,6vh,80px)' }}
-        >
+      {/* Content — mobile: abaixo da banda em branco sólido; desktop: overlay centralizado */}
+      <div className="relative z-10 flex w-full md:absolute md:inset-0 md:min-h-[100dvh] md:items-center">
+        <div className="w-full px-6 sm:px-10 lg:pl-20 xl:pl-24 pt-8 pb-12 md:pt-[clamp(80px,10vh,120px)] md:pb-[clamp(40px,6vh,80px)]">
           <div className="max-w-full sm:max-w-[640px]">
 
             {/* H1 — three lines: line1 biggest, line2 slightly smaller, line3 typed small */}
